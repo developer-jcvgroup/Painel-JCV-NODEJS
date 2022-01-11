@@ -1,0 +1,211 @@
+.beleza-view-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.beleza-view-image-display{
+    width: 100%;
+    height: 37%;
+    display: flex;
+    justify-content: center;
+    background: cornflowerblue;
+}
+
+.beleza-view-img-desktop{
+    width: 100%;
+    object-fit: cover;
+}
+
+.beleza-view-img-mobile{
+    display: none;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* DISPLAY BODY */
+.beleza-view-section-display-body{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+.beleza-view-display-solicitar{
+    width: 550px;
+    margin-top: -100px;
+    height: fit-content;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+
+.beleza-view-container-box{
+    padding: 26px;
+}
+.beleza-view-title-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.beleza-view-title-box span{
+    font-size: 1.9rem;
+    font-weight: lighter;
+    color: var(--color-one);
+}
+.beleza-view-container-body{
+    width: 100%;
+    margin-top: 56px;
+}
+
+.beleza-view-info{
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.beleza-view-info span:nth-child(1){
+    font-size: 1.3rem;
+    color: rgb(33, 122, 33);
+    margin-bottom: 14px;
+}
+.beleza-view-info span:nth-child(2){
+    font-size: 0.8rem;
+    color: var(--color-one);
+}
+.beleza-view-info span:nth-child(3){
+    font-size: 0.8rem;
+    margin-top: 4px;
+    font-weight: bold;
+    color: var(--color-one);
+}
+
+.beleza-view-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.beleza-view-form-row{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 23px;
+}
+
+.beleza-view-form-row-large{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+}
+.beleza-view-form-row-large span{
+    font-size: 0.9rem;
+    padding: 4px;
+    border-bottom: 1px solid var(--color-five);
+}
+
+.beleza-view-form-row-action{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.beleza-view-link-normal{
+    text-decoration: underline;
+    margin-top: 17px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+    cursor: pointer;
+}
+
+
+/*****************************/
+/* SOLICITAR CANCELAMENTO */
+.beleza-cancel-main{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - var(--heigth-header));
+}
+.beleza-cancel-cont-main{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1920px; 
+    height: 100%;
+    max-height: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-eight);
+}
+.beleza-cancel-center-box{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.beleza-cancel-close{
+    width: 100%;
+    margin: 23px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.beleza-cancel-close i{
+    font-size: 1.5rem;
+    color: var(--color-one);
+    cursor: pointer;
+}
+.beleza-cancel-msg{
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+}
+.beleza-cancel-msg span{
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-two);
+}
+.beleza-cancel-button{
+    width: 100;
+    display: flex;
+    justify-content: center;
+    margin-top: 23px;
+}
+.beleza-cancel-button button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .beleza-view-img-desktop{
+        display: none;
+    }
+    .beleza-view-img-mobile{
+        display: flex;
+    }
+    .beleza-view-display-solicitar{
+        width: 98%;
+    }
+    .beleza-view-container-box{
+        padding: 12px;
+    }
+    .beleza-view-info{
+        white-space: normal;
+        text-align: center;
+    }
+}

@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="/panel/css/requisitor/viewRequisicao.css">
+
+<section class="view-order-container-main">
+    <section class="view-order-container-page">
+        <div class="view-order-container-identify-page">
+            <span>Visualizar Requisição <b>#<%= arrayOrderInfo[0]['sys_req_idOne'] %></b></span>
+            <span>/ Requsitor de Materiais / 
+                <b>    
+                    <% if(arrayOrderInfo[0]['sys_req_orderStatus'] == 1){ %>
+                        Requisição Efetuada
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 2) { %>
+                        Em Separação
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 3) { %>
+                        Finalizado
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 4) { %>
+                        Requisição Cancelada
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 5) { %>
+                        Requisição Pendente
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 6) { %>
+                        Requisição enviada
+                    <% } %>
+                </b>
+            </span>
+        </div>
+        <section class="view-order-page-new">
+            <div class="view-order-page-center">
+
+
+                <section class="view-order-information-send">
+                    <div class="view-order-title-box"><span>Execute uma ação</span></div>
+                    <div class="view-order-finaly-request">
+                        <form class="view-order-container-row-large" method="post">
+                            <div class="view-order-container-button">
+                                <button formaction="./view/order/download" type="submit" value="<%= arrayOrderInfo[0]['sys_req_idOne'] %>" title="Fazer download" class="view-order-button-default" name="button-view-action-download"><i class="ri-download-2-fill"></i></button>
+                                <a class="view-order-button-default" href="../EditarRequisicao/<%= arrayOrderInfo[0]['sys_req_idOne'] %>" title="Editar Requisição"><i class="ri-edit-line"></i></a>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="view-order-section-table">
+            <div class="view-order-container-main-table">
+                <div class="view-order-title-box"><span>Itens de seu pedido</span></div>
+                <section class="view-order-container-table-set">
+                    <table class="view-order-table" id="view-order-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% arrayOrderItem.forEach(element => { %>
+                            <tr>
+                                <td><%= element['sys_req_item_itemId'] %></td>
+                                <td><%= element['sys_req_item_itemName'] %></td>
+                                <td><%= element['sys_req_item_itemAmount'] %></td>
+                                <td>
+                                    <% if(arrayOrderInfo[0]['sys_req_orderStatus'] == 1){ %>
+                                        <i class="ri-checkbox-circle-line"></i>
+                                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 2) { %>
+                                        <i class="ri-share-forward-box-fill"></i>
+                                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 3) { %>
+                                        <i class="ri-check-double-line"></i>
+                                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 4) { %>
+                                        <i class="ri-close-circle-line"></i>
+                                    <% } %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+    </section>
+</section>

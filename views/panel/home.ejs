@@ -1,0 +1,159 @@
+
+<section class="section-home-main-center">
+    <section class="home-section-card-background">
+        <!--  -->
+    </section>
+
+    <!-- -->
+    
+    <section class="home-body-page">
+        <section class="section-box-suspended">
+            <div class="suspended-title">
+                <div class="title-page-info">
+                    <span>Olá <%= GLOBAL_DASH[8] %></span>
+                    <span>Você não possui notificações</span>
+                </div>
+            </div>
+            <div class="suspended-main">
+                <div class="suspended-blocks-container">
+                    <div class="suspended-container-center">
+                        <div class="suspended-title">
+                            <span>Calendario</span>
+                        </div>
+                        <div class="chat-message-box-home">
+                            <div class="chat-box-content-home">
+                                <a href="/painel/calendario/main">
+                                    <i class="ri-calendar-line"></i>
+                                    <span>Você possui <%= CALENDARcount.length %> participação em eventos</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
+                <div class="suspended-blocks-container">
+                    <div class="suspended-container-center">
+                        <div class="suspended-title">
+                            <span>Requisitor de Materiais</span>
+                        </div>
+                        <% if (REQUISITORstatus == true){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/requisitor/MinhasRequisicoes">
+                                        <i class="main-suspended-group-icon ri-file-list-3-line"></i>
+                                        <span>Você possui requisições</span>
+                                        <span>Clique e veja mais <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else{ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/requisitor/Novo">
+                                        <i class="main-suspended-group-icon ri-add-line"></i>
+                                        <span>Faça sua requisição</span>
+                                        <span>Clique aqui <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+
+
+                <% if(GLOBAL_PERM[0].sys_blz_perm_use == 1){ %>
+                <div class="suspended-blocks-container">
+                    <div class="suspended-container-center">
+                        <div class="suspended-title">
+                            <span>Progama da Beleza</span>
+                        </div>
+                        <% if(system_blz_status == 2){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/status">
+                                        <i class="main-suspended-group-icon ri-check-double-line"></i>
+                                        <span>Solicitação concluída</span>
+                                        <span>Clique e veja <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else if(system_blz_status == 1){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/solicitar">
+                                        <i class="main-suspended-group-icon ri-error-warning-line"></i>
+                                        <span>Solicitação pendente</span>
+                                        <span>Clique e faça já <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else if(system_blz_status == 3){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/solicitar">
+                                        <i class="main-suspended-group-icon ri-close-line"></i>
+                                        <span>Solicitação cancelada</span>
+                                        <span>Clique para refazer <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else if(system_blz_status == 4){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/status">
+                                        <i class="main-suspended-group-icon ri-check-double-line"></i>
+                                        <span>Solicitação separada</span>
+                                        <span>Clique para rever <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else if(system_blz_status == 5){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/status">
+                                        <i class="main-suspended-group-icon ri-git-pull-request-line"></i>
+                                        <span>Pedido de cancelamento</span>
+                                        <span>Clique para ver <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% }else if(system_blz_status == false){ %>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info" href="./painel/beleza/solicitar">
+                                        <i class="main-suspended-group-icon ri-error-warning-line"></i>
+                                        <span>Requisição Pendente</span>
+                                        <span>Clique para refazer <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        <% } %>
+                        
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- <div class="home-logs-system">
+                <div class="home-logs-main">
+                    <div class="home-logs-title"><span><a href="/painel/logs">Logs</a></span></div>
+                    <div class="home-logs-list">
+                        <a href=""><i class="ri-cursor-line"></i><span><b>Vitor Henrique </b>criou um novo pedido. 11/10/2021 - 15h</span></a>
+                        <a href=""><i class="ri-check-line"></i><span><b>Vitor Henrique </b>Finalizou um pedido. 11/10/2021 - 15h</span></a>
+                        <a href=""><i class="ri-error-warning-line"></i><span><b>12 Dias </b>para criar um pedido. 11/10/2021 - 15h</span></a>
+
+
+                        <a href=""><i class="ri-cursor-line"></i><span><b>Vitor Henrique </b>criou um novo pedido</span></a>
+                        <a href=""><i class="ri-check-line"></i><span><b>Vitor Henrique </b>Finalizou um pedido</span></a>
+                        <a href=""><i class="ri-error-warning-line"></i><span><b>12 Dias </b>para criar um pedido</span></a>
+                    </div>
+                </div>
+            </div> -->
+        </section>
+
+        <!-- -->
+
+    </section>
+</section>

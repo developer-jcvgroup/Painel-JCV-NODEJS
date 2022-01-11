@@ -1,0 +1,27 @@
+{
+  "name": "paineljcv",
+  "version": "1.0.0",
+  "description": "Compilado de apps do jcv group",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.6",
+    "excel4node": "^1.7.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "html-pdf": "^3.0.1",
+    "knex": "^0.95.11",
+    "moment": "^2.29.1",
+    "multer": "^1.4.3",
+    "mysql2": "^2.3.0",
+    "nodemailer": "^6.7.2",
+    "qr-image": "^3.2.0"
+  }
+}

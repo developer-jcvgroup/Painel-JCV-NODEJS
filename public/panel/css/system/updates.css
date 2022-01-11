@@ -1,0 +1,93 @@
+.updates-main-section{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* container event */
+.updates-section-viewer-event{
+    width: 90%;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    white-space: normal;
+}
+.updates-calendar-box{
+    width: 100%;
+    padding: 0 18px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+.updates-title-day{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+}
+.updates-title-day span:nth-child(1){
+    font-size: 1.5rem;
+    color: var(--color-two);
+}
+.updates-title-day span:nth-child(2){
+    font-size: 0.9rem;
+    margin-left: 15px;
+    color: var(--color-five);
+}
+
+/*****************/
+.updates-calendar-cont-main{
+    margin-top: 28px;
+}
+
+.updates-row-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    white-space: normal;
+}
+
+.updates-box-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 23px;
+}
+
+.updates-box-main label{
+    font-size: 0.8rem;
+    color: var(--color-five);
+}
+.updates-box-main span{
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: var(--color-two);
+}
+
+.updates-action-command button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 550px){
+    .updates-title-day{
+        flex-direction: column;
+    }
+    .updates-title-day span:nth-child(2){
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}

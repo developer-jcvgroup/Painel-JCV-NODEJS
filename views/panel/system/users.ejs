@@ -1,0 +1,386 @@
+<link rel="stylesheet" href="/panel/css/system/users.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<section class="sys-users-container-main">
+    <section class="sys-users-container-page">
+        <div class="sys-users-container-identify-page">
+            <span>Usuarios e Permissões</span>
+            <span>/ Sistema</span>
+        </div>
+
+        <section class="sys-section-search-container">
+            <div class="sys-section-container-main">
+                <div class="sys-box-search">
+                    <input type="text" placeholder="Busque por CPF, nome, email, ramal.." id="input-search-table">
+                </div>
+            </div>
+        </section>
+
+        <form class="sys-users-section-list" method="post">
+            <div class="sys-users-container-main-list">
+                <div class="sys-users-container-fix">
+                    <table class="sys-users-table-list" id="sys-users-table-list">
+                        <thead>
+                            <tr>
+                                <th>CPF</th>
+                                <th>Funcionário</th>
+                                <th>Unidade</th>
+                                <th>Gestor</th>
+                                <th>E-mail coporativo</th>
+                                <th>E-mail pessoal</th>
+                                <th>Ramal</th>
+                                <th>Departamento</th>
+
+                                <th>Requisitor</th>
+                                <th>Progama da Beleza</th>
+
+                                <th>Classificado</th>
+                                <th>Ativo?</th>
+                                <th>Sistema de e-mails</th>
+
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                            <tr>
+                                <td><input placeholder="Insira um CPF.." id="insert-cpf" type="text" name="save-new-cpf"></td>
+                                <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name"></td>
+                                <td>
+                                    <select name="save-new-unidade">
+                                        <option value="">* Selecione *</option>
+                                        <% allUnitys.forEach(element => { %>
+                                            <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                        <% }) %>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="save-new-gestor">
+                                        <option value="">* Selecione *</option>
+                                        <% allManager.forEach(element => { %>
+                                            <option value="<%= element.jcv_id %>"><%= element.jcv_userNamePrimary %></option>
+                                        <% }) %>
+                                    </select>
+                                </td>
+                                <td><input placeholder="Email corporativo" class="sys-input-table-large-two" type="text" name="save-new-email-corp"></td>
+                                <td><input placeholder="Email pessoal" class="sys-input-table-large-two" type="text" name="save-new-email-folks"></td>
+                                <td><input placeholder="Ramal" type="text" name="save-new-ramal"></td>
+                                <td>
+                                    <select name="save-new-setor" id="">
+                                        <option value="">* Selecione *</option>
+                                        <% allDepto.forEach(element => { %>
+                                            <option value="<%= element.sys_department_id%>"><%= element.sys_department_name %></option>
+                                        <% }) %>
+                                    </select>
+                                </td>
+
+
+                                <td>
+                                    <div class="sys-container-two">
+                                        <div class="sys-container-two-row">
+                                            <div class="sys-container-two-box">
+                                                <label for="">Utilizar</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-use" id="">
+                                            </div>
+
+                                            <!-- Gestor -->
+                                            <div class="sys-container-two-box">
+                                                <label for="">Gestor</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-manager" id="">
+                                            </div>
+
+                                            <!-- admin -->
+
+                                            <div class="sys-container-two-box">
+                                                <label for=""><b>*Admin*</b></label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-admin" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="sys-container-two">
+                                        <div class="sys-container-two-row">
+                                            <div class="sys-container-two-box">
+                                                <label for="">Utilizar</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-use" id="">
+                                            </div>
+
+                                            <!-- Gestor -->
+                                            <div class="sys-container-two-box">
+                                                <label for="">Gestor</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-manager" id="">
+                                            </div>
+
+                                            <!-- admin -->
+
+                                            <div class="sys-container-two-box">
+                                                <label for=""><b>*Admin*</b></label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-admin" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <select name="save-new-sys-type-user" id="">
+                                        <option value="0">* Selecione *</option>
+                                        <option value="1">Master</option>
+                                        <option value="2">Gestor</option>
+                                        <option value="3">Colaborador Interno</option>
+                                        <option value="4">Representantes</option>
+                                        <option value="5">Promotoras</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sys-container-two">
+                                        <select name="save-new-active" id="">
+                                            <option value="*">* Selecione *</option>
+                                            <option value="1">Sim</option>
+                                            <option value="0">Nao</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select name="save-new-sys-mails" id="">
+                                        <option value="">* Selecione *</option>
+                                        <option value="1">Sim</option>
+                                        <option value="0">Não</option>
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <div class="sys-actions-commands">
+                                        <button formaction="./action/sys/user/save" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!--  -->
+                            <!--  -->
+
+                            <tr>
+                                <td><br></td>
+                            </tr>
+
+                            <!--  -->
+                            <!--  -->
+                            
+                            <% if(locals.allUsers != ''){ %>
+                                <% allUsers.forEach(element => { %>
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="save-edit-cpf-<%= element.jcv_id %>" value="<%= element.jcv_userCpf %>" class="user-insert-cpf">
+                                        </td>
+                                        <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
+                                        <td>
+                                            <select name="save-edit-unidade-<%= element.jcv_id %>">
+                                                <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+
+                                                <option disabled></option>
+                                                
+                                                <% allUnitys.forEach(element => { %>
+                                                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="save-edit-gestor-<%= element.jcv_id %>">
+
+                                                <option value="<%= element.jcv_userManager %>"><%= element.jcv_userNameSecundary %></option>
+                                                
+                                                <option disabled></option>
+
+                                                <% allManager.forEach(element => { %>
+                                                    <option value="<%= element.jcv_id %>"><%= element.jcv_userNamePrimary %></option>
+                                                <% }) %>
+
+                                            </select>
+                                        </td>
+                                        <td><input placeholder="Email corporativo" class="sys-input-table-large-two" value="<%= element.jcv_userEmailCorporate %>" type="text" name="save-edit-email-corp-<%= element.jcv_id %>"></td>
+                                        <td><input placeholder="Email pessoal" class="sys-input-table-large-two" value="<%= element.jcv_userEmailFolks %>" type="text" name="save-edit-email-folks-<%= element.jcv_id %>"></td>
+                                        <td><input placeholder="Ramal" value="<%= element.jcv_userExtension %>" type="text" name="save-edit-ramal-<%= element.jcv_id %>"></td>
+                                        <td>
+                                            <select name="save-edit-setor-<%= element.jcv_id %>">
+                                                <option value="<%= element.sys_department_id %>"><%= element.sys_department_name %></option>
+
+                                                <option disabled></option>
+                                                
+                                                <% allDepto.forEach(element => { %>
+                                                    <option value="<%= element.sys_department_id %>"><%= element.sys_department_name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </td>
+        
+        
+                                        <td>
+                                            <div class="sys-container-two">
+                                                <div class="sys-container-two-row">
+
+                                                    <!-- use -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Utilizar</label>
+
+                                                        <% if(element.sys_req_perm_use == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-use-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-use-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+
+                                                    <!-- manager -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Gestor</label>
+
+                                                        <% if(element.sys_req_perm_manager == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-manager-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-manager-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+        
+                                                    <!-- admin -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for=""><b>*Admin*</b></label>
+
+                                                        <% if(element.sys_req_perm_admin == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-admin-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-admin-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+        
+                                        <td>
+                                            <div class="sys-container-two">
+                                                <div class="sys-container-two-row">
+
+                                                    <!-- use -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Utilizar</label>
+                                                        
+                                                        <% if(element.sys_blz_perm_use == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-use-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-use-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+
+                                                    <!-- manager -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Gestor</label>
+                                                        
+                                                        <% if(element.sys_blz_perm_manager == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-manager-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-manager-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+        
+                                                    <!-- admin -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for=""><b>*Admin*</b></label>
+                                                        
+                                                        <% if(element.sys_blz_perm_admin == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-admin-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-admin-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+        
+                                        <td>
+                                            <select name="save-edit-sys-type-user-<%= element.jcv_id %>" id="">
+                                                <% if(element.jcv_userCassification == 1){ %>
+                                                    <option value="1">Master</option>
+                                                <% }else if(element.jcv_userCassification == 2){ %>
+                                                    <option value="2">Gestor</option>
+                                                <% }else if(element.jcv_userCassification == 3){ %>
+                                                    <option value="3">Colaborador Interno</option>
+                                                <% }else if(element.jcv_userCassification == 4){ %>
+                                                    <option value="4">Representantes</option>
+                                                <% }else if(element.jcv_userCassification == 5){ %>
+                                                    <option value="5">Promotoras</option>
+                                                <% } %>
+                                                <option disabled></option>
+                                                <option value="1">Master</option>
+                                                <option value="2">Gestor</option>
+                                                <option value="3">Colaborador Interno</option>
+                                                <option value="4">Representantes</option>
+                                                <option value="5">Promotoras</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div class="sys-container-two">
+                                                <select name="save-edit-active-<%= element.jcv_id %>" id="">
+                                                    <% if(element.jcv_userEnabled == 1){ %>
+                                                        <option value="1">Sim</option>
+                                                    <% }else{ %>
+                                                        <option value="0">Nao</option>
+                                                    <% } %>
+
+                                                    <option disabled></option>
+                                                    <option value="1">Sim</option>
+                                                    <option value="0">Nao</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select name="save-edit-sys-mails-<%= element.jcv_id %>" id="">
+                                                <% if(element.jcv_sysEmail == 1){ %>
+                                                    <option value="1">Sim</option>
+                                                <% }else{ %>
+                                                    <option value="0">Nao</option>
+                                                <% } %>
+
+                                                <option disabled></option>
+                                                <option value="1">Sim</option>
+                                                <option value="0">Não</option>
+                                            </select>
+                                        </td>
+        
+                                        <td>
+                                            <div class="sys-actions-commands">
+                                                <button formaction="./action/sys/user/save-edit" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-save-edit"><i class="ri-save-line"></i></button>
+                                                <!-- <button formaction="./action/sys/user/delete" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-delete-edit"><i class="ri-delete-bin-line"></i></button> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                <% }) %>
+
+                            <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+        //Input mask
+        $('#insert-cpf').mask('000.000.000-00');
+        $(".user-insert-cpf").mask('000.000.000-00');
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#sys-users-table-list',15,2);
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table')
+
+        $(".save-new-name").keyup(function() {
+            var valor = $(this).val().replace(/[^a-zA-Z 0-9]+/g,'');
+            $(this).val(valor);
+        });
+    })
+
+</script>

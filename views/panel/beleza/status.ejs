@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="/panel/css/beleza/status.css">
+<section class="beleza-view-main-section">
+    <section class="beleza-view-image-display">
+        <img class="beleza-view-img-desktop" src="/panel/img/image-solicitar-desktop.jpg" alt="" srcset="">
+        <img class="beleza-view-img-mobile" src="/panel/img/image-solicitar-mobile.jpg" alt="" srcset="">
+    </section>
+    <section class="beleza-view-section-display-body">
+        <div class="beleza-view-display-solicitar">
+            <div class="beleza-view-container-box">
+                <div class="beleza-view-title-box"><span>Programa da Beleza</span></div>
+                <div class="beleza-view-info">
+                    <span>Solicitação concluída!</span>
+                    <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
+                    <% if(statusCancel) { %>
+                        <span>Pedido de cancelamento em análise! Aguarde..</span>
+                    <% }else{} %>
+                </div>
+                <div class="beleza-view-container-body">
+                    <form class="beleza-view-form" action="">
+                        <div class="beleza-view-form-row-large">
+                            <span><%= productOne %></span>
+                        </div>
+
+                        <div class="beleza-view-form-row-large">
+                            <span><%= productTwo %></span>
+                        </div>
+                        <div class="beleza-view-form-row-action">
+                            <span id="click-open-cancel" class="beleza-view-link-normal">Cancelar Solicitação</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<section class="beleza-cancel-main" id="beleza-cancel-main">
+    <section class="beleza-cancel-cont-main">
+        <section class="beleza-cancel-center-box">
+            <div class="beleza-cancel-close">
+                <i id="click-close-cancel" class="ri-close-line"></i>
+            </div>
+            <div class="beleza-cancel-msg">
+                <span>Caso não foi você quem solicitou ou quer refazer a sua solicitação você pode pedir o cancelamento ao administrador, lembrando que isso passará por uma análise
+                    antes do cancelamento. Clique no botão abaixo e agurade até que seu pedido seja cancelado.
+                </span>
+            </div>
+            <form class="beleza-cancel-button" action="./request/cancel" method="post">
+                <button class="class-loader" type="submit" value="<%= idRequest %>" name="buttonIDorder">Solicitar cancelamento</button>
+            </form>
+        </section>
+    </section>
+</section>
+<script>
+    $(function(){
+        $("#click-open-cancel").click(function(){
+            $("#beleza-cancel-main").fadeIn();
+        })
+
+        $("#click-close-cancel").click(function(){
+            $("#beleza-cancel-main").fadeOut();
+        })
+    })
+</script>

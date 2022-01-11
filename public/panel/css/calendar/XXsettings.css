@@ -1,0 +1,232 @@
+.settings-section-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.settings-section-center{
+    width: 90%;
+    margin-top: 23px;
+    display: flex;
+    
+}
+.settings-container-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.settings-title span{
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+.settings-container-salas{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-title-box{
+    width: 100%;
+    margin-bottom: 13px;
+    display: flex;
+}
+.settings-title-box span{
+    font-size: 0.9rem;
+}
+
+/* */
+.settings-container-main-set{
+    width: 100%;
+    padding: 12px;
+    height: 450px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+/* */
+.settings-add-container{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+/********/
+.settings-row-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 21px;
+}
+.settings-row-form label{
+    font-size: 0.7rem;
+    color: var(--color-five);
+}
+
+.settings-row-form input[type=text] {
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+.settings-row-form-select{
+    width: 100%;
+    margin-bottom: 21px;
+    display: flex;
+    align-items: center;
+}
+.settings-row-form-select select{
+    width: 150px;
+    outline: 0;
+    padding: 4px 5px;
+    font-size: 0.8rem;
+    margin-right: 15px;
+    margin-top: 8px;
+    color: var(--color-one);
+    border-bottom: 1px solid var(--color-one);
+}
+
+.settings-row-form-check{
+    display: flex;
+    align-items: center;
+    margin-bottom: 21px;
+}
+.settings-row-form-check label{
+    font-size: 0.9rem;
+    margin-left: 15px;
+    color: var(--color-two);
+}
+
+.settings-row-form-commands{
+    display: flex;
+    align-items: center;
+}
+.settings-row-form-commands button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+/****************************/
+/****************************/
+.settings-container-lists{
+    width: 59%;
+    display: flex;
+    overflow-y: auto;
+}
+.setting-container-table{
+    width: 100%;
+    padding: 5px;
+}
+
+/* table */
+.settings-table-salas{
+    width: 100%;
+    border-collapse: collapse;
+}
+.settings-table-salas tr th{
+    border: none;
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    color: var(--color-one);
+    padding: 6px;
+    font-size: 0.9rem;
+}
+.settings-table-salas tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    padding: 6px;
+}
+
+.settings-table-salas tr th:nth-child(1){
+    text-align: center;
+    width: 5%;
+}
+.settings-table-salas tr th:nth-child(2){
+    text-align: left;
+}
+.settings-table-salas tr th:nth-child(3){
+    width: 10%;
+}
+.settings-table-salas tr th:nth-child(4){
+    width: 10%;
+    text-align: center;
+}
+.settings-table-salas tr th:nth-child(5){
+    width: 10%;
+    text-align: center;
+}
+
+/*********/
+.settings-table-salas tr td:nth-child(1){
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-seven);
+}
+
+.settings-table-salas tr td select{
+    outline: 0;
+    padding: 2px 5px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    border-bottom: 1px solid var(--color-five);
+}
+.settings-table-salas tr td input{
+    width: 100%;
+    outline: 0;
+    border: 0;
+    padding: 4px;
+    font-size: 0.8rem;
+    border: 1px solid var(--color-five);
+}
+
+/* */
+.settings-input-edit{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.settings-table-action{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+}
+.settings-table-action button{
+    background: transparent;
+    color: var(--color-one);
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    font-size: 0.9rem;
+}
+
+/*********************/
+/*********************/
+@media only screen and (max-width: 900px){
+    .settings-container-main-set{
+        flex-direction: column;
+        overflow: auto;
+    }
+    .settings-add-container{
+        width: 100%;
+    }
+    .settings-container-lists{
+        min-width: 500px;
+        margin-top: 23px;   
+    }
+}

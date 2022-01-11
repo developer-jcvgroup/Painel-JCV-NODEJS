@@ -1,0 +1,168 @@
+<link rel="stylesheet" href="/panel/css/requisitor/editarRequisicao.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="edit-order-container-main">
+    <form class="edit-order-container-page" method="post">
+        <div class="edit-order-container-identify-page">
+            <span>Editar Requisição <b>#<%= infoOrder[0].sys_req_idOne %></b></span>
+            <span>/ Requsitor de Materiais</span>
+        </div>
+        <section class="edit-order-page-new">
+            <div class="edit-order-page-center">
+
+
+                <section class="edit-order-information-send">
+                    <div class="edit-order-title-box"><span>Insira itens ao seu pedido</span></div>
+                    <div class="edit-order-finaly-request">
+                        <div class="edit-order-container-row-large">
+                            <div class="edit-order-container-box-large">
+                                <label for="">Busque por um item</label>
+                                <input type="text" name="" id="input-item-name" placeholder="busque pelo nome, referência, id, etc.">
+                            </div>
+                            <div class="edit-order-container-box-single">
+                                <label for="">Quantidade</label>
+                                <input type="number" name="" id="input-item-amount" min="1">
+                            </div>
+                            <div class="edit-order-container-link">
+                                <span id="open-list-itens">Lista de itens <i class="ri-external-link-line"></i></span>
+                            </div>
+                            <div class="edit-order-container-button">
+                                <button type="button" class="edit-order-button-default" id="button-insert-item">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="edit-order-section-table">
+            <div class="edit-order-container-main-table">
+                <div class="edit-order-title-box"><span>Itens de seu pedido</span></div>
+                <section class="edit-order-container-table-set">
+                    <table class="edit-order-table" id="edit-order-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let arrayDataItems = []; listItemsRequest.forEach(element => { %>
+                                <% arrayDataItems.push(parseInt(element.sys_req_item_itemId)) %>
+                                <tr>
+                                    <td><%= element['sys_req_item_itemId'] %></td>
+                                    <td><input class="req-input-large" readonly type="text" value="<%= element['sys_req_item_itemName'] %>" name="req-input-list-item-table"></td>
+                                    <td><div class="edit-order-table-inputs">
+                                        <input type="number" value="<%= element['sys_req_item_itemAmount'] %>" name="req-input-list-amount-table" min="1">
+                                    </div></td>
+                                    <td><div class="edit-order-container-actions">
+                                        <button type="button" title="Remover item" onclick="Removeitem(this, '<%= element.sys_req_item_itemId %>')"><i class="ri-delete-bin-line"></i></button>
+                                    </div></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+
+        <section class="edit-order-section-final" id="edit-order-section-final">
+            <div class="edit-order-section-final-box">
+                <div class="edit-order-container-row-large">
+                    <div class="edit-order-container-box-large">
+                        <label for="">Observação</label>
+                        <input type="text" value="<%= infoOrder[0].sys_req_orderNode %>" name="edit-order-node-request" id="">
+                    </div>
+                    <div class="edit-order-container-button">
+                        <button formaction="./save/new/Request" value="<%= infoOrder[0].sys_req_idOne %>" name="button-id-order-request" class="edit-order-button-default class-loader">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</section>
+<!--  -->
+<section class="edit-new-list-itens">
+    <div class="edit-new-main-itens">
+        <div class="edit-new-main-itens-title">
+            <span>Busque por um item</span>
+            <i id="close-list-itens" class="ri-close-line"></i>
+        </div>
+        <div class="edit-new-main-itens-input">
+            <input type="text" placeholder="Busque por algum item.." id="search-item-table-input">
+        </div>
+        <div class="edit-new-main-itens-table-display">
+            <table class="edit-new-main-itens-table" id="edit-new-main-itens-table">
+                <thead>
+                    <!--  -->
+                </thead>
+                <tbody>
+                    <% arrayItems.forEach(element => { %>
+                    <tr>
+                        <td><%= element.split(' - ')[1] %></td>
+                        <td>
+                            <button value="<%= element %>" class="edit-new-main-itens-table-button button-add-item">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+
+    $(function(){
+
+        //Pegando a lista de itens que já existe neste pedido
+        let arrayDataItems = '<%- arrayDataItems %>';
+        let arrayItemDinamic = arrayDataItems.split(',').map(function(item) {
+            return parseInt(item, 10);
+        });
+
+
+        $.fn.functionSetDinamic(true, arrayItemDinamic);//Adicionando os ids dos pedidos
+
+        //Pegando a lista de itens
+        let dataOne = '<%- locals.arrayItems %>';
+        let arrayDataOne = dataOne.split(',');
+
+        //Primeiro campo
+        $("#input-item-name").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+                response(results.slice(0, 5));
+            }
+        });
+
+        //Sistema de busca de itens na tabela
+        $.fn.searchInputTable('#edit-new-main-itens-table tr', '#search-item-table-input')
+
+        $("#close-list-itens").click(function(){
+            $(".edit-new-list-itens").fadeOut()
+        })
+        $("#open-list-itens").click(function(){
+            $(".edit-new-list-itens").fadeIn()
+            $(".edit-new-list-itens").css('display','flex')
+        })
+
+        $(".button-add-item").click(function(){
+            let value = $(this).val()
+            $("#input-item-name").val(value)
+            $(".edit-new-list-itens").fadeOut()
+            $("#input-item-amount").select()
+        })
+
+        //Botão para dar inicio ao modulo de inserção, delete na tabela
+        $("#button-insert-item").click(function(){
+            $("#edit-order-section-final").fadeIn()
+            addItemTable('input-item-amount','input-item-name', 'edit-order-table', false, arrayDataOne)
+        })
+    })
+</script>

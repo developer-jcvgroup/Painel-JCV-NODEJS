@@ -1,0 +1,191 @@
+<link rel="stylesheet" href="/panel/css/beleza/produtos.css">
+
+<script src="/js/jquery-paginate.js"></script>
+
+<section class="produtos-container-main">
+    <section class="produtos-container-page">
+        <div class="produtos-container-identify-page">
+            <span>Lista de Produtos</span>
+            <span>/ Programa da Beleza</span>
+        </div>        
+        <form class="produtos-container-list-all" method="post">
+            <section class="section-produtos-list-center">
+                <div class="produtos-title-box"><span>Lista de produtos</span></div>
+
+                <div class="produtos-order-srs-search">
+                    <div class="produtos-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="product-search-rows">
+                    </div>
+                    <div class="container-actions-checks-produtos">
+                        <div class="produtos-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="actionProducts" id="">
+                                <option value=""></option>
+                                <option value="">-- Selecione --</option>
+                                <option value="" disabled></option>
+                                <option value="CMD01">Habilitar</option>
+                                <option value="CMD02">Desabilitar</option>
+                                <option value="CMD03">Exportar Excel</option>
+                            </select>
+                        </div>
+                        <div class="produtos-box-actions-checks-button">
+                            <button formaction="./status/products">Executar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div class="produtos-container-table" >
+                    <table class="produtos-list-table" id="produtos-list-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>SKU</th>
+                                <th>Marca</th>
+                                <th>Produto</th>
+                                <th>Classificado</th>
+                                <th>Ativo</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>    </td>
+                                <td><input type="text" name="productSKU" placeholder="Insira o SKU.."></td>
+                                <td>
+                                    <select name="productBrand">
+                                        <option value="">Marca</option>
+                                        <option value="" disabled></option>
+                                        <option value="Felps Professional">Felps Professional</option>
+                                        <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                                        <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="productName" placeholder="Insira o produto.."></td>
+                                <td>
+                                    <select name="productType">
+                                        <option value="">Tipo de produto</option>
+                                        <option value="" disabled></option>
+                                        <option value="1">Shampoo</option>
+                                        <option value="2">Condicionador</option>
+                                        <option value="3">Máscaras, pomadas, etc.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="produtos-button-switch">
+                                        <input type="checkbox" name="productEnabled" checked>
+                                        <span class="produtos-button-slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="produtos-container-actions-table">
+                                        <button formaction="./register/product" class="class-loader"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+
+                            <% productsData.forEach(element => { %>
+                            <tr class="request-row-check-mark">
+                                <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_product_id'] %>" name="productsIds"></td>
+                                <td><input type="text" value="<%= element['sys_blz_productSKU'] %>" name="editProduct_sku<%= element['sys_blz_product_id'] %>"></td>
+                                <td>
+                                    <select name="editProductBrand<%= element['sys_blz_product_id'] %>" id="">
+                                        <option value="<%= element['sys_blz_productBrand'] %>"><%= element['sys_blz_productBrand'] %></option>
+                                        <option value="" disabled></option>
+                                        <option value="Felps Professional">Felps Professional</option>
+                                        <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                                        <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                                    </select>
+                                </td>
+                                <td><input value="<%= element['sys_blz_productName'] %>" type="text" name="editProductName<%= element['sys_blz_product_id'] %>"></td>
+                                <td>
+                                    <select name="editProductType<%= element['sys_blz_product_id'] %>" id="">
+                                        <option value="<%= element['sys_blz_productType'] %>">
+                                            <% if(element['sys_blz_productType'] == 1){ %>
+                                                Shampoo
+                                            <% }else if(element['sys_blz_productType'] == 2){ %>
+                                                Condicionador
+                                            <% }else if(element['sys_blz_productType'] == 3){ %>
+                                                <p>Máscaras, pomadas, etc.</p>
+                                            <% } %>
+                                        </option>
+                                        <option value="" disabled></option>
+                                        <option value="1">Shampoo</option>
+                                        <option value="2">Condicionador</option>
+                                        <option value="3">Máscaras, pomadas, etc.</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <% if (element['sys_blz_productEnabled'] == 1){ %>
+
+                                        <label class="produtos-button-switch">
+                                            <input type="checkbox" checked name="editProductEnabled<%= element['sys_blz_product_id'] %>">
+                                            <span class="produtos-button-slider round"></span>
+                                        </label>
+
+                                    <% } else { %>
+                                        <label class="produtos-button-switch">
+                                            <input type="checkbox" name="editProductEnabled<%= element['sys_blz_product_id'] %>">
+                                            <span class="produtos-button-slider round"></span>
+                                        </label>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="produtos-container-actions-table">
+                                        <button formaction="./actions/product/save" value="<%= element['sys_blz_product_id'] %>" class="class-loader" name="btnEditProduct"><i class="ri-save-line"></i></button>
+                                        <button formaction="./actions/product/delete" value="<%= element['sys_blz_product_id'] %>" class="class-loader" name="btnDeleteProduct"><i class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <% }) %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+
+        //Spin load {1: ativo, 2: desativar}
+        $.fn.loadSpin(2) ;
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#produtos-list-table',20,2);
+
+        //Checknox all
+        $("#checkbox-select-all").click(function(){
+            var checkSet = $(this).is(':checked');
+            var inputsCheckedmodel = $('.checkbox-select-single');
+
+            if(checkSet == true){
+                inputsCheckedmodel.prop('checked', true);
+            }else{
+                inputsCheckedmodel.prop('checked', false);
+            }
+        })
+        $(".checkbox-select-single").click(function(){
+            $("#checkbox-select-all").prop("checked", false)
+        })
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#produtos-list-table','#product-search-rows')
+
+       
+    })
+</script>

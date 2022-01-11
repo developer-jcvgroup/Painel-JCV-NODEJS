@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="/panel/css/requisitor/enviarRequisicao.css">
+
+<section class="send-order-container-main">
+    <form class="send-order-container-page" method="post">
+        <div class="send-order-container-identify-page">
+            <span>Confirmar Envio <b>#1,#1,#1,#1,#1,#1,#1,#1</b></span>
+            <span>/ Requsitor de Materiais / 
+                <b>    
+                    AAAAAAAAAAAAAA
+                </b>
+            </span>
+        </div>
+        <section class="send-order-page-new">
+            <div class="send-order-page-center">
+
+
+                <section class="send-order-information-send">
+                    <div class="send-order-title-box"><span>Finalize seu pedido</span></div>
+                    <div class="send-order-finaly-request">
+
+                        <div class="send-order-container-row-large">
+                            <div class="send-order-container-button">
+                                <button type="button" id="button-open-confirm" class="send-order-button-default">Forçar Finalizar</button>
+                                <button formaction="./receber/finalizar" class="send-order-button-default class-loader" value="" name="btn-finalizar-order">Finalizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="send-order-section-table">
+            <div class="send-order-container-main-table">
+                <div class="send-order-title-box"><span>Itens de seu pedido</span></div>
+                <section class="send-order-container-table-set">
+                    <table class="send-order-table" id="send-order-table">
+                        <thead>
+                            <tr>
+                                <th>ID Requsição</th>
+                                <th>Item</th>
+                                <th>Solicitado</th>
+                                <th>Enviando</th>
+                            </tr>
+                        </thead>
+                        <tbody>    
+                            <% allOrderItems.forEach(element => { %>
+                            <tr>
+                                <td><input class="send-input-order-amount" readonly type="text" name="send-ids-orders" value="<%= element['sys_req_item_orderId'] %>"></td>
+                                <td><%= element['sys_req_item_itemName'] %></td>
+                                <td><input class="send-input-order-amount" readonly type="text" name="send-order-amount" value="<%= element['sys_req_item_itemAmount'] %>"></td>
+                                <td><input class="send-input-order-send" type="text" name="send-order-amount" value="<%= element['sys_req_item_amountReceived'] %>"></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+
+        <section class="send-force-main-main" id="send-force-main-main">
+            <section class="send-force-main">
+                <section class="send-force-cont-center">
+                    <div class="send-force-center">
+                        <div class="send-force-title-one">
+                            <i class="ri-alert-line"></i>
+                        </div>
+                        <hr class="send-force-hr">
+                        <div class="send-force-title-two">
+                            <span>Cuidado!</span>
+                        </div>
+                        <div class="send-force-msg-box">
+                            <span>Esta opção é para caso você receba itens a mais que pediu e que o administrador tenha ciência disto. Esta operação so pode ser executada
+                                uma única vez! Ele pegará todas as quantidades inseridas por você, irá salvar e finalizar o pedido <b>deseja realmente fazer isto?</b>.
+                            </span>
+                        </div>
+                        <div class="send-force-button">
+                            <button formaction="./receber/finalizar/force" class="send-order-button-default class-loader" value="" name="btn-force-finalizar-order">Sim, finalize agora</button>
+                            <button type="button" id="send-force-close-display">Fechar</button>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+
+
+
+
+
+    </form>
+
+    
+</section>
+
+
+
+
+<script>
+    $(function(){
+        $("#button-open-confirm").click(function(){
+            $("#send-force-main-main").fadeIn();
+        })
+        $("#send-force-close-display").click(function(){
+            $("#send-force-main-main").fadeOut();
+        })
+    })
+</script>

@@ -1,0 +1,245 @@
+<style>
+    :root{
+        --color-pdf-one: #222224;
+        --color-pdf-two: #343a40;
+        --color-pdf-three: #d6d9dd;
+        --color-pdf-four: white;
+        --color-pdf-five: #868f99;
+        --background-pdf-two: white;
+    }
+    
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        color: #222224;
+    }
+    
+    /* title */
+    .pdf-title-page{
+        
+        margin: 0 auto;
+        text-align: center;
+    }
+    .pdf-title-box{
+        margin: 24px 0;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+    .pdf-title-box span:nth-child(1){
+        font-size: 20px;
+        color: #222224;
+    }
+    .pdf-title-box span:nth-child(2){
+        font-size: 12px;
+        margin-top: 12px;
+        color: #343a40;
+        text-decoration: underline;
+    }
+    
+    /* tabela de usuarios */
+    .pdf-div-center-table{
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+    }
+    .pdf-table-list{
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    .pdf-table-list thead tr th{
+        font-size: 0.7rem;
+        border: 1px solid #222224;
+        padding: 4px;
+        text-align: left;
+    }
+
+
+    .pdf-table-list thead tr th:nth-child(1){
+        width: 10%;
+    }
+    .pdf-table-list thead tr th:nth-child(2){
+        width: 20%;
+    }
+    .pdf-table-list thead tr th:nth-child(3){
+        width: 10%;
+    }
+    .pdf-table-list thead tr th:nth-child(4){
+        width: 10%;
+    }
+
+
+    .pdf-table-list thead tr th:last-child{
+        border: 1px solid transparent;
+    }
+
+    /*  */
+    .pdf-table-list tbody tr td:nth-child(1){
+        border: 1px solid #222224;
+        padding: 4px;
+        text-align: left;
+        font-size: 0.7rem;
+        page-break-inside: avoid;
+    }
+    .pdf-table-list tbody tr td:nth-child(2){
+        border: 1px solid #222224;
+        padding: 4px;
+        text-align: left;
+        font-size: 0.7rem;
+        page-break-inside: avoid;
+    }
+    .pdf-table-list tbody tr td:nth-child(3){
+        border: 1px solid #222224;
+        padding: 4px;
+        text-align: left;
+        font-size: 0.7rem;
+        page-break-inside: avoid;
+    }
+    .pdf-table-list tbody tr td:nth-child(4){
+        border: 1px solid #222224;
+        padding: 4px;
+        text-align: left;
+        font-size: 0.7rem;
+        page-break-inside: avoid;
+    }
+    .pdf-table-list tbody tr td:nth-child(5){
+        border: 1px solid transparent;
+        page-break-inside: avoid;
+        padding: 5px;
+    }
+
+
+    /* etiquetas */
+    .pdf-container-list{
+        width: 50%;
+        margin: 0 auto;
+        max-width: 900px;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+
+        flex-wrap: wrap;
+        white-space: normal;
+
+    }
+    .pdf-center-etiquetas{
+        width: 100%;
+        
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .pdf-etiqueta-list{
+        display: flex;
+        list-style: none;
+        width: 100%;
+    }
+    .pdf-etiqueta-list li{
+        display: flex;
+        align-items: center;
+        padding: 8px;
+    }
+    
+    /* dados */
+    .pdf-etiqueta-main{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 2px solid #222224;
+        border-radius: 4px;
+        padding: 8px;
+    }
+
+    .pdf-title-etiquetas{
+        font-size: 0.8rem;
+    }
+    .pdf-body-etiquetas{
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+</style>
+    
+    <div class="pdf-title-page">
+        <div class="pdf-title-box">
+            <span>Lista de etiquetas - Programa da Beleza</span>
+            <br>
+            <span>Etiquetas geradas as <b><%= dateNow %></b></span>
+        </div>
+    </div>
+
+
+    <!-- PAGINAÇÃO -->
+
+    <table style="margin-bottom: 10px" class="pdf-table-list">
+        <thead>
+            <tr>
+                <th>Funcionario</th>
+                <th>Shampoo</th>
+                <th>Tratamento</th>
+                <th>Gestor</th>
+                <th></th>
+            </tr>
+        </thead>
+    <% let atualIndex = arrayData[0].jcv_userNameSecundary %>
+    <% for(let i = 0; i < arrayData.length; i++){ %>
+
+        <% if(arrayData[i].jcv_userNameSecundary == atualIndex){ %>
+            <!-- Listando aqui corretamente -->
+
+
+            
+
+
+
+
+            <tr>
+                <td><%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></td>
+                <td><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></td>
+                <td><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></td>
+                <td><%= arrayData[i].jcv_userNameSecundary.split(' ')[0] %> <%= arrayData[i].jcv_userNameSecundary.split(' ')[1] %></td>
+                <td>
+                    <div class="pdf-etiqueta-main">
+                        <span class="pdf-body-etiquetas">Solicitante: <%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></span>
+                        <br>
+                        <span class="pdf-body-etiquetas">Gestor: <%= arrayData[i].jcv_userNameSecundary.split(' ')[0] %> <%= arrayData[i].jcv_userNameSecundary.split(' ')[1] %></span>
+                        <br>
+                        <br>
+                        <span class="pdf-title-etiquetas"><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></span>
+                        <br>
+                        <span class="pdf-title-etiquetas"><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></span>
+                        <br>
+                        <br>
+                        <span class="pdf-title-etiquetas">Ref.: <%= arrayData[i].sys_blz_requestReference %> </span>
+                    </div>
+                </td>
+            </tr>
+            
+
+        <% }else{ %>
+            <!-- Alterando o indice -->
+
+            </table>
+            <hr style="margin: 10px 0">
+            
+            <table class="pdf-table-list">
+                <thead>
+                    <tr style="border: 1px solid black;">
+                        <th>Funcionario</th>
+                        <th>Shampoo</th>
+                        <th>Tratamento</th>
+                        <th>Gestor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+
+            <% atualIndex = arrayData[i].jcv_userNameSecundary %>
+            <% i--; %>
+        <% } %>
+    <% } %>
+    </table> 

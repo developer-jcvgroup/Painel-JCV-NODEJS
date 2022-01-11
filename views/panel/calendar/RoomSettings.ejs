@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="/panel/css/calendar/RoomSettings.css">
+
+<section class="room-setings-section-main">
+    <section class="room-setings-section-center">
+        <div class="room-setings-container-body">
+            <div class="room-setings-title"><span>Configurações</span></div>
+            <div class="room-setings-container-salas">
+                
+                <div class="room-setings-container-main-set">
+                    
+                    <form class="room-setings-add-container" method="post">
+                        <div class="room-setings-title-box"><span>Salas</span></div>
+                        <div class="room-setings-row-form">
+                            <div class="room-setings-row-form-box">
+                                <label for="">Cadastrar Sala</label>
+                                <input required type="text" name="room-register-name">
+                            </div>
+                            <div class="room-setings-row-form-box">
+                                <label for="">Escolha uma cor</label>
+                                <input required type="color" name="room-register-color">
+                            </div>
+                        </div>
+                        <div class="room-setings-row-form-select">
+                            <select required name="room-register-unity">
+                                <% getAllUnitys.forEach(element => { %>
+                                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                <% }) %>
+                                <option value="0">N/D</option>
+                            </select>
+
+                            <select name="room-register-enabled">
+                                <option value="1">Habilitada</option>
+                                <option value="0">Desabilitada</option>
+                            </select>
+                        </div>
+                        <div class="room-setings-row-form-commands">
+                            <button formaction="./register/new" type="submit">Salvar</button>
+                        </div>
+                    </form>
+    
+                    <div class="room-setings-container-lists">
+                        <div class="setting-container-table">
+                            <table class="room-setings-table-salas">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome da sala</th>
+                                        <th>Cor</th>
+                                        <th>Unidade</th>
+                                        <th>Status</th>
+                                        <th>Ação</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% getAllRoom.forEach(element => { %>
+                                    <tr>
+                                        <form method="post">
+                                            <td><%= element.sys_calendar_roomId %></td>
+                                            <td>
+                                                <div class="room-setings-input-edit">
+                                                    <input type="text" value="<%= element.sys_calendar_roomName %>" name="room-edit-name-<%= element.sys_calendar_roomId %>" placeholder="Insira o nome da sala">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="room-setings-input-edit">
+                                                    <input type="color" value="<%= element.sys_calendar_roomColor %>" name="room-edit-color-<%= element.sys_calendar_roomId %>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="room-setings-input-edit">
+                                                    <select name="room-edit-unity-<%= element.sys_calendar_roomId %>">
+                                                            <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                                            <option disabled></option>
+                                                        <% getAllUnitys.forEach(element => { %>
+                                                            <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                                        <% }) %>
+                                                            <option value="0">N/D</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="room-setings-input-edit">
+                                                    <select name="room-edit-enabled-<%= element.sys_calendar_roomId %>">
+                                                        <% if(element.sys_calendar_roomEnabled == 1){ %>
+                                                            <option value="1">Habilitado</option>
+                                                        <% }else{ %>
+                                                            <option value="0">Desabilitado</option>
+                                                        <% } %>
+                                                        <option disabled></option>
+                                                        <option value="1">Habilitada</option>
+                                                        <option value="0">Desabilitada</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="room-setings-table-action" method="post">
+                                                    <button type="submit" formaction="./register/edit" value="<%= element.sys_calendar_roomId %>" name="room-edit-id"><i class="ri-save-line"></i></button>
+                                                    <button type="submit" formaction="./register/createQrCode" value="<%= element.sys_calendar_roomId %>" name="room-qrcode-id"><i class="ri-qr-code-line"></i></button>
+                                                </div>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

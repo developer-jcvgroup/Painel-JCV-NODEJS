@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/panel/css/main/index.css">
+    <link rel="stylesheet" href="/panel/css/main/home.css">
+    <link rel="stylesheet" href="/panel/css/main/spinLoad.css">
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/js.cookie.min.js"></script>
+    <script src="/js/scripts.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <section class="index-section-index-page">
+        <section class="index-container-main-menu" id="menu-action-main">
+            <div class="menu-container-main">
+                <div class="menu-ul-list-container">
+
+
+                    <ul class="menu-ul-list-set-one">
+                        <li id="menu-01"><span>Páginas</span><i class="ri-arrow-up-s-line"></i></li>
+                        <ul id="sub-01" class="menu-list-set-two" style="display: flex">
+                            <li><a class="class-loader" href="/painel"><i class="ri-home-2-line"></i><span>Home</span></a></li>
+                            <li><a class="class-loader" href="/painel/calendario/main"><i class="ri-calendar-2-line"></i><span>Calendário</span></a></li>
+                            <!-- <li><a class="class-loader" href="/painel/chat"><i class="ri-chat-1-line"></i><span>Chats & Grupos</span></a></li> -->
+                        </ul>
+                    </ul>
+
+                    <% if(GLOBAL_PERM[0].sys_blz_perm_use == 1){ %>
+                    <ul class="menu-ul-list-set-one">
+                        <li id="menu-03"><span>Programa da Beleza</span><i class="ri-arrow-down-s-line"></i></li>
+                        <ul id="sub-03" class="menu-list-set-two">
+                                <li><a class="class-loader" href="/painel/beleza/solicitar"><i class="ri-add-line"></i><span>Nova Solicitação</span></a></li>
+                                <li><a class="class-loader" href="/painel/beleza/status"><i class="ri-file-paper-2-line"></i><span>Minha Solicitação</span></a></li>
+            
+                            <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1){ %>
+                                <li><a class="class-loader" href="/painel/beleza/solicitacoes"><i class="ri-list-ordered"></i><span>Lista de Solicitações</span></a></li>
+                                <li><a class="class-loader" href="/painel/beleza/produtos"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
+                            <% } %>
+                        </ul>
+                    </ul>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
+                    <ul class="menu-ul-list-set-one">
+                        <li id="menu-02"><span>Requsitor de Materiais</span><i class="ri-arrow-down-s-line"></i></li>
+                        <ul id="sub-02" class="menu-list-set-two">       
+                                <li><a class="class-loader" href="/painel/requisitor/Novo"><i class="ri-add-line"></i><span>Nova Requisição</span></a></li>
+                                <li><a class="class-loader" href="/painel/requisitor/MinhasRequisicoes"><i class="ri-file-paper-2-line"></i></i><span>Minhas Requisições</span></a></li>
+                            
+                            
+                            <% if(GLOBAL_PERM[0].sys_req_perm_manager == 1){ %>
+                                <li><a class="class-loader" href="/painel/requisitor/ListaRequisicoes"><i class="ri-list-ordered"></i><span>Lista de Requisições</span></a></li>
+                                <li><a class="class-loader" href="/painel/requisitor/items"><i class="ri-pencil-ruler-line"></i><span>Itens</span></a></li>
+                            <% } %>
+                        </ul>
+                    </ul>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
+                    <ul class="menu-ul-list-set-one">
+                        <li id="menu-04"><span>Configurações do Sistema</span><i class="ri-arrow-down-s-line"></i></li>
+                        <ul id="sub-04" class="menu-list-set-two">
+                            <li><a class="class-loader" href="/painel/system/users"><i class="ri-braces-line"></i><span>Usuarios & Permissões</span></a></li>
+                            <li><a class="class-loader" href="/painel/system/unidades"><i class="ri-building-line"></i><span>Unidades</span></a></li>
+                            <li><a class="class-loader" href="/painel/system/departamentos"><i class="ri-door-open-line"></i><span>Departamentos</span></a></li>
+                        </ul>
+                    </ul>
+                    <% } %>
+
+                </div>
+                <div class="menu-footer-container">
+                    <div class="menu-footer-one">
+                        <span>Build: 0.1.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+
+        <section class="index-container-main-body">
+            <section class="index-main-header">
+                <header>
+                    <div class="index-cont-left">
+                        <div class="index-header-icon-menu">
+                            <i id="menu-action" class="ri-menu-line"></i>
+                        </div>
+                        <div class="index-header-logo">
+                            <img class="header-img-logo" src="/logos/jcvLogo.png" alt="">
+                        </div>
+                    </div>
+                    <div class="index-cont-rigth">
+                        <ul class="header-nav-ul">
+                            <ul class="header-links-nav">
+                                <!-- <li><a title="updates" class="class-loader" href="/painel/updates"><i class="ri-refresh-line"></i></a></li> -->
+                                <!-- <li><a title="Logs do sistema" class="class-loader" href="/painel/logs"><i class="ri-alert-line"></i></a></li> -->
+                                <li class="notification-container"><a title="Notificações" class="class-loader" href="/painel/notifications"><i class="ri-notification-4-line"></i><div class="notification-main"><span>1</span></div></a></li>
+                                <div class="header-separador"></div><!-- separador -->
+                            </ul>
+                            <ul class="header-nav-dropdown">
+                                <li id="dropdown-action" title="Veja mais">
+                                    <div class="header-info-user">
+                                        <div class="header-info-user-img">
+                                            <% if(GLOBAL_DASH[7] != null){ %>
+                                                <img class="info-user-img" src="/panel/img/img-user/<%= GLOBAL_DASH[7] %>" alt="">
+                                            <% }else{ %>
+                                                <div class="info-user-img"></div>
+                                            <% } %>
+                                        </div>
+                                        <div class="info-user-infos">
+                                            <span><%= GLOBAL_DASH[8] %></span>
+                                            <span><%= GLOBAL_DASH[10] %></span>
+                                        </div>
+                                        <div class="info-user-icon-down">
+                                            <i id="toggle-user" class="ri-arrow-down-s-line"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="li-info-user-drop" id="li-info-user-drop">
+                                    <ul class="navbar-info-user-drop">
+                                        <li><%= GLOBAL_DASH[5] %></li>
+                                        <li># <%= GLOBAL_DASH[6] %></li>
+                                        <li><div class="dropdown-separator"></div><!-- separador --></li>
+                                        <li><a class="class-loader" href="/painel/perfil">Perfil / Configurações</a></li>
+                                        <li><a class="class-loader" href="/painel/logout">Sair</a></li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </header>
+            </section>
+
+            <!-- Separador -->
+
+            <section class="section-body-main">
+                <%- include(page) %>
+            </section>
+
+        </section>
+    </section>
+<section class="system-section-notification" id="system-section-notification">
+    <div class="sys-notifi-container-main" id="sys-notifi-container-main">
+
+        <!-- itens inseridos dinamicamente -->
+
+    </div>
+</section>
+<section class="sys-update-main-main">
+    <section class="sys-update-main">
+        <section class="sys-update-cont-center">
+            <div class="sys-update-center">
+                <div class="sys-update-title-one">
+                    <i class="ri-code-s-slash-fill"></i>
+                </div>
+                <hr class="sys-update-hr">
+                <div class="sys-update-title-two">
+                    <span>Atualização 13.1.20</span>
+                </div>
+                <div class="sys-update-msg-box">
+                    <span>O sistema sofreu uma Atualização, corrigidos bugs, estilo do requistor. Aconselhamos acessar o <a href="">Central de Atualizações</a> para obter mais informações</span>
+                </div>
+                <div class="sys-update-button">
+                    <button>Fechar</button>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+<section class="sys-section-loader" id="sys-section-loader">
+    <section class="sys-section-load-main">
+        <div class="sys-spin-load">
+            <div id="loader"></div>
+        </div>
+    </section>
+</section>
+
+<!--  -->
+
+<% if(DEFINEpassword != null){  %>
+<section class="sys-define-pass-main">
+    <div class="sys-define-box">
+        <form class="sys-define-form" method="post">
+            <div class="sys-define-row">
+                <span>Defina uma senha</span>
+            </div>
+
+            <div class="sys-define-row">
+                <input type="password" name="passOne" id="inputSetPassOne">
+            </div>
+
+            <div class="sys-define-row">
+                <input type="password" name="passTwo" id="inputSetPassTwo">
+            </div>
+            
+            <div class="sys-define-row" id="msg-box">
+                <span>insira no minimo 10 caracteres</span>
+            </div>
+
+            <div class="sys-define-row">
+                <button formaction="./painel/action/define/pass" value="<%= DEFINEpassword %>" disabled id="button-send" type="submit" name="button-def-pass">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    $(function(){
+        //Valida so o campo tem a quantidade necessaria
+        $("#inputSetPassTwo").keyup(function(){
+            let iptOne = $("#inputSetPassOne").val();
+            let iptTwo = $("#inputSetPassTwo").val();
+
+            let button = $("#button-send");
+
+            if(iptOne.length == iptTwo.length){
+                console.log("BBB")
+                button.prop("disabled",false);
+                button.css("background","var(--color-one)")
+                button.css("color","var(--color-four)")
+                button.css("border","1px solid var(--color-one)")
+            }else{
+                console.log("AAA")
+
+                button.prop("disabled",true);
+                button.css("background","transparent")
+                button.css("color","var(--color-one)")
+                button.css("border","1px solid var(--color-one)")
+            }
+        }) 
+    })
+</script>
+<% } %>
+
+</body>
+</html>

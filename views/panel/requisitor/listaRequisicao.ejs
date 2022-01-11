@@ -1,0 +1,232 @@
+<link rel="stylesheet" href="/panel/css/requisitor/listaRequisicao.css">
+
+<section class="all-orders-container-main">
+    <section class="all-orders-container-page">
+        <div class="all-orders-container-identify-page">
+            <span>Lista de Requisições</span>
+            <span>/ Requsitor de Materiais</span>
+        </div>
+        <form class="all-orders-page-new" method="post">
+            <div class="all-orders-page-center">
+
+
+                <section class="all-orders-information-send">
+                    <div class="all-orders-title-box"><span>Liste as requisições</span></div>
+                    <div class="all-orders-finaly-request">
+                        <div class="all-orders-container-row-large">
+                            <div class="all-orders-container-box-single">
+                                <label for="">ID</label>
+                                <input type="number" min="1" name="all-id-search" id="">
+                            </div>
+                            <div class="all-orders-container-box-single-select">
+                                <label for="">Status</label>
+                                <select name="" id="req-status-select-filter">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">Requisição Efetuada</option>
+                                    <option value="2">Em Separação</option>
+                                    <option value="3">Recebida pelo usuario</option>
+                                    <option value="4">Cancelado</option>
+                                    <option value="5">Pendente</option>
+                                    <option value="6">Requisição Enviada</option>
+                                </select>
+                            </div>
+                            <div class="all-orders-container-box-single-select">
+                                <label for="">Usuarios</label>
+                                <select name="" id="req-usuarios-select-filter">
+                                        <option value="">-- Selecione --</option>
+                                    <% arrayAllUsers.forEach(element => { %>
+                                        <option value="<%= element.jcv_id %>"><%= element.jcv_userNamePrimary %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            
+                            
+                        </div>
+
+                        <div class="all-orders-container-row-large">
+
+                            <div class="all-orders-container-box-single-select">
+                                <label for="">Unidade</label>
+                                <select name="" id="req-unidade-select-filter">
+                                        <option value="">-- Selecione --</option>
+                                    <% arrayUnidades.forEach(element => { %>
+                                        <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="all-orders-container-box-single-select">
+                                <label for="">Ordenar</label>
+                                <select name="all-order-by-amount" id="">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="all">Tudo</option>
+                                </select>
+                            </div>
+                            <div class="all-orders-container-button">
+                                <button formaction="./action/list/requisicoes" class="all-orders-button-default class-loader">Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="all-orders-container-row-large">
+                            <div class="sys-filter-display-main" id="sys-filter-display-main">
+                                <div class="sys-filter-container-col">
+                                    <div class="sys-filter-title">
+                                        <span>Filtros</span>
+                                    </div>
+                                    <div class="sys-filter-component-boxs" id="sys-filter-component-boxs">
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </form>
+
+        <% if(locals.resultSearchDataRequisitor != ""){ %>
+        <section class="all-orders-section-table">
+            <form class="all-orders-container-main-table" method="post">
+                <div class="all-orders-title-box"><span>Suas Requisições</span></div>
+                <div class="all-order-srs-search">
+                    <div class="all-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do solicitante, data, status, unidade.." id="input-search-requests">
+                    </div>
+
+
+                    <div class="all-orders-actions">
+                        <div class="all-orders-cont-input">
+                            <label for="">Ação</label>
+                            <select name="order-action-command" id="">
+                                <option value="">-- AÇÃO --</option>
+                                <option value="" disabled>-- Status</option>
+                                <option value="CMD01">⠀⠀Em Separação</option>
+                                <option value="CMD02">⠀⠀Cancelar Requisição(ões)</option>
+                                <option value="CMD03">⠀⠀Requisição(ões) Enviada(s)</option>
+                                <option value="" disabled>-- Exportar</option>
+                                <option value="CMD04">⠀⠀Exportar Pedido(s)</option>
+                                <option value="CMD05">⠀⠀Exportar Soma total de itens</option>
+                                <option value="CMD06">⠀⠀Exportar Itens (Pedido)</option>
+                            </select>
+                        </div>
+                        <div class="all-order-action-all">
+                            <button formaction="./action/commands/orders">Executar</button>
+                        </div>
+                    </div>
+                </div>
+                <section class="all-orders-container-table-set">
+                    <table class="all-orders-table" id="all-orders-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>ID</th>
+                                <th>Emitido</th>
+                                <th>Emissor</th>
+                                <th>Localidade</th>
+                                <th>Itens Totais</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% resultSearchDataRequisitor.forEach(element => { %>
+                            <tr>
+                                <td><input type="checkbox" value="<%= element['sys_req_idOne'] %>" name="order-id-actions-all" class="checkbox-select-single"></td>
+                                <td><b>#<%= element['sys_req_idOne'] %></b></td>
+                                <td><%= element['sys_req_orderEmitter'] %></td>
+                                <td><%= element['sys_req_userName'] %></td>
+                                <td><%= element['sys_unity_name'] %></td>
+                                <td><b><%= element['sys_req_orderTotalItems'] %></b></td>
+                                <td>
+                                    
+                                    <% if(element['sys_req_orderStatus'] == 1){ %>
+                                        <b>Requisição Efetuada</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 2) { %>
+                                        <b>Em Separação</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 3) { %>
+                                        <b id="all-order-text-green">Finalizado</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 4) { %>
+                                        <b id="all-order-text-red">Requisição Cancelada</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 5) { %>
+                                        <b id="all-order-text-yellow">Requisição Pendente</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 6) { %>
+                                        <b>Requisição enviada</b>
+                                    <% } %>
+                                
+                                </td>
+                                <td><div class="all-orders-container-actions">
+                                    <a class="class-loader" href="./VisualizarRequisicao/<%= element['sys_req_idOne'] %>"><i class="ri-eye-line"></i></a>
+                                    <a class="class-loader" href="./EditarRequisicao/<%= element['sys_req_idOne'] %>"><i class="ri-edit-line"></i></a>
+                                    <button formaction="./admin/action/download/myRequest" value="<%= element['sys_req_idOne'] %>" name="button-admin-download-request" title="Baixar Pedido"><i class="ri-download-2-fill"></i></button>
+                                    <button formaction="./admin/action/remove/myRequest" value="<%= element['sys_req_idOne'] %>" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                </div></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </form>
+        </section>
+        <% } %>
+    </section>
+</section>
+<script>
+    $(function(){
+
+
+        //Adicionando um filtro: Unidades
+        $("select#req-unidade-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-unidade-select-filter','unitys');
+        })
+
+        //Adicionando um filtro: Setor
+        $("select#req-gestor-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-gestor-select-filter','sector');
+        })
+
+        //Adicionando um filtro: Usuarios
+        $("#req-usuarios-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-usuarios-select-filter','users');
+        })
+
+        //Adicionando um filtro: Status
+        $("#req-status-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','status');
+        })
+
+
+        //Checknox all
+        $("#checkbox-select-all").click(function(){
+            var checkSet = $(this).is(':checked');
+            var inputsCheckedmodel = $('.checkbox-select-single');
+
+            if(checkSet == true){
+                inputsCheckedmodel.prop('checked', true);
+            }else{
+                inputsCheckedmodel.prop('checked', false);
+            }
+        })
+        $(".checkbox-select-single").click(function(){
+            $("#checkbox-select-all").prop("checked", false)
+        })
+
+
+
+        //Input Search
+        $.fn.searchInputTable('#all-orders-table tr', '#input-search-requests')
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#all-orders-table',10,0);
+
+        
+
+
+    })
+</script>

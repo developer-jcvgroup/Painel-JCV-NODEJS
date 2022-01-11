@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/panel/css/requisitor/itemRequisitor.css">
+<section class="requsitor-items-main-section">
+    <section class="requsitor-items-section-viewer-event">
+        <div class="requsitor-items-set-box">
+            <div class="requsitor-items-title-day"><span>Lista de itens</span><span>Última atualização: <%= dataLastUpdate %></span></div>
+            <div class="requsitor-items-set-cont-main">
+                <div class="requsitor-items-input-search">
+                    <input type="text" name="" placeholder="Busque por um produto aqui" id="input-search-values">
+                </div>
+                <div class="requsitor-items-row-container">
+                    <table class="requsitor-items-table-list-products" id="requsitor-items-table-list-products">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% arrayItems.forEach(element => { %>
+                            <tr>
+                                <td><%= element.sys_req_itemId %></td>
+                                <td><%= element.sys_req_itemName %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script>
+    $(function(){
+        //Input Search
+        $.fn.searchInputTable('#requsitor-items-table-list-products tr', '#input-search-values')
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#requsitor-items-table-list-products',20,1);
+    })
+</script>

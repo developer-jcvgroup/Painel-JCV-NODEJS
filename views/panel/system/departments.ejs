@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/panel/css/system/departments.css">
+
+<section class="department-unidades-container-main">
+    <section class="department-unidades-container-page">
+        <div class="department-unidades-container-identify-page">
+            <span>Departamentos</span>
+            <span>/ Sistema</span>
+        </div>
+
+        <section class="department-section-search-container">
+            <div class="department-section-container-main">
+                <div class="department-box-search">
+                    <input type="text" placeholder="Busque pelo nome, id, região, status.." id="input-search-table">
+                </div>
+            </div>
+        </section>
+
+        <form class="department-unidades-section-list" method="post">
+            <div class="department-unidades-container-main-list">
+                <div class="department-unidades-container-fix">
+                    <table class="department-unidades-table-list" id="department-unidades-table-list">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Departamento</th>
+                                <th>Ativo?</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td><input class="department-input-table-large-one" type="text" name="depart-save-name" placeholder="Cadastre um novo departamento..."></td>
+                                <td>
+                                    <label class="sys-department-button-switch">
+                                        <input type="checkbox" name="depart-save-enabled">
+                                        <span class="sys-department-button-slider round"></span>
+                                    </label>
+                                </td>
+                                
+                                <td>
+                                    <div class="department-actions-commands">
+                                        <button formaction="./department/action/save" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                
+                            </tr>
+                            <% departments.forEach(element =>{ %>
+                            <tr>
+                                <td><%= element.sys_department_id %></td>
+                                <td><input class="department-input-table-large-one" type="text" value="<%= element.sys_department_name %>" name="depart-edit-name-<%= element.sys_department_id %>"></td>
+                                <td>
+
+
+
+                                    <% if(element.sys_department_enabled== 1){ %>
+                                        <label class="sys-department-button-switch">
+                                            <input checked type="checkbox" name="depart-edit-enabled-<%= element.sys_department_id %>">
+                                            <span class="sys-department-button-slider round"></span>
+                                        </label>
+                                    <% }else{ %>
+                                        <label class="sys-department-button-switch">
+                                            <input type="checkbox" name="depart-edit-enabled-<%= element.sys_department_id %>">
+                                            <span class="sys-department-button-slider round"></span>
+                                        </label>
+                                    <% } %>
+
+
+
+
+
+                                </td>
+                                
+                                <td>
+                                    <div class="department-actions-commands">
+                                        <button formaction="./department/action/saveEdit" value="<%= element.sys_department_id %>" name="depart-edit-id-save" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#department-unidades-table-list',10,2);
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#department-unidades-table-list','#input-search-table')
+    })
+</script>

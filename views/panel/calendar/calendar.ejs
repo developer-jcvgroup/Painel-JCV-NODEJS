@@ -1,0 +1,600 @@
+<link rel="stylesheet" href="/panel/css/calendar/calendar.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/moment.js"></script>
+
+
+<section class="calendar-main">
+    <section class="calendar-section-menu">
+        <div class="calendar-menu-open">
+            <i id="calendar-menu-open" class="ri-menu-2-line"></i>
+        </div>
+        <!--  -->
+        <div class="calendar-menu-main" id="calendar-menu-main">
+            <div class="calendar-menu-close">
+                <i id="calendar-menu-close" class="ri-close-line"></i>
+            </div>
+            <!--  -->
+            <div class="calendar-menu-main-box">
+                <div class="calendar-menu-icons">
+                    <ul class="calendar-menu-list-inc">
+                        <li class="calendar-visible-bottom"><a href="/painel/calendario/main"><i class="ri-home-3-line"></i></a><hr></li>
+                        <li class="calendar-visible-bottom"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
+                        <li class="calendar-visible-bottom"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
+                        <li class="calendar-visible-bottom"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
+                        <li><a href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
+                    </ul>
+                </div>
+                <!--  -->
+                <div class="calendar-menu-events-all" id="public-events">
+                    <div class="calendar-menu-events-title-box">
+                        <span>Eventos Públicos</span>
+                    </div>
+                    <!--  -->
+
+
+
+
+                    <% if(allEventsPublic != ''){ %>
+                        <% allEventsPublic.forEach(element => { %>
+                            <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
+                                <div class="calendar-menu-events-ul-one">
+                                    <i class="ri-calendar-check-fill"></i>
+                                </div>
+                                <!--  -->
+                                <div class="calendar-menu-events-ul-two">
+                                    <span><%= element.sys_calendar_eventName %></span>
+                                    <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
+                                </div>
+                            </a>
+                            <hr style="width: 95%; margin: 7px 0;">
+                        <% }) %>
+                    <% }else{ %>
+                        <span>Nenhum evento disponível</span>
+                    <% } %>
+
+
+
+                </div>
+
+
+
+
+                <!--  -->
+                <!--  -->
+
+                <div class="calendar-menu-events-all" id="my-events">
+                    <div class="calendar-menu-events-title-box">
+                        <span>Meus Eventos</span>
+                    </div>
+                    <!--  -->
+
+
+                    <% if(allEventsPrivate != ''){ %>
+                        <% allEventsPrivate.forEach(element => { %>
+                            <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
+                                <div class="calendar-menu-events-ul-one">
+                                    <i class="ri-calendar-check-fill"></i>
+                                </div>
+                                <!--  -->
+                                <div class="calendar-menu-events-ul-two">
+                                    <span><%= element.sys_calendar_eventName %></span>
+                                    <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
+                                </div>
+                            </a>
+                            <hr style="width: 95%; margin: 7px 0;">
+                        <% }) %>
+                    <% }else{ %>
+                        <span>Nenhum evento disponível</span>
+                    <% } %>
+                    </a>
+                </div>
+
+                <!--  -->
+                <!--  -->
+
+                <div class="calendar-menu-events-all" id="rooms-events">
+                    <div class="calendar-menu-events-title-box">
+                        <span>Eventos por sala</span>
+                    </div>
+                    <!--  -->
+                    <div class="calendar-box-room-event">
+
+                        
+                        <% getAllRooms.forEach(element => { %>
+                        <a class="calendar-menu-events-ul" href="/painel/calendario/viewRoom/<%= element.sys_calendar_roomId %>/<%= monthNow.split('/')[0] %>-<%= monthNow.split('/')[1] %>">
+                            <div class="calendar-menu-events-ul-one">
+                                <i class="ri-calendar-check-fill"></i>
+                            </div>
+                            <!--  -->
+                            <div class="calendar-menu-events-ul-two">
+                                <span><%= element.sys_calendar_roomName %></span>
+
+                                <% let countEventsFinal = 0; %>
+                                
+                                <% let countEvents; %>
+                                <% allEventsCount.forEach(elementTwo => { %>
+                                   
+                                    <% if (elementTwo.sys_calendar_eventRoom ==  element.sys_calendar_roomId){ %>
+                                        <% countEventsFinal++ %>
+                                    <% } %>
+
+                                <% }) %>
+
+                                <span><%= countEventsFinal%> eventos</span>
+                            </div>
+                        </a>
+                        <hr style="width: 95%; margin: 7px 0;">
+                        <% }) %>
+                    </div>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+    </section>
+
+    <!--  -->
+    <section class="calendar-section-calendar">
+        <div class="calendar-main-box">
+            <div class="calendar-box">
+            
+                <div class="calendar-select-month">
+                    <div class="calendar-select-month-one">
+                        <div class="calendar-select-month-options">
+                            <a href="../<%= previousMonthYear %>"><i class="ri-arrow-up-s-line"></i></a>
+                            <a href="../<%= nextMonthYear %>"><i class="ri-arrow-down-s-line"></i></a>
+                        </div>
+                        <!--  -->
+                        <div class="calendar-select-month-set">
+                            <span><%= nameMonthYear %></span>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="calendar-new-event">
+                        <i id="open-new-event-display-day" class="ri-add-line"></i>
+                    </div>
+                </div>
+
+                <div class="calendar-month-days">
+                    <div class="calendar-days-week">
+                        <ul class="calendar-week-days">
+                            <li>Domingo</li>
+                            <li>Segunda</li>
+                            <li>Terça</li>
+                            <li>Quarta</li>
+                            <li>Quinta</li>
+                            <li>Sexta</li>
+                            <li>Sábado</li>
+                        </ul>
+                    </div>
+                    <div class="calendar-week-days-list">
+                        <ul class="calendar-list-days-comp">
+
+                            <% for(let i = 0; i < NumberDayWeek; i++){ %>
+                                <li style="cursor: default;"></li>
+                            <% } %>
+
+                            <% for(let i = 1; i <= AllDays; i++){ %>
+                                <li>
+                                    <div onclick="openOptionsDays('<%= i %>/<%= monthNow %>')" class="calendar-day-box">
+                                        <div id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                            <span><%= i %></span>
+                                        </div>
+                                        <!--  -->
+
+                                        <div class="calendar-day-box-list-events">
+                                            <ul class="claendar-list-events">
+                                                <% for(let jj = 0; jj < allEventsMonth.length; jj++){ %>
+                                                    <% if(allEventsMonth[jj].sys_calendar_eventDate == (i < 10 ? '0'+i : i)+'/'+monthNow){ %>
+                                                        
+                                                        <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
+                                                            <li><a style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                        <% }else{ %>
+                                                            <li><a style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                        <% } %>
+                                                        
+                                                    <% } %>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-- AÇÃO AO CLICAR NO DIA (OPTIONS) -->
+<section class="calendar-display-actions" id="calendar-display-actions">
+    <div class="calendar-display-select">
+        <div class="calendar-option-close">
+            <i id="close-options-days" class="ri-close-line"></i>
+        </div>
+        <div class="calendar-options-list">
+            <div id="open-event-display-day" class="calendar-display-new">
+                <i class="ri-add-circle-line"></i>
+                <span>Novo Evento</span>
+            </div>
+            <!--  -->
+            <div class="calendar-display-list">
+                <a id="calendar-day-link-module"><i class="ri-calendar-todo-line"></i></a>
+                <span>Ver Eventos</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AÇÃO AO CLICAR NO DIA (NOVO EVENTO) -->
+<section class="calendar-display-event" id="calendar-display-event">
+    <form class="calendar-event-box" method="post">
+        <div class="calendar-event-day-title">
+            <div class="calendar-event-day-title-set">
+                <span id="calendar-day-dinamic">Novo Evento</span>
+            </div>
+            <!--  -->
+            <div class="calendar-event-day-title-close">
+                <i id="event-close-display-day" class="ri-close-line"></i>
+            </div>
+        </div>
+        <!--  -->
+        <div class="calendar-event-main">
+            <div class="calendar-event-set-name">
+                <input name="calendar-register-name" type="text" placeholder="Nome do evento">
+            </div>
+        </div>
+        <!--  -->
+        <div class="calendar-event-description">
+            <label for="">Descrição</label>
+            <textarea name="calendar-register-description" rows="5"></textarea>
+        </div>
+        <!--  -->
+        <div class="calendar-event-select-day">
+            <label for="">Data</label>
+            <input required name="calendar-register-date" id="calendar-input-date" type="date">
+        </div>
+        <!--  -->
+        <div class="calendar-event-operation">
+            <div class="calendar-event-operation-initial">
+                <label for="">Das</label>
+                <select name="calendar-register-hour-initial" id="calendar-register-hour-initial">
+                    <option value="06:00">06:00</option>
+                    <option value="06:30">06:30</option>
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                    <option value="23:30">23:30</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="calendar-event-operation-final">
+                <label for="">Das</label>
+                <select name="calendar-register-hour-final" id="calendar-register-hour-final">
+                    <option value="06:30">06:30</option>
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                    <option value="23:30" selected>23:30</option>
+                </select>
+            </div>   
+            <!--  -->
+            <div class="calendar-event-operation-sep"></div><!-- SEPARATOR -->
+            <!--  -->
+            <div class="calendar-event-operation-day">
+                <label for="">Dia inteiro</label>
+                <input type="checkbox" name="calendar-register-all-day" id="calendar-register-all-day">
+            </div>
+            <!--  -->
+            <div class="calendar-event-operation-day">
+                <label for="">Evento Publico</label>
+                <input type="checkbox" name="calendar-register-event-public">
+            </div>  
+        </div>
+        <!--  -->
+        <div class="calendar-event-locate">
+            <div class="calendar-event-locate-cont">
+                <label for="">Local:</label>
+                <select name="calendar-register-location" id="calendar-register-location">
+                    <% allLocations.forEach(element => { %>
+                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                    <% }) %>
+                    <option value="not">Outro local</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="calendar-event-locate-name">
+                <input id="calendar-register-location-name" type="text" placeholder="Insira o nome do local..">
+            </div>
+        </div>
+        <!--  -->
+        <div class="calendar-event-reminder">
+            <div class="calendar-event-reminder-box">
+                <label for="">Lembre-me</label>
+                <select  name="calendar-register-reminder">
+                    <!-- FORMATO EM MINUTOS -->
+                    <option value="1440">1 Dia antes</option>
+                    <option value="60">1 Hora antes</option>
+                    <option value="30">30 minutos antes</option>
+                    <option value="15">15 minutos antes</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="calendar-event-reminder-room">
+                <label for="">Sala</label>
+                <select  name="calendar-register-room">
+                    <% getAllRooms.forEach(element => { %>
+                        <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
+                    <% }) %>
+                    <option value="0">Não usarei</option>
+                </select>
+            </div>
+        </div>
+        <!--  -->
+        <hr style="margin: 30px 0;">
+        <!--  -->
+        <div class="calendar-event-persons">
+            <div class="calendar-event-persons-filter">
+                <input type="text" placeholder="Pessoas que participarão do evento" id="insert-person">
+                <button type="button" id="button-add-person">Adicionar</button>
+            </div>
+            <!--  -->
+            <div class="calendar-event-persons-list">
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <!--  -->
+            </div>
+        </div>
+        <!--  -->
+        <hr style="margin: 30px 0;">
+        <!--  -->
+        <div class="calendar-event-actions">
+            <button type="submit" formaction="../register/new">Salvar</button>
+            <button type="button" id="calendar-close-event">Cancelar</button>
+        </div>
+    </form>
+</section>
+
+<script>
+    $(function(){
+
+        //Setando a data no calendario
+        const dateNowCalendar = "<%- dayNow %>";
+        $("#day-"+dateNowCalendar).css("color","var(--color-four)")
+        $("#day-"+dateNowCalendar).css("background","var(--color-one)")
+
+        //DISPLAY DE EVENTOS
+        let eventsMy = $("#my-events")
+        let eventRooms = $("#rooms-events")
+        let eventPublic = $("#public-events");
+
+        eventsMy.css('display','none');
+        eventRooms.css('display','none');
+
+        //Exibindo meus eventos
+        $("#calendar-events-my").click(function(){
+            eventsMy.fadeIn();
+
+            eventPublic.css('display','none');
+            eventRooms.css('display','none');
+        })
+        //Exibindo eventos publicos
+        $("#calendar-events-publics").click(function(){
+            eventPublic.fadeIn();
+
+            eventsMy.css('display','none');
+            eventRooms.css('display','none');
+        })
+        //Exibindo eventos das salas
+        $("#calendar-events-room").click(function(){
+            eventRooms.fadeIn();
+
+            eventsMy.css('display','none');
+            eventPublic.css('display','none');
+        })
+
+
+        /////////////////////////////////////////
+        /* MENU CLOSE */
+        $("#calendar-menu-close").click(function(){
+            //$("#calendar-menu-main").toggle()
+            $("#calendar-menu-main").animate({width: "toggle"},100);
+        })
+        /* MENU OPEN */
+        $("#calendar-menu-open").click(function(){
+            //$("#calendar-menu-main").toggle()
+            $("#calendar-menu-main").animate({width: "toggle"},100);
+        })
+
+        
+        /* o open esta no final da linha */
+        /* CLOSE MENU OPTIONS */
+        $("#close-options-days").click(function(){
+            $("#calendar-display-actions").fadeOut()
+        })
+
+
+        /* OPEN DISPLAY EVENT DAY */
+        $("#open-event-display-day").click(function(){
+            $("#calendar-display-actions").fadeOut()
+            $("#calendar-display-event").fadeIn();
+            $("#calendar-display-event").css('display','flex');
+        })
+        /* CLOSE DISPLAY EVENT DAY */
+        $("#event-close-display-day").click(function(){
+            $("#calendar-display-event").fadeOut();
+        })
+
+        /* OPEN DISPLAY NEW EVENT DAY */
+        $("#open-new-event-display-day").click(function(){
+            $("#calendar-display-actions").fadeOut()
+            $("#calendar-display-event").fadeIn();
+            $("#calendar-display-event").css('display','flex');
+        })
+
+        /* BUTTON CLOSE EVENT REGISTER */
+        $("#calendar-close-event").click(function(){
+            $("#calendar-display-event").fadeOut();
+        })
+    })
+
+
+    //LISTANDO OS USUARIOS
+    let dataOne = '<%- locals.allUsers %>';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#insert-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+
+    let idArray = [];
+    //ADICIONANDO PESSOAS
+    $("#button-add-person").click(function(){
+        //Usuario a ser adicionado
+        const valIdUser = $("#insert-person").val().split('-')[0];
+        const valPerson = $("#insert-person").val().split('-')[1];
+
+        if(idArray.indexOf(parseInt(valIdUser)) != -1){
+            $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+        }else{
+            idArray.push(parseInt(valIdUser))
+            $(".calendar-event-persons-list")
+            .append(
+            `<div class="calendar-event-person-box" id="person-id-${valIdUser}">
+                <input readonly type="text" value="${valPerson}">
+                <input hidden value="${valIdUser}" name="calendar-register-persons"/>
+                <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+            </div>`
+            )
+
+            console.log(idArray)
+
+            $("#insert-person").val('')
+        }
+    })
+    function functionRemovePerson(id){
+
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    }
+
+    /* OPEN MENU OPTIONS */
+    function openOptionsDays(day){
+        let getMonth = day.split('/')[0]+' de <%- nameMonthYear %>';
+
+        let dayConfig = day.split('/')[0] < 10 ? '0'+day.split('/')[0] : day.split('/')[0];
+        let valueDate = day.split('/')[2]+  '-'  +day.split('/')[1]+'-'  +  dayConfig;
+        $("#calendar-input-date").val(valueDate)
+
+        //Valor do link do dia
+        let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
+        $("#calendar-day-link-module").attr('href','/painel/calendar/viewEvent/Day/'+dayLinkOpen)
+
+        $("#calendar-day-dinamic").text(getMonth)
+
+        $(".calendar-display-actions").fadeIn()
+        $(".calendar-display-actions").css('display','flex')
+    }
+
+    /* SELECIONANDO A SALA */
+    $("select#calendar-register-location").change(function(){
+        let valueSelect = $(this).val();
+
+        if(valueSelect == 'not'){
+            console.log('AAAAAAAAAA')
+            $(".calendar-event-locate-name input").css('display','flex')
+            $(".calendar-event-locate-name input").attr('name','calendar-register-location')//Atribuindo o name ao input
+            $("#calendar-register-location").attr('name','xxx')
+        }else{
+            $(".calendar-event-locate-name input").css('display','none')
+            $("#calendar-register-location").attr('name','calendar-register-location')
+            $(".calendar-event-locate-name input").attr('name','xxx')
+        }
+    })
+
+    /* EVENTO DIA INTEIRO */
+    $("#calendar-register-all-day").click(function(){
+        //$('#calendar-register-hour-initial option[value=06:00]').attr('selected','selected');
+
+        $("#calendar-register-hour-initial").val("06:00").change();
+        $("#calendar-register-hour-final").val("23:30").change();
+    })
+
+    //Marcação da opção
+    $(".calendar-visible-bottom").click(function(){
+        $('.calendar-visible-bottom hr').remove();
+        $(this).append('<hr>')
+    })
+</script>

@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="/panel/css/requisitor/minhasRequisicoes.css">
+
+<section class="list-order-container-main">
+    <section class="list-order-container-page">
+        <div class="list-order-container-identify-page">
+            <span>Minhas Requisições</span>
+            <span>/ Requsitor de Materiais</span>
+        </div>
+        <section class="list-order-page-new">
+            <div class="list-order-page-center">
+
+
+                <section class="list-order-information-send">
+                    <div class="list-order-title-box"><span>Execute uma ação</span></div>
+                    <form class="list-order-finaly-request" method="post">
+                        <div class="list-order-container-row-large">
+                            <div class="list-order-container-box-single">
+                                <label for="">ID</label>
+                                <input type="number" name="" id="" min="1">
+                            </div>
+                            <div class="list-order-container-box-single-select">
+                                <label for="">Status</label>
+                                <select id="req-status-select-filter">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">Requisição Efetuada</option>
+                                    <option value="2">Em Separação</option>
+                                    <option value="3">Recebida</option>
+                                    <option value="4">Cancelado</option>
+                                    <option value="5">Pendente</option>
+                                    <option value="6">Requisição Enviada</option>
+                                </select>
+                            </div>
+                            <div class="list-order-container-box-single-select">
+                                <label for="">Ordenar</label>
+                                <select name="" id="">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="all">Tudo</option>
+                                </select>
+                            </div>
+                            <div class="list-order-container-button">
+                                <button formaction="./action/search/myRequests" class="list-order-button-default class-loader">Buscar</button>
+                            </div>
+                        </div>
+
+
+                        <div class="list-order-container-row-large">
+                            <div class="sys-filter-display-main" id="sys-filter-display-main">
+                                <div class="sys-filter-container-col">
+                                    <div class="sys-filter-title">
+                                        <span>Filtros</span>
+                                    </div>
+                                    <div class="sys-filter-component-boxs" id="sys-filter-component-boxs">
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </form>
+                </section>
+            </div>
+        </section>
+
+        <% if(locals.resultSearchMyRequests != ''){ %>
+        <form class="list-order-section-table" method="post">
+            <div class="list-order-container-main-table">
+                <div class="list-order-title-box"><span>Suas Requisições</span></div>
+                <div class="list-order-srs-search">
+                    <div class="list-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, data, status.." id="input-search-requests">
+                    </div>
+                </div>
+                <section class="list-order-container-table-set">
+                    <table class="list-order-table" id="list-order-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Gerado</th>
+                                <th>Itens Totais</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% resultSearchMyRequests.forEach(element => { %>
+                            <tr>
+                                <td><b>#<%= element['sys_req_idOne'] %></b></td>
+                                <td><%= element['sys_req_orderEmitter'] %></td>
+                                <td><b><%= element['sys_req_orderTotalItems'] %></b></td>
+                                <td>
+                                    
+                                    <% if(element['sys_req_orderStatus'] == 1){ %>
+                                        <b>Requisição Efetuada</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 2) { %>
+                                        <b>Em Separação</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 3) { %>
+                                        <b style="color: green">Finalizado</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 4) { %>
+                                        <b>Requisição Cancelada</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 5) { %>
+                                        <b>Requisição Pendente</b>
+                                    <% } else if(element['sys_req_orderStatus'] == 6) { %>
+                                        <b>Requisição enviada</b>
+                                    <% } %>
+                                
+                                </td>
+                                <td><div class="list-order-container-actions">
+                                    <a href="./VisualizarRequisicao/<%= element['sys_req_idOne'] %>"><i class="ri-eye-line"></i></a>
+                                    <a href="./EditarRequisicao/<%= element['sys_req_idOne'] %>"><i class="ri-edit-line"></i></a>
+                                    <button formaction="./action/download/myRequest" value="<%= element['sys_req_idOne'] %>" name="button-view-action-download" title="Remover item"><i class="ri-download-2-fill"></i></button>
+                                    <button formaction="./action/remove/myRequest" value="<%= element['sys_req_idOne'] %>" type="submit" name="action-request-romove" class="class-loader" title="Excluir Requisição"><i class="ri-delete-bin-line"></i></button>
+                                </div></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </form>
+        <% } %>
+    </section>
+</section>
+<script>
+    $(function(){
+        //Input Search
+        $.fn.searchInputTable('#list-order-table tr', '#input-search-requests')
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#list-order-table',10,0);
+
+        //Adicionando um filtro: Status
+        $("#req-status-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','status');
+        })
+    })
+</script>

@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/panel/css/main/profile.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<section class="profile-section-main">
+    <section class="profile-section-center-main">
+        <div class="profile-container-main-style"></div>
+        <div class="profile-container-info-user">
+            <form class="profile-container-image-user" action="./perfil/update/image" method="post" enctype="multipart/form-data">
+
+
+                <% if(arrayData[0]['jcv_userImageIcon'] != null){ %>
+                    <img class="profile-img-user" src="/panel/img/img-user/<%= arrayData[0]['jcv_userImageIcon'] %>" alt="">
+                <% }else{ %>
+                    <div class="profile-img-user"></div>
+                <% } %>
+
+
+                <div class="profile-container-edit">
+                    <input id="input-edit-img" type="file" name="userImageUpload" required>
+                    <label for="input-edit-img"><i class="ri-edit-line"></i></label>
+                    <button type="submit"><i class="ri-save-line"></i></button>
+                </div>
+            </form>
+            <form class="profile-container-info-user-set" action="./perfil/update" method="post">
+                <div class="profile-row-form">
+                    <div class="profile-container-input">
+                        <label for="">Seu Nome</label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userNamePrimary'] %>" name="updateNameUser" id="">
+                    </div>
+                    <div class="profile-container-input">
+                        <label for="">CPF</label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userCpf'] %>" name="updateCPFUser" id="update-cpf">
+                    </div>
+
+
+                    <div class="profile-container-input">
+                        <label for="">E-mail corporativo</label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" id="">
+                    </div>
+                    <div class="profile-container-input">
+                        <label for="">E-mail pessoal</label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userEmailFolks'] %>" name="updateEmailUserPer" id="">
+                    </div>
+
+                    <div class="profile-container-input">
+                        <label for="">Ramal</label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userExtension'] %>" name="updateRamalUser" id="">
+                    </div>
+                    <div class="profile-container-input-checkbox">
+                        
+                        <% if(arrayData[0]['jcv_sysEmail'] >= 1){ %>
+                            <input type="checkbox" checked name="updateAppsUser" id="check-apps">
+                        <% }else{ %>
+                            <input type="checkbox" name="updateAppsUser" id="check-apps">
+                        <% } %>
+                        <label for="check-apps">Receber e-mails corporativos</label>
+                    </div>
+                    <div class="profile-container-pass-renew">
+                        <span id="profile-recovery-open">Nova senha</span>
+                    </div>
+                    <div class="profile-container-buttons">
+                        <button type="submit">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+<section id="profile-recover-pass" class="profile-recover-password">
+    <section class="profile-recover-container-main">
+        <div class="profile-recover-center">
+            <div class="profile-recover-header">
+                <span><b><%= arrayData[1]%></b> defina sua nova senha</span>
+                <span><i id="profile-recover-close" class="ri-close-line"></i></span>
+            </div>
+            <div class="profile-recover-body">
+                <form class="profile-form-recover" action="./perfil/pass/redefine" method="post">
+                    <div class="profile-form-recover-row">
+                        <span>Insira sua senha e repita no campo abaixo</span>
+                    </div>
+                    <div class="profile-form-recover-row">
+                        <input type="password" name="sysNewPass" id="sysNewPass" placeholder="insira sua nova senha..">
+                    </div>
+                    <div class="profile-form-recover-row">
+                        <input type="password" name="sysNewPassTwo" id="sysNewPassTwo" placeholder="repita sua nova senha..">
+                    </div>
+                    <div class="profile-form-recover-row-commands">
+                        <button class="class-loader" type="submit" id="button-save-pass">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</section>
+<script>
+    $(function(){
+        $("#profile-recovery-open").click(function(){
+            $("#profile-recover-pass").fadeIn();
+            $("#profile-recover-pass").css("display","flex");
+        })
+
+        $("#profile-recover-close").click(function(){
+            $("#profile-recover-pass").fadeOut();
+        })
+    })    
+    
+    $('#update-cpf').mask('000.000.000-00');
+    
+</script>

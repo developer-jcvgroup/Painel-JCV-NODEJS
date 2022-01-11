@@ -1,0 +1,430 @@
+.calendar-main{
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* titulo do mes */
+.calendar-title-month-display{
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.calendar-month-actualy{
+    display: flex;
+    align-items: center;
+}
+.calendar-month-actualy span{
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+
+.calendar-inside-month{
+    display: flex;
+    align-items: center;
+}
+.calendar-inside-month a{
+    text-decoration: none;
+    color: var(--color-two);
+    font-size: 1.7rem;
+}
+.calendar-next-month{
+    display: flex;
+    align-items: center;
+}
+.calendar-next-month a{
+    text-decoration: none;
+    color: var(--color-two);
+    font-size: 1.7rem;
+}
+
+.calendar-body-display{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar-list-days{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    padding: 10px 0;
+    /* justify-content: space-around;
+    align-items: center; */
+}
+.calendar-list-days > li{
+    width: 14.28%;
+    font-size: 0.9rem;
+    color: var(--color-two);
+    text-align: center;
+}
+
+.calendar-list-number{
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar-list-number > li{
+    width: 14.28%;
+    height: 20%;
+    list-style-type: none;
+    cursor: pointer;
+    border: 1px solid var(--color-six);
+}
+
+
+/* LISTANDO OS EVENTOS DO DIA */
+.calendar-day-set{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: auto;
+}
+.calendar-day{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    padding: 7px;
+}
+.calendar-day-events-list{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: left;
+}
+.calendar-day-events-list a{
+    text-decoration: none;
+    color: var(--color-one);
+    padding: 6px 0;
+    font-size: 0.8rem;
+}
+
+
+
+/* .calendar-list-number-cont{
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow-y: auto;
+}
+.calendar-list-number-cont li{
+    width: 14.28%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid var(--color-six);
+} */
+
+/****************************/
+/****************************/
+/* ACTION MONTH */
+/* .calendar-row-actions-register{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 18px;
+} */
+/* .calendar-date{
+    display: flex;
+    align-items: center;
+}
+.calendar-date span{
+    font-size: 1rem;
+    padding: 4px;
+    color: var(--color-two);
+} */
+
+/* LIST EVENTS */
+/* .calendar-list-events{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+} */
+/* .calendar-ul-events-all{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.calendar-ul-events-all li{
+    width: 98%;
+    padding: 3px;
+    display: flex;
+    align-items: flex-end;
+    background: #f3e3b9d8;
+    margin-top: 4px;
+    border: none;
+}
+.calendar-ul-events-all li a{
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: var(--color-two);
+} */
+
+/****************************/
+/* set event section */
+.section-calendar-section-set-event{
+    position: absolute;
+    width: 100%;
+    max-width: 1920px; 
+    height: calc(100% - 48px);
+    max-height: 1000px;
+    background: #bdc4cc56;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.section-container-set-event{
+    width: 550px;
+    height: 50%;
+    display: flex;
+    background: var(--background-two);
+    border-radius: 4px;
+}
+.calendar-main-set{
+    width: 100%;
+    height: 100%;
+    padding: 20px 15px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* */
+.calendar-close-screen{
+    width: 100%;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.calendar-close-screen i{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.title-box-cal span{
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+
+/* */
+.form-set-event{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+   
+}
+.form-event-row{
+    width: 100%;
+    margin-bottom: 23px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-event-container-large{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.form-event-container-large label{
+    font-size: 0.7rem;
+    color: var(--color-five);
+}
+.event-form-input-text{
+    width: 100%;
+    margin-top: 8px;
+    border: 0;
+    outline: 0;
+    padding: 4px 5px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    border-bottom: 1px solid var(--color-one);
+}
+
+.form-event-container{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-event-container label{
+    font-size: 0.7rem;
+    color: var(--color-five);
+}
+.calendar-select-actions{
+    outline: 0;
+    padding: 4px 5px;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: var(--color-one);
+    border-bottom: 1px solid var(--color-one);
+}
+
+/* textarea */
+.calendar-text-area{
+    outline: 0;
+    margin-top: 8px;
+    resize: none;
+}
+
+/* CHECKBOX */
+.form-event-check{
+    display: flex;
+    align-items: center;
+}
+.form-event-check label{
+    font-size: 0.9rem;
+    margin-left: 6px
+}
+
+/* list users events */
+.container-list-users-event{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-cont-single{
+    width: min-content;
+    margin: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--color-seven);
+}
+
+.user-cont-single input[type=text]{
+    width: 120px;
+    outline: 0;
+    padding: 5px 7px;
+    border: 0;
+}
+.user-cont-single button{
+    padding: 4px 6px;
+    border: none;
+    outline: 0;
+    font-size: 0.8rem;
+    background: transparent;
+    color: var(--color-two);
+    cursor: pointer;
+}
+
+/*******************/
+.form-action-commands{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form-action-commands button:nth-child(1){
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+.form-action-commands button:nth-child(2){
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: var(--background-two);
+    border: 1px solid var(--color-seven);
+    cursor: pointer;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 1300px) {
+    .calendar-info-display{
+        width: 35%;
+    }
+    .calendar-display{
+        width: 60%;
+    }
+
+
+}
+
+@media only screen and (max-width: 850px) {
+    .calendar-display-body-center{
+        height: auto;
+    }
+    .calendar-container-box-all{
+        flex-direction: column;
+        
+    }
+    .calendar-display{
+        width: 100%;
+        height: 80%;
+        margin-top: 26px;
+    }
+    .calendar-info-display{
+        width: 100%;
+        margin-top: 22px;
+    }
+    .calendar-main{
+        min-width: 550px;
+        height: 600px;
+    }
+    .calendar-display{
+        overflow: auto;
+    }
+    .calendar-title-month-display{
+        height: 90px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .calendar-title-page{
+        margin-top: 22px;
+    }
+
+    .section-container-set-event{
+        width: 95%;
+        height: 90%;
+    }
+
+    .calendar-footer-actions{
+        justify-content: space-around;
+    }
+    .calendar-footer-actions a{
+        font-size: 1.5rem;
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 400px){
+
+}

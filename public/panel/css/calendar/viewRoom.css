@@ -1,0 +1,211 @@
+.view-room-main-section{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* container view-room */
+.view-room-section-viewer-view-room{
+    width: 90%;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.view-room-calendar-box{
+    width: 100%;
+    padding: 0 18px;
+    display: flex;
+    flex-direction: column;
+}
+.view-room-title-day{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.view-room-title-day span:nth-child(1){
+    font-size: 1.5rem;
+    color: var(--color-two);
+}
+.view-room-title-day span:nth-child(2){
+    font-size: 0.9rem;
+    margin-left: 15px;
+    color: var(--color-five);
+}
+
+/*****************/
+.view-room-calendar-cont-main{
+    margin-top: 28px;
+}
+.view-room-back-calendar{
+    margin: 16px 0;
+}
+.view-room-back-calendar a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+
+
+/* */
+.view-room-row-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    white-space: normal;
+}
+.view-room-container-events{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-seven);
+    padding: 15px 0;
+}
+
+/* */
+.view-room-info-row{
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+}
+.view-room-info-row-col{
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* */
+.view-room-icon{
+    display: flex;
+    align-items: center;
+    margin: 0 16px;
+}
+.view-room-icon i{
+    font-size: 1rem;
+    color: var(--color-one);
+}
+/* */
+.view-room-title-event{
+    display: flex;
+    align-items: baseline;
+}
+.view-room-title-event span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.view-room-title-event span:nth-child(2){
+    font-size: 0.8rem;
+    margin-left: 15px;
+    color: var(--color-five);
+}
+
+/* */
+.view-room-container-desc{
+    width: 100%;
+    margin-left: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.view-room-container-desc > span:nth-child(1){
+    font-size: 0.8rem;
+    color: var(--color-five);
+}
+.view-room-container-desc > span:nth-child(2){
+    font-size: 0.9rem;
+    margin-top: 8px;
+    color: var(--color-one);
+}
+
+/* box user */
+.view-room-box-user{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+.view-room-box-user span{
+    width: max-content;
+    color: var(--color-one);
+    padding: 4px 7px;
+    font-size: 0.8rem;
+    border: 1px solid var(--color-seven);
+    border-radius: 14px;
+    margin-right: 5px;
+}
+
+
+
+
+
+
+.view-room-box-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 23px;
+}
+
+.view-room-box-main label{
+    font-size: 0.8rem;
+    color: var(--color-five);
+}
+.view-room-box-main span{
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: var(--color-two);
+}
+
+.view-room-action-command button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+.view-room-not-found{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.view-room-not-found span{
+    margin: 10% 0;
+    font-size: 1rem;
+    color: var(--color-one);
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 600px){
+    .view-room-title-day{
+        flex-direction: column;
+        white-space: normal;
+    }
+    .view-room-title-event{
+        flex-direction: column;
+    }
+    .view-room-title-event span:nth-child(2){
+        margin-left: 0;
+    }
+    .view-room-info-row-col{
+        margin-top: 24px;
+    }
+    .view-room-title-day span:nth-child(2){
+        margin-left: 0;
+        margin-top: 12px;
+        font-size: 0.8rem;
+    }
+}

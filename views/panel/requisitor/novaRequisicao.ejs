@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="/panel/css/requisitor/novaRequisicao.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="req-new-container-main">
+    <form class="req-new-container-page" method="post" action="./create/order">
+        <div class="req-new-container-identify-page">
+            <span>Nova Requisição</span>
+            <span>/ Requsitor de Materiais</span>
+        </div>
+        <section class="req-new-page-new">
+            <div class="req-new-page-center">
+                <section class="req-new-information-send">
+                    <div class="req-new-title-box"><span>Insira itens ao seu pedido</span></div>
+                    <div class="req-new-finaly-request">
+
+                        <div class="req-new-container-row-large">
+                            <div class="req-new-container-box-large">
+                                <label for="">Busque por um item</label>
+                                <input type="text" name="" placeholder="busque pelo nome, referência, id, etc." id="input-item-name">
+                            </div>
+                            <div class="req-new-container-box-single">
+                                <label for="">Quantidade</label>
+                                <input type="number" name="" id="input-item-amount" min="1">
+                            </div>
+                            <div class="req-new-container-link">
+                                <span id="open-list-itens">Lista de itens <i class="ri-external-link-line"></i></span>
+                            </div>
+                            <div class="req-new-container-button">
+                                <button class="req-new-button-default" id="button-insert-item" type="button">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="req-new-section-table" id="req-new-section-table">
+            <div class="req-new-container-main-table">
+                <div class="req-new-title-box"><span>Itens de seu pedido</span></div>
+                <section class="req-new-container-table-set">
+                    <table class="req-new-table" id="req-new-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+
+        <section class="req-new-section-final" id="req-new-section-final">
+            <div class="req-new-section-final-box">
+                <div class="req-new-container-row-large">
+                    <div class="req-new-container-box-large">
+                        <label for="">Observação</label>
+                        <input type="text" name="req-input-node-order" id="">
+                    </div>
+                    <div class="req-new-container-button">
+                        <button class="req-new-button-default class-loader">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </form>
+</section>
+<!--  -->
+<section class="req-new-list-itens">
+    <div class="req-new-main-itens">
+        <div class="req-new-main-itens-title">
+            <span>Busque por um item</span>
+            <i id="close-list-itens" class="ri-close-line"></i>
+        </div>
+        <div class="req-new-main-itens-input">
+            <input type="text" placeholder="Busque por algum item.." id="search-item-table-input">
+        </div>
+        <div class="req-new-main-itens-table-display">
+            <table class="req-new-main-itens-table" id="req-new-main-itens-table">
+                <thead>
+                    <!--  -->
+                </thead>
+                <tbody>
+                    <% arrayItems.forEach(element => { %>
+                    <tr>
+                        <td><%= element.split(' - ')[1] %></td>
+                        <td>
+                            <button value="<%= element %>" class="req-new-main-itens-table-button button-add-item">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    $(function(){
+
+        $.fn.functionSetDinamic(false, '');//Não adicionando ids de itens existentes
+
+        //Pegando a lista de itens
+        let dataOne = '<%- locals.arrayItems %>';
+        let arrayDataOne = dataOne.split(',');
+
+        //Primeiro campo
+        $("#input-item-name").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+                response(results.slice(0, 5));
+            }
+        });
+
+        //Box de lista de itens
+        $.fn.searchInputTable('#req-new-main-itens-table tr', '#search-item-table-input')
+
+        $("#close-list-itens").click(function(){
+            $(".req-new-list-itens").fadeOut()
+        })
+        $("#open-list-itens").click(function(){
+            $(".req-new-list-itens").fadeIn()
+            $(".req-new-list-itens").css('display','flex')
+        })
+
+        $(".button-add-item").click(function(){
+            let value = $(this).val()
+            $("#input-item-name").val(value)
+            $(".req-new-list-itens").fadeOut()
+            $("#input-item-amount").select()
+        })
+
+        //Botão para dar inicio ao modulo de inserção, delete na tabela
+        $("#button-insert-item").click(function(){
+            $("#req-new-section-final").fadeIn()
+            addItemTable('input-item-amount','input-item-name', 'req-new-table', 'req-new-section-table', arrayDataOne)
+        })
+
+    })
+</script>

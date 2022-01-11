@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="/panel/css/requisitor/receberRequisicao.css">
+
+<section class="received-order-container-main">
+    <form class="received-order-container-page" method="post">
+        <div class="received-order-container-identify-page">
+            <span>Receber Requisição <b>#<%= arrayOrderInfo[0]['sys_req_idOne'] %></b></span>
+            <span>/ Requsitor de Materiais / 
+                <b>    
+                    <% if(arrayOrderInfo[0]['sys_req_orderStatus'] == 1){ %>
+                        Requisição Efetuada
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 2) { %>
+                        Em Separação
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 3) { %>
+                        Requisição Finalizada
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 4) { %>
+                        Requisição Cancelada
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 5) { %>
+                        Requisição Pendente
+                    <% } else if(arrayOrderInfo[0]['sys_req_orderStatus'] == 6) { %>
+                        Requisição enviada
+                    <% } %>
+                </b>
+            </span>
+        </div>
+        <section class="received-order-page-new">
+            <div class="received-order-page-center">
+
+
+                <section class="received-order-information-send">
+                    <div class="received-order-title-box"><span>Finalize seu pedido</span></div>
+                    <div class="received-order-finaly-request">
+
+                        <div class="received-order-container-row-large">
+                            <div class="received-order-container-button">
+                                <button type="button" id="button-open-confirm" class="received-order-button-default">Forçar Finalizar</button>
+                                <button formaction="./receber/finalizar" class="received-order-button-default class-loader" value="<%= arrayOrderInfo[0]['sys_req_idOne'] %>" name="btn-finalizar-order">Finalizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="received-order-section-table">
+            <div class="received-order-container-main-table">
+                <div class="received-order-title-box"><span>Itens de seu pedido</span></div>
+                <section class="received-order-container-table-set">
+                    <table class="received-order-table" id="received-order-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Solicitado</th>
+                                <th>Recebido</th>
+                            </tr>
+                        </thead>
+                        <tbody>    
+                            <% arrayOrderItem.forEach(element => { %>
+                            <tr>
+                                <td><input class="received-input-order-amount" readonly type="text" name="received-ids-orders" value="<%= element['sys_req_item_itemId'] %>"></td>
+                                <td><b><%= element['sys_req_item_itemName'] %></b></td>
+                                <td><input class="received-input-order-amount" readonly type="text" name="received-order-amount" value="<%= element['sys_req_item_itemAmount'] %>"></td>
+
+                                <% if(element['sys_req_item_amountReceived'] == element['sys_req_item_itemAmount']){ %>
+                                    <td><div class="received-order-table-inputs-block">
+                                        <input type="number" readonly value="<%= element['sys_req_item_amountReceived'] %>" name="received-input-amount">
+                                    </div></td>
+                                <% }else if(element['sys_req_item_amountReceived'] > ""){ %>
+                                    <td><div class="received-order-table-inputs">
+                                        <input type="number" value="<%= element['sys_req_item_amountReceived'] %>" name="received-input-amount">
+                                    </div></td>
+                                <% }else{ %>
+                                    <td><div class="received-order-table-inputs">
+                                        <input type="number" name="received-input-amount" id="">
+                                    </div></td>
+                                <% } %>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+
+        <section class="received-force-main-main" id="received-force-main-main">
+            <section class="received-force-main">
+                <section class="received-force-cont-center">
+                    <div class="received-force-center">
+                        <div class="received-force-title-one">
+                            <i class="ri-alert-line"></i>
+                        </div>
+                        <hr class="received-force-hr">
+                        <div class="received-force-title-two">
+                            <span>Cuidado!</span>
+                        </div>
+                        <div class="received-force-msg-box">
+                            <span>Esta opção é para caso você receba itens a mais que pediu e que o administrador tenha ciência disto. Esta operação so pode ser executada
+                                uma única vez! Ele pegará todas as quantidades inseridas por você, irá salvar e finalizar o pedido <b>deseja realmente fazer isto?</b>.
+                            </span>
+                        </div>
+                        <div class="received-force-button">
+                            <button formaction="./receber/finalizar/force" class="received-order-button-default class-loader" value="<%= arrayOrderInfo[0]['sys_req_idOne'] %>" name="btn-force-finalizar-order">Sim, finalize agora</button>
+                            <button type="button" id="received-force-close-display">Fechar</button>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+
+
+
+
+
+    </form>
+
+    
+</section>
+
+
+
+
+<script>
+    $(function(){
+        $("#button-open-confirm").click(function(){
+            $("#received-force-main-main").fadeIn();
+        })
+        $("#received-force-close-display").click(function(){
+            $("#received-force-main-main").fadeOut();
+        })
+    })
+</script>

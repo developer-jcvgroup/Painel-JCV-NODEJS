@@ -1,0 +1,110 @@
+.notifications-main-section{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* container event */
+.notifications-section-viewer-event{
+    width: 90%;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    white-space: normal;
+}
+
+
+.notifications-title-page{
+    width: 100%;
+    padding: 0 18px;
+    display: flex;
+    margin: 23px 0;
+}
+.notifications-title-page span{
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+
+.notifications-calendar-box{
+    width: 100%;
+    padding: 0 18px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+.notifications-title-day{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+}
+.notifications-title-day span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-two);
+}
+.notifications-title-day span:nth-child(2){
+    font-size: 0.9rem;
+    margin-left: 15px;
+    color: var(--color-five);
+}
+
+/*****************/
+.notifications-calendar-cont-main{
+    margin-top: 28px;
+}
+
+.notifications-row-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    white-space: normal;
+}
+
+.notifications-box-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 23px;
+}
+
+.notifications-box-main label{
+    font-size: 0.8rem;
+    color: var(--color-five);
+}
+.notifications-box-main span{
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: var(--color-two);
+}
+
+.notifications-action-command{
+    margin-bottom: 20px;
+}
+.notifications-action-command a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 550px){
+    .notifications-title-day{
+        flex-direction: column;
+    }
+    .notifications-title-day span:nth-child(2){
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}

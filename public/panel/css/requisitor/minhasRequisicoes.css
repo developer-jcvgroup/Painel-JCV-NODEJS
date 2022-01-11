@@ -1,0 +1,321 @@
+.list-order-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list-order-container-page{
+    width: 90%;
+}
+
+/* IDENTIFICAÇÃO DA PAGINA */
+.list-order-container-identify-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.list-order-container-identify-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.list-order-container-identify-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/***************************/
+/* PAGINA */
+.list-order-page-new{
+    width: 100%;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.list-order-page-center{
+    padding: 12px;
+}
+
+/* BLOCO FINALIZAR PEDIDO */
+.list-order-information-send{
+    width: 100%;
+}
+
+/* INPUT PARA BUSCAR OS PEDIDOS */
+.list-order-srs-search{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list-order-srs-box{
+    width: 80%;
+}
+.list-order-srs-box input{
+    width: 100%;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+/* */
+.list-order-title-box{
+    display: flex;
+}
+.list-order-title-box span{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+.list-order-finaly-request{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 28px;
+}
+
+/******************************/
+/******************************/
+/* CONTAINER ROW */
+.list-order-container-row-large{
+    width: 100%;
+    display: flex;
+    margin-bottom: 26px;
+}
+.list-order-container-box-large{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.list-order-container-box-large label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-order-container-box-large input[type=text]{
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+/*****************/
+/* SINGLE */
+.list-order-container-row-single{
+    width: 100%;
+    display: flex;
+}
+.list-order-container-box-single{
+    width: 10%;
+    margin-left: 36px;
+    display: flex;
+    flex-direction: column;
+}
+.list-order-container-box-single-select{
+    margin-left: 36px;
+    display: flex;
+    flex-direction: column;
+}
+.list-order-container-box-single-select label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-order-container-box-single label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-order-container-box-single input{
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+}
+.list-order-container-box-single-select select{
+    width: 150px;
+    margin-top: 6px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+}
+
+/* LINKS */
+.list-order-container-link{
+    margin: 0 36px;
+    display: flex;
+    align-items: center;
+}
+.list-order-container-link a{
+    color: var(--color-one);
+    font-size: 0.8rem;
+}
+.list-order-container-link a i{
+    margin-left: 3px;
+}
+
+/* BUTTON */
+.list-order-container-button{
+    display: flex;
+    align-items: center;
+    margin-left: 26px;
+}
+.list-order-button-default{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+/************************/
+/************************/
+/* TABELA */
+.list-order-section-table{
+    width: 100%;
+    margin-top: 36px;
+    margin-bottom: 36px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.list-order-container-main-table{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-order-container-table-set{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 36px;
+}
+
+/* TABLE */
+.list-order-table{
+    border-collapse: collapse;
+    width: 80%;
+}
+.list-order-table tr th{
+    border: none;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    font-weight: normal;
+    background: var(--color-one);
+    color: var(--color-four);
+    padding: 6px;
+    font-size: 0.9rem;
+}
+.list-order-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 13px 6px;
+    color: var(--color-one);
+    font-size: 0.9rem;
+}
+
+.list-order-table tr th:nth-child(1){
+    width: 5%;
+}
+.list-order-table tr th:nth-child(2){
+    width: 5%;
+}
+.list-order-table tr th:nth-child(3){
+    width: 5%;
+}
+.list-order-table tr th:nth-child(4){
+    width: 5%;
+}
+.list-order-table tr th:nth-child(5){
+    width: 5%;
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-eight);
+}
+
+.list-order-table tbody tr:hover{
+    background: var(--color-six);
+    transition: 0.5s;
+}
+
+/* ACTIONS */
+.list-order-container-actions{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;       
+}
+
+.list-order-container-actions a{
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--color-one);
+    background: transparent;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+.list-order-container-actions button{
+    font-size: 1.4rem;
+    color: var(--color-one);
+    background: transparent;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 700px) {
+    .list-order-container-row-large{
+        flex-direction: column;
+    }
+    .list-order-container-box-single{
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 19px;
+    }
+    .list-order-container-box-single-select{
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 19px;
+    }
+    .list-order-container-box-single-select select{
+        width: 100%;
+    }
+    .list-order-container-button{
+        margin-left: 0;
+        justify-content: center;
+    }
+
+    .list-order-table{
+        width: 100%;
+        min-width: 700px;
+    }
+    .list-order-container-table-set{
+        overflow: auto;
+        justify-content: flex-start;
+    }
+
+    .list-order-container-identify-page{
+        width: 100%;
+        margin: 0;
+        margin: 26px 0;
+    }
+}

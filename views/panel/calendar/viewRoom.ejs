@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="/panel/css/calendar/viewRoom.css">
+<section class="view-room-main-section">
+    <section class="view-room-section-viewer-view-room">
+        <div class="view-room-calendar-box">
+            <div class="view-room-back-calendar"><a href="/painel/calendario/main/"><i class="ri-calendar-event-line"></i></a></div>
+            <div class="view-room-title-day"><span><%= roomInfo[0].sys_calendar_roomName %></span><span><%= roomInfo[0].sys_unity_name %> - Eventos registrados do mes <%= monthRoom.split('-')[0] %>/<%= monthRoom.split('-')[1] %></span></div>
+            <div class="view-room-calendar-cont-main">
+                <div class="view-room-row-container">
+
+
+                    <% if(resultEventsRoom != ''){ %>
+
+                    <% resultEventsRoom.forEach(element => { %>
+                    <div class="view-room-container-events">
+                        <div class="view-room-info-row">
+                            <div class="view-room-icon"><i class="ri-calendar-check-line"></i></div>
+                            <div class="view-room-title-event">
+                                <span><%= element.sys_calendar_eventName %></span>
+                                <span><b><%= element.sys_calendar_eventDate %></b> - <%= element.sys_calendar_eventHours %></span>
+                            </div>
+                        </div>
+                        <div class="view-room-info-row-col">
+                            <div class="view-room-container-desc">
+                                <span>Descrição:</span>
+                                <span><%= element.sys_calendar_eventDescription %></span>
+                            </div>
+                            <div class="view-room-container-desc">
+                                <span>Participantes:</span>
+                                <div class="view-room-box-user">
+                                    
+
+                                    <% if (typeof(element.sys_calendar_eventPersons) == 'string'){ %>
+                                    
+                                        <% let arrayFinal = element.sys_calendar_eventPersons.split(',') %>
+
+
+                                        <% arrayFinal.forEach(element => { %>
+
+
+                                            
+                                            <% let validation = userAll.map(function(e) { return e.jcv_id; }).indexOf(parseInt(element));%>
+                                            <% if(validation > -1) { %>
+                                                <span><%= userAll[validation].jcv_userNamePrimary %></span>
+                                            <% } %>
+
+
+                                        <% }) %>
+
+
+
+
+                                    <% }else{ %>
+                                        <span>Nenhum Participante</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+
+                    <% }else{ %>
+                        <div class="view-room-not-found">
+                            <span>Nenhum evento encontrado..</span>
+                        </div>
+                    <% } %>
+
+
+                    <!--
+                    <div class="view-room-box-main">
+                        <label>Descrição</label>
+                        
+                    </div>
+
+                    <div class="view-room-box-main">
+                        <label>Horário</label>
+                        <span>Dás 08:00h ás 17:00h</span>
+                    </div>
+
+                    <div class="view-room-box-main">
+                        <label>Local</label>
+                        <span>Expor center norte</span>
+                    </div>
+
+                    <div class="view-room-box-main">
+                        <label>Pessoas</label>
+                        <span>Vitor Henrique, Vitor Henrique, Vitor Henrique</span>
+                    </div>
+
+                    <div class="view-room-box-main">
+                        <label>Sala</label>
+                        <span>Sala 1</span>
+                    </div>
+
+                    <div class="view-room-box-main">
+                        <div class="view-room-action-command">
+                            <button type="submit">Excluir view-roomo</button>
+                        </div>
+                    </div>
+                    -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

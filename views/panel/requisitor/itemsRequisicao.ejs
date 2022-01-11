@@ -1,0 +1,124 @@
+<link rel="stylesheet" href="/panel/css/requisitor/itemsRequisicao.css">
+
+<section class="items-container-main">
+    <section class="items-container-page">
+        <div class="items-container-identify-page">
+            <span>Itens</span>
+            <span>/ Requsitor de Materiais</span>
+        </div>
+        <form class="items-section-table" method="post">
+            <div class="items-container-main-table">
+                <div class="items-title-box"><span>Lista de Itens</span></div>
+                <div class="items-order-srs-search">
+                    <div class="items-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="input-search-requests">
+                    </div>
+                    <div class="items-container-row-large">
+                        <div class="items-container-box-single-select">
+                            <label for="">Ação</label>
+                            <select name="" id="">
+                                <option value="">* Selecione *</option>
+                                <option value="" disabled>* Status</option>
+                                <option value="">Habilitar</option>
+                                <option value="">Desabilitar</option>
+                            </select>
+                        </div>
+                        <div class="items-container-button">
+                            <button class="items-button-default class-loader">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <section class="items-container-table-set">
+                    <table class="items-table" id="items-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Ativo?</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="text" placeholder="Cadastre um item aqui" name="item-register-name-item" id="input-validate-caracteres"></td>
+                                <td>
+                                    <label class="items-button-switch">
+                                        <input type="checkbox" checked name="item-register-enabled-item">
+                                        <span class="items-button-slider round"></span>
+                                    </label>
+                                </td>
+                                <td><div class="items-container-actions">
+                                    <button formaction="./save/item/new" class="class-loader" title="Remover item"><i class="ri-save-line"></i></button>
+                                </div></td>
+                            </tr>
+    
+                            <tr>
+                                <td></td>
+                            </tr>
+    
+                            <% arrayItems.forEach(element => { %>
+                                <tr>
+                                    <td><input class="checkbox-select-single" value="<%= element['sys_req_itemId'] %>" type="checkbox" name="item-input-edit-id-<%= element['sys_req_itemId'] %>"></td>
+                                    <td><%= element['sys_req_itemId'] %></td>
+                                    <td><input type="text" value="<%= element['sys_req_itemName'] %>" name="item-input-edit-name-<%= element['sys_req_itemId'] %>"></td>
+                                    <% if(element['sys_req_itemEnabled'] == 1){ %>
+                                        <td>
+                                            <label class="items-button-switch">
+                                                <input type="checkbox" checked name="item-input-edit-enabled-<%= element['sys_req_itemId'] %>">
+                                                <span class="items-button-slider round"></span>
+                                            </label>
+                                        </td>
+                                    <% }else{ %>
+                                        <td>
+                                            <label class="items-button-switch">
+                                                <input type="checkbox" name="item-input-edit-enabled-<%= element['sys_req_itemId'] %>">
+                                                <span class="items-button-slider round"></span>
+                                            </label>
+                                        </td>
+                                    <% } %>
+
+                                    <td><div class="items-container-actions">
+                                        <button formaction="./save/item/edit" value="<%= element['sys_req_itemId'] %>" class="class-loader" name="button-edit-id" title="Remover item"><i class="ri-save-line"></i></button>
+                                        <button formaction="./delete/item" value="<%= element['sys_req_itemId'] %>" class="class-loader" name="button-remove-id" title="Remover item"><i class="ri-delete-bin-line"></i></button>
+                                    </div></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+        //Checknox all
+        $("#checkbox-select-all").click(function(){
+            var checkSet = $(this).is(':checked');
+            var inputsCheckedmodel = $('.checkbox-select-single');
+
+            if(checkSet == true){
+                inputsCheckedmodel.prop('checked', true);
+            }else{
+                inputsCheckedmodel.prop('checked', false);
+            }
+        })
+        $(".checkbox-select-single").click(function(){
+            $("#checkbox-select-all").prop("checked", false)
+        })
+        
+        $.fn.inputValidateCaracters("#input-validate-caracteres")
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#items-table',20,2);
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#items-table','#input-search-requests')
+    })
+</script>

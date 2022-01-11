@@ -1,0 +1,280 @@
+.profile-section-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* MAIN */
+.profile-section-center-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* BG MAIN */
+.profile-container-main-style{
+    width: 100%;
+    height: 270px;
+    background: linear-gradient(126deg, rgba(34,34,36,1) 0%, rgba(44,47,51,1) 88%, rgba(52,58,64,1) 100%);
+}
+
+/* PROFILE */
+.profile-container-info-user{
+    width: 50%;
+    margin-top: -140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+}
+
+/* IMG USER */
+.profile-container-image-user{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5% 0;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.profile-img-user{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--color-one);
+}
+
+/* edit */
+.profile-container-edit{
+    margin-top: -45px;
+    display: flex;
+}
+.profile-container-edit label{
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-five);
+    margin: 0 8px;
+}
+.profile-container-edit button{
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-five);
+    background: transparent;
+    border: none;
+    outline: 0;
+    margin: 0 8px;
+}
+#input-edit-img{
+    display: none;
+}
+
+
+/*****************************/
+/* INFO USER */
+.profile-container-info-user-set{
+    width: 100%;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-row-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-container-input{
+    width: 310px;
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-container-input label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+.profile-container-input input[type=text]{
+    outline: 0;
+    border: 0;
+    padding: 6px 6px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+.profile-container-input-checkbox{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+}
+.profile-container-input-checkbox input[type=checkbox]{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.profile-container-input-checkbox label{
+    font-size: 0.7rem;
+    margin-left: 13px;
+    color: var(--color-one);
+}
+.profile-container-pass-renew{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 26px;
+}
+.profile-container-pass-renew span{
+    text-decoration: underline;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--color-one);
+}
+
+
+.profile-container-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.profile-container-buttons button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+
+
+/**************************/
+/* DEFINIR SENHA */
+.profile-recover-password{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-width: 1920px; 
+    height: 100%;
+    max-height: 1000px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+.profile-recover-container-main{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 4px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.profile-recover-center{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.profile-recover-header{
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-recover-header span:nth-child(1){
+    font-size: 1rem;
+    color: var(--color-one);
+}
+.profile-recover-header span:nth-child(2){
+    font-size: 1.5rem;
+    color: var(--color-one);
+    cursor: pointer;
+}
+
+/***************************/
+.profile-recover-body{
+    width: 100%;
+    margin: 17px 0;
+    display: flex;
+}
+.profile-form-recover{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-form-recover-row{
+    width: 100%;
+    margin-bottom: 23px;
+    display: flex;
+}
+
+.profile-form-recover-row span{
+    color: var(--color-two);
+    font-size: 0.8rem;
+}
+.profile-form-recover-row input[type=password]{
+    width: 100%;
+    border: 0.9px solid var(--color-two);
+    padding: 8px 9px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+.profile-form-recover-row-commands{
+    width: 100%;
+    margin-top: 23px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+}
+.profile-form-recover-row-commands button{
+    height: fit-content;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    transition: 0.5s;
+}
+.profile-form-recover-row-commands button:hover{
+    transition: 0.5s;
+    background: transparent;
+    color: var(--color-one);
+    border: 1px solid var(--color-one);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+
+/*********************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 750px) {
+    .profile-container-info-user-set{
+        padding: 12px;
+    }
+    .profile-container-info-user{
+        width: 90%;
+    }
+    .profile-container-input{
+        width: 100%;
+    }
+}

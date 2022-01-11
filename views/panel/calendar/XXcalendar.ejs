@@ -1,0 +1,798 @@
+<link rel="stylesheet" href="/panel/css/calendar/calendarScreen.css">
+<link rel="stylesheet" href="/panel/css/calendar/calendar.css">
+<section class="calendar-main-section">
+    <section class="calendar-section-center">
+        <section class="calendar-display-body-center">
+            <section class="calendar-container-box-all">
+                <section class="calendar-display">
+                    <section class="calendar-main">
+
+                        <div class="calendar-title-month-display">
+                            <div class="calendar-inside-month">
+                                <a href="../<%= previousMonthYear %>"><i class="ri-arrow-left-s-line"></i></a>
+                            </div>
+                            <div class="calendar-month-actualy">
+                                <span id="month-year-page"><%= nameMonthYear %></span>
+                            </div>
+                            <div class="calendar-next-month">
+                                <a href="../<%= nextMonthYear %>"><i class="ri-arrow-right-s-line"></i></a>
+                            </div>
+                        </div>
+                        <div class="calendar-body-display">
+                            <ul class="calendar-list-days">
+                                <li>Domingo</li>
+                                <li>Segunda</li>
+                                <li>Terça</li>
+                                <li>Quarta</li>
+                                <li>Quinta</li>
+                                <li>Sexta</li>
+                                <li>Sábado</li>
+                            </ul>
+
+                            <ul class="calendar-list-number">
+                                
+                                <li onclick="actionDay('01/<%= monthNow %>')">
+                                    <div class="calendar-day-set">
+                                        <div class="calendar-day"><span>1</span></div>
+                                        <div class="calendar-day-events-list">
+                                            <a href="">CR - 10:00 ás 11:00hr</a>
+                                            <a href="">VH - 10:00 ás 11:00hr</a>
+                                            <a href="">CR - 10:00 ás 11:00hr</a>
+                                            <a href="">VH - 10:00 ás 11:00hr</a>
+                                            <a href="">CR - 10:00 ás 11:00hr</a>
+                                            <a href="">VH - 10:00 ás 11:00hr</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                                <li>6</li>
+                                <li>7</li>
+                                <li>8</li>
+                                <li>9</li>
+                                <li>10</li>
+                                <li>11</li>
+                                <li>12</li>
+                                <li>13</li>
+                                <li>14</li>
+                                <li>15</li>
+                                <li>16</li>
+                                <li>17</li>
+                                <li>18</li>
+                                <li>19</li>
+                                <li>20</li>
+                                <li>21</li>
+                                <li>22</li>
+                                <li>23</li>
+                                <li>24</li>
+                                <li>25</li>
+                                <li>26</li>
+                                <li>27</li>
+                                <li>28</li>
+                                <li>29</li>
+                                <li>30</li>
+                                <li>31</li>
+                                <!-- <ul class="calendar-list-number-cont">
+
+
+
+                                    <li onclick="actionDay('01/<%= monthNow %>')">
+
+
+                                        <div class="calendar-row-actions-register">
+                                            <div class="calendar-date"><span>1</span></div>
+                                        </div>
+                                        
+                                        <div class="calendar-list-events">
+                                            <ul class="calendar-ul-events-all">
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                                <li><a href="">Evento 1</a></li>
+                                            </ul>
+                                        </div>
+
+
+                                    </li>
+
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                </ul>
+
+                                
+                                <ul class="calendar-list-number-cont">
+                                    <li onclick="actionDay('08/<%= monthNow %>')">8</li>
+                                    <li onclick="actionDay('09/<%= monthNow %>')">9</li>
+                                    <li onclick="actionDay('10/<%= monthNow %>')">10</li>
+                                    <li onclick="actionDay('11/<%= monthNow %>')">11</li>
+                                    <li onclick="actionDay('12/<%= monthNow %>')">12</li>
+                                    <li onclick="actionDay('13/<%= monthNow %>')">13</li>
+                                    <li onclick="actionDay('14/<%= monthNow %>')">14</li>
+                                </ul>
+
+                                <ul class="calendar-list-number-cont">
+                                    <li onclick="actionDay('15/<%= monthNow %>')">15</li>
+                                    <li onclick="actionDay('16/<%= monthNow %>')">16</li>
+                                    <li onclick="actionDay('17/<%= monthNow %>')">17</li>
+                                    <li onclick="actionDay('18/<%= monthNow %>')">18</li>
+                                    <li onclick="actionDay('19/<%= monthNow %>')">19</li>
+                                    <li onclick="actionDay('20/<%= monthNow %>')">20</li>
+                                    <li onclick="actionDay('21/<%= monthNow %>')">21</li>
+                                </ul>
+
+                                <ul class="calendar-list-number-cont">
+                                    <li onclick="actionDay('22/<%= monthNow %>')">22</li>
+                                    <li onclick="actionDay('23/<%= monthNow %>')">23</li>
+                                    <li onclick="actionDay('24/<%= monthNow %>')">24</li>
+                                    <li onclick="actionDay('25/<%= monthNow %>')">25</li>
+                                    <li onclick="actionDay('26/<%= monthNow %>')">26</li>
+                                    <li onclick="actionDay('27/<%= monthNow %>')">27</li>
+
+                                <% if(AllDays == 28){ %>
+                                    <li onclick="actionDay('28/<%= monthNow %>')">28</li>
+                                </ul>
+                                <% }else if(AllDays == 29){ %>
+                                    <li onclick="actionDay('28/<%= monthNow %>')">28</li>
+                                </ul>
+                                <ul class="calendar-list-number-cont">
+                                    <li>29</li>
+                                </ul>
+                                <% }else if(AllDays == 30){ %>
+                                    <li onclick="actionDay('28/<%= monthNow %>')">28</li>
+                                </ul>
+                                <ul class="calendar-list-number-cont">
+                                    <li onclick="actionDay('29/<%= monthNow %>')">29</li>
+                                    <li onclick="actionDay('30/<%= monthNow %>')">30</li>
+                                </ul>
+                                <% }else if(AllDays == 31){ %>
+                                    <li onclick="actionDay('28/<%= monthNow %>')">28</li>
+                                </ul>
+                                <ul class="calendar-list-number-cont">
+                                    <li onclick="actionDay('29/<%= monthNow %>')">29</li>
+                                    <li onclick="actionDay('30/<%= monthNow %>')">30</li>
+                                    <li onclick="actionDay('31/<%= monthNow %>')">31</li>
+                                </ul>
+                                <% } %> -->
+                                
+                            </ul>
+                        </div>
+
+                    </section>
+
+                    
+                </section>
+
+                <!-- -->
+
+
+                
+                <section class="calendar-info-display">
+                    <div class="calendar-info-center-main">
+                        <div class="calendar-display-screens">
+                            <ul class="calendar-list-actions-main">
+                                <li id="events-one"><span>Eventos Publicos</span></li>
+                                <li id="events-two"><span>Meus Eventos</span></li>
+                            </ul>
+                        </div>
+
+
+                        <!-- -->
+
+
+                        <div id="calendar-envents-one" class="calendar-container-list-events-one">
+                            <div class="calendar-list-avents">
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Beauty Fair 2021</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                        <!-- -->
+
+
+                        <div id="calendar-envents-two" class="calendar-container-list-events-two">
+                            <div class="calendar-list-avents">
+
+
+
+
+                                <a class="calendar-row-container-envent" href="calendario/evento/outubro/2021/1">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+
+
+                                <a class="calendar-row-container-envent" href="#">
+                                    <div class="calendar-row-one">
+                                        <i class="ri-calendar-event-fill"></i>
+                                    </div>
+                                    <div class="calendar-row-two">
+                                        <span>Meus Eventos</span>
+                                        <span>O maior evento de beleza e estética da america latina aaa aaa aaa aaa aaa aa</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <!-- -->
+
+
+                        <div class="calendar-container-footer-events">
+                            <div class="calendar-footer-actions">                                
+                                <a href="calendario/scan"><i class="ri-camera-3-line"></i></a>
+                                <a href="calendario/setting"><i class="ri-settings-3-fill"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>
+
+
+<section class="section-calendar-section-set-event" id="section-calendar-section-set-event">
+    <section class="section-container-set-event">
+        <div class="calendar-main-set">
+            <div class="calendar-close-screen"><div class="title-box-cal"><span id="date-selected">04 de Outubro de 2021</span></div><div><i id="close-screen-add" class="ri-close-line"></i></div></div>
+
+            <form class="form-set-event" action="" method="post">
+                <div class="form-event-row">
+                    <div class="form-event-container-large">
+                        <label for="">Nome do Evento</label>
+                        <input class="event-form-input-text" type="text" name="" id="">
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-event-container-large">
+                        <label for="">Descrição</label>
+                        <textarea class="calendar-text-area" name="" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-event-container">
+                        <label for="">Evento</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">Reunião</option>
+                            <option value="">Evento Público</option>
+                            <option value="">Evento Pessoal</option>
+                        </select>
+                    </div>
+                    <div class="form-event-container">
+                        <div class="form-event-check"><input type="checkbox" name="" id="check-day-select"><label for="check-day-select">Dia inteiro</label></div>
+                        <div class="form-event-check"><input type="checkbox" name="" id="check-event-select"><label for="check-event-select">Evento Público</label></div>
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-event-container-large">
+                        <label for="">Das</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">06:00</option>
+                            <option value="">06:30</option>
+                            <option value="">07:00</option>
+                            <option value="">07:30</option>
+                            <option value="">08:00</option>
+                            <option value="">08:30</option>
+                            <option value="">09:00</option>
+                            <option value="">09:30</option>
+                            <option value="">10:00</option>
+                            <option value="">10:30</option>
+                            <option value="">11:00</option>
+                            <option value="">11:30</option>
+                            <option value="">12:00</option>
+                            <option value="">12:30</option>
+                            <option value="">13:00</option>
+                            <option value="">13:30</option>
+                            <option value="">14:00</option>
+                            <option value="">14:30</option>
+                            <option value="">15:00</option>
+                            <option value="">15:30</option>
+                            <option value="">16:00</option>
+                            <option value="">16:30</option>
+                            <option value="">17:00</option>
+                            <option value="">17:30</option>
+                            <option value="">18:00</option>
+                            <option value="">18:30</option>
+                            <option value="">19:00</option>
+                            <option value="">19:30</option>
+                            <option value="">20:00</option>
+                            <option value="">20:30</option>
+                            <option value="">21:00</option>
+                            <option value="">21:30</option>
+                            <option value="">22:00</option>
+                            <option value="">22:30</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-event-container-large">
+                        <label for="">Ás</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">06:00</option>
+                            <option value="">06:30</option>
+                            <option value="">07:00</option>
+                            <option value="">07:30</option>
+                            <option value="">08:00</option>
+                            <option value="">08:30</option>
+                            <option value="">09:00</option>
+                            <option value="">09:30</option>
+                            <option value="">10:00</option>
+                            <option value="">10:30</option>
+                            <option value="">11:00</option>
+                            <option value="">11:30</option>
+                            <option value="">12:00</option>
+                            <option value="">12:30</option>
+                            <option value="">13:00</option>
+                            <option value="">13:30</option>
+                            <option value="">14:00</option>
+                            <option value="">14:30</option>
+                            <option value="">15:00</option>
+                            <option value="">15:30</option>
+                            <option value="">16:00</option>
+                            <option value="">16:30</option>
+                            <option value="">17:00</option>
+                            <option value="">17:30</option>
+                            <option value="">18:00</option>
+                            <option value="">18:30</option>
+                            <option value="">19:00</option>
+                            <option value="">19:30</option>
+                            <option value="">20:00</option>
+                            <option value="">20:30</option>
+                            <option value="">21:00</option>
+                            <option value="">21:30</option>
+                            <option value="">22:00</option>
+                            <option value="">22:30</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-event-container">
+                        <label for="">Local</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">Matriz Jaraguá</option>
+                            <option value="">Matriz Pirituba</option>
+                            <option value="">Outro Local</option>
+                        </select>
+                    </div>
+                    <div class="form-event-container" style="width: 50%;">
+                        <label for="">Nome do Local</label>
+                        <input class="event-form-input-text" type="text" name="" id="">
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-event-container">
+                        <label for="">Lembre-me</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">1 Hora Antes</option>
+                            <option value="">2 Horas Antes</option>
+                            <option value="">5 Horas Antes</option>
+                            <option value="">10 Horas Antes</option>
+                            <option value="">15 Horas antes</option>
+                            <option value="">1 Dia antes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr style="margin-bottom: 23px;">
+
+                <div class="form-event-row">
+                    <div class="form-event-container-large">
+                        <label for="">Pessoas</label>
+                        <input class="event-form-input-text" type="text" name="" id="">
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="container-list-users-event">
+                        <div class="user-cont-single"><input readonly value="Vitor Henrique" type="text"><button type="button"><i class="ri-close-line"></i></button></div>
+                        <div class="user-cont-single"><input readonly value="Vitor Henrique" type="text"><button type="button"><i class="ri-close-line"></i></button></div>
+                        <div class="user-cont-single"><input readonly value="Vitor Henrique" type="text"><button type="button"><i class="ri-close-line"></i></button></div>
+                        <div class="user-cont-single"><input readonly value="Vitor Henrique" type="text"><button type="button"><i class="ri-close-line"></i></button></div>
+                        <div class="user-cont-single"><input readonly value="Vitor Henrique" type="text"><button type="button"><i class="ri-close-line"></i></button></div>
+                    </div>
+                </div>
+
+                <hr style="margin-bottom: 23px;">
+
+                <div class="form-event-row">
+                    <div class="form-event-container">
+                        <label for="">Sala</label>
+                        <select class="calendar-select-actions" name="" id="">
+                            <option value="">Sala 1</option>
+                            <option value="">Sala 2</option>
+                            <option value="">Sala 3</option>
+                        </select>
+                    </div>
+                    <div class="form-event-container">
+                        <div class="form-event-check"><input type="checkbox" name="" id="check-sala-select"><label for="check-sala-select">Não usarei a sala</label></div>
+                    </div>
+                </div>
+
+                <div class="form-event-row">
+                    <div class="form-action-commands">
+                        <button id="button-save-day" value="">Salvar</button>
+                        <button id="button-close" type="button">Cancelar</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</section>
+<script>
+    function actionDay(idDay){
+        $(function(){
+
+            //jogando a data no titulo
+            $('#date-selected').text(idDay.split('/')[0] + ' ' + $("#month-year-page").text())
+
+            $("#button-save-day").val(idDay);
+            $("#section-calendar-section-set-event").fadeIn();
+            $("#section-calendar-section-set-event").css("display","flex");
+        })
+    }
+$(function(){
+
+    //Close screen add
+    $("#close-screen-add").click(function(){
+        $("#section-calendar-section-set-event").fadeOut();
+    })
+
+    $("#button-close").click(function(){
+        $("#section-calendar-section-set-event").fadeOut();
+    })
+
+    $("#events-one").click(function(){
+        $("#calendar-envents-two").css("display","none");
+        $("#calendar-envents-one").fadeIn(500);
+
+        $("#events-one").css("border-bottom","2px solid var(--color-one)")
+        $("#events-two").css("border","0")
+    })
+
+    $("#events-two").click(function(){
+        $("#calendar-envents-one").css("display","none");
+        $("#calendar-envents-two").fadeIn(500);
+
+        $("#events-two").css("border-bottom","2px solid var(--color-one)")
+        $("#events-one").css("border","0")
+    })
+})
+</script>

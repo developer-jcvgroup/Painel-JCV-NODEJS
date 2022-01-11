@@ -1,0 +1,260 @@
+<link rel="stylesheet" href="/panel/css/beleza/listRequests.css">
+<section class="requests-container-main">
+    <section class="requests-container-page">
+        <div class="requests-container-identify-page">
+            <span>Lista de Solicitações</span>
+            <span>/ Programa da Beleza</span>
+        </div>
+
+        <section class="section-requests-container-search">
+            <section class="requests-center-body">
+                <div class="requests-title-box"><span>Busque por solicitações</span></div>
+
+                <section class="request-main-page">
+                    <form class="request-form-search" action="./requests/search" method="post">
+                        <div class="requests-container-row-form">
+                            <div class="request-form-box">
+                                <label for="">Referência</label>
+                                <select name="blzReferenceMonth" id="">
+                                    <option value="<%= monthReference %>">Ref. Atual (<%= monthReference %>)</option>
+                                    <option value="" disabled> </option>
+                                    <option value="01-<%= yearNow %>">Janeiro</option>
+                                    <option value="02-<%= yearNow %>">Fevereiro</option>
+                                    <option value="03-<%= yearNow %>">Março</option>
+                                    <option value="04-<%= yearNow %>">Abril</option>
+                                    <option value="05-<%= yearNow %>">Maio</option>
+                                    <option value="06-<%= yearNow %>">Junho</option>
+                                    <option value="07-<%= yearNow %>">Julho</option>
+                                    <option value="08-<%= yearNow %>">Agosto</option>
+                                    <option value="09-<%= yearNow %>">Setembro</option>
+                                    <option value="10-<%= yearNow %>">Outubro</option>
+                                    <option value="11-<%= yearNow %>">Novembro</option>
+                                    <option value="12-<%= yearNow %>">Dezembro</option>
+                                </select>
+                            </div>
+                            <div class="request-form-box">
+                                <label for="">Status</label>
+                                <select name="" id="status-select-filter">
+                                    <option value=""></option>
+                                    <option value="1">Pedente</option>
+                                    <option value="2">Solicitado</option>
+                                    <option value="3">Cancelados</option>
+                                    <option value="4">Separados</option>
+                                    <option value="5">Pedidos de Cancelamentos</option>
+                                </select>
+                            </div>
+                            <div class="request-form-box">
+                                <label for="">Unidade</label>
+                                <select name="blzUnidade[]" id="unidade-select-filter">
+                                    <option value=""></option>
+                                    <% unidades.forEach(element => {  %>
+                                        <option value="<%= element['sys_unity_id'] %>"><%= element['sys_unity_name'] %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="request-form-box">
+                                <label for="">Gestor</label>
+                                <select class="requests-select-large" name="blzGestor" id="gestor-select-filter">
+                                    <option value=""></option>
+                                    <% blzGestor.forEach(element => {  %>
+                                        <option value="<%= element['jcv_id'] %>"><%= element['jcv_userNamePrimary'] %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="request-form-box-actions">
+                                <button class="class-loader" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="requests-container-row-form-filter">
+                            <div class="sys-filter-display-main" id="sys-filter-display-main">
+                                <div class="sys-filter-container-col">
+                                    <div class="sys-filter-title">
+                                        <span>Filtros</span>
+                                    </div>
+                                    <div class="sys-filter-component-boxs" id="sys-filter-component-boxs">
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </section>        
+
+        <% if(locals.resultSearchData != ""){ %>
+        <form class="requests-container-list-all" action="./actions/orders/commands" method="post">
+            <section class="section-requests-list-center">
+                <div class="requests-title-box"><span>Lista de solicitações</span></div>
+                <div class="requests-order-srs-search">
+                    <div class="requests-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nomde do solicitante, gestor, unidade.." id="input-search-requests">
+                    </div>
+                    <div class="container-actions-checks-requests">
+                        <div class="requests-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="requestOrderCommands" id="">
+                                <option value="">⠀⠀Selecione⠀⠀</option>
+                                    <option value="" disabled>-- Status</option>
+                                    <option value="CMD02">⠀⠀Separado(s)</option>
+                                    <option value="CMD03">⠀⠀Cancelado(s)</option>
+                                    <option value="" disabled>⠀⠀</option>
+                                    <option value="" disabled>-- Exportar</option>
+                                    <option value="CMD04">⠀⠀Exportar Pedidos</option>
+                                    <option value="CMD05">⠀⠀Exportar (Produtos)</option>
+                                    <option value="CMD07">⠀⠀Exportar (Por unidade)</option>
+                                    <option value="" disabled>⠀⠀</option>
+                                    <option value="" disabled>-- Avançado</option>
+                                    <option value="CMD06">⠀⠀Gerar etiquetas</option>
+                            </select>
+                        </div>
+                        <div class="requests-box-actions-checks-button">
+                            <button type="submit" id="reload-page">Executar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="requests-container-table">
+                    <table class="request-list-table" id="request-list-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>Solicitante</th>
+                                <th>Unidade</th>
+                                <th>Gestor</th>
+                                <th>Produtos</th>
+                                <th>Status</th>
+                                <th>Ref</th>
+                                <th>Gerado</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% resultSearchData.forEach(element => { %>
+                                <tr class="request-row-check-mark">
+                                    <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_id'] %>" name="requestOrderId"></td>
+                                    <td><b><%= element['sys_blz_userName'] %></b></td>
+                                    <td><%= element['sys_unity_name'] %></td>
+                                    <td><b><%= element['jcv_userNameSecundary'] %></b></td>
+                                    <td>
+                                        <div class="requests-container-products">
+                                            <span><b>Shampoo:</b> <%= element['sys_blz_tratmentOne'] %></span>
+                                            <span><b>Tratamento:</b> <%= element['sys_blz_tratmentTwo'] %></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <% if(element['sys_blz_requestStatus'] == 1){ %>
+                                            <b>Pendente</b>
+                                        <% }else if(element['sys_blz_requestStatus'] == 2){ %>
+                                            <b>Solicitado</b>
+                                        <% }else if(element['sys_blz_requestStatus'] == 3){ %>
+                                            <b style="color: red;">Cancelado</b>
+                                        <% }else if(element['sys_blz_requestStatus'] == 4){ %>
+                                            <b>Separado</b>
+                                        <% }else if(element['sys_blz_requestStatus'] == 5){ %>
+                                            <b>Pedido de cancelamento</b>
+                                        <% }%>
+                                    </td>
+                                    <td><%= element['sys_blz_requestReference'] %></td>
+                                    <td><%= element['sys_blz_requestCreate'] %></td>
+                                    <td>
+                                        <div class="requests-container-actions-table">
+                                            
+                                            <form></form>
+
+                                            <form method="post">
+                                                <button formaction="./actions/order/download" value="<%= element['sys_blz_id'] %>" name="btnDownloadOrder"><i class="ri-download-line"></i></button>
+
+                                                <button formaction="./actions/order/delete" value="<%= element['sys_blz_id'] %>" name="btnDeleteOrder"><i class="ri-delete-bin-line"></i></button>
+                                            </form>
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table> 
+                </div>
+            </section>
+        </form>
+        <% }%>
+    </section>
+</section>
+<script>
+let countButtonsOne = 0;
+let countButtonsTwo = 0;
+
+$(function(){
+
+    //Input Search
+    $.fn.searchInputTable('#request-list-table tr', '#input-search-requests')
+
+    //Paginação das tabelas
+    $.fn.paginationTableMain('#request-list-table',15,0);
+
+    //Adicionando um filtro: Unidades
+    $("select#unidade-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','unidade-select-filter','Unidade');
+    })
+
+    //Adicionando um filtro: Gestor
+    $("select#gestor-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','gestor-select-filter','Gestor');
+    })
+
+    //Adicionando um filtro: Status
+    $("select#status-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','Status');
+    })
+
+
+
+
+
+
+
+
+    //Checknox all
+    $("#checkbox-select-all").click(function(){
+        var checkSet = $(this).is(':checked');
+        var inputsCheckedmodel = $('.checkbox-select-single');
+
+        if(checkSet == true){
+            inputsCheckedmodel.prop('checked', true);
+        }else{
+            inputsCheckedmodel.prop('checked', false);
+        }
+    })
+    $(".checkbox-select-single").click(function(){
+        $("#checkbox-select-all").prop("checked", false)
+    })
+    
+})
+
+//Button remove filter One
+function buttonFilterUnidade(idButton){
+    $(function(){
+        countButtonsOne--;
+
+        if(countButtonsOne == 0){
+            $('#requests-filter-content-one').css("display", "none");
+        }
+        $("#button-filter-unidade-"+idButton).remove();
+    })
+}
+
+//Button remove filter Two
+function buttonFilterGestor(idButton){
+    $(function(){
+        countButtonsTwo--;
+
+        if(countButtonsTwo == 0){
+            $('#requests-filter-content-two').css("display", "none");
+        }
+        $("#button-filter-gestor-"+idButton).remove();
+    })
+}
+</script>

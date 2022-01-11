@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login/css/index.css">
+    <link rel="stylesheet" href="/login/css/spinLoad.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
+    <title>Log in | JCV GROUP</title>
+</head>
+<script>
+    $(function(){
+        
+        
+
+
+        $("#index-recovery-open").click(function(){
+            $("#index-recover-pass").fadeIn();
+            $("#index-recover-pass").css("display","flex");
+        })
+
+        $("#index-recover-close").click(function(){
+            $("#index-recover-pass").fadeOut();
+        })
+
+        //Input mask login
+        $('#input-cpf').mask('000.000.000-00');
+        //Input mask reset pass
+        $('#input-cpf-reset-pass').mask('000.000.000-00');
+
+        //Spin loader
+        $(".class-loader").click(function(){
+            $("#sys-section-loader").fadeIn();
+        })
+
+
+        //animação das frases
+        let textmsg = '<%- frasesIndex %>'.split('//')
+        let textauthor = '<%- authorIndex %>'.split('//')
+
+        textmsg.pop()
+        textauthor.pop()
+
+        var atualmsg = 0;
+        var atualauthor = 0;
+
+        $('#span-msg').text(textmsg[atualmsg++]);
+        setInterval(function() {
+            $('#span-msg').fadeOut(function() {
+                if (atualmsg >= textmsg.length) atualmsg = 0;
+                $('#span-msg').text(textmsg[atualmsg++]).fadeIn();
+            });
+        }, 7000);
+        
+
+        $('#span-author').text(textauthor[atualauthor++]);
+        setInterval(function() {
+            $('#span-author').fadeOut(function() {
+                if (atualauthor >= textauthor.length) atualauthor = 0;
+                $('#span-author').text(textauthor[atualauthor++]).fadeIn();
+            });
+        }, 7000);
+
+    });
+</script>
+<body>
+<section class="index-section-index-page">
+    <section class="index-section-main">
+        <section class="index-banner-image">
+            <div class="index-image-wallpaper">
+                <img class="index-bg-background" src="/login/img/bg-fundo.png" alt="" srcset="">
+                <div class="index-container-msg-sys">
+                    <div class="index-cont-msg">
+                        <span id="span-msg">“XX”</span>
+                        <span id="span-author">XX</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="index-section-login">
+            <div class="index-login-container">
+                <form class="index-form-login" action="/login/logar" method="post">
+                    <div class="index-login-logo">
+                        <img id="image-1" class="index-logo" src="/logos/jcvLogo.png" alt="">
+                    </div>
+                    <div class="index-title-box">
+                        <span>Sistema JCV GROUP</span>
+                    </div>
+                    <div class="index-inputs-container">
+                        <div class="index-row-form">
+                            <div class="index-box-input">
+                                <label for="">Informe seu CPF</label>
+                                <input id="input-cpf" type="text" name="cpfUser">
+                            </div>
+                        </div>
+
+                        <div class="index-row-form">
+                            <div class="index-box-input">
+                                <label for="">Insira sua senha</label>
+                                <input type="password" name="cpfPassword">
+                            </div>
+                        </div>
+
+                        <div class="index-row-commands">
+                            <input hidden name="input-link-special" type="text" value="<%= linkspecial %>">
+                            <button class="class-loader" type="submit">logar</button>
+                        </div>
+                        <div class="index-help-pass">
+                            <span id="index-recovery-open">Esqueci minha senha</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+</section>
+
+
+<section id="index-recover-pass" class="index-recover-password">
+    <section class="index-recover-container-main">
+        <div class="index-recover-center">
+            <div class="index-recover-header">
+                <span>Recupera a senha</span>
+                <span><i id="index-recover-close" class="ri-close-line"></i></span>
+            </div>
+            <div class="index-recover-body">
+                <form class="index-form-recover" method="post">
+                    <div class="index-form-recover-row">
+                        <span>Informe seu CPF</span>
+                    </div>
+                    <div class="index-form-recover-row">
+                        <input type="text" name="cpfResetPass" id="input-cpf-reset-pass">
+                    </div>
+                    <div class="index-form-recover-row-commands">
+                        <button formaction="/login/action/reset/pass" class="class-loader" type="submit">Recuperar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section class="system-section-notification" id="system-section-notification">
+    <div class="sys-notifi-container-main" id="sys-notifi-container-main">
+
+        <!-- itens inseridos dinamicamente -->
+
+    </div>
+</section>
+<section class="sys-section-loader" id="sys-section-loader">
+    <section class="sys-section-load-main">
+        <div class="sys-spin-load">
+            <div id="loader"></div>
+        </div>
+    </section>
+</section>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<link rel="stylesheet" href="/panel/css/calendar/viewEvent.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="event-main-section">
+    <section class="event-section-viewer-event">
+        <div class="event-event-edit-box">
+            <div class="event-back-event-edit"><a href="/painel/calendario/main"><i class="ri-arrow-left-line"></i></a></div>
+            <div class="event-title-day"><span><%= allDataEvent[0].sys_calendar_eventName %></span><span> - <%= allDataEvent[0].sys_calendar_eventDate %></span></div>
+            <div class="event-event-edit-cont-main">
+                <div class="event-row-container">
+                    <div class="event-box-main">
+                        <label>Descrição</label>
+                        <span><%= allDataEvent[0].sys_calendar_eventDescription %></span>
+                    </div>
+
+                    <div class="event-box-main">
+                        <label>Horário</label>
+                        <span><%= allDataEvent[0].sys_calendar_eventHours %></span>
+                    </div>
+
+                    <div class="event-box-main">
+                        <label>Local</label>
+                        <% if(typeof(getLocation) == 'object'){ %>
+                            <span><%= getLocation[0].sys_unity_name %></span>
+                        <% }else{ %>
+                            <span><%= getLocation %></span>
+                        <% } %>
+                    </div>
+
+                    <div class="event-box-main">
+                        <label>Pessoas</label>
+                        <span>
+                            <% if(allDataPersons == false){ %>
+                                <span>Somente o criador é participante</span>
+                            <% }else{ %>
+                                <% allDataPersons.forEach(element => { %>
+                                    <%= element.jcv_userNamePrimary %> <br>
+                                <% }) %>
+                            <% } %>
+                        </span>
+                    </div>
+
+                    <div class="event-box-main">
+                        <label>Sala</label>
+                        <span><%= allDataEvent[0].sys_calendar_roomName %></span>
+                    </div>
+
+                    <div class="event-box-main">
+                        <label>Evento</label>
+
+                        <% if(allDataEvent[0].sys_calendar_eventPublic == 1){ %>
+                            <span><b>Evento Publico</b></span>
+                        <% }else{ %>
+                            <span><b>Evento Privado</b></span>
+                        <% } %>
+
+                    </div>
+
+                    <div class="event-box-main">
+                        <% if(allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
+                        <form class="event-action-command" method="post">
+                            <button type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event">Excluir Evento</button>
+                            <button id="view-open-edit-event-edit" type="button">Editar Evento</button>
+                        </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+<section class="event-edit-display-event" id="event-edit-display-event">
+    <form class="event-edit-event-box" method="post">
+        <div class="event-edit-event-day-title">
+            <div class="event-edit-event-day-title-set">
+                <span id="event-edit-day-dinamic"><%= allDataEvent[0].sys_calendar_eventName %></span>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-day-title-close">
+                <i id="event-close-display-day" class="ri-close-line"></i>
+            </div>
+        </div>
+        <!--  -->
+        <div class="event-edit-event-main">
+            <div class="event-edit-event-set-name">
+                <input name="event-edit-register-name" type="text" value="<%= allDataEvent[0].sys_calendar_eventName %>">
+            </div>
+        </div>
+        <!--  -->
+        <div class="event-edit-event-description">
+            <label for="">Descrição</label>
+            <textarea name="event-edit-register-description" rows="5"><%= allDataEvent[0].sys_calendar_eventDescription %></textarea>
+        </div>
+        <!--  -->
+        <div class="event-edit-event-select-day">
+            <label for="">Data</label>
+            <input required name="event-edit-register-date" id="event-edit-input-date" type="date" value="<%= allDataEvent[0].sys_calendar_eventDate.split('/')[2] %>-<%= allDataEvent[0].sys_calendar_eventDate.split('/')[1] %>-<%= allDataEvent[0].sys_calendar_eventDate.split('/')[0] %>" >
+        </div>
+        <!--  -->
+        <div class="event-edit-event-operation">
+            <div class="event-edit-event-operation-initial">
+                <label for="">Das</label>
+                <select name="event-edit-register-hour-initial" id="event-edit-register-hour-initial">
+                    <option value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] %>"><%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] %></option>
+                    <option disabled></option>
+                    <option value="06:00">06:00</option>
+                    <option value="06:30">06:30</option>
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                    <option value="23:30">23:30</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-operation-final">
+                <label for="">Das</label>
+                <select name="event-edit-register-hour-final" id="event-edit-register-hour-final">
+                    <option value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[1] %>"><%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[1] %></option>
+                    <option disabled></option>
+                    <option value="06:30">06:30</option>
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                    <option value="23:30">23:30</option>
+                </select>
+            </div>   
+            <!--  -->
+            <div class="event-edit-event-operation-sep"></div><!-- SEPARATOR -->
+            <!--  -->
+            <div class="event-edit-event-operation-day">
+                <label for="">Evento Publico</label>
+                <% if(allDataEvent[0].sys_calendar_eventPublic == 1){ %>
+                    <input type="checkbox" checked name="event-edit-register-event-public">
+                <% }else { %>
+                    <input type="checkbox" name="event-edit-register-event-public">
+                <% } %>
+            </div>  
+        </div>
+        <!--  -->
+        <div class="event-edit-event-locate">
+            <div class="event-edit-event-locate-cont">
+                <label for="">Local:</label>
+                <select name="event-edit-register-location" id="event-edit-register-location">
+                    <option value="<%= allDataEvent[0].sys_calendar_eventLocation %>"><%= allDataEvent[0].sys_unity_name %></option>
+                    <option disabled></option>
+                    <% allLocations.forEach(element => { %>
+                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
+                    <% }) %>
+                    <option value="not">Outro local</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-locate-name">
+                <input id="event-edit-register-location-name" type="text" placeholder="Insira o nome do local..">
+            </div>
+        </div>
+        <!--  -->
+        <div class="event-edit-event-reminder">
+            <div class="event-edit-event-reminder-box">
+                <label for="">Lembre-me</label>
+                <select  name="event-edit-register-reminder">
+                    <!-- FORMATO EM MINUTOS -->
+                    <option value="1440">1 Dia antes</option>
+                    <option value="60">1 Hora antes</option>
+                    <option value="30">30 minutos antes</option>
+                    <option value="15">15 minutos antes</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-reminder-room">
+                <label for="">Sala</label>
+                <select name="event-edit-register-room">
+                    <option value="<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></option>
+                    <option disabled></option>
+                    <% getAllRooms.forEach(element => { %>
+                        <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
+                    <% }) %>
+                    <option value="0">Não usarei</option>
+                </select>
+            </div>
+        </div>
+        <!--  -->
+        <hr style="margin: 30px 0;">
+        <!--  -->
+        <div class="event-edit-event-persons">
+            <div class="event-edit-event-persons-filter">
+                <input type="text" placeholder="Pessoas que participarão do evento" id="insert-person">
+                <button type="button" id="button-add-person">Adicionar</button>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-persons-list">
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <% if(getPersonsEvents != false) { %>
+                    <% getPersonsEvents.forEach(element => { %>
+                        <div class="event-edit-event-person-box" id="person-id-<%= element.jcv_id %>">
+                            <input readonly type="text" value="<%= element.jcv_userNamePrimary %>">
+                            <input hidden value="<%= element.jcv_id %>" name="event-edit-register-persons"/>
+                            <button onclick="functionRemovePerson('<%= element.jcv_id %>')" value="<%= element.jcv_id %>" type="button"><i class="ri-close-circle-line"></i></button>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <!--  -->
+        <hr style="margin: 30px 0;">
+        <!--  -->
+        <div class="event-edit-event-actions">
+            <button type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/register/edit" name="button-edit-event">Salvar</button>
+            <button type="button" id="event-edit-close-event">Cancelar</button>
+        </div>
+    </form>
+</section>
+<script>
+    $(function(){
+        $("#view-open-edit-event-edit").click(function(){
+            $("#event-edit-display-event").fadeIn().css('display','flex');
+        })
+        
+        /* EVENTO DIA INTEIRO */
+        $("#event-edit-register-all-day").click(function(){
+            //$('#calendar-register-hour-initial option[value=06:00]').attr('selected','selected');
+
+            $("#event-edit-register-hour-initial").val("06:00").change();
+            $("#event-edit-register-hour-final").val("00:00").change();
+        })
+    })
+
+
+    //LISTANDO OS USUARIOS
+    let dataOne = '<%- locals.allUsers %>';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#insert-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+
+
+    //Pegando os ids dos usuarios deste evento
+    let arrayString = '<%- allDataEvent[0].sys_calendar_eventPersons %>'.split(',');
+    let idArray = [];
+
+    arrayString.forEach(element => {
+        idArray.push(parseInt(element));
+    });
+
+    console.log(idArray)
+
+    //ADICIONANDO PESSOAS
+    $("#button-add-person").click(function(){
+        //Usuario a ser adicionado
+        const valIdUser = $("#insert-person").val().split('-')[0];
+        const valPerson = $("#insert-person").val().split('-')[1];
+
+        if(idArray.indexOf(parseInt(valIdUser)) != -1){
+            $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+        }else{
+            idArray.push(parseInt(valIdUser))
+            $(".event-edit-event-persons-list")
+            .append(
+            `<div class="event-edit-event-person-box" id="person-id-${valIdUser}">
+                <input readonly type="text" value="${valPerson}">
+                <input hidden value="${valIdUser}" name="event-edit-register-persons"/>
+                <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+            </div>`
+            )
+
+            console.log(idArray)
+
+            $("#insert-person").val('')
+        }
+    })
+    function functionRemovePerson(id){
+
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    }
+
+    /* SELECIONANDO A SALA */
+    $("select#event-edit-register-location").change(function(){
+        let valueSelect = $(this).val();
+
+        if(valueSelect == 'not'){
+            $(".event-edit-event-locate-name input").css('display','flex')
+            $(".event-edit-event-locate-name input").attr('name','event-edit-calendar-register-location')//Atribuindo o name ao input
+            $("#event-edit-register-location").attr('name','xxx')
+        }else{
+            $(".event-edit-event-locate-name input").css('display','none')
+            $("#event-edit-register-location").attr('name','event-edit-calendar-register-location')
+            $(".event-edit-event-locate-name input").attr('name','xxx')
+        }
+    })
+
+    /* CLOSE DISPLAY EVENT DAY */
+    $("#event-close-display-day").click(function(){
+        $("#event-edit-display-event").fadeOut();
+    })
+    /* CLOSE DISPLAY EVENT DAY */
+    $("#event-edit-close-event").click(function(){
+        $("#event-edit-display-event").fadeOut();
+    })
+
+</script>

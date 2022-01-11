@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="/panel/css/system/unidades.css">
+
+<section class="sys-unidades-container-main">
+    <section class="sys-unidades-container-page">
+        <div class="sys-unidades-container-identify-page">
+            <span>Unidades</span>
+            <span>/ Sistema</span>
+        </div>
+
+        <section class="sys-section-search-container">
+            <div class="sys-section-container-main">
+                <div class="sys-box-search">
+                    <input type="text" placeholder="Busque pelo nome, id, região, status.." id="input-search-table">
+                </div>
+            </div>
+        </section>
+
+        <form class="sys-unidades-section-list" method="post">
+            <div class="sys-unidades-container-main-list">
+                <div class="sys-unidades-container-fix">
+                    <table class="sys-unidades-table-list" id="sys-unidades-table-list">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Unidade</th>
+                                <th>Região</th>
+                                <th>Ativo?</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td><input class="sys-input-table-large-one" type="text" placeholder="Insira uma nova unidade.." name="unidade-save-name"></td>
+                                <td>
+                                    <select name="unidade-save-region">
+                                        <option value="Região Norte">Região Norte</option>
+                                        <option value="Região Nordeste">Região Nordeste</option>
+                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
+                                        <option value="Região Sudeste">Região Sudeste</option>
+                                        <option value="Região Sul">Região Sul</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="sys-unidades-button-switch">
+                                        <input type="checkbox" name="unidade-save-enabled">
+                                        <span class="sys-unidades-button-slider round"></span>
+                                    </label>
+                                </td>
+                                
+                                <td>
+                                    <div class="sys-actions-commands">
+                                        <button formaction="./unidades/action/save" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <% unitys.forEach(element => { %>
+                            <tr>
+                                <td><%= element.sys_unity_id %></td>
+                                <td><input class="sys-input-table-large-one" type="text" value="<%= element.sys_unity_name %>" name="unitys-edit-name-<%= element.sys_unity_id %>"></td>
+                                <td>
+                                    <select name="unitys-edit-region-<%= element.sys_unity_id %>">
+
+                                        <option value="<%= element.sys_unity_region %>"><%= element.sys_unity_region %></option>
+
+                                        <option disabled></option>
+                                        <option value="Região Norte">Região Norte</option>
+                                        <option value="Região Nordeste">Região Nordeste</option>
+                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
+                                        <option value="Região Sudeste">Região Sudeste</option>
+                                        <option value="Região Sul">Região Sul</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <% if(element.sys_unity_enabled == 1){ %>
+                                        <label class="sys-unidades-button-switch">
+                                            <input checked type="checkbox" name="unitys-edit-enabled-<%= element.sys_unity_id %>">
+                                            <span class="sys-unidades-button-slider round"></span>
+                                        </label>
+                                    <% }else{ %>
+                                        <label class="sys-unidades-button-switch">
+                                            <input type="checkbox" name="unitys-edit-enabled-<%= element.sys_unity_id %>">
+                                            <span class="sys-unidades-button-slider round"></span>
+                                        </label>
+                                    <% } %>
+                                </td>
+                                
+                                <td>
+                                    <div class="sys-actions-commands">
+                                        <button formaction="./unidades/action/save/edit" value="<%= element.sys_unity_id %>" name="unitys-edit-id" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#sys-unidades-table-list',10,1);
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#sys-unidades-table-list','#input-search-table')
+    })
+</script>
