@@ -20,13 +20,11 @@
                             <div class="edit-order-container-box-large">
                                 <label for="">Busque por um item</label>
                                 <input type="text" name="" id="input-item-name" placeholder="busque pelo nome, referência, id, etc.">
+                                <i id="open-list-itens" style="position: absolute; margin-top: 20px; cursor: pointer; background: var(--background-two);"><i class="ri-search-line"></i></i>
                             </div>
                             <div class="edit-order-container-box-single">
                                 <label for="">Quantidade</label>
                                 <input type="number" name="" id="input-item-amount" min="1">
-                            </div>
-                            <div class="edit-order-container-link">
-                                <span id="open-list-itens">Lista de itens <i class="ri-external-link-line"></i></span>
                             </div>
                             <div class="edit-order-container-button">
                                 <button type="button" class="edit-order-button-default" id="button-insert-item">Adicionar</button>
@@ -103,7 +101,7 @@
                 <tbody>
                     <% arrayItems.forEach(element => { %>
                     <tr>
-                        <td><%= element.split(' - ')[1] %></td>
+                        <td><button class="edit-new-main-itens-table-button-item button-add-item" value="<%= element %>"><%= element.split(' - ')[1] %></button></td>
                         <td>
                             <button value="<%= element %>" class="edit-new-main-itens-table-button button-add-item">
                                 <i class="ri-arrow-right-line"></i>

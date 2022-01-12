@@ -60,6 +60,13 @@ authenticate = async (req, res, next) => {
 
             global.GLOBAL_PERM = resultPermissions;
 
+
+            //Validadno o link, olhar no README!!!!
+            let linkspecial = req.query.linkspecial;
+            if(linkspecial != undefined){
+                res.redirect(linkspecial)
+            }
+
             next();
 
         }else{

@@ -6,131 +6,146 @@
 
 <section class="calendar-main">
     <section class="calendar-section-menu">
-        <div class="calendar-menu-open">
-            <i id="calendar-menu-open" class="ri-menu-2-line"></i>
-        </div>
+
+
+
         <!--  -->
         <div class="calendar-menu-main" id="calendar-menu-main">
-            <div class="calendar-menu-close">
-                <i id="calendar-menu-close" class="ri-close-line"></i>
+            <!--  -->
+            <div class="calendar-menu-icons">
+                <ul class="calendar-menu-list-inc">
+                    <li class="calendar-visible-bottom"><a href="/painel/calendario/main"><i class="ri-home-3-line"></i></a><hr></li>
+                    <li class="calendar-visible-bottom"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
+                    <li class="calendar-visible-bottom"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
+                    <li class="calendar-visible-bottom"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
+                    <li><a href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
+                </ul>
             </div>
             <!--  -->
-            <div class="calendar-menu-main-box">
-                <div class="calendar-menu-icons">
-                    <ul class="calendar-menu-list-inc">
-                        <li class="calendar-visible-bottom"><a href="/painel/calendario/main"><i class="ri-home-3-line"></i></a><hr></li>
-                        <li class="calendar-visible-bottom"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
-                        <li class="calendar-visible-bottom"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
-                        <li class="calendar-visible-bottom"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
-                        <li><a href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
-                    </ul>
+            <div class="calendar-menu-events-all" id="public-events">
+                <div class="calendar-menu-close">
+                    <i class="ri-close-line calendar-menu-close-command"></i>
                 </div>
                 <!--  -->
-                <div class="calendar-menu-events-all" id="public-events">
-                    <div class="calendar-menu-events-title-box">
-                        <span>Eventos Públicos</span>
-                    </div>
-                    <!--  -->
-
-
-
-
-                    <% if(allEventsPublic != ''){ %>
-                        <% allEventsPublic.forEach(element => { %>
-                            <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
-                                <div class="calendar-menu-events-ul-one">
-                                    <i class="ri-calendar-check-fill"></i>
-                                </div>
-                                <!--  -->
-                                <div class="calendar-menu-events-ul-two">
-                                    <span><%= element.sys_calendar_eventName %></span>
-                                    <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
-                                </div>
-                            </a>
-                            <hr style="width: 95%; margin: 7px 0;">
-                        <% }) %>
-                    <% }else{ %>
-                        <span>Nenhum evento disponível</span>
-                    <% } %>
-
-
-
+                <div class="calendar-menu-events-title-box">
+                    <span>Eventos Públicos</span>
                 </div>
-
-
-
-
                 <!--  -->
-                <!--  -->
-
-                <div class="calendar-menu-events-all" id="my-events">
-                    <div class="calendar-menu-events-title-box">
-                        <span>Meus Eventos</span>
-                    </div>
-                    <!--  -->
-
-
-                    <% if(allEventsPrivate != ''){ %>
-                        <% allEventsPrivate.forEach(element => { %>
-                            <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
-                                <div class="calendar-menu-events-ul-one">
-                                    <i class="ri-calendar-check-fill"></i>
-                                </div>
-                                <!--  -->
-                                <div class="calendar-menu-events-ul-two">
-                                    <span><%= element.sys_calendar_eventName %></span>
-                                    <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
-                                </div>
-                            </a>
-                            <hr style="width: 95%; margin: 7px 0;">
-                        <% }) %>
-                    <% }else{ %>
-                        <span>Nenhum evento disponível</span>
-                    <% } %>
-                    </a>
-                </div>
-
-                <!--  -->
-                <!--  -->
-
-                <div class="calendar-menu-events-all" id="rooms-events">
-                    <div class="calendar-menu-events-title-box">
-                        <span>Eventos por sala</span>
-                    </div>
-                    <!--  -->
-                    <div class="calendar-box-room-event">
-
-                        
-                        <% getAllRooms.forEach(element => { %>
-                        <a class="calendar-menu-events-ul" href="/painel/calendario/viewRoom/<%= element.sys_calendar_roomId %>/<%= monthNow.split('/')[0] %>-<%= monthNow.split('/')[1] %>">
+                <% if(allEventsPublic != ''){ %>
+                    <% allEventsPublic.forEach(element => { %>
+                        <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
                             <div class="calendar-menu-events-ul-one">
                                 <i class="ri-calendar-check-fill"></i>
                             </div>
                             <!--  -->
                             <div class="calendar-menu-events-ul-two">
-                                <span><%= element.sys_calendar_roomName %></span>
-
-                                <% let countEventsFinal = 0; %>
-                                
-                                <% let countEvents; %>
-                                <% allEventsCount.forEach(elementTwo => { %>
-                                   
-                                    <% if (elementTwo.sys_calendar_eventRoom ==  element.sys_calendar_roomId){ %>
-                                        <% countEventsFinal++ %>
-                                    <% } %>
-
-                                <% }) %>
-
-                                <span><%= countEventsFinal%> eventos</span>
+                                <span><%= element.sys_calendar_eventName %></span>
+                                <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
                             </div>
                         </a>
                         <hr style="width: 95%; margin: 7px 0;">
-                        <% }) %>
-                    </div>
+                    <% }) %>
+                <% }else{ %>
+                    <span>Nenhum evento disponível</span>
+                <% } %>
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+            <!--  -->
+            <!--  -->
+
+            <div class="calendar-menu-events-all" id="my-events">
+                <div class="calendar-menu-close">
+                    <i class="ri-close-line calendar-menu-close-command"></i>
                 </div>
                 <!--  -->
+                <div class="calendar-menu-events-title-box">
+                    <span>Meus Eventos</span>
+                </div>
+                <!--  -->
+
+
+                <% if(allEventsPrivate != ''){ %>
+                    <% allEventsPrivate.forEach(element => { %>
+                        <a class="calendar-menu-events-ul" href="../../event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> ">
+                            <div class="calendar-menu-events-ul-one">
+                                <i class="ri-calendar-check-fill"></i>
+                            </div>
+                            <!--  -->
+                            <div class="calendar-menu-events-ul-two">
+                                <span><%= element.sys_calendar_eventName %></span>
+                                <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
+                            </div>
+                        </a>
+                        <hr style="width: 95%; margin: 7px 0;">
+                    <% }) %>
+                <% }else{ %>
+                    <span>Nenhum evento disponível</span>
+                <% } %>
+                </a>
             </div>
+
+            <!--  -->
+            <!--  -->
+
+            <div class="calendar-menu-events-all" id="rooms-events">
+                <div class="calendar-menu-close">
+                    <i class="ri-close-line calendar-menu-close-command"></i>
+                </div>
+                <!--  -->
+                <div class="calendar-menu-events-title-box">
+                    <span>Eventos por sala</span>
+                </div>
+                <!--  -->
+                <div class="calendar-box-room-event">
+
+                    
+                    <% getAllRooms.forEach(element => { %>
+                    <a class="calendar-menu-events-ul" href="/painel/calendario/viewRoom/<%= element.sys_calendar_roomId %>/<%= monthNow.split('/')[0] %>-<%= monthNow.split('/')[1] %>">
+                        <div class="calendar-menu-events-ul-one">
+                            <i class="ri-calendar-check-fill"></i>
+                        </div>
+                        <!--  -->
+                        <div class="calendar-menu-events-ul-two">
+                            <span><%= element.sys_calendar_roomName %></span>
+
+                            <% let countEventsFinal = 0; %>
+                            
+                            <% let countEvents; %>
+                            <% allEventsCount.forEach(elementTwo => { %>
+                                
+                                <% if (elementTwo.sys_calendar_eventRoom ==  element.sys_calendar_roomId){ %>
+                                    <% countEventsFinal++ %>
+                                <% } %>
+
+                            <% }) %>
+
+                            <span><%= countEventsFinal%> eventos</span>
+                        </div>
+                    </a>
+                    <hr style="width: 95%; margin: 7px 0;">
+                    <% }) %>
+                </div>
+            </div>
+            <!--  -->
         </div>
+
+
+
+
+
+
+
+        
     </section>
 
     <!--  -->
@@ -397,7 +412,7 @@
         <!--  -->
         <div class="calendar-event-persons">
             <div class="calendar-event-persons-filter">
-                <input type="text" placeholder="Pessoas que participarão do evento" id="insert-person">
+                <input type="text" placeholder="Equipe para participar" id="insert-person">
                 <button type="button" id="button-add-person">Adicionar</button>
             </div>
             <!--  -->
@@ -436,37 +451,35 @@
 
         //Exibindo meus eventos
         $("#calendar-events-my").click(function(){
-            eventsMy.fadeIn();
 
             eventPublic.css('display','none');
             eventRooms.css('display','none');
+
+            eventsMy.fadeIn();
+            
         })
         //Exibindo eventos publicos
         $("#calendar-events-publics").click(function(){
-            eventPublic.fadeIn();
-
             eventsMy.css('display','none');
             eventRooms.css('display','none');
+
+            eventPublic.fadeIn();
         })
         //Exibindo eventos das salas
         $("#calendar-events-room").click(function(){
-            eventRooms.fadeIn();
-
             eventsMy.css('display','none');
             eventPublic.css('display','none');
+
+            eventRooms.fadeIn();
         })
 
 
         /////////////////////////////////////////
         /* MENU CLOSE */
-        $("#calendar-menu-close").click(function(){
+        $(".calendar-menu-close-command").click(function(){
             //$("#calendar-menu-main").toggle()
-            $("#calendar-menu-main").animate({width: "toggle"},100);
-        })
-        /* MENU OPEN */
-        $("#calendar-menu-open").click(function(){
-            //$("#calendar-menu-main").toggle()
-            $("#calendar-menu-main").animate({width: "toggle"},100);
+            //$("#calendar-menu-main").animate({width: "toggle"},100);
+            $(".calendar-menu-events-all").fadeOut()
         })
 
         

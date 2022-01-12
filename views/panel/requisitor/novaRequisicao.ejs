@@ -19,13 +19,11 @@
                             <div class="req-new-container-box-large">
                                 <label for="">Busque por um item</label>
                                 <input type="text" name="" placeholder="busque pelo nome, referência, id, etc." id="input-item-name">
+                                <i id="open-list-itens" style="position: absolute; margin-top: 20px; cursor: pointer; background: var(--background-two);"><i class="ri-search-line"></i></i>
                             </div>
                             <div class="req-new-container-box-single">
                                 <label for="">Quantidade</label>
                                 <input type="number" name="" id="input-item-amount" min="1">
-                            </div>
-                            <div class="req-new-container-link">
-                                <span id="open-list-itens">Lista de itens <i class="ri-external-link-line"></i></span>
                             </div>
                             <div class="req-new-container-button">
                                 <button class="req-new-button-default" id="button-insert-item" type="button">Adicionar</button>
@@ -91,7 +89,7 @@
                 <tbody>
                     <% arrayItems.forEach(element => { %>
                     <tr>
-                        <td><%= element.split(' - ')[1] %></td>
+                        <td><button class="button-add-item req-new-main-itens-table-button-item" value="<%= element %>"><%= element.split(' - ')[1] %></button></td>
                         <td>
                             <button value="<%= element %>" class="req-new-main-itens-table-button button-add-item">
                                 <i class="ri-arrow-right-line"></i>

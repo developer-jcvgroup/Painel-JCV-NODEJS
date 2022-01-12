@@ -11,30 +11,22 @@
 .calendar-section-menu{
     display: flex;
     flex-direction: column;
-}
-.calendar-menu-open{
-    padding: 13px;
-}
-.calendar-menu-open i{
-    color: var(--color-one);
-    font-size: 1.2rem;
-    cursor: pointer;
+    height: 100%;
 }
 
 /* MENU EM SI */
 .calendar-menu-main{
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    width: 400px;
-    height: calc(100% - 46px);
-    background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
+    height: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    /* position: absolute; */
+    /* width: 400px; */
+    justify-content: space-between;
 }
 
 /* MENU */
 .calendar-menu-close{
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
     display: flex;
     justify-content: right;
@@ -48,15 +40,8 @@
 }
 
 /* MENU BOX */
-.calendar-menu-main-box{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 .calendar-menu-icons{
-    width: 55px;
+    width: 50px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -85,12 +70,16 @@
 
 /* MENU LIST EVENTS */
 .calendar-menu-events-all{
-    width: 100%;
-    height: 100%;
-    display: flex;
+    position: absolute;
+    margin-left: 50px;
+    width: 400px;
+    height: calc(100% - var(--heigth-header));
+    display: none;
     flex-direction: column;
     align-items: center;
-    padding-top: 40px;
+    padding: 15px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
 }
 .calendar-menu-events-title-box{
     width: 90%;
@@ -405,6 +394,7 @@
 }
 .calendar-event-box{
     width: 40%;
+    min-width: 600px;
     max-height: 600px;
     display: flex;
     padding: 15px;
@@ -738,7 +728,7 @@
 /************************/
 /* RESPONSIVE */
 @media only screen and (max-width: 800px){
-    .calendar-event-box{
+    /* .calendar-event-box{
         width: 90%;
     }
     .calendar-menu-main-box{
@@ -749,15 +739,63 @@
     }
     .calendar-menu-open{
         position: absolute;
+    } */
+
+    .calendar-main-box{
+        padding: 0;
     }
+    .calendar-box{
+        padding: 5px;  
+    }
+
+    .calendar-main{
+        flex-direction: column;
+    }
+    .calendar-section-menu{
+        width: 100%;
+        height: 55px;
+    }
+    .calendar-menu-main{
+        width: 100%;
+    }
+    .calendar-menu-icons{
+        width: 100%;
+        height: 100%;
+    }
+    .calendar-menu-list-inc{
+        display: flex;
+    }
+    .calendar-menu-list-inc > li{
+        margin: 0 23px;
+    }
+
+    .calendar-menu-events-all{
+        margin-top: 55px;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .calendar-event-box{
+        min-width: 95%;
+    }
+
+    .calendar-day-box-list-events{
+        display: none;
+    }
+
+    .calendar-week-days li{
+        font-size: 0.6rem;
+    }
+
+
 }
 @media only screen and (max-width: 400px){
-    .calendar-menu-main{
+    /* .calendar-menu-main{
         width: 100%;
     }
 
 
     .calendar-week-days li{
         font-size: 0.7rem;
-    }
+    } */
 }

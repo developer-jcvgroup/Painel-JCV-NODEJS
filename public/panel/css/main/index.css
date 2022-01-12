@@ -195,6 +195,11 @@ header{
     align-items: center;
     justify-content: center;
 }
+.index-header-logo a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .header-img-logo{
     width: 50%;
 }
