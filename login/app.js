@@ -8,11 +8,6 @@ const database = require("./database/database");
 router.get("/", async (req,res)=>{
 
     const linkspecial = req.query['linkspecial']
-
-
-
-    //input-link-special
-
     const allAuthor = await database.select("sys_phrase_string","sys_phrase_author").where({sys_phrase_enalbed: 1}).table("jcv_sys_phrase").then( data => {
         
         let arrFrase = '';
@@ -27,7 +22,31 @@ router.get("/", async (req,res)=>{
         return arr;
     })
 
-    res.render("login/index", {frasesIndex: allAuthor[0], authorIndex: allAuthor[1], linkspecial: linkspecial})
+    //Pegando todas as contas que não possui uma senha
+    const allAccountPass = await database
+    .select("jcv_userCpf")
+    .where({jcv_userPassword: null})
+    .table("jcv_users")
+    .then( data => {
+
+        let newArr = []
+        if(data != ''){
+            data.forEach(element => {
+                newArr.push(element.jcv_userCpf)
+            });
+        }else{
+            newArr.push('')
+        }
+        return newArr;
+
+    })
+
+    res.render("login/index", {
+        frasesIndex: allAuthor[0], 
+        authorIndex: allAuthor[1], 
+        linkspecial: linkspecial,
+        allAccountPass: allAccountPass
+    })
 })
 
 /**********************/

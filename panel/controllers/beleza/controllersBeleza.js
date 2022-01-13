@@ -3,11 +3,6 @@ const getPermissions = require("../../middlewarePermissions");
 const fs = require('fs');
 
 const moment = require("moment");
-const { compareSync } = require("bcryptjs");
-const { report } = require("process");
-const { count, Console } = require("console");
-const { type } = require("os");
-const { join } = require("path");
 moment.locale('pt-BR');
 
 //URL arquivos para download
@@ -432,6 +427,8 @@ exports.actionsCommandsOrder = async (req,res) => {
         createTagsOrders(arrayPedidos,req,res)
     }else if(commandSet == "CMD07"){
         exportsUnitysExcel(arrayPedidos,req,res)
+    }else if(commandSet == "CMD08"){
+        exportProductsUnity(arrayPedidos,req,res)
     }else{
         //Opção não encontrado
     }
@@ -822,20 +819,6 @@ async function exportsUnitysExcel(ids,req,res) {
     const nameData = 'EXPORT-PRODUCTS-'+caracteresAleatorios;
 
     wb.write(nameData+'.xlsx', res)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 async function alterarStatus(ids, status,req,res) {
@@ -906,5 +889,140 @@ async function alterarStatus(ids, status,req,res) {
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
             res.redirect("/painel/beleza/solicitacoes");
         }
+    }
+}
+
+// FUNÇÃO PARA EXPORTAR OS PRODUTOS POR UNIDADE
+async function exportProductsUnity (ids,req,res){
+
+    const xl = require('excel4node');
+    const wb = new xl.Workbook();
+    const ws = wb.addWorksheet('Worksheet Name');
+
+    if(ids.length >= 1){
+        const productTwo = await database
+        .raw("SELECT sys_blz_tratmentTwo,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY COUNT(sys_blz_tratmentTwo) DESC")
+        .then(data => {
+            return data[0];
+        })
+
+        const productOne = await database
+        .raw("SELECT sys_blz_tratmentOne,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY COUNT(sys_blz_tratmentOne) DESC")
+        .then(data => {
+            return data[0];
+        })
+
+        let newArrayComp = []
+        productOne.forEach(element => {
+            newArrayComp.push([element.sys_blz_tratmentOne,element.sys_unity_name,element.Qtd,element.sys_blz_userUnity])
+        })
+        productTwo.forEach(elementO => {
+            newArrayComp.push([elementO.sys_blz_tratmentTwo,elementO.sys_unity_name,elementO.Qtd,elementO.sys_blz_userUnity])
+        })
+
+        function sortByKey(array, key) {
+            return array.sort(function(a, b) {
+                var x = a[key]; var y = b[key];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            });
+        }
+
+        //let newArrayItensExports = sortByKey(newArrayComp,2)
+
+
+        const headingColumnNames = [
+            "Produtos",
+            "Unidade",
+            "Quantidade Somada"
+        ]
+        
+        let headingColumnIndex = 1; //diz que começará na primeira linha
+        headingColumnNames.forEach(heading => { //passa por todos itens do array
+            // cria uma célula do tipo string para cada título
+            ws.cell(1, headingColumnIndex++).string(heading);
+        });
+        
+        let ordersExportsUnitys = sortByKey(newArrayComp,3);
+        //console.log(ordersExportsUnitys)
+
+
+        let rowIndex = 2;
+        let atualIndex = 0;
+
+        for(let i = 0; i < ordersExportsUnitys.length; i++){
+
+            if(ordersExportsUnitys[i][3] == atualIndex){
+                //console.log("é igual: "+ordersExportsUnitys[i].sys_blz_userUnity)
+            }else{
+
+                //console.log("Mudou para: "+ordersExportsUnitys[i].sys_blz_userUnity)
+                atualIndex = ordersExportsUnitys[i][3];
+                i--;
+                rowIndex++;
+
+                ordersExportsUnitys.forEach( record => {
+                    let columnIndex = 1;
+
+                    if(record[3] == atualIndex){
+
+                        Object.keys(record).forEach(columnName =>{
+
+                            //Verificando se o dado é numero
+                            if(typeof(record[columnName]) === 'number'){
+                                ws.cell(rowIndex,columnIndex++)
+                                .number(record [columnName])
+                            }else{
+                                ws.cell(rowIndex,columnIndex++)
+                                .string(record [columnName])
+                            }
+                        });
+                        rowIndex++;
+
+                    }else{
+                        //rowIndex++;
+                    }
+                });
+            }
+
+
+        }
+
+        /* let rowIndex = 2;
+        productOne.forEach( record => {
+            let columnIndex = 1;
+            Object.keys(record).forEach(columnName =>{
+
+                //Verificando se o dado é numero
+                if(typeof(record[columnName]) === 'number'){
+                    ws.cell(rowIndex,columnIndex++)
+                    .number(record [columnName])
+                }else{
+                    ws.cell(rowIndex,columnIndex++)
+                    .string(record [columnName])
+                }
+            });
+            rowIndex++;
+        });
+
+        productTwo.forEach( record => {
+            let columnIndex = 1;
+            Object.keys(record).forEach(columnName =>{
+
+                //Verificando se o dado é numero
+                if(typeof(record[columnName]) === 'number'){
+                    ws.cell(rowIndex,columnIndex++)
+                    .number(record [columnName])
+                }else{
+                    ws.cell(rowIndex,columnIndex++)
+                    .string(record [columnName])
+                }
+            });
+            rowIndex++;
+        }); */
+
+        const caracteresAleatorios = Math.random().toString(36).substring(5);
+        const nameData = 'EXPORT-PRODUCTS-'+caracteresAleatorios;
+
+        wb.write(nameData+'.xlsx', res)
     }
 }

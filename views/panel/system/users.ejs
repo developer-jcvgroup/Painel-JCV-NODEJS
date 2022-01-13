@@ -33,6 +33,7 @@
 
                                 <th>Requisitor</th>
                                 <th>Progama da Beleza</th>
+                                <th>Calendario</th>
 
                                 <th>Classificado</th>
                                 <th>Ativo?</th>
@@ -120,6 +121,30 @@
                                             <div class="sys-container-two-box">
                                                 <label for=""><b>*Admin*</b></label>
                                                 <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-admin" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="sys-container-two">
+                                        <div class="sys-container-two-row">
+                                            <div class="sys-container-two-box">
+                                                <label for="">Utilizar</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-use" id="">
+                                            </div>
+
+                                            <!-- Gestor -->
+                                            <div class="sys-container-two-box">
+                                                <label for="">Gestor</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-manager" id="">
+                                            </div>
+
+                                            <!-- admin -->
+
+                                            <div class="sys-container-two-box">
+                                                <label for=""><b>*Admin*</b></label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-admin" id="">
                                             </div>
                                         </div>
                                     </div>
@@ -295,6 +320,46 @@
                                                 </div>
                                             </div>
                                         </td>
+
+                                        <td>
+                                            <div class="sys-container-two">
+                                                <div class="sys-container-two-row">
+
+                                                    <!-- use -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Utilizar</label>
+                                                        
+                                                        <% if(element.sys_cal_perm_use == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+
+                                                    <!-- manager -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Gestor</label>
+                                                        
+                                                        <% if(element.sys_cal_perm_manager == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-manager-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-manager-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+        
+                                                    <!-- admin -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for=""><b>*Admin*</b></label>
+                                                        
+                                                        <% if(element.sys_cal_perm_admin == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
         
                                         <td>
                                             <select name="save-edit-sys-type-user-<%= element.jcv_id %>" id="">
@@ -349,6 +414,7 @@
                                         <td>
                                             <div class="sys-actions-commands">
                                                 <button formaction="./action/sys/user/save-edit" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-save-edit"><i class="ri-save-line"></i></button>
+                                                <button formaction="./action/sys/user/resetpass" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-reset-pass"><i class="ri-lock-unlock-line"></i></button>
                                                 <!-- <button formaction="./action/sys/user/delete" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-delete-edit"><i class="ri-delete-bin-line"></i></button> -->
                                             </div>
                                         </td>

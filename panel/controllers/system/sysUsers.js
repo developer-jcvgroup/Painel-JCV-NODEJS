@@ -65,6 +65,10 @@ exports.saveNewUser = async (req,res) => {
     const userSYSbelezaManager = req.body['save-new-sys-beleza-manager'] == 'on' ? 1 : 0;
     const userSYSbelezaAdmin = req.body['save-new-sys-beleza-admin'] == 'on' ? 1 : 0;
 
+    const userSYScalendarUse = req.body['save-new-sys-calendar-use-'+idUser] == 'on' ? 1 : 0;
+    const userSYScalendarManager = req.body['save-new-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
+    const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin-'+idUser] == 'on' ? 1 : 0;
+
     const userType = parseInt(req.body['save-new-sys-type-user']);
     const userSYSemail = parseInt(req.body['save-new-sys-mails']);
     const userAtivo = parseInt(req.body['save-new-active']);
@@ -95,7 +99,10 @@ exports.saveNewUser = async (req,res) => {
             sys_blz_perm_admin: userSYSbelezaAdmin,
             sys_req_perm_use: userSYSrequisitorUse,
             sys_req_perm_manager: userSYSbelezaManager,
-            sys_req_perm_admin: userSYSrequisitorAdmin
+            sys_req_perm_admin: userSYSrequisitorAdmin,
+            sys_cal_perm_use: userSYScalendarUse,
+            sys_cal_perm_manager: userSYScalendarManager,
+            sys_cal_perm_admin: userSYScalendarAdmin
 
         }).table("jcv_users_permissions").then(data => {
             if(data != ''){
@@ -137,6 +144,11 @@ exports.editSaveUser = async (req,res) => {
     const userSYSbelezaManager = req.body['save-edit-sys-beleza-manager-'+idUser] == 'on' ? 1 : 0;
     const userSYSbelezaAdmin = req.body['save-edit-sys-beleza-admin-'+idUser] == 'on' ? 1 : 0;
 
+    const userSYScalendarUse = req.body['save-edit-sys-calendar-use-'+idUser] == 'on' ? 1 : 0;
+    const userSYScalendarManager = req.body['save-edit-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
+    const userSYScalendarAdmin = req.body['save-edit-sys-calendar-admin-'+idUser] == 'on' ? 1 : 0;
+
+
     const userType = parseInt(req.body['save-edit-sys-type-user-'+idUser]);
     const userSYSemail = parseInt(req.body['save-edit-sys-mails-'+idUser]);
     const userAtivo = parseInt(req.body['save-edit-active-'+idUser]);
@@ -165,7 +177,10 @@ exports.editSaveUser = async (req,res) => {
             sys_blz_perm_admin: userSYSbelezaAdmin,
             sys_req_perm_use: userSYSrequisitorUse,
             sys_req_perm_manager: userSYSrequisitorManager,
-            sys_req_perm_admin: userSYSrequisitorAdmin
+            sys_req_perm_admin: userSYSrequisitorAdmin,
+            sys_cal_perm_use: userSYScalendarUse,
+            sys_cal_perm_manager: userSYScalendarManager,
+            sys_cal_perm_admin: userSYScalendarAdmin
 
         }).table("jcv_users_permissions").where({sys_blz_perm_userId: idUser}).then(data => {
             if(data != ''){
@@ -175,11 +190,19 @@ exports.editSaveUser = async (req,res) => {
         })
 
     })
+}
 
+exports.resetPassUser = async (req,res) => {
+    const idUser = req.body['user-action-reset-pass']
 
-
-
-
-
-
+    database.update({jcv_userPassword: null}).where({jcv_id: idUser}).table("jcv_users").then( data => { 
+        if(data == 1){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+            req.session.cookieLogin = undefined;
+            res.redirect("/login");
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            res.redirect("/painel/system/users");
+        }
+    })
 }

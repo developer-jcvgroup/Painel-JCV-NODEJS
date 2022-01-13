@@ -107,6 +107,35 @@ async function getPermissions (req, res, next) {
 
     }
 
+    //CONFIGURAÇÃO DO CALENDARIO
+    if(urlPage[0] == "calendario"){
+
+        let pageError = true;
+        //ADMIN GERAL
+        if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use === 1){
+            return next();
+        }
+        if(urlPage[1] == "event" && resultPermissions[0].sys_cal_perm_use === 1){
+            return next();
+        }
+        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_manager === 1){
+            return next();
+        }
+        if(urlPage[1] == "viewRoom" && resultPermissions[0].sys_cal_perm_use === 1){
+            return next();
+        }
+        if(urlPage[1] == "viewEvent" && resultPermissions[0].sys_cal_perm_use === 1){
+            return next();
+        }
+
+        //Não foi encontrado
+        if(pageError){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.redirect("/painel");
+        }
+
+    }
+
 
 
 

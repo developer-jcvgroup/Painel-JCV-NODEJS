@@ -18,7 +18,9 @@
                     <li class="calendar-visible-bottom"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
                     <li class="calendar-visible-bottom"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
                     <li class="calendar-visible-bottom"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
-                    <li><a href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
+                    <% if(GLOBAL_PERM[0].sys_cal_perm_manager == 1){ %>
+                        <li><a href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
+                    <% } %>
                 </ul>
             </div>
             <!--  -->

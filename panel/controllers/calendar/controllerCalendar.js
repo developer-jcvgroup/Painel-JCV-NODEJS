@@ -162,7 +162,10 @@ exports.saveNewEvent = async (req,res) => {
     //Pegando as HORAS DISPONIVEIS DO DIA
     const hoursFree = await database
     .select("sys_calendar_eventHours")
-    .where({sys_calendar_eventDate: eventDay})
+    .where({
+        sys_calendar_eventDate: eventDay,
+        sys_calendar_eventRoom: eventRoom
+    })
     .table("jcv_calendar_registers")
     .then( data => {
         return data;
@@ -453,7 +456,7 @@ exports.editSaveNewEvent = async (req,res) => {
     //Pegando as HORAS DISPONIVEIS DO DIA
     const hoursFree = await database
     .select("sys_calendar_eventHours")
-    .whereRaw("sys_calendar_eventDate = '"+eventDay+"' AND sys_calendar_eventId NOT IN("+idEvent+")")
+    .whereRaw("sys_calendar_eventDate = '"+eventDay+"' AND sys_calendar_eventId NOT IN("+idEvent+") AND sys_calendar_eventRoom = "+eventRoom)
     .table("jcv_calendar_registers")
     .then( data => {
         return data;

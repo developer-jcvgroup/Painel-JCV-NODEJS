@@ -102,18 +102,18 @@ router.post("/requisitor/delete/item", authenticate, itemsRequisitor.deleteItem)
 /***********************************/
 /***********************************/
 //Calendario: Pagina inicial
-router.get("/calendario/main/:numberMonth?/:yearMonth?", authenticate,controllerCalendar.viewCalendarMonth)
+router.get("/calendario/main/:numberMonth?/:yearMonth?", authenticate, getPermissions, controllerCalendar.viewCalendarMonth)
 //Calendario: Pagina de eventos
-router.get("/calendario/event/:idEvent?/:dayEvent?/:monthEvent?/:yearEvent?", authenticate, controllerCalendar.viewEvent)
+router.get("/calendario/event/:idEvent?/:dayEvent?/:monthEvent?/:yearEvent?", authenticate, getPermissions, controllerCalendar.viewEvent)
 //Calendario: Pagina de salas
-router.get("/calendario/room/RoomSettings", authenticate, controllerCalendar.roomSettings)
+router.get("/calendario/room/RoomSettings", authenticate, getPermissions, controllerCalendar.roomSettings)
 
 
 //Calendario: Pagina ver eventos da sala
-router.get("/calendario/viewRoom/:idRoom/:monthRoom?", authenticate, controllerCalendar.viewRoom)
+router.get("/calendario/viewRoom/:idRoom/:monthRoom?", authenticate, getPermissions, controllerCalendar.viewRoom)
 
 //Calendario: Ver evento do dia
-router.get("/calendar/viewEvent/Day/:dayEvent?", authenticate, controllerCalendar.viewEventDay)
+router.get("/calendar/viewEvent/Day/:dayEvent?", authenticate, getPermissions, controllerCalendar.viewEventDay)
 
 //Calendario: Criar novo evento
 router.post("/calendario/main/register/new", authenticate, controllerCalendar.saveNewEvent)
@@ -162,6 +162,8 @@ router.get("/system/users", authenticate, getPermissions, controllerUsers.listAl
 router.post("/system/action/sys/user/save", authenticate, controllerUsers.saveNewUser)
 //Salvar um usuario editado
 router.post("/system/action/sys/user/save-edit", authenticate, controllerUsers.editSaveUser)
+//Resetar a senha do usuario
+router.post("/system/action/sys/user/resetpass", authenticate, controllerUsers.resetPassUser)
 
 //Departamentos
 router.get("/system/departamentos", authenticate, getPermissions, controllerDepartment.listDepartments)

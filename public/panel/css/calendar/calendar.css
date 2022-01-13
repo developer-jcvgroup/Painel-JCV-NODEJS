@@ -47,7 +47,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--color-two);
+    background: var(--color-one);
     border-radius: 0 4px 4px 0;
 }
 .calendar-menu-list-inc{
@@ -217,7 +217,7 @@
     list-style: none;
     display: flex;
     align-items: center;
-    background-color: var(--color-two);
+    background-color: var(--color-one);
     border-radius: 4px;
 }
 .calendar-week-days li{

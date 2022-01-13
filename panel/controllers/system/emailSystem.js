@@ -1,4 +1,10 @@
 var ejs = require("ejs");
+const moment = require("moment");
+
+//Data atual
+function generateDate(){
+    return moment().format('LT')+" "+moment().format('L')
+}
 
 exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sysNameUser, sysMailTextOne, sysMailTextTwo) => {
 
@@ -36,7 +42,7 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
         if (err) {
             console.log(err);
         } else {
-            console.log('Message sent: ' + info.response);
+            console.log('Message sent: ' + info.response + ' | '+generateDate());
         }
     });
     

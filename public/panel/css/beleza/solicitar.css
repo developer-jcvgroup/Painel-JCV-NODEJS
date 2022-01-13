@@ -185,7 +185,7 @@
 
 .beleza-search-box{
     width: 500px;
-    max-height: 400px;
+    max-height: 70%;
     padding: 12px;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
@@ -231,6 +231,13 @@
     color: var(--color-one);
     font-size: 0.8rem;
     transition: 0.5s;
+}
+.beleza-search-button-item{
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
 }
 .beleza-button-select-product{
     font-size: 1.4rem;

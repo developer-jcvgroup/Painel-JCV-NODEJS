@@ -125,7 +125,7 @@ o registro de log referente a grupos sera: 01,02,03 onde lista os grupos que vã
 Programa da beleza
 - [sys_blz_perm_userId] *PRIMARY KEY* //id
 - [sys_blz_perm_use] *INT* //Permissão para o uso PADRÂO do sistema {solicitar, pedir cancelamento}
-- [sys_blz_perm_manager] *INT* //Gestores do sistema *NAO POSSUEM PRIVILEGIOS ADMIN*
+- [sys_blz_perm_manager] *INT* //Gestores do sistema *NAO POSSUEM PRIVILEGIOS ADMIN* {adicionar, remover e salvar produtos}
 - [sys_blz_perm_admin] *INT* //Permissão para uso como ADMIN {listar solicitações, aplicar ações, adicionar, remover e salvar produtos}
 *------*
 Requisitor de Materiais

@@ -46,7 +46,7 @@
         </div>
         <!--  -->
         <div class="beleza-search-box-row">
-            <input type="text" id="search-product-solicitar-one">
+            <input placeholder="Busque por um shampoo" type="text" id="search-product-solicitar-one">
         </div>
         <!--  -->
         <div class="beleza-search-box-table">
@@ -57,7 +57,7 @@
                 <tbody>
                     <% arrayProductOne.forEach(element => { %>
                         <tr>
-                            <td><%= element %></td>
+                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-one"><%= element %></button></td>
                             <td><button class="beleza-button-select-product button-select-one" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
                         </tr>
                     <% }) %>
@@ -75,7 +75,7 @@
         </div>
         <!--  -->
         <div class="beleza-search-box-row">
-            <input type="text" id="search-product-solicitar-two">
+            <input placeholder="Busque por um tratamento" type="text" id="search-product-solicitar-two">
         </div>
         <!--  -->
         <div class="beleza-search-box-table">
@@ -86,7 +86,7 @@
                 <tbody>
                     <% arrayProductTwo.forEach(element => { %>
                         <tr>
-                            <td><%= element %></td>
+                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-two"><%= element %></button></td>
                             <td><button class="beleza-button-select-product button-select-two" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
                         </tr>
                     <% }) %>

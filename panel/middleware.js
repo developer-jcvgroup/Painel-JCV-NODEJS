@@ -25,7 +25,7 @@ authenticate = async (req, res, next) => {
             let GLOBALimage = searchUser[0]["jcv_userImageIcon"];//Image
 
             //Verificando a senha
-            if(searchUser[0]["jcv_userPassword"] == searchUser[0]["jcv_userCpf"]){
+            if(searchUser[0]["jcv_userPassword"] == null){
                 global.DEFINEpassword = searchUser[0]["jcv_id"];
             }else{
                 global.DEFINEpassword = null;
