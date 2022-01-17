@@ -453,13 +453,11 @@
 
         //Exibindo meus eventos
         $("#calendar-events-my").click(function(){
-
             eventPublic.css('display','none');
             eventRooms.css('display','none');
-
             eventsMy.fadeIn();
-            
         })
+
         //Exibindo eventos publicos
         $("#calendar-events-publics").click(function(){
             eventsMy.css('display','none');
@@ -467,6 +465,7 @@
 
             eventPublic.fadeIn();
         })
+
         //Exibindo eventos das salas
         $("#calendar-events-room").click(function(){
             eventsMy.css('display','none');

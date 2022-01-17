@@ -94,6 +94,11 @@
       
 }
 .sys-users-table-list thead tr th{
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+
+
     border: none;
     border-bottom: 1px solid var(--color-five);
     text-align: left;
@@ -106,6 +111,11 @@
 
 
 .sys-users-table-list tbody tr td{
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+
+
     border: none;
     border-top: 1px solid var(--color-five);
     border-bottom: 1px solid var(--color-five);
@@ -146,7 +156,15 @@
     cursor: pointer;
 }
 
-
+.sys-users-table-list thead th:nth-child(2) {
+    left: 0;
+    z-index: 1;
+}
+.sys-users-table-list tbody td:nth-child(2) {
+    left: 0;
+    z-index: 1;
+    background: var(--background-two);
+}
 
 /**************************/
 /**************************/
