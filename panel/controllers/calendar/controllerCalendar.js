@@ -451,6 +451,7 @@ exports.editSaveNewEvent = async (req,res) => {
     const eventRoom = req.body['event-edit-register-room'];//0 REPRESENTA NÃO USAREI SALA
 
     const eventPersons = req.body['event-edit-register-persons'];
+    console.log(eventPersons)
 
 
     //Pegando as HORAS DISPONIVEIS DO DIA
@@ -503,6 +504,8 @@ exports.editSaveNewEvent = async (req,res) => {
 
         //Nova Array string
         arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
+    }else{
+        arrNewPerson = eventPersons;
     }
 
     //Validando os inputs

@@ -147,6 +147,21 @@
     align-items: center;
 }
 
+/* ICONES */
+.sys-icon-def{
+    width: 50%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+}
+.sys-icon-size{
+    width: 60%;
+    height: 100%;
+    height: fit-content;
+    object-fit: cover;
+}
+
 /* BOX BELEZA */
 .home-beleza-painel-status{
     width: 100%;
