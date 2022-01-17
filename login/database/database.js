@@ -1,7 +1,7 @@
 const connection = require('knex')({
     client: 'mysql2',
     connection: {
-    host : 'localhost',
+    host : 'localhostAAAAAAAAAAA',
     user : 'jcv',
     password : '!@#246810Cp',
     database : 'jcvpanel'
