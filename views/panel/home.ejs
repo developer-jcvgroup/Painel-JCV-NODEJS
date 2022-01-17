@@ -20,17 +20,19 @@
                         <div class="suspended-title">
                             <span>Calendario</span>
                         </div>
-                        <div class="chat-message-box-home">
-                            <div class="chat-box-content-home">
-                                <a href="/painel/calendario/main">
-                                    <i class="ri-calendar-line"></i>
+                        <div class="home-main-suspended-box">
+                            <div class="main-suspended-info">
+                                <a class="main-suspended-group-info" href="./painel/requisitor/Novo">
+                                    <div class="sys-icon-def">
+                                        <img class="sys-icon-size" src="/icons/icon-calendar.png" alt="">
+                                    </div>
+                                    <span></span>
                                     <span>Você possui <%= CALENDARcount.length %> participação em eventos</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
                 <div class="suspended-blocks-container">
                     <div class="suspended-container-center">
