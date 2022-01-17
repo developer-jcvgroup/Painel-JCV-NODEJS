@@ -242,7 +242,7 @@ exports.viewRequest = async (req,res) => {
             //Verificando se foi encontrado
             if(orderSearch == ""){
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum pedido encontrado.");
-                res.redirect("/painel/requisitor/MinhasRequisicoes")
+                res.redirect("/painel/requisitor/minhasRequisicoes")
             }else{
                 //Buscando os itens do pedido
                 const orderSearchItems = await database.select().where({sys_req_item_orderId: idView, sys_req_item_userId: GLOBAL_DASH[0]}).table("jcv_req_orders_items").then( data => {
@@ -767,7 +767,7 @@ exports.actionCommandsORders = async(req,res) => {
 exports.listMyRequests = async (req,res) => {
     //Pagina que lista a requisição do usuario
 
-    var page = "requisitor/MinhasRequisicoes";
+    var page = "requisitor/minhasRequisicoes";
     res.render("panel/index", {page: page, resultSearchMyRequests: req.flash('resultSearchMyRequests')})
 }
 
@@ -797,10 +797,10 @@ exports.searchMyRequest = async (req,res) => {
     //Validando se a busca é vazia
     if(resultSearch != ""){
         req.flash('resultSearchMyRequests', resultSearch)
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
 
@@ -883,7 +883,7 @@ exports.editRequestUser = async (req,res) => {
             //Validando e criando um cookie caso o status seja diferente de solicitado
             if(result[0].sys_req_orderStatus != 1){
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar este pedido por conta do status atual dele.");
-                res.redirect("/painel/requisitor/MinhasRequisicoes");
+                res.redirect("/painel/requisitor/minhasRequisicoes");
             }else{
                 //Validando se o pedido é do usuario ou não
                 if(result != false){
@@ -908,13 +908,13 @@ exports.editRequestUser = async (req,res) => {
 
                 }else{
                     res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
-                    res.redirect("/painel/requisitor/MinhasRequisicoes");
+                    res.redirect("/painel/requisitor/minhasRequisicoes");
                 }
             }
         }
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
 
@@ -1211,7 +1211,7 @@ exports.editRequestUserCommand = async(req,res) => {
         }
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar esta requisição.");
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
 
@@ -1420,11 +1420,11 @@ exports.myRequestRemove = async (req,res) => {
 
 
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
 
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
-        res.redirect("/painel/requisitor/MinhasRequisicoes");
+        res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
 
