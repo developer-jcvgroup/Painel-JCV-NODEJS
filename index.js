@@ -37,7 +37,7 @@ app.get("/", (req,res)=>{
 const jcvPanel = require("./panel/app")
 app.use("/painel", jcvPanel);
 
-app.listen(80, ()=>{
+app.listen(8080, ()=>{
     console.log(" ")
     console.log("Servidor Rodando")
     console.log(" ")
