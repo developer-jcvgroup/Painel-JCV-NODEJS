@@ -194,6 +194,7 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 8px;
 }
 .index-header-logo a{
     display: flex;
