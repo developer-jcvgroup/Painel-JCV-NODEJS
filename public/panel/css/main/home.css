@@ -56,7 +56,7 @@
 /* BLOCKS */
 .suspended-blocks-container{
     width: 310px;
-    height: 150px;
+    height: 200px;
     overflow-y: auto;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
