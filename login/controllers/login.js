@@ -63,6 +63,10 @@ exports.commandLogar = async (req, res) =>{
                     data[0]["jcv_userExtension"],
                     data[0]["jcv_userImageIcon"]
                 ];
+
+                res.redirect("/painel");
+            }else{
+                res.redirect("/login");
             }
 
         }else{
