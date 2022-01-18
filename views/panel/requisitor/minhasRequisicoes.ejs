@@ -11,7 +11,18 @@
 
 
                 <section class="list-order-information-send">
-                    <div class="list-order-title-box"><span>Execute uma ação</span></div>
+                    <div class="list-order-title-box">
+                        
+                        
+                        <div class="list-order-label">
+                            <span>Execute uma ação</span>
+                        </div>
+                    
+                        <div class="list-roder-new-link">
+                            <a href="/painel/requisitor/Novo"><i class="ri-add-line"></i></a>
+                        </div>
+                    
+                    </div>
                     <form class="list-order-finaly-request" method="post">
                         <div class="list-order-container-row-large">
                             <div class="list-order-container-box-single">
@@ -65,7 +76,9 @@
         <% if(locals.resultSearchMyRequests != ''){ %>
         <form class="list-order-section-table" method="post">
             <div class="list-order-container-main-table">
-                <div class="list-order-title-box"><span>Suas Requisições</span></div>
+                <div class="list-order-title-box">
+                    <span>Suas requisições</span>
+                </div>
                 <div class="list-order-srs-search">
                     <div class="list-order-srs-box">
                         <input type="text" placeholder="Busque por ID, data, status.." id="input-search-requests">

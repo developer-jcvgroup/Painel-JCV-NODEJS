@@ -537,9 +537,8 @@ exports.editSaveNewEvent = async (req,res) => {
         .table("jcv_calendar_registers").then(date => {
             if(date != ''){
 
-
                 //Mandando emails para os os usuarios que irão participar
-                if(arrNewPerson != ''){
+                if(arrNewPerson != undefined){
                     let arrayPersonSend = arrNewPerson.split(',')
 
                     let newArrayEamils = [];
@@ -563,7 +562,6 @@ exports.editSaveNewEvent = async (req,res) => {
                     emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                     
                 }
-
                 
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" editado com sucesso!");
                 res.redirect("/painel/calendario/main");

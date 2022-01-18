@@ -38,7 +38,13 @@ exports.commandLogar = async (req, res) =>{
                         data[0]["jcv_userExtension"],
                         data[0]["jcv_userImageIcon"]
                     ];
-                    res.redirect("/painel");
+
+                    //Sistema de links
+                    if(linkspecial > ''){
+                        res.redirect(linkspecial)
+                    }else{
+                        res.redirect("/painel");
+                    }
                 }else{
                     //Senha incorreta
                     res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Senha incorreta");
@@ -57,7 +63,6 @@ exports.commandLogar = async (req, res) =>{
                     data[0]["jcv_userExtension"],
                     data[0]["jcv_userImageIcon"]
                 ];
-                res.redirect("/painel");
             }
 
         }else{

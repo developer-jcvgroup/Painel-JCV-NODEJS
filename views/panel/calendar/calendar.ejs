@@ -205,9 +205,9 @@
                                                     <% if(allEventsMonth[jj].sys_calendar_eventDate == (i < 10 ? '0'+i : i)+'/'+monthNow){ %>
                                                         
                                                         <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
-                                                            <li><a style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
                                                         <% }else{ %>
-                                                            <li><a style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
                                                         <% } %>
                                                         
                                                     <% } %>
@@ -405,7 +405,7 @@
                     <% getAllRooms.forEach(element => { %>
                         <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
                     <% }) %>
-                    <option value="0">Não usarei</option>
+                    <option value="1">Não usarei</option>
                 </select>
             </div>
         </div>
@@ -429,7 +429,7 @@
         <hr style="margin: 30px 0;">
         <!--  -->
         <div class="calendar-event-actions">
-            <button type="submit" formaction="../register/new">Salvar</button>
+            <button class="class-loader" type="submit" formaction="../register/new">Salvar</button>
             <button type="button" id="calendar-close-event">Cancelar</button>
         </div>
     </form>

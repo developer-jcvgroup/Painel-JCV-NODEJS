@@ -233,12 +233,17 @@
             <div class="event-edit-event-reminder-room">
                 <label for="">Sala</label>
                 <select name="event-edit-register-room">
-                    <option value="<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></option>
+                    <% if(allDataEvent[0].sys_calendar_roomId == 1){ %>
+                        <option value="1">Não usarei</option>
+                    <% }else{ %>
+                        <option value="<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></option>
+                    <% } %>
+        
                     <option disabled></option>
                     <% getAllRooms.forEach(element => { %>
                         <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
                     <% }) %>
-                    <option value="0">Não usarei</option>
+                    <option value="1">Não usarei</option>
                 </select>
             </div>
         </div>
@@ -271,7 +276,7 @@
         <hr style="margin: 30px 0;">
         <!--  -->
         <div class="event-edit-event-actions">
-            <button type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/register/edit" name="button-edit-event">Salvar</button>
+            <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/register/edit" name="button-edit-event">Salvar</button>
             <button type="button" id="event-edit-close-event">Cancelar</button>
         </div>
     </form>

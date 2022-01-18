@@ -62,11 +62,30 @@
 /* */
 .list-order-title-box{
     display: flex;
+    justify-content: space-between;
 }
-.list-order-title-box span{
+.list-order-label span{
     font-size: 0.7rem;
     color: var(--color-one);
 }
+.list-roder-new-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list-roder-new-link a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+
 
 .list-order-finaly-request{
     width: 100%;

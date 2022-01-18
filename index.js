@@ -28,9 +28,13 @@ app.use(session({
 const jcvLogin = require("./login/app")
 app.use("/login", jcvLogin)
 
-
 app.get("/", (req,res)=>{
-    res.send("Pagina inicial")
+    let loginContr = false;
+    if(req.session.cookieLogin != undefined){
+        loginContr = true
+    }
+
+    res.render("web/index", {loginContr: loginContr})
 })
 
 //Require do painel

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="JCV Group">
+    <meta name="apple-mobile-web-app-title" content="JCV Group">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="./index.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script src="/sw.js"></script>
+    <script src="/service-work.js"></script>
+    <script src="/js/jquery-3.5.1.min.js"></script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/web/index.css">
+
+    <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
+    <title>JCV Group</title>
+</head>
+<script>
+$(function(){
+    
+    //Limpa os caches gerados pelo pwa
+    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+    self.caches.delete('JCV-Group-Sistema');//Nome do cache
+
+    $('.popup-close').click(function(){
+        $('#section-main-sobre-nos').fadeOut();
+        $('.popup-container-close').fadeOut();
+    })
+
+    $('#icon-transparencia').click(function(){
+        var popup = $('#popup-container-display-transparencia');
+
+        $('#section-main-sobre-nos').css('display', 'flex');
+        popup.fadeIn();
+        popup.css('display', 'flex');
+    })
+
+    $('#icon-energia').click(function(){
+        var popup = $('#popup-container-display-energia');
+
+        $('#section-main-sobre-nos').css('display', 'flex');
+        popup.fadeIn();
+        popup.css('display', 'flex');
+    })
+
+    $('#icon-respeito').click(function(){
+        var popup = $('#popup-container-display-respeito');
+
+        $('#section-main-sobre-nos').css('display', 'flex');
+        popup.fadeIn();
+        popup.css('display', 'flex');
+    })
+
+    $('#ponto-online').click(function(){
+        var popup = $('#popup-container-display-ponto');
+
+        $('#section-main-sobre-nos').css('display', 'flex');
+        popup.fadeIn();
+        popup.css('display', 'flex');
+    })
+
+})
+</script>
+<body>
+<section class="section-main-body">
+    <section class="section-image-page-body">
+        <div class="image-section-body-smartphone"></div>
+    </section>
+    <section class="section-main">
+        <header>
+            <div class="header-container-list-brands">
+                <div class="header-container-main-brand">
+                    <div class="header-container-one">
+                        <div class="header-container-brand">
+                            <a href="https://www.felps.com.br/" ><img class="header-logos-brands" src="/logos/logo-felps.png" alt="logo-felps"></a>
+                        </div>
+                        <div class="header-container-brand">
+                            <a href="https://www.retrocosmeticos.com.br/" ><img class="header-logos-brands" src="/logos/logo-retro.png" alt="logo-retro"></a>
+                        </div>
+                    </div>
+                    <div class="header-container-two">
+                        <div class="header-container-brand">
+                            <a href="https://avencacosmeticos.com.br/" ><img class="header-logos-brands" src="/logos/logo-avenca.png" alt="logo-avenca"></a>
+                        </div>
+                        <div class="header-container-brand">
+                            <a href="https://www.vitorstudio.com.br/" ><img class="header-logos-brands" src="/logos/logo-vitor.png" alt="logo-vitor"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-container-logo-web">
+                <div class="header-separator-barra"></div><!-- Separador -->
+                <div class="header-container-logo-jcv">
+                    <img class="header-logos-jcv" src="/logos/logo-jcv.png" alt="logo-felps">
+                </div>
+                <div class="header-separator-barra"></div><!-- Separador -->
+            </div>
+        </header>
+        <div class="header-def-status-login">
+            <% if(loginContr){ %>
+                <a href="/painel"><span>Painel</span> <i class="ri-arrow-right-line"></i></a>
+            <% }else{ %>
+                <a href="/login"><span>Logar</span> <i class="ri-login-box-line"></i></a>
+            <% } %>
+        </div>
+        <main>
+            <section class="section-list-all-links">
+                <div class="container-main-list">
+
+                    <div class="list-container-links">
+                        <a class="list-box-link" href="/painel/?linkspecial=/painel/requisitor/MinhasRequisicoes">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-requisitor.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Requisitor de Materiais</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="/painel/?linkspecial=/painel/beleza/solicitar">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-progama-da-beleza.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Progama da Beleza</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="/painel/?linkspecial=/painel/calendario/main/">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-calendar.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Calendario</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://sistema3.jotec.com.br/~cl101620/">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-jotec.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>JOTEC Sistema</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://sistema3.jotec.com.br/cgi-bin/jtvdvend.exe?idd=cl101620&dir=FISICO">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-jotec-representante.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>JOTEC Representante</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://app.epays.com.br/login">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-portal-funcionario.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Portal do Funcionário</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="main-separator-sobre-nos"></div><!-- -->
+                    <div class="sobre-nos-title"><h1>Nossos Valores</h1></div>
+                    <div class="main-sobre-nos">
+
+                        <div class="main-display-center">
+                            <div class="sobre-container-links" id="icon-transparencia">
+                                <div class="sobre-box-link">
+                                    <div class="sobre-link-container-box">
+                                        <div class="sobre-img-link">
+                                            <img class="sobre-icon-img" src="/icons/web/icon-transparencia.png" alt="">
+                                        </div>
+                                        <div class="sobre-container-link-set">
+                                            <span>TRANSPARÊNCIA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sobre-container-links" id="icon-energia">
+                                <div class="sobre-box-link">
+                                    <div class="sobre-link-container-box">
+                                        <div class="sobre-img-link">
+                                            <img class="sobre-icon-img" src="/icons/web/icon-energia.png" alt="">
+                                        </div>
+                                        <div class="sobre-container-link-set">
+                                            <span>ENERGIA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sobre-container-links" id="icon-respeito">
+                                <div class="sobre-box-link"  href="">
+                                    <div class="sobre-link-container-box">
+                                        <div class="sobre-img-link">
+                                            <img class="sobre-icon-img" src="/icons/web/icon-respeito.png" alt="">
+                                        </div>
+                                        <div class="sobre-container-link-set">
+                                            <span>RESPEITO</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="main-separator-sobre-nos"></div><!-- -->
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://webapp.pontofopag.com.br/Login">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-ponto-app.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Pontofopag</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://webmail7.ultramail.com.br/">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-webmail.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>Webmail</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="list-container-links">
+                        <a class="list-box-link"  href="https://go.vbox.com.br/">
+                            <div class="list-link-container-box">
+                                <div class="list-img-link">
+                                    <img class="list-icon-img" src="/icons/web/icon-vbox.png" alt="">
+                                </div>
+                                <div class="list-container-link-set">
+                                    <span>vBox</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <section class="section-main-sobre-nos" id="section-main-sobre-nos">
+
+
+                        <div class="popup-container-display-transparencia popup-container-close" id="popup-container-display-transparencia">
+                            <div class="popup-img-icon-all">
+                                <img class="popup-img-icon" src="/icons/web/icon-transparencia.png" alt="">
+                            </div>
+                            <div class="popup-text">
+                                <span>Transparência</span>
+                                <br>
+                                <span>Deixamos visível nossas intenções, sendo sinceros e capazes de justificar as nossas ações e decisões.</span>
+                            </div>
+                            <div class="popup-actions">
+                                <button class="popup-close">X</button>
+                            </div>
+                        </div>
+
+
+                        <div class="popup-container-display-energia popup-container-close" id="popup-container-display-energia">
+                            <div class="popup-img-icon-all">
+                                <img class="popup-img-icon" src="/icons/web/icon-energia.png" alt="">
+                            </div>
+                            <div class="popup-text">
+                                <span>Energia</span>
+                                <br>
+                                <span>Como fonte de transformação e busca incessante de novos produtos e tecnologias.</span>
+                            </div>
+                            <div class="popup-actions">
+                                <button class="popup-close">X</button>
+                            </div>
+                        </div>
+
+
+                        <div class="popup-container-display-respeito popup-container-close" id="popup-container-display-respeito">
+                            <div class="popup-img-icon-all">
+                                <img class="popup-img-icon" src="/icons/web/icon-respeito.png" alt="">
+                            </div>
+                            <div class="popup-text">
+                                <span>Respeito</span>
+                                <br>
+                                <span>Porque todas as nossas ações impactam os colaboradores e os clientes internos e externos.</span>
+                            </div>
+                            <div class="popup-actions">
+                                <button class="popup-close">X</button>
+                            </div>
+                        </div>
+
+
+                        <!-- Exemplo de box que exibe o em breve -->
+                        <!-- <div class="list-container-links">
+                            <div class="list-box-link" id="ponto-online" style="cursor: pointer;">
+                                <div class="list-link-container-box">
+                                    <div class="list-img-link">
+                                        <img class="list-icon-img" src="/icons/web/icon-ponto-app.png" alt="">
+                                    </div>
+                                    <div class="list-container-link-set">
+                                        <span>Ponto Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="popup-container-display-ponto popup-container-close" id="popup-container-display-ponto">
+                            <div class="popup-img-icon-all">
+                                <img class="popup-img-icon" src="/icons/web/icon-ponto-app.png" alt="">
+                            </div>
+                            <div class="popup-text">
+                                <span>Em Breve</span>
+                            </div>
+                            <div class="popup-actions">
+                                <button class="popup-close">X</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </section>
+</section>
+</body>
+</html>

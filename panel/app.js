@@ -50,7 +50,7 @@ const controllerSystemGeneral = require("./controllers/system/sysGeneral")
 //Logout
 router.get("/logout", (req,res)=> {
     req.session.cookieLogin = undefined;
-    res.redirect("/login");
+    res.redirect("/");
 })
 
 //Pagina inicial
