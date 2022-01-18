@@ -29,13 +29,13 @@
                     </div>
                     <div class="profile-container-input">
                         <label for="">CPF</label>
-                        <input type="text" value="<%= arrayData[0]['jcv_userCpf'] %>" name="updateCPFUser" id="update-cpf">
+                        <input required type="text" value="<%= arrayData[0]['jcv_userCpf'] %>" name="updateCPFUser" id="update-cpf">
                     </div>
 
 
                     <div class="profile-container-input">
                         <label for="">E-mail corporativo</label>
-                        <input type="text" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" id="">
+                        <input required type="email" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" id="">
                     </div>
                     <div class="profile-container-input">
                         <label for="">E-mail pessoal</label>

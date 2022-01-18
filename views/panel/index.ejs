@@ -129,7 +129,13 @@
                             <li class="li-info-user-drop" id="li-info-user-drop">
                                 <ul class="navbar-info-user-drop">
                                     <li><%= GLOBAL_DASH[5] %></li>
-                                    <li># <%= GLOBAL_DASH[6] %></li>
+                                    <li>
+                                        <% if(GLOBAL_DASH[6] != '') { %>
+                                            # <%= GLOBAL_DASH[6] %>
+                                        <% }else{ %>
+                                            sem ramal
+                                        <% } %>
+                                    </li>
                                     <li><div class="dropdown-separator"></div><!-- separador --></li>
                                     <li><a class="class-loader" href="/painel/perfil">Perfil / Configurações</a></li>
                                     <li><a class="class-loader" href="/painel/logout">Sair</a></li>

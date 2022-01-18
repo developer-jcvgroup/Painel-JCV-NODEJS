@@ -104,7 +104,7 @@
     color: var(--color-one);
 }
 
-.profile-container-input input[type=text]{
+.profile-container-input input{
     outline: 0;
     border: 0;
     padding: 6px 6px;
