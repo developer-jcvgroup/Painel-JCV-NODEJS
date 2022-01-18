@@ -36,11 +36,31 @@ authenticate = async (req, res, next) => {
                 return data[0].sys_department_name;
             })
 
+            //Verificando se existe menssagem de novas atualizações
+            const allUpdate = await database
+            .select()
+            .whereRaw("(sys_update_usersOkUpdate NOT LIKE '%"+GLOBALuserid+"%' OR sys_update_usersOkUpdate IS NULL)")
+            .table("sys_update")
+            .then( data => { return data; })
+
             //Pegando so nome e sobrenome
             let GLOBALuserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0] + " " + searchUser[0]["jcv_userNamePrimary"].split(' ')[1];
             let GLOBALfisrtUserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0];
 
-            GLOBAL_DASH = [GLOBALuserid, GLOBALuser, GLOBALunidade, GLOBALsetor, GLOBALgestor, GLOBALemail, GLOBALramal, GLOBALimage, GLOBALuserName, GLOBALfisrtUserName, sectorUser];
+            GLOBAL_DASH = [
+                GLOBALuserid,
+                GLOBALuser, 
+                GLOBALunidade, 
+                GLOBALsetor, 
+                GLOBALgestor,
+                GLOBALemail, 
+                GLOBALramal, 
+                GLOBALimage, 
+                GLOBALuserName, 
+                GLOBALfisrtUserName, 
+                sectorUser,
+                allUpdate
+            ];
 
             //Aqui eu predefino a url das salas no calendario
             //isto é importante pois não consigo pegar o link cheio usando o express e portanto tenho que definir manualmente

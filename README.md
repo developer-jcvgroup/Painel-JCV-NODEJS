@@ -210,6 +210,14 @@ Requisitor de Materiais
 * [sys_calendar_roomEnabled] *INT* //1 ou 0
 * [sys_calendar_roomColor] *VARCHAR* //Cor simbólica da sala
 
+# ------------------------------------------
+# Tabela calendario:
+* [sys_update_idUp] *PRIMARY KEY* //id
+* [sys_update_versionUpdate] *VARCHAR* //Versão do update
+* [sys_update_nameUpdate] *VARCHAR* //Nome da atualização 
+* [sys_update_textUpdate] *VARCHAR* //texto da atualização
+* [sys_update_usersOkUpdate] *VARCHAR* //Usuarios que deram OK para não exibir mais a atualização 
+
 
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/

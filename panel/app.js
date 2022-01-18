@@ -209,6 +209,9 @@ router.get("/updates", authenticate,(req,res)=>{
     res.render("panel/index", {page: page}) */
 })
 
+//Updates: Sistema de exibição do update
+router.post("/update/closeUp", authenticate, controllerSystemGeneral.closeUpdateSingle)
+router.post("/update/closeAll", authenticate, controllerSystemGeneral.closeUpdateAll)
 
 /***********************************/
 /***********************************/

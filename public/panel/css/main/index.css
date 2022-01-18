@@ -364,7 +364,7 @@ header{
     top: 0;
     width: 100%;
     height: 100%;
-    display: none;
+    display: flex;
     justify-content: center;
 }
 .sys-update-main{
@@ -376,33 +376,69 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--color-eight);
+    background: rgba(168, 168, 168, 0.267);
 }
 .sys-update-cont-center{
-    width: 450px;
+    width: 600px;
+    max-height: 650px;
     display: flex;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
 }
 .sys-update-center{
+    width: 100%;
     padding: 12px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
-
-
 
 .sys-update-title-one{
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.sys-update-title-one i{
+
+.sys-update-icon{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sys-update-icon i{
+    font-size: 2rem;
+    color: var(--color-one);
+    margin-right: 15px;
+}
+.sys-update-icon span{
     font-size: 2rem;
     color: var(--color-one);
 }
 
+.sys-update-close-all-updates{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    white-space: nowrap;
+    margin-top: 15px;
+}
+.sys-update-close-all-updates button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+    text-decoration: underline;
+}
+
 .sys-update-hr{
+    width: 100%;
     margin: 25px;
 }
 

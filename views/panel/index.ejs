@@ -157,27 +157,55 @@
 
     </div>
 </section>
-<section class="sys-update-main-main">
-    <section class="sys-update-main">
-        <section class="sys-update-cont-center">
-            <div class="sys-update-center">
-                <div class="sys-update-title-one">
-                    <i class="ri-code-s-slash-fill"></i>
-                </div>
-                <hr class="sys-update-hr">
-                <div class="sys-update-title-two">
-                    <span>Atualização 13.1.20</span>
-                </div>
-                <div class="sys-update-msg-box">
-                    <span>O sistema sofreu uma Atualização, corrigidos bugs, estilo do requistor. Aconselhamos acessar o <a href="">Central de Atualizações</a> para obter mais informações</span>
-                </div>
-                <div class="sys-update-button">
-                    <button>Fechar</button>
-                </div>
-            </div>
+
+<% if(GLOBAL_DASH[11] != ''){ %>
+    <section class="sys-update-main-main">
+        <section class="sys-update-main">
+            <section class="sys-update-cont-center">
+
+                
+                <form method="post" class="sys-update-center">
+                    <div class="sys-update-title-one">
+                        <div class="sys-update-icon">
+                            <i class="ri-code-s-slash-fill"></i>
+                            <span>Atualizações</span>
+                        </div>
+                    </div>
+
+                    <% if(GLOBAL_DASH[11].length > 1){ %>
+
+                        <!-- Array ids updates -->
+                        <% let allIds = [] %>
+                        <% GLOBAL_DASH[11].forEach(element => { %>
+                            <% allIds.push(element.sys_update_idUp) %>
+                        <% }) %>
+
+                        <div class="sys-update-close-all-updates">
+                            <button type="submit" value="<%= allIds %>" formaction="./painel/update/closeAll" name="button-update-all">Fechar todas</button>
+                        </div>
+                    <% } %>
+
+                    <% GLOBAL_DASH[11].forEach(element => { %>
+                        <hr class="sys-update-hr">
+                        <div class="sys-update-title-two">
+                            <span><%= element.sys_update_nameUpdate %> - <%= element.sys_update_versionUpdate %></span>
+                        </div>
+                        <div class="sys-update-msg-box">
+                            <span><%= element.sys_update_textUpdate %></span>
+                        </div>
+                        <div class="sys-update-button">
+                            <button type="submit" formaction="./painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
+                        </div>
+                    <% }) %>
+                    <hr class="sys-update-hr">
+                </form>
+               
+
+            </section>
         </section>
     </section>
-</section>
+<% } %>
+
 <section class="sys-section-loader" id="sys-section-loader">
     <section class="sys-section-load-main">
         <div class="sys-spin-load">
