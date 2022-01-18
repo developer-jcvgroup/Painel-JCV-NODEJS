@@ -149,7 +149,10 @@ exports.saveNewEvent = async (req,res) => {
 
     let eventDaySet = req.body['calendar-register-date'].split('-');
     const eventDay = eventDaySet[2]+'/'+eventDaySet[1]+'/'+eventDaySet[0];
-    
+
+    //Mes que vai ser redirecionado se der sucesso ou erro
+    const monthCalendarRedirect = eventDaySet[1]+'/'+eventDaySet[0];
+
     const eventPublic = req.body['calendar-register-event-public'] == 'on' ? 1 : 0;
     const eventLocation = req.body['calendar-register-location'];
     const eventHourInitial = req.body['calendar-register-hour-initial'];
@@ -214,10 +217,10 @@ exports.saveNewEvent = async (req,res) => {
 
         if(validationResult == false){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
-            res.redirect("/painel/calendario/main");
+            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
-            res.redirect("/painel/calendario/main");
+            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }
     }else{
 
@@ -266,7 +269,7 @@ exports.saveNewEvent = async (req,res) => {
                 }
 
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+date[0]+" registrado com sucesso!");
-                res.redirect("/painel/calendario/main");
+                res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
             }
         })
     }   
@@ -451,8 +454,9 @@ exports.editSaveNewEvent = async (req,res) => {
     const eventRoom = req.body['event-edit-register-room'];//0 REPRESENTA NÃO USAREI SALA
 
     const eventPersons = req.body['event-edit-register-persons'];
-    console.log(eventPersons)
-
+    
+    //Mes que vai ser redirecionado se der sucesso ou erro
+    const monthCalendarRedirect = eventDaySet[1]+'/'+eventDaySet[0];
 
     //Pegando as HORAS DISPONIVEIS DO DIA
     const hoursFree = await database
@@ -512,10 +516,10 @@ exports.editSaveNewEvent = async (req,res) => {
     if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
         if(validationResult == false){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a hora do evento! Horários incompatíveis.");
-            res.redirect("/painel/calendario/main");
+            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
-            res.redirect("/painel/calendario/main");
+            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }
     }else{
         //Inserindo no banco
@@ -564,7 +568,7 @@ exports.editSaveNewEvent = async (req,res) => {
                 }
                 
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" editado com sucesso!");
-                res.redirect("/painel/calendario/main");
+                res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
             }
         })
     }   
