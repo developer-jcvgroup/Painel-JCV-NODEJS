@@ -187,7 +187,7 @@
                         <% }) %>
 
                         <div class="sys-update-close-all-updates">
-                            <button type="submit" value="<%= allIds %>" formaction="./painel/update/closeAll" name="button-update-all">Fechar todas</button>
+                            <button type="submit" value="<%= allIds %>" formaction="/painel/update/closeAll" name="button-update-all">Fechar todas</button>
                         </div>
                     <% } %>
 
@@ -200,7 +200,7 @@
                             <span><%= element.sys_update_textUpdate %></span>
                         </div>
                         <div class="sys-update-button">
-                            <button type="submit" formaction="./painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
+                            <button type="submit" formaction="/painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
                         </div>
                     <% }) %>
                     <hr class="sys-update-hr">
