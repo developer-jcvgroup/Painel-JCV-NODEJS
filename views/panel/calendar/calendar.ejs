@@ -434,7 +434,7 @@
         </div>
     </form>
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     $(function(){
 
@@ -493,6 +493,8 @@
 
         /* OPEN DISPLAY EVENT DAY */
         $("#open-event-display-day").click(function(){
+
+            
             $("#calendar-display-actions").fadeOut()
             $("#calendar-display-event").fadeIn();
             $("#calendar-display-event").css('display','flex');
@@ -572,6 +574,10 @@
         let valueDate = day.split('/')[2]+  '-'  +day.split('/')[1]+'-'  +  dayConfig;
         $("#calendar-input-date").val(valueDate)
 
+        //console.log(valueDate)
+        //console.log(moment().format("YYYY-MM-DD"))
+
+        //console.log('dia do evento maior')
         //Valor do link do dia
         let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
         $("#calendar-day-link-module").attr('href','/painel/calendario/viewEvent/Day/'+dayLinkOpen)
@@ -580,6 +586,16 @@
 
         $(".calendar-display-actions").fadeIn()
         $(".calendar-display-actions").css('display','flex')
+
+        if(moment().format(valueDate) < moment().format("YYYY-MM-DD")){
+            //console.log('dia do evento menor')
+            /* CLOSE DISPLAY EVENT DAY */
+            
+            $("#open-event-display-day").css('display','none')
+        }else{
+            //Ele pode fazer eventos neste dia
+            $("#open-event-display-day").css('display','flex')
+        }        
     }
 
     /* SELECIONANDO A SALA */

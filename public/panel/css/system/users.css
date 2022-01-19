@@ -127,9 +127,9 @@
     cursor: pointer;
     transition: 0.5s;
 }
-.sys-users-table-list tr:hover{
+.sys-users-table-list tbody tr:hover{
     transition: 0.5s;
-    background: var(--color-eight);
+    background: var(--color-eight) !important;
 }
 
 /**************************/

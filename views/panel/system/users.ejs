@@ -22,7 +22,7 @@
                     <table class="sys-users-table-list" id="sys-users-table-list">
                         <thead>
                             <tr>
-                                <th>CPF</th>
+                                <th style="cursor: pointer;" class="order-by-command">CPF</th>
                                 <th>Funcionário</th>
                                 <th>Unidade</th>
                                 <th>Gestor</th>
@@ -48,7 +48,7 @@
 
                             <tr>
                                 <td><input placeholder="Insira um CPF (Obrigatorio)" id="insert-cpf" type="text" name="save-new-cpf"></td>
-                                <td><input placeholder="Insira um nome (Obrigatorio)" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name"></td>
+                                <td><input placeholder="Insira um nome (Obrigatorio)" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name" id="insert-name-func"></td>
                                 <td>
                                     <select name="save-new-unidade">
                                         <option value="">* Selecione *</option>
@@ -200,7 +200,7 @@
                                         <td>
                                             <input type="text" name="save-edit-cpf-<%= element.jcv_id %>" value="<%= element.jcv_userCpf %>" class="user-insert-cpf">
                                         </td>
-                                        <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
+                                        <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
                                         <td>
                                             <input hidden type="text" value="<%= element.sys_unity_name %>">
                                             <select name="save-edit-unidade-<%= element.jcv_id %>">
@@ -363,6 +363,21 @@
                                         </td>
         
                                         <td>
+
+                                            <!-- <% if(element.jcv_userCassification == 1){ %>
+                                                <input hidden type="text" name="Master">
+                                            <% }else if(element.jcv_userCassification == 2){ %>
+                                                <input hidden type="text" name="Gestor">
+                                            <% }else if(element.jcv_userCassification == 3){ %>
+                                                <input hidden type="text" name="Colaborador Interno">
+                                            <% }else if(element.jcv_userCassification == 4){ %>
+                                                <input hidden type="text" name="Representantes">
+                                            <% }else if(element.jcv_userCassification == 5){ %>
+                                                <input hidden type="text" name="Promotoras">
+                                            <% }else if(element.jcv_userCassification == 6){ %>
+                                                <input hidden type="text" name="Jovem Aprendiz">
+                                            <% } %> -->
+
                                             <select name="save-edit-sys-type-user-<%= element.jcv_id %>" id="">
                                                 <% if(element.jcv_userCassification == 1){ %>
                                                     <option value="1">Master</option>
@@ -467,6 +482,13 @@
             var valor = $(this).val().replace(/[^a-zA-Z 0-9]+/g,'');
             $(this).val(valor);
         });
+
+        //Sistema de caracteres inteligentes
+        $.fn.inputCaractersValidation("#insert-name-func")
+        $.fn.inputCaractersValidation(".update-name-func")
+
+        //Ordenação da tabela
+        $.fn.orderByTableColumns("#sys-users-table-list",".order-by-command")
     })
 
 </script>

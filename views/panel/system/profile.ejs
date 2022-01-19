@@ -24,8 +24,8 @@
             <form class="profile-container-info-user-set" action="./perfil/update" method="post">
                 <div class="profile-row-form">
                     <div class="profile-container-input">
-                        <label for="">Seu Nome</label>
-                        <input type="text" value="<%= arrayData[0]['jcv_userNamePrimary'] %>" name="updateNameUser" id="">
+                        <label for="">Nome (Obrigatorio)</label>
+                        <input required type="text" value="<%= arrayData[0]['jcv_userNamePrimary'] %>" name="updateNameUser" placeholder="(Obrigatorio)">
                     </div>
                     <div class="profile-container-input">
                         <label for="">CPF</label>
@@ -34,16 +34,16 @@
 
                     <div class="profile-container-input">
                         <label for="">E-mail 1 (Obrigatorio)</label>
-                        <input required type="email" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" id="">
+                        <input required type="email" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" placeholder="Insira um email corporativo ou pessoal">
                     </div>
                     <div class="profile-container-input">
                         <label for="">E-mail 2 (Opcional)</label>
-                        <input type="text" value="<%= arrayData[0]['jcv_userEmailFolks'] %>" name="updateEmailUserPer" id="">
+                        <input type="text" value="<%= arrayData[0]['jcv_userEmailFolks'] %>" name="updateEmailUserPer" placeholder="Opcional">
                     </div>
 
                     <div class="profile-container-input">
-                        <label for="">Ramal</label>
-                        <input type="text" value="<%= arrayData[0]['jcv_userExtension'] %>" name="updateRamalUser" id="">
+                        <label for="">Ramal (Opcional) </label>
+                        <input type="text" value="<%= arrayData[0]['jcv_userExtension'] %>" name="updateRamalUser" placeholder="Opcional">
                     </div>
                     <div class="profile-container-input-checkbox">
                         

@@ -15,13 +15,12 @@
                 </div>
             </div>
             <div class="suspended-main">
+                <% if(GLOBAL_PERM[0].sys_cal_perm_use == 1){ %>
                 <div class="suspended-blocks-container">
                     <div class="suspended-container-center">
                         <div class="suspended-title">
                             <span>Calendario</span>
                         </div>
-
-
                         <div class="home-main-suspended-box">
                             <div class="main-suspended-info">
                                 <a class="main-suspended-group-info class-loader" href="./painel/calendario/main/">
@@ -33,10 +32,9 @@
                                 </a>
                             </div>
                         </div>
-
-                        
                     </div>
                 </div>
+                <% } %>
                 <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
                 <div class="suspended-blocks-container">
                     <div class="suspended-container-center">

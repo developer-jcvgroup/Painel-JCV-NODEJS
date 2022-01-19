@@ -71,9 +71,9 @@ authenticate = async (req, res, next) => {
             //Buscando todas as permissões
             const resultPermissions = await database
             .select("jcv_users.jcv_userCassification","jcv_users_permissions.*")
-            .where({sys_blz_perm_userId: GLOBAL_DASH[0]})
+            .where({sys_perm_idUser: GLOBAL_DASH[0]})
             .table("jcv_users_permissions")
-            .join("jcv_users", "jcv_users_permissions.sys_blz_perm_userId",'=','jcv_users.jcv_id')
+            .join("jcv_users", "jcv_users_permissions.sys_perm_idUser",'=','jcv_users.jcv_id')
             .then( data => {
                 return data;
             })

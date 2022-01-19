@@ -32,7 +32,7 @@ exports.sysBLZrequest = async (req, res) =>{
                 ordersStatus++;
             }
 
-            if(ordersStatus > 0){
+            if(ordersStatus == 0){
                 //O ultimo pedido tem status 3 ou 4
                 listProducts();
             }else{
@@ -173,7 +173,7 @@ exports.listRequests = async (req,res) => {
     const blzGestor = await database
         .select('jcv_users.jcv_id','jcv_users.jcv_userNamePrimary')
         .table("jcv_users")
-        .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_blz_perm_userId')
+        .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_perm_idUser')
         .where({jcv_userEnabled: 1, sys_blz_perm_manager: 1})
         .then(data => {
             return data;

@@ -430,8 +430,72 @@ $(function(){
 
 
 
+    $.fn.inputCaractersValidation = function (input){
+        let vazioAnterior = 0;
+        $(input).keypress(function(e) {
+
+            if(vazioAnterior == 0){
+                var regex = new RegExp("^[a-z0-9_ ]+$");
+            }else{
+            var regex = new RegExp("^[a-z0-9_]+$");
+                vazioAnterior = 0
+            }
+
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+
+            if(key == ' '){
+                vazioAnterior++
+            }
+
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
+            }
+
+            var str = $(this).val();
+            str = str.replace(/(^|\s|$)(?!de|do|d$)(.)/g, (geral, match1, match2) => match1 + match2.toUpperCase());
+            $(this).val(str);
+        });
+    }
 
 
+    $.fn.orderByTableColumns = function (tableId, orderByClick){
+        var table = $(tableId);
+        console.log(table)
+    
+        $(orderByClick)
+        .wrapInner('<span title="Coluna Ordenada"/>')
+        .each(function(){
+            
+            var th = $(this),
+                thIndex = th.index(),
+                inverse = false;
+            
+            th.click(function(){
+                
+                table.find('tbody td').filter(function(){
+                    
+                    return $(this).index() === thIndex;
+                    
+                }).sortElements(function(a, b){
+                    
+                    return $.text([a]) > $.text([b]) ?
+                        inverse ? -1 : 1
+                        : inverse ? 1 : -1;
+                    
+                }, function(){
+                    
+                    // parentNode is the element we want to move
+                    return this.parentNode; 
+                    
+                });
+                
+                inverse = !inverse;
+                    
+            });
+                
+        });    
+    }
 
 
 

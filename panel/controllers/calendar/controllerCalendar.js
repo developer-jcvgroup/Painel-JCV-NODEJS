@@ -88,7 +88,7 @@ exports.viewCalendarMonth = async (req,res) => {
         //Listando os usuario que tem PERMISSAO PARA ACESSO AO CALENDARIO
         const allUsers = await database
         .select("jcv_users.jcv_userNamePrimary","jcv_users.jcv_id")
-        .join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_blz_perm_userId")
+        .join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
         .where({sys_cal_perm_use: 1, jcv_userEnabled: 1})
         .table("jcv_users")
         .then(date => {
@@ -161,126 +161,131 @@ exports.saveNewEvent = async (req,res) => {
     const eventRoom = req.body['calendar-register-room'];//0 REPRESENTA NÃO USAREI SALA
     const eventPersons = req.body['calendar-register-persons'];
 
+    if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um eventoe nesta data! Data inferiror ao dia atual.");
+        res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+    }else{
 
-    //Pegando as HORAS DISPONIVEIS DO DIA
-    const hoursFree = await database
-    .select("sys_calendar_eventHours")
-    .where({
-        sys_calendar_eventDate: eventDay,
-        sys_calendar_eventRoom: eventRoom
-    })
-    .table("jcv_calendar_registers")
-    .then( data => {
-        return data;
-    })
+        //Pegando as HORAS DISPONIVEIS DO DIA
+        const hoursFree = await database
+        .select("sys_calendar_eventHours")
+        .where({
+            sys_calendar_eventDate: eventDay,
+            sys_calendar_eventRoom: eventRoom
+        })
+        .table("jcv_calendar_registers")
+        .then( data => {
+            return data;
+        })
 
-    //Validando os intervalos
-    var format = 'hh:mm';
-    let validationResult = true;//Inicialemnte a pessoa pode criar o evento
+        //Validando os intervalos
+        var format = 'hh:mm';
+        let validationResult = true;//Inicialemnte a pessoa pode criar o evento
 
-    hoursFree.forEach(element => {
-        let eachElementOne = element.sys_calendar_eventHours.split(' - ')[0];
-        let eachElementTwo = element.sys_calendar_eventHours.split(' - ')[1];
+        hoursFree.forEach(element => {
+            let eachElementOne = element.sys_calendar_eventHours.split(' - ')[0];
+            let eachElementTwo = element.sys_calendar_eventHours.split(' - ')[1];
 
-        var timeValidateInicial = moment(eventHourInitial,format);//Horario INICIAL a validar
-        var timeValidateFinal = moment(eventHourFinal,format);//Horario FINAL a validar
+            var timeValidateInicial = moment(eventHourInitial,format);//Horario INICIAL a validar
+            var timeValidateFinal = moment(eventHourFinal,format);//Horario FINAL a validar
 
-        var initialTime = moment(eachElementOne,format).subtract(1, 'minutes');//Horaio inicial
-        var finalTime = moment(eachElementTwo, format).subtract(1, 'minutes');//Horario final
+            var initialTime = moment(eachElementOne,format).subtract(1, 'minutes');//Horaio inicial
+            var finalTime = moment(eachElementTwo, format).subtract(1, 'minutes');//Horario final
 
-        if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
-            console.log("Voce não pode registrar nesse horario")
-            validationResult = false
-        }else{
-            console.log("Voce pode registrar")
+            if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
+                console.log("Voce não pode registrar nesse horario")
+                validationResult = false
+            }else{
+                console.log("Voce pode registrar")
 
-            if(validationResult == false){
-                validationResult == true
+                if(validationResult == false){
+                    validationResult == true
+                }
             }
-        }
-    });
-
-    //Convertendo em array string
-    let arrNewPerson = '';
-    if(typeof(eventPersons) == 'object'){
-        
-        eventPersons.forEach(element => {
-            arrNewPerson+=element+',';
         });
 
-        //Nova Array string
-        arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
-    }else{
-        arrNewPerson = [GLOBAL_DASH[0]];
-    }
+        //Convertendo em array string
+        let arrNewPerson = '';
+        if(typeof(eventPersons) == 'object'){
+            
+            eventPersons.forEach(element => {
+                arrNewPerson+=element+',';
+            });
 
-    //Validando os inputs
-    if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
-
-        if(validationResult == false){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
-            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+            //Nova Array string
+            arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
-            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+            arrNewPerson = [GLOBAL_DASH[0]];
         }
-    }else{
 
-        //Inserindo no banco
-        database
-        .insert({
-            sys_calendar_eventUserId: GLOBAL_DASH[0],
-            sys_calendar_eventName: eventName,
-            sys_calendar_eventDescription: eventDescription,
-            sys_calendar_eventDate: eventDay,
-            sys_calendar_eventMonth: eventDaySet[1]+'/'+eventDaySet[0],
-            sys_calendar_eventHours: eventHourInitial+' - '+eventHourFinal,
-            sys_calendar_eventPublic: eventPublic,
-            sys_calendar_eventLocation: eventLocation,
-            sys_calendar_eventReminder: eventReminder,
-            sys_calendar_eventRoom: eventRoom,
-            sys_calendar_eventPersons: arrNewPerson,
-            sys_calendar_eventCreateDate: generateDate()
-        }).table("jcv_calendar_registers").then(date => {
-            if(date != ''){
+        //Validando os inputs
+        if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
 
-                //Mandando emails para os os usuarios que irão participar
-                if(arrNewPerson != ''){
-
-                    let arrayPersonSend;
-                    if(typeof(arrNewPerson) == 'object'){
-                        arrayPersonSend = arrNewPerson;
-                    }else{
-                        arrayPersonSend = arrNewPerson.split(',')
-                    }
-
-                    let newArrayEamils = [];
-                    arrayPersonSend.forEach(element => {
-                        database
-                        .select("jcv_userEmailCorporate","jcv_userEmailFolks")
-                        .where({jcv_id: element})
-                        .table("jcv_users")
-                        .then( dato => {
-                            
-                            if(dato[0].jcv_userEmailCorporate != ''){
-                                newArrayEamils.push(dato[0].jcv_userEmailCorporate)
-                            }else if(dato[0].jcv_userEmailFolks != ''){
-                                newArrayEamils.push(dato[0].jcv_userEmailFolks)
-                            }
-                        })
-                    })
-
-                    const textOne = 'Evento criado!';
-                    const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Criado por: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
-                    emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
-                    
-                }
-
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+date[0]+" registrado com sucesso!");
+            if(validationResult == false){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
+                res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
                 res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
             }
-        })
-    }   
+        }else{
+
+            //Inserindo no banco
+            database
+            .insert({
+                sys_calendar_eventUserId: GLOBAL_DASH[0],
+                sys_calendar_eventName: eventName,
+                sys_calendar_eventDescription: eventDescription,
+                sys_calendar_eventDate: eventDay,
+                sys_calendar_eventMonth: eventDaySet[1]+'/'+eventDaySet[0],
+                sys_calendar_eventHours: eventHourInitial+' - '+eventHourFinal,
+                sys_calendar_eventPublic: eventPublic,
+                sys_calendar_eventLocation: eventLocation,
+                sys_calendar_eventReminder: eventReminder,
+                sys_calendar_eventRoom: eventRoom,
+                sys_calendar_eventPersons: arrNewPerson,
+                sys_calendar_eventCreateDate: generateDate()
+            }).table("jcv_calendar_registers").then(date => {
+                if(date != ''){
+
+                    //Mandando emails para os os usuarios que irão participar
+                    if(arrNewPerson != ''){
+
+                        let arrayPersonSend;
+                        if(typeof(arrNewPerson) == 'object'){
+                            arrayPersonSend = arrNewPerson;
+                        }else{
+                            arrayPersonSend = arrNewPerson.split(',')
+                        }
+
+                        let newArrayEamils = [];
+                        arrayPersonSend.forEach(element => {
+                            database
+                            .select("jcv_userEmailCorporate","jcv_userEmailFolks")
+                            .where({jcv_id: element})
+                            .table("jcv_users")
+                            .then( dato => {
+                                
+                                if(dato[0].jcv_userEmailCorporate != ''){
+                                    newArrayEamils.push(dato[0].jcv_userEmailCorporate)
+                                }else if(dato[0].jcv_userEmailFolks != ''){
+                                    newArrayEamils.push(dato[0].jcv_userEmailFolks)
+                                }
+                            })
+                        })
+
+                        const textOne = 'Evento criado!';
+                        const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Criado por: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                        emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
+                        
+                    }
+
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+date[0]+" registrado com sucesso!");
+                    res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+                }
+            })
+        }   
+    }
 }
 
 exports.deleteEvent = async(req,res) => {
@@ -363,7 +368,7 @@ exports.viewEvent = async (req,res) => {
     //Listando os usuario que tem PERMISSAO PARA ACESSO AO CALENDARIO
     const allUsers = await database
     .select("jcv_users.jcv_userNamePrimary","jcv_users.jcv_id")
-    .join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_blz_perm_userId")
+    .join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
     .where({sys_cal_perm_use: 1, jcv_userEnabled: 1})
     .table("jcv_users")
     .then(date => {
@@ -466,120 +471,126 @@ exports.editSaveNewEvent = async (req,res) => {
     //Mes que vai ser redirecionado se der sucesso ou erro
     const monthCalendarRedirect = eventDaySet[1]+'/'+eventDaySet[0];
 
-    //Pegando as HORAS DISPONIVEIS DO DIA
-    const hoursFree = await database
-    .select("sys_calendar_eventHours")
-    .whereRaw("sys_calendar_eventDate = '"+eventDay+"' AND sys_calendar_eventId NOT IN("+idEvent+") AND sys_calendar_eventRoom = "+eventRoom)
-    .table("jcv_calendar_registers")
-    .then( data => {
-        return data;
-    })
+    if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a data do evento! Data inferiror ao dia atual.");
+        res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+    }else{
 
-    //console.log(hoursFree);
+        //Pegando as HORAS DISPONIVEIS DO DIA
+        const hoursFree = await database
+        .select("sys_calendar_eventHours")
+        .whereRaw("sys_calendar_eventDate = '"+eventDay+"' AND sys_calendar_eventId NOT IN("+idEvent+") AND sys_calendar_eventRoom = "+eventRoom)
+        .table("jcv_calendar_registers")
+        .then( data => {
+            return data;
+        })
 
-    //Validando os intervalos
-    var format = 'hh:mm';
-    let validationResult = true;//Inicialemnte a pessoa pode criar o evento
+        //console.log(hoursFree);
 
-    hoursFree.forEach(element => {
-        let eachElementOne = element.sys_calendar_eventHours.split(' - ')[0];
-        let eachElementTwo = element.sys_calendar_eventHours.split(' - ')[1];
+        //Validando os intervalos
+        var format = 'hh:mm';
+        let validationResult = true;//Inicialemnte a pessoa pode criar o evento
 
-        var timeValidateInicial = moment(eventHourInitial,format);//Horario INICIAL a validar
-        var timeValidateFinal = moment(eventHourFinal,format);//Horario FINAL a validar
+        hoursFree.forEach(element => {
+            let eachElementOne = element.sys_calendar_eventHours.split(' - ')[0];
+            let eachElementTwo = element.sys_calendar_eventHours.split(' - ')[1];
 
-        var initialTime = moment(eachElementOne,format).subtract(1, 'minutes');//Horaio inicial
-        var finalTime = moment(eachElementTwo, format).add(1, 'minutes');//Horario final
+            var timeValidateInicial = moment(eventHourInitial,format);//Horario INICIAL a validar
+            var timeValidateFinal = moment(eventHourFinal,format);//Horario FINAL a validar
 
-        if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
-            //console.log("Voce não pode registrar nesse horario")
-            validationResult = false;
-        }else{
-            //console.log("Voce pode registrar")
+            var initialTime = moment(eachElementOne,format).subtract(1, 'minutes');//Horaio inicial
+            var finalTime = moment(eachElementTwo, format).add(1, 'minutes');//Horario final
 
-            if(validationResult == false){
-                validationResult == true
+            if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
+                //console.log("Voce não pode registrar nesse horario")
+                validationResult = false;
+            }else{
+                //console.log("Voce pode registrar")
+
+                if(validationResult == false){
+                    validationResult == true
+                }
             }
-        }
-    });
-
-    //console.log(eventPersons)
-    //Convertendo em array string
-    let arrayPerson = eventPersons;
-    let arrNewPerson = '';//Nova array
-
-    if(typeof(eventPersons) == 'object'){
-        
-        eventPersons.forEach(element => {
-            arrNewPerson+=element+',';
         });
 
-        //Nova Array string
-        arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
-    }else{
-        arrNewPerson = eventPersons;
-    }
+        //console.log(eventPersons)
+        //Convertendo em array string
+        let arrayPerson = eventPersons;
+        let arrNewPerson = '';//Nova array
 
-    //Validando os inputs
-    if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
-        if(validationResult == false){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a hora do evento! Horários incompatíveis.");
-            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+        if(typeof(eventPersons) == 'object'){
+            
+            eventPersons.forEach(element => {
+                arrNewPerson+=element+',';
+            });
+
+            //Nova Array string
+            arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
-            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+            arrNewPerson = eventPersons;
         }
-    }else{
-        //Inserindo no banco
-        database
-        .update({
-            sys_calendar_eventName: eventName,
-            sys_calendar_eventDescription: eventDescription,
-            sys_calendar_eventDate: eventDay,
-            sys_calendar_eventMonth: eventDaySet[1]+'/'+eventDaySet[0],
-            sys_calendar_eventHours: eventHourInitial+' - '+eventHourFinal,
-            sys_calendar_eventPublic: eventPublic,
-            sys_calendar_eventLocation: eventLocation,
-            sys_calendar_eventReminder: eventReminder,
-            sys_calendar_eventRoom: eventRoom,
-            sys_calendar_eventPersons: arrNewPerson,
-            sys_calendar_eventCreateDate: generateDate()
-        })
-        .where({sys_calendar_eventId: idEvent})
-        .table("jcv_calendar_registers").then(date => {
-            if(date != ''){
 
-                //Mandando emails para os os usuarios que irão participar
-                if(arrNewPerson != undefined){
-                    let arrayPersonSend = arrNewPerson.split(',')
-
-                    let newArrayEamils = [];
-                    arrayPersonSend.forEach(element => {
-                        database
-                        .select("jcv_userEmailCorporate","jcv_userEmailFolks")
-                        .where({jcv_id: element})
-                        .table("jcv_users")
-                        .then( dato => {
-                            
-                            if(dato[0].jcv_userEmailCorporate != ''){
-                                newArrayEamils.push(dato[0].jcv_userEmailCorporate)
-                            }else if(dato[0].jcv_userEmailFolks != ''){
-                                newArrayEamils.push(dato[0].jcv_userEmailFolks)
-                            }
-                        })
-                    })
-
-                    const textOne = 'Evento editado!';
-                    const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
-                    emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
-                    
-                }
-                
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" editado com sucesso!");
+        //Validando os inputs
+        if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
+            if(validationResult == false){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a hora do evento! Horários incompatíveis.");
+                res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
                 res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
             }
-        })
-    }   
+        }else{
+            //Inserindo no banco
+            database
+            .update({
+                sys_calendar_eventName: eventName,
+                sys_calendar_eventDescription: eventDescription,
+                sys_calendar_eventDate: eventDay,
+                sys_calendar_eventMonth: eventDaySet[1]+'/'+eventDaySet[0],
+                sys_calendar_eventHours: eventHourInitial+' - '+eventHourFinal,
+                sys_calendar_eventPublic: eventPublic,
+                sys_calendar_eventLocation: eventLocation,
+                sys_calendar_eventReminder: eventReminder,
+                sys_calendar_eventRoom: eventRoom,
+                sys_calendar_eventPersons: arrNewPerson,
+                sys_calendar_eventCreateDate: generateDate()
+            })
+            .where({sys_calendar_eventId: idEvent})
+            .table("jcv_calendar_registers").then(date => {
+                if(date != ''){
+
+                    //Mandando emails para os os usuarios que irão participar
+                    if(arrNewPerson != undefined){
+                        let arrayPersonSend = arrNewPerson.split(',')
+
+                        let newArrayEamils = [];
+                        arrayPersonSend.forEach(element => {
+                            database
+                            .select("jcv_userEmailCorporate","jcv_userEmailFolks")
+                            .where({jcv_id: element})
+                            .table("jcv_users")
+                            .then( dato => {
+                                
+                                if(dato[0].jcv_userEmailCorporate != ''){
+                                    newArrayEamils.push(dato[0].jcv_userEmailCorporate)
+                                }else if(dato[0].jcv_userEmailFolks != ''){
+                                    newArrayEamils.push(dato[0].jcv_userEmailFolks)
+                                }
+                            })
+                        })
+
+                        const textOne = 'Evento editado!';
+                        const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                        emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
+                        
+                    }
+                    
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" editado com sucesso!");
+                    res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+                }
+            })
+        }   
+    }
 }
 
 exports.roomSettings = async (req,res) => {

@@ -159,7 +159,7 @@ exports.createOrder = async(req,res) => {
             .select("jcv_users.jcv_userEmailCorporate")
             .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
             .table("jcv_users_permissions")
-            .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+            .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
             .then( data => {
 
                 if(data != ''){
@@ -197,7 +197,7 @@ exports.viewRequest = async (req,res) => {
     }else{
 
         //Validando o usuario, se for admin ele pode ter acesso a requisição
-        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_blz_perm_userId: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
+        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_perm_idUser: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
             if(data != ''){
                 return true;
             }else{
@@ -360,7 +360,7 @@ exports.sendRequests = async (req,res) => {
     }else{
 
         //Validando o usuario, se for admin ele pode ter acesso a VER E EDITAR A REQUISIÇÃO
-        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_blz_perm_userId: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
+        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_perm_idUser: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
             if(data != ''){
                 return true;
             }else{
@@ -533,7 +533,7 @@ exports.receberRequisicaoAction = async (req,res) => {
                 .select("jcv_users.jcv_userEmailCorporate")
                 .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
                 .table("jcv_users_permissions")
-                .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+                .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
                 .then( data => {
 
                     if(data != ''){
@@ -608,7 +608,7 @@ exports.receberRequisicaoAction = async (req,res) => {
         .select("jcv_users.jcv_userEmailCorporate")
         .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
         .table("jcv_users_permissions")
-        .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+        .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
         .then( data => {
 
             if(data != ''){
@@ -643,7 +643,7 @@ exports.listRequsicoesAll = async (req,res) => {
     const allUsers = await database
     .select("jcv_users.jcv_id","jcv_users.jcv_userNamePrimary")
     .table("jcv_users")
-    .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_blz_perm_userId')
+    .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_perm_idUser')
     .whereRaw("jcv_users_permissions.sys_req_perm_use = 1")
     .then( data => {
         return data;
@@ -810,7 +810,7 @@ exports.editRequestUser = async (req,res) => {
     if(req.params.id != undefined){
 
         //Validando o usuario, se for admin ele pode ter acesso a editar a requisição
-        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_blz_perm_userId: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
+        const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_perm_idUser: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
             if(data != ''){
                 return true;
             }else{
@@ -928,7 +928,7 @@ exports.editRequestUserCommand = async(req,res) => {
     const arraYamountsItems = req.body['req-input-list-amount-table'];
 
     //Validando o usuario, se for admin ele pode ter acesso a editar a requisição
-    const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_blz_perm_userId: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
+    const validateUser = await database.select("sys_req_perm_admin").where({sys_req_perm_admin: 1, sys_perm_idUser: GLOBAL_DASH[0]}).table("jcv_users_permissions").then( data => {
         if(data != ''){
             return true;
         }else{
@@ -1059,7 +1059,7 @@ exports.editRequestUserCommand = async(req,res) => {
                     .select("jcv_users.jcv_userEmailCorporate")
                     .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
                     .table("jcv_users_permissions")
-                    .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+                    .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
                     .then( data => {
 
                         if(data != ''){
@@ -1186,7 +1186,7 @@ exports.editRequestUserCommand = async(req,res) => {
                     .select("jcv_users.jcv_userEmailCorporate")
                     .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
                     .table("jcv_users_permissions")
-                    .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+                    .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
                     .then( data => {
 
                         if(data != ''){
@@ -1398,7 +1398,7 @@ exports.myRequestRemove = async (req,res) => {
         .select("jcv_users.jcv_userEmailCorporate")
         .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
         .table("jcv_users_permissions")
-        .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+        .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
         .then( data => {
 
             if(data != ''){
@@ -1473,7 +1473,7 @@ exports.adminRequestRemove = async (req,res) => {
         .select("jcv_users.jcv_userEmailCorporate")
         .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
         .table("jcv_users_permissions")
-        .join('jcv_users', 'jcv_users_permissions.sys_blz_perm_userId', '=', 'jcv_users.jcv_id')
+        .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
         .then( data => {
 
             if(data != ''){
