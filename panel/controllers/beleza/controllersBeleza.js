@@ -137,7 +137,14 @@ exports.listOrder = async (req,res,next) => {
         }
 
         var page = "beleza/status";
-        res.render("panel/index", {page: page, productOne: requestUser[0]["sys_blz_tratmentOne"].split('-')[1], productTwo: requestUser[0]["sys_blz_tratmentTwo"].split('-')[1], idRequest: requestUser[0]["sys_blz_id"], mesReferencia: getMonthReferece(), statusCancel: statusCancel})
+        res.render("panel/index", {
+            page: page,
+            requestUser: requestUser,
+            productOne: requestUser[0]["sys_blz_tratmentOne"].split('-')[1], 
+            productTwo: requestUser[0]["sys_blz_tratmentTwo"].split('-')[1], 
+            idRequest: requestUser[0]["sys_blz_id"], 
+            mesReferencia: getMonthReferece(), 
+            statusCancel: statusCancel})
     }else{
         res.redirect("/painel/beleza/solicitar");
     }
@@ -512,12 +519,13 @@ exports.actionsCommandsUnityCancel = async (req,res) => {
     
     const id = req.body.btnDeleteOrder;
 
-    database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: id}).table("jcv_blz_orders").then(data => {
+    database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: id, sys_blz_requestStatus: 2}).table("jcv_blz_orders").then(data => {
+
         if(data != ""){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Pedido #"+id+" cancelado com sucesso!");
             res.redirect("/painel/beleza/solicitacoes");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao excluir o pedido #"+id);
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro, você não pode excluir o pedido #"+id);
             res.redirect("/painel/beleza/solicitacoes");
         }
     })

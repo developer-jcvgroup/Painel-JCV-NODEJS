@@ -24,9 +24,11 @@
                         <div class="beleza-view-form-row-large">
                             <span><%= productTwo %></span>
                         </div>
+                        <% if(requestUser[0].sys_blz_requestStatus == 2 ){ %>
                         <div class="beleza-view-form-row-action">
                             <span id="click-open-cancel" class="beleza-view-link-normal">Cancelar Solicitação</span>
                         </div>
+                        <% } %>
                     </form>
                 </div>
             </div>

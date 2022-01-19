@@ -72,17 +72,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 15px;
 }
 .list-roder-new-link a{
     text-decoration: none;
     outline: 0;
     border: 0;
-    padding: 8px 12px;
+    padding: 8px 16px;
     border-radius: 4px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--color-four);
     background: var(--color-one);
     cursor: pointer;
+    
 }
 
 
