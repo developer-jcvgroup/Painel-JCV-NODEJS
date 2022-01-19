@@ -19,21 +19,21 @@ async function getPermissions (req, res, next) {
 
         let pageError = true;
         //USER:
-        if(urlPage[1] == "solicitar" && resultPermissions[0].sys_blz_perm_use === 1){
+        if(urlPage[1] == "solicitar" && resultPermissions[0].sys_blz_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "status" && resultPermissions[0].sys_blz_perm_use === 1){
+        if(urlPage[1] == "status" && resultPermissions[0].sys_blz_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "listaItens" && resultPermissions[0].sys_blz_perm_use === 1){
+        if(urlPage[1] == "listaItens" && resultPermissions[0].sys_blz_perm_use == 1){
             return next();
         }
       
         //ADMIN:
-        if(urlPage[1] == "solicitacoes" && resultPermissions[0].sys_blz_perm_manager === 1 || resultPermissions[0].sys_blz_perm_admin === 1){
+        if(urlPage[1] == "solicitacoes" && resultPermissions[0].sys_blz_perm_admin == 1){
             return next();
         }
-        if(urlPage[1] == "produtos" && resultPermissions[0].sys_blz_perm_manager === 1 || resultPermissions[0].sys_blz_perm_admin === 1){
+        if(urlPage[1] == "produtos" && resultPermissions[0].sys_blz_perm_manager == 1 || resultPermissions[0].sys_blz_perm_admin == 1){
             return next();
         }
 
@@ -50,30 +50,30 @@ async function getPermissions (req, res, next) {
 
         let pageError = true;
         //USER
-        if(urlPage[1] == "Novo" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "Novo" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "EditarRequisicao" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "EditarRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "VisualizarRequisicao" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "VisualizarRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "ReceberRequisicao" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "ReceberRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "MinhasRequisicoes" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "MinhasRequisicoes" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "itemsAll" && resultPermissions[0].sys_req_perm_use === 1){
+        if(urlPage[1] == "itemsAll" && resultPermissions[0].sys_req_perm_use == 1){
             return next();
         }
 
         //ADMIN
-        if(urlPage[1] == "ListaRequisicoes" && resultPermissions[0].sys_req_perm_manager === 1 || resultPermissions[0].sys_req_perm_admin === 1){
+        if(urlPage[1] == "ListaRequisicoes" && resultPermissions[0].sys_req_perm_manager == 1 || resultPermissions[0].sys_req_perm_admin == 1){
             return next();
         }
-        if(urlPage[1] == "Items" && resultPermissions[0].sys_req_perm_manager === 1 || resultPermissions[0].sys_req_perm_admin === 1){
+        if(urlPage[1] == "Items" && resultPermissions[0].sys_req_perm_manager == 1 || resultPermissions[0].sys_req_perm_admin == 1){
             return next();
         }
 
@@ -89,13 +89,13 @@ async function getPermissions (req, res, next) {
 
         let pageError = true;
         //ADMIN GERAL
-        if(urlPage[1] == "users" && resultPermissions[0].jcv_userCassification === 1){
+        if(urlPage[1] == "users" && resultPermissions[0].jcv_userCassification == 1){
             return next();
         }
-        if(urlPage[1] == "unidades" && resultPermissions[0].jcv_userCassification === 1){
+        if(urlPage[1] == "unidades" && resultPermissions[0].jcv_userCassification == 1){
             return next();
         }
-        if(urlPage[1] == "departamentos" && resultPermissions[0].jcv_userCassification === 1){
+        if(urlPage[1] == "departamentos" && resultPermissions[0].jcv_userCassification == 1){
             return next();
         }
 
@@ -112,19 +112,19 @@ async function getPermissions (req, res, next) {
 
         let pageError = true;
         //ADMIN GERAL
-        if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use === 1){
+        if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "event" && resultPermissions[0].sys_cal_perm_use === 1){
+        if(urlPage[1] == "event" && resultPermissions[0].sys_cal_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_manager === 1){
+        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_manager == 1){
             return next();
         }
-        if(urlPage[1] == "viewRoom" && resultPermissions[0].sys_cal_perm_use === 1){
+        if(urlPage[1] == "viewRoom" && resultPermissions[0].sys_cal_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "viewEvent" && resultPermissions[0].sys_cal_perm_use === 1){
+        if(urlPage[1] == "viewEvent" && resultPermissions[0].sys_cal_perm_use == 1){
             return next();
         }
 
