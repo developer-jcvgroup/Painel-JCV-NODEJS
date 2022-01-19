@@ -45,7 +45,7 @@
                             <li><a class="class-loader" href="/painel/beleza/solicitacoes"><i class="ri-list-ordered"></i><span>Lista de Solicitações</span></a></li>
                         <% } %>
 
-                        <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1){ %>
+                        <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1 || GLOBAL_PERM[0].sys_blz_perm_admin == 1){ %>
                             <li><a class="class-loader" href="/painel/beleza/produtos"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
                         <% } %>
                     </ul>
