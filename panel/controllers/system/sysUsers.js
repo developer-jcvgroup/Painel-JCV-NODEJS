@@ -52,7 +52,7 @@ exports.saveNewUser = async (req,res) => {
     const userName = req.body['save-new-name'];
     const userUnidade = req.body['save-new-unidade'];
     const userGestor = req.body['save-new-gestor'];
-    const userEmailCorporativo = req.body['save-new-email-corp'];
+    const userEmailCorporativo = req.body['save-new-email-corp'] == '' ? null : req.body['save-new-email-corp'];
     const userEmailPessoal = req.body['save-new-email-folks'];
     const userRamal = req.body['save-new-ramal'];
     const userSetor = req.body['save-new-setor'];
@@ -65,9 +65,9 @@ exports.saveNewUser = async (req,res) => {
     const userSYSbelezaManager = req.body['save-new-sys-beleza-manager'] == 'on' ? 1 : 0;
     const userSYSbelezaAdmin = req.body['save-new-sys-beleza-admin'] == 'on' ? 1 : 0;
 
-    const userSYScalendarUse = req.body['save-new-sys-calendar-use-'+idUser] == 'on' ? 1 : 0;
-    const userSYScalendarManager = req.body['save-new-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
-    const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin-'+idUser] == 'on' ? 1 : 0;
+    const userSYScalendarUse = req.body['save-new-sys-calendar-use'] == 'on' ? 1 : 0;
+    const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
+    const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin'] == 'on' ? 1 : 0;
 
     const userType = parseInt(req.body['save-new-sys-type-user']);
     const userSYSemail = parseInt(req.body['save-new-sys-mails']);
