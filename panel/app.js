@@ -113,7 +113,7 @@ router.get("/calendario/room/RoomSettings", authenticate, getPermissions, contro
 router.get("/calendario/viewRoom/:idRoom/:monthRoom?", authenticate, getPermissions, controllerCalendar.viewRoom)
 
 //Calendario: Ver evento do dia
-router.get("/calendar/viewEvent/Day/:dayEvent?", authenticate, getPermissions, controllerCalendar.viewEventDay)
+router.get("/calendario/viewEvent/Day/:dayEvent?", authenticate, getPermissions, controllerCalendar.viewEventDay)
 
 //Calendario: Criar novo evento
 router.post("/calendario/main/register/new", authenticate, controllerCalendar.saveNewEvent)

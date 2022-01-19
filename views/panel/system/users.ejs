@@ -11,7 +11,7 @@
         <section class="sys-section-search-container">
             <div class="sys-section-container-main">
                 <div class="sys-box-search">
-                    <input type="text" placeholder="Busque por CPF, nome, email, ramal.." id="input-search-table">
+                    <input type="text" placeholder="Busque por CPF, nome, email, ramal, unidade.." id="input-search-table">
                 </div>
             </div>
         </section>
@@ -26,8 +26,8 @@
                                 <th>Funcionário</th>
                                 <th>Unidade</th>
                                 <th>Gestor</th>
-                                <th>E-mail coporativo</th>
-                                <th>E-mail pessoal</th>
+                                <th>E-mail 1</th>
+                                <th>E-mail 2</th>
                                 <th>Ramal</th>
                                 <th>Departamento</th>
 
@@ -47,8 +47,8 @@
 
 
                             <tr>
-                                <td><input placeholder="Insira um CPF.." id="insert-cpf" type="text" name="save-new-cpf"></td>
-                                <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name"></td>
+                                <td><input placeholder="Insira um CPF (Obrigatorio)" id="insert-cpf" type="text" name="save-new-cpf"></td>
+                                <td><input placeholder="Insira um nome (Obrigatorio)" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name"></td>
                                 <td>
                                     <select name="save-new-unidade">
                                         <option value="">* Selecione *</option>
@@ -65,9 +65,9 @@
                                         <% }) %>
                                     </select>
                                 </td>
-                                <td><input placeholder="Email corporativo" class="sys-input-table-large-two" type="text" name="save-new-email-corp"></td>
-                                <td><input placeholder="Email pessoal" class="sys-input-table-large-two" type="text" name="save-new-email-folks"></td>
-                                <td><input placeholder="Ramal" type="text" name="save-new-ramal"></td>
+                                <td><input placeholder="Email primario (Obrigatorio)" class="sys-input-table-large-two" type="text" name="save-new-email-corp"></td>
+                                <td><input placeholder="Email secundario (Opcional)" class="sys-input-table-large-two" type="text" name="save-new-email-folks"></td>
+                                <td><input placeholder="Ramal (Opcional)" type="text" name="save-new-ramal"></td>
                                 <td>
                                     <select name="save-new-setor" id="">
                                         <option value="">* Selecione *</option>
@@ -76,7 +76,6 @@
                                         <% }) %>
                                     </select>
                                 </td>
-
 
                                 <td>
                                     <div class="sys-container-two">
@@ -203,6 +202,7 @@
                                         </td>
                                         <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
                                         <td>
+                                            <input hidden type="text" value="<%= element.sys_unity_name %>">
                                             <select name="save-edit-unidade-<%= element.jcv_id %>">
                                                 <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
 
@@ -226,8 +226,8 @@
 
                                             </select>
                                         </td>
-                                        <td><input placeholder="Email corporativo" class="sys-input-table-large-two" value="<%= element.jcv_userEmailCorporate %>" type="text" name="save-edit-email-corp-<%= element.jcv_id %>"></td>
-                                        <td><input placeholder="Email pessoal" class="sys-input-table-large-two" value="<%= element.jcv_userEmailFolks %>" type="text" name="save-edit-email-folks-<%= element.jcv_id %>"></td>
+                                        <td><input placeholder="Email primario (Obrigatorio)" class="sys-input-table-large-two" value="<%= element.jcv_userEmailCorporate %>" type="text" name="save-edit-email-corp-<%= element.jcv_id %>"></td>
+                                        <td><input placeholder="Email secundario (Opcional)" class="sys-input-table-large-two" value="<%= element.jcv_userEmailFolks %>" type="text" name="save-edit-email-folks-<%= element.jcv_id %>"></td>
                                         <td><input placeholder="Ramal" value="<%= element.jcv_userExtension %>" type="text" name="save-edit-ramal-<%= element.jcv_id %>"></td>
                                         <td>
                                             <select name="save-edit-setor-<%= element.jcv_id %>">
@@ -441,8 +441,24 @@
         $('#insert-cpf').mask('000.000.000-00');
         $(".user-insert-cpf").mask('000.000.000-00');
 
+        if(Cookies.get('SEARCH-INPUT')){
+            $("#input-search-table").val(Cookies.get('SEARCH-INPUT'))   
+        }
+
         //Paginação das tabelas
         $.fn.paginationTableMain('#sys-users-table-list',15,2);
+
+        //Criando um cookie para salvar sempre o que o
+        //usuario digitar
+        $("#input-search-table").keyup(function(){
+
+            if($(this).val().length <  1){
+                Cookies.remove('SEARCH-INPUT')    
+            }
+
+            Cookies.set('SEARCH-INPUT', $(this).val())
+
+        })
 
         //Filtro dinamico em inputs
         $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table')

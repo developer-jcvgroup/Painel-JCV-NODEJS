@@ -238,7 +238,7 @@
             </div>
             <!--  -->
             <div class="calendar-display-list">
-                <a id="calendar-day-link-module"><i class="ri-calendar-todo-line"></i></a>
+                <a class="class-loader" id="calendar-day-link-module"><i class="ri-calendar-todo-line"></i></a>
                 <span>Ver Eventos</span>
             </div>
         </div>
@@ -574,7 +574,7 @@
 
         //Valor do link do dia
         let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
-        $("#calendar-day-link-module").attr('href','/painel/calendar/viewEvent/Day/'+dayLinkOpen)
+        $("#calendar-day-link-module").attr('href','/painel/calendario/viewEvent/Day/'+dayLinkOpen)
 
         $("#calendar-day-dinamic").text(getMonth)
 

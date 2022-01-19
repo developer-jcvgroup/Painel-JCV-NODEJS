@@ -210,6 +210,8 @@ exports.saveNewEvent = async (req,res) => {
 
         //Nova Array string
         arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
+    }else{
+        arrNewPerson = [GLOBAL_DASH[0]];
     }
 
     //Validando os inputs
@@ -244,7 +246,13 @@ exports.saveNewEvent = async (req,res) => {
 
                 //Mandando emails para os os usuarios que irão participar
                 if(arrNewPerson != ''){
-                    let arrayPersonSend = arrNewPerson.split(',')
+
+                    let arrayPersonSend;
+                    if(typeof(arrNewPerson) == 'object'){
+                        arrayPersonSend = arrNewPerson;
+                    }else{
+                        arrayPersonSend = arrNewPerson.split(',')
+                    }
 
                     let newArrayEamils = [];
                     arrayPersonSend.forEach(element => {
@@ -562,7 +570,7 @@ exports.editSaveNewEvent = async (req,res) => {
                     })
 
                     const textOne = 'Evento editado!';
-                    const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Criado por: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                    const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
                     emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                     
                 }
@@ -739,62 +747,59 @@ exports.viewRoom = async (req,res) => {
 
 exports.viewEventDay = async (req,res) => {
 
-    
+    try {
+        const dayEvent = req.params['dayEvent']
 
-    const dayEvent = req.params['dayEvent']
-
-    //Caso o mes e ano não esteja definido ele pega o mes atual
-    if(dayEvent.split('-').length > 3){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Dia não definido");
-        res.redirect("/painel/calendario")
-    }else{
-
-
-        let dayComp = dayEvent.split('-')[0]+'/'+dayEvent.split('-')[1]+'/'+dayEvent.split('-')[2]
-
-        //Buscando os eventos do dia
-        const roomInfo = await database
-        .select()
-        .where({sys_calendar_eventDate: dayComp})
-        .table("jcv_calendar_registers")
-        //.join("jcv_unitys","jcv_calendar_registers.sys_calendar_eventLocation","jcv_unitys.sys_unity_id")
-        //.join("jcv_calendar_rooms","jcv_calendar_registers.sys_calendar_eventRoom","jcv_calendar_rooms.sys_calendar_roomId")
-        .then ( data =>{ return data} )
-
-        if(roomInfo != ''){
-            //Buscando todos os usuario
-            const userAll = await database
-            .select("jcv_id","jcv_userNamePrimary")
-            .where({jcv_userEnabled: 1})
-            .table("jcv_users")
-            .then( data => {
-                return data;
-            })
-            .catch( err => {console.log(err)})
-
-            var page = "calendar/viewEventDay";
-            res.render("panel/index", {
-                page: page,
-                userAll: userAll,
-                roomInfo: roomInfo,
-                dayComp: dayComp
-            })
-        }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhum evento encontrado neste dia");
-            res.redirect("/painel/calendario/main")
+        if(dayEvent == undefined){
+            throw {
+                error: "",
+                urllink: "/painel/calendario/viewEvent/Day/"+moment().format("DD-MM-YYYY")
+            }
         }
+
+        //Caso o mes e ano não esteja definido ele pega o mes atual
+        if(dayEvent.split('-').length > 3){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Dia não definido");
+            res.redirect("/painel/calendario")
+        }else{
+
+
+            let dayComp = dayEvent.split('-')[0]+'/'+dayEvent.split('-')[1]+'/'+dayEvent.split('-')[2]
+
+            //Buscando os eventos do dia
+            const roomInfo = await database
+            .select()
+            .where({sys_calendar_eventDate: dayComp})
+            .table("jcv_calendar_registers")
+            //.join("jcv_unitys","jcv_calendar_registers.sys_calendar_eventLocation","jcv_unitys.sys_unity_id")
+            //.join("jcv_calendar_rooms","jcv_calendar_registers.sys_calendar_eventRoom","jcv_calendar_rooms.sys_calendar_roomId")
+            .then ( data =>{ return data} )
+
+            if(roomInfo != ''){
+                //Buscando todos os usuario
+                const userAll = await database
+                .select("jcv_id","jcv_userNamePrimary")
+                .where({jcv_userEnabled: 1})
+                .table("jcv_users")
+                .then( data => {
+                    return data;
+                })
+                .catch( err => {console.log(err)})
+
+                var page = "calendar/viewEventDay";
+                res.render("panel/index", {
+                    page: page,
+                    userAll: userAll,
+                    roomInfo: roomInfo,
+                    dayComp: dayComp
+                })
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhum evento encontrado neste dia");
+                res.redirect("/painel/calendario/main")
+            }
+        }
+    } catch (error) {
+        res.cookie('SYS-NOTIFICATION-EXE1', error.error);
+        res.redirect(error.urllink)
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
 }

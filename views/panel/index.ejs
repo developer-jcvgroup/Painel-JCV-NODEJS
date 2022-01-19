@@ -137,7 +137,7 @@
                                         <% } %>
                                     </li>
                                     <li><div class="dropdown-separator"></div><!-- separador --></li>
-                                    <li><a class="class-loader" href="/painel/perfil">Perfil / Configurações</a></li>
+                                    <li><a class="class-loader" href="/painel/perfil">Conta / Configurações</a></li>
                                     <li><a class="class-loader" href="/painel/logout">Sair</a></li>
                                     
                                 </ul>
@@ -197,7 +197,9 @@
                             <span><%= element.sys_update_nameUpdate %> - <%= element.sys_update_versionUpdate %></span>
                         </div>
                         <div class="sys-update-msg-box">
-                            <span><%= element.sys_update_textUpdate %></span>
+                            <span id="sys-update-text">
+                                <%= element.sys_update_textUpdate %>
+                            </span>
                         </div>
                         <div class="sys-update-button">
                             <button type="submit" formaction="/painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
@@ -205,8 +207,6 @@
                     <% }) %>
                     <hr class="sys-update-hr">
                 </form>
-               
-
             </section>
         </section>
     </section>
@@ -251,6 +251,8 @@
 
 <script>
     $(function(){
+
+        //$("#sys-update-text").text().replace(/\s/g,'<br/>');
         //Valida so o campo tem a quantidade necessaria
         $("#inputSetPassTwo").keyup(function(){
             let iptOne = $("#inputSetPassOne").val();

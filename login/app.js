@@ -8,7 +8,7 @@ const database = require("./database/database");
 router.get("/", async (req,res)=>{
 
     const linkspecial = req.query['linkspecial']
-    const allAuthor = await database.select("sys_phrase_string","sys_phrase_author").where({sys_phrase_enalbed: 1}).table("jcv_sys_phrase").then( data => {
+    const allAuthor = await database.select("sys_phrase_string","sys_phrase_author").where({sys_phrase_enalbed: 1}).orderBy("sys_phrase_order", "ASC").table("jcv_sys_phrase").then( data => {
         
         let arrFrase = '';
         let arrAutor = '';
