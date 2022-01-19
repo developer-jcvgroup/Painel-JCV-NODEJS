@@ -106,6 +106,7 @@ exports.viewCalendarMonth = async (req,res) => {
         .select()
         .where({sys_calendar_roomEnabled: 1})
         .table("jcv_calendar_rooms")
+        .join("jcv_unitys","jcv_calendar_rooms.sys_calendar_roomUnity","jcv_unitys.sys_unity_id")
         .then( data => {
             return data;
         })

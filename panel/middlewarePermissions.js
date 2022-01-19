@@ -118,7 +118,7 @@ async function getPermissions (req, res, next) {
         if(urlPage[1] == "event" && resultPermissions[0].sys_cal_perm_use == 1){
             return next();
         }
-        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_manager == 1){
+        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_manager == 1 || resultPermissions[0].sys_cal_perm_admin == 1){
             return next();
         }
         if(urlPage[1] == "viewRoom" && resultPermissions[0].sys_cal_perm_use == 1){

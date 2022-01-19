@@ -611,7 +611,7 @@
 
 .calendar-event-reminder-room{
     width: fit-content;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 .calendar-event-reminder-room label{

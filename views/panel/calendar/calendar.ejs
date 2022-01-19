@@ -399,15 +399,38 @@
                 </select>
             </div>
             <!--  -->
-            <div class="calendar-event-reminder-room">
-                <label for="">Sala</label>
-                <select  name="calendar-register-room">
-                    <% getAllRooms.forEach(element => { %>
-                        <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
-                    <% }) %>
-                    <option value="1">Não usarei</option>
-                </select>
-            </div>
+
+            <% let atualIndex = allLocations[0].sys_unity_id %>
+            
+            <% for(let i = 0; i < allLocations.length; i++){ %>
+                
+                <% if(allLocations[i].sys_unity_id == atualIndex){ %>
+                    <!-- console.log("é igual: "+resultData[i].jcv_userNameSecundary) -->
+                    <!-- <span>1</span> -->
+
+                    <div class="calendar-event-reminder-room" id="room-and-unty-<%= atualIndex %>" >
+                        <label for="">Sala</label>
+                        <select name="calendar-register-room">
+                            <% getAllRooms.forEach(element => { %>
+
+                                <% if(element.sys_calendar_roomUnity == atualIndex){ %>
+                                    <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
+                                <% } %>
+
+                            <% }) %>
+                            <option value="1">Não usarei</option>
+                        </select>
+                    </div>
+
+
+                <% }else{ %>
+                    
+                    <!-- console.log("Mudou para: "+resultData[i].jcv_userNameSecundary) -->
+                    <% atualIndex = allLocations[i].sys_unity_id %>
+                    <% i-- %>
+                <% } %>
+            <% } %>
+
         </div>
         <!--  -->
         <hr style="margin: 30px 0;">
@@ -627,4 +650,17 @@
         $('.calendar-visible-bottom hr').remove();
         $(this).append('<hr>')
     })
+
+
+    //Sistema de salas para o calendario
+    let aptionValueSet = $("select#calendar-register-location").val()
+    $("#room-and-unty-"+aptionValueSet).fadeIn().css('display','flex')
+    $("select#calendar-register-location").change(function(){
+        let optionValue = $(this).val();
+        
+        $(".calendar-event-reminder-room").css('display','none');
+        $("#room-and-unty-"+optionValue).fadeIn().css('display','flex')
+        
+    })
+
 </script>
