@@ -26,20 +26,12 @@ exports.sysBLZrequest = async (req, res) =>{
         
         //Valida o status
         if(data != ""){
-            let ordersStatus = 0;
             //Caso o pedido esteja cancelado ou separado ele vai para a pagina de solicitação
-            if(data[0].sys_blz_requestStatus == 3 || data[0].sys_blz_requestStatus == 4){
-                ordersStatus++;
-            }
-
-            if(ordersStatus == 0){
-                //O ultimo pedido tem status 3 ou 4
+            if(data[0].sys_blz_requestStatus == 3){
                 listProducts();
             }else{
-                //Solicitação já criada, va para a pagina de status
                 res.redirect("/painel/beleza/status");
             }
-
         }else{
             //Nenhuma solicitação encontrada
             listProducts();
