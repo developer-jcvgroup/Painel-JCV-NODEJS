@@ -104,6 +104,7 @@ body, html{
     font-size: 1.2rem;
     font-style: italic;
     color: var(--color-two);
+    font-weight: bold;
 }
 .index-cont-msg span:nth-child(2){
     font-size: 0.8rem;
@@ -487,6 +488,37 @@ body, html{
 
 /********************************/
 /********************************/
+/* LGPD */
+.system-lgpd-container{
+    width: 78%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 5%;
+}
+.system-lgpd-main{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding: 20px 10px;
+    border-radius: 4px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.system-lgpd-main span{
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-one);
+}
+.system-lgpd-main a{
+    color: var(--color-one);
+}
+
+
+
+/********************************/
+/********************************/
 @media only screen and (max-width: 1000px){
     .index-cont-msg span:nth-child(1){
         font-size: 0.8rem;
@@ -535,5 +567,16 @@ body, html{
 
     .index-recover-container-main{
         width: 95%;
+    }
+
+    /*  */
+    .system-lgpd-container{
+        height: fit-content;
+        width: 100%;
+        top: 20%;
+    }
+    .system-lgpd-main{
+        width: 95%;
+        height: min-content;
     }
 }

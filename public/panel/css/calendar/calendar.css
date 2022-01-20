@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* ********************* */
@@ -11,7 +12,7 @@
 .calendar-section-menu{
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: fit-content;
 }
 
 /* MENU EM SI */
@@ -49,6 +50,8 @@
     justify-content: center;
     background: var(--color-one);
     border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 4px 0 var(--color-three);
+    z-index: 1;
 }
 .calendar-menu-list-inc{
     list-style: none;
@@ -71,8 +74,9 @@
 /* MENU LIST EVENTS */
 .calendar-menu-events-all{
     position: absolute;
-    margin-left: 50px;
-    width: 400px;
+    top: var(--heigth-header);
+    /* margin-left: 50px; */
+    min-width: 400px;
     height: calc(100% - var(--heigth-header));
     display: none;
     flex-direction: column;
@@ -80,6 +84,13 @@
     padding: 15px;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
+}
+.calendar-menu-events-main-cent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
 }
 .calendar-menu-events-title-box{
     width: 90%;
@@ -115,7 +126,7 @@
     align-items: center;
 }
 .calendar-menu-events-ul-one i{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 .calendar-menu-events-ul-two{
@@ -125,10 +136,10 @@
 .calendar-menu-events-ul-two span:nth-child(1){
     font-size: 0.9rem;
     color: var(--color-one);
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 .calendar-menu-events-ul-two span:nth-child(2){
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--color-two);
 }
 
@@ -191,11 +202,13 @@
 .calendar-new-event{
     display: flex;
     align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 .calendar-new-event i{
     color: var(--color-two);
     font-size: 1.7rem;
-    cursor: pointer;
+    margin-right: 7px;
 }
 
 /*  */
@@ -788,15 +801,15 @@
         font-size: 0.6rem;
     }
 
+    .calendar-menu-events-main-cent{
+        width: 95%;
+        align-items: center;
+        padding-left: 0;
+    }
 
 }
 @media only screen and (max-width: 400px){
-    /* .calendar-menu-main{
-        width: 100%;
+    .calendar-new-event span{
+        display: none;
     }
-
-
-    .calendar-week-days li{
-        font-size: 0.7rem;
-    } */
 }

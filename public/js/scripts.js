@@ -437,8 +437,8 @@ $(function(){
             if(vazioAnterior == 0){
                 var regex = new RegExp("^[a-z0-9_ ]+$");
             }else{
-            var regex = new RegExp("^[a-z0-9_]+$");
-                vazioAnterior = 0
+                var regex = new RegExp("^[a-z0-9_]+$");
+                vazioAnterior = 0;
             }
 
             var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -448,12 +448,23 @@ $(function(){
             }
 
             if (!regex.test(key)) {
+
+
                 event.preventDefault();
-                return false;
+                
+                //return false;
+
+                
+                if(key == ''){
+                    return false;
+                }else{
+                    $.fn.sys_popupSystem("SYS02","<b>Digite apenas caracteres MINÚSCULOS e NÃO ESPECIAIS</b>")
+                }
             }
 
             var str = $(this).val();
             str = str.replace(/(^|\s|$)(?!de|do|d$)(.)/g, (geral, match1, match2) => match1 + match2.toUpperCase());
+
             $(this).val(str);
         });
     }
@@ -496,9 +507,6 @@ $(function(){
                 
         });    
     }
-
-
-
 
 
 

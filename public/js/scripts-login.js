@@ -91,3 +91,8 @@ if(Cookies.get("SYS-NOTIFICATION-EXE3") != undefined){
     const valuesCookiesEXE3 = Cookies.get("SYS-NOTIFICATION-EXE3").split("|");
     $.fn.sys_popupSystem(valuesCookiesEXE3[0], valuesCookiesEXE3[1]);
 }
+
+//LGPD
+setInterval(() => {
+    $("#system-lgpd-container").fadeOut()    
+}, 7000);

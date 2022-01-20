@@ -44,6 +44,14 @@
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
 }
+.room-setings-back{
+    margin-bottom: 16px;
+}
+.room-setings-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
 /* */
 .room-setings-add-container{
     width: 100%;
