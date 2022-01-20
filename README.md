@@ -85,6 +85,45 @@ o registro de log referente a grupos sera: 01,02,03 onde lista os grupos que vã
 - ADM: Exportar pedidos, produtos dos pedidos e gerar etiquetas para os pedidos
 - ADM: Listagem de produtos mais direta, exportar lista de produtos e alteração em massa
 
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+## Trade Markenting
+
+Formulário de visita: {ADM}: Novo formulário, lista de formulários
+Vendas diárias: {USER,ADM}: Novo, listar;
+Pesquisa de mercado: {USER,ADM}: Criar pesquisa, Listar Pesquisa
+
+Vendas Diarias: form exibirá cada box por vez (box da marca felps,retro avenca):
+
+* N° de peças (label(exeto saches))
+* Teve Alguma ação? (S/N) sim? Qual? (campo text)
+* Loja: select dinamico para a loja que a pessoa esta cadastrada na tabela de lojas 
+* Item mais vendido: input text dinamico onde vamos campturar o id do produto
+* Data: Data padrão é o dia em que foi clicado
+* Possui material de marketing? (S/N)
+
+Formulário de visita: o compo loja é dinamico a data o usuario decide
+
+Lojas:
+Cadastro de lojas e criar a lista de promotoras desta loja
+
+Produtos:
+Todos os produtos do GGP do jcv
+
+Pesquisa de mercado:
+Formulário dinâmico para a inserção do conteudo, somente uma respota POR LOJA
+
+* Titulo global do form
+* Descrição do form
+* Perguntas: {
+    titulo da pergunta: (input text),
+    Resposta: {
+        S/N/T: (input check sim,não,talvez),
+        CheckPer: (input check personalizado onde ele colocara a resposta da pergunta caso este em check)
+        Text: Campo texto  normal
+    }
+}
+* Observação que a pessoa que respondeer pode fazer
 
 ## *****************************************************************************************
 ## *****************************************************************************************
