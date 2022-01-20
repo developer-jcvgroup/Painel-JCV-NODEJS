@@ -11,12 +11,11 @@
                 <% if(arrayData[0]['jcv_userImageIcon'] != null){ %>
                     <img class="profile-img-user" src="/panel/img/img-user/<%= arrayData[0]['jcv_userImageIcon'] %>" alt="">
                 <% }else{ %>
-                    <div class="profile-img-user"></div>
+                    <img id="img-user-preview" class="profile-img-user"></img>
                 <% } %>
 
-
                 <div class="profile-container-edit">
-                    <input id="input-edit-img" type="file" name="userImageUpload" required>
+                    <input id="input-edit-img" type="file" name="userImageUpload" accept="image/png, image/jpeg" required>
                     <label for="input-edit-img"><i class="ri-edit-line"></i></label>
                     <button type="submit"><i class="ri-save-line"></i></button>
                 </div>
@@ -91,17 +90,29 @@
         </div>
     </section>
 </section>
+<!-- <script src="/js/jquery-3.5.1.min.js"></script> -->
 <script>
-    $(function(){
-        $("#profile-recovery-open").click(function(){
-            $("#profile-recover-pass").fadeIn();
-            $("#profile-recover-pass").css("display","flex");
-        })
 
-        $("#profile-recover-close").click(function(){
-            $("#profile-recover-pass").fadeOut();
-        })
-    })    
+    function readImage() {
+        if (this.files && this.files[0]) {
+            var file = new FileReader();
+            file.onload = function(e) {
+                document.getElementById("img-user-preview").src = e.target.result;
+            };       
+            file.readAsDataURL(this.files[0]);
+            $.fn.sys_popupSystem("SYS01","Preview habilitado, salve a imagem!")
+        }
+    }
+    document.getElementById("input-edit-img").addEventListener("change", readImage, false);
+
+    $("#profile-recovery-open").click(function(){
+        $("#profile-recover-pass").fadeIn();
+        $("#profile-recover-pass").css("display","flex");
+    })
+
+    $("#profile-recover-close").click(function(){
+        $("#profile-recover-pass").fadeOut();
+    })
     
     $('#update-cpf').mask('000.000.000-00');
     
