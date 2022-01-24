@@ -47,7 +47,7 @@ exports.commandLogar = async (req, res) =>{
                     }
                 }else{
                     //Senha incorreta
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Senha incorreta");
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Senha incorreta");
                     res.redirect("/login");
                 }
             }else if(data[0].cv_userPassword == null){
@@ -71,7 +71,7 @@ exports.commandLogar = async (req, res) =>{
 
         }else{
             //Erro conta não econtrada
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Usuario inexistente");
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Usuario inexistente");
             res.redirect("/login");
         }
     })

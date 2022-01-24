@@ -57,77 +57,94 @@ exports.saveNewUser = async (req,res) => {
     userCPF = pad(userCPF,11)
 
     if(userCPF.length == 11){
-        
-        const userName = req.body['save-new-name'];
-        const userUnidade = req.body['save-new-unidade'];
-        const userGestor = req.body['save-new-gestor'];
-        const userEmailCorporativo = req.body['save-new-email-corp'] == '' ? null : req.body['save-new-email-corp'];
-        const userEmailPessoal = req.body['save-new-email-folks'];
-        const userRamal = req.body['save-new-ramal'];
-        const userSetor = req.body['save-new-setor'];
 
-        const userSYSrequisitorUse = req.body['save-new-sys-requsitor-use'] == 'on' ? 1 : 0;
-        //const userSYSrequisitorManager = req.body['save-new-sys-requsitor-manager'] == 'on' ? 1 : 0;
-        const userSYSrequisitorAdmin = req.body['save-new-sys-requsitor-admin'] == 'on' ? 1 : 0;
 
-        const userSYSbelezaUse = req.body['save-new-sys-beleza-use'] == 'on' ? 1 : 0;
-        const userSYSbelezaManager = req.body['save-new-sys-beleza-manager'] == 'on' ? 1 : 0;
-        const userSYSbelezaAdmin = req.body['save-new-sys-beleza-admin'] == 'on' ? 1 : 0;
+        const validationCPF = await database
+        .select("jcv_userCpf")
+        .where({jcv_userCpf: userCPF})
+        .table("jcv_users")
+        .then( data => {return data;})
 
-        const userSYScalendarUse = req.body['save-new-sys-calendar-use'] == 'on' ? 1 : 0;
-        //const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
-        const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin'] == 'on' ? 1 : 0;
 
-        const userType = parseInt(req.body['save-new-sys-type-user']);
-        const userSYSemail = parseInt(req.body['save-new-sys-mails']);
-        const userAtivo = parseInt(req.body['save-new-active']);
+        if(validationCPF != ''){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| CPF já cadastrado!");
+            res.redirect("/painel/system/users");
+        }else{
 
-        database.insert({
-
-            jcv_userNamePrimary: userName,
-            jcv_userNameSecundary: userName,
-            jcv_userCpf: userCPF,
-            jcv_userPassword: null,
-            jcv_userEmailCorporate: userEmailCorporativo,
-            jcv_userEmailFolks: userEmailPessoal,
-            jcv_userSector: userSetor,
-            jcv_userUnity: userUnidade,
-            jcv_userExtension: userRamal,
-            jcv_userManager: userGestor,
-            jcv_userCassification: userType,
-            jcv_userEnabled: userAtivo,
-            jcv_sysEmail: userSYSemail
-
-        }).table("jcv_users").then(data => { 
+            const userName = req.body['save-new-name'];
+            const userUnidade = req.body['save-new-unidade'];
+            const userGestor = req.body['save-new-gestor'];
+            const userEmailCorporativo = req.body['save-new-email-corp'] == '' ? null : req.body['save-new-email-corp'];
+            const userEmailPessoal = req.body['save-new-email-folks'];
+            const userRamal = req.body['save-new-ramal'];
+            const userSetor = req.body['save-new-setor'];
+    
+            const userSYSrequisitorUse = req.body['save-new-sys-requsitor-use'] == 'on' ? 1 : 0;
+            //const userSYSrequisitorManager = req.body['save-new-sys-requsitor-manager'] == 'on' ? 1 : 0;
+            const userSYSrequisitorAdmin = req.body['save-new-sys-requsitor-admin'] == 'on' ? 1 : 0;
+    
+            const userSYSbelezaUse = req.body['save-new-sys-beleza-use'] == 'on' ? 1 : 0;
+            const userSYSbelezaManager = req.body['save-new-sys-beleza-manager'] == 'on' ? 1 : 0;
+            const userSYSbelezaAdmin = req.body['save-new-sys-beleza-admin'] == 'on' ? 1 : 0;
+    
+            const userSYScalendarUse = req.body['save-new-sys-calendar-use'] == 'on' ? 1 : 0;
+            //const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
+            const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin'] == 'on' ? 1 : 0;
+    
+            const userType = parseInt(req.body['save-new-sys-type-user']);
+            const userSYSemail = parseInt(req.body['save-new-sys-mails']);
+            const userAtivo = parseInt(req.body['save-new-active']);
+    
             database.insert({
-
-                sys_perm_idUser: data,
-                sys_blz_perm_use: userSYSbelezaUse,
-                sys_blz_perm_manager: userSYSbelezaManager,
-                sys_blz_perm_admin: userSYSbelezaAdmin,
-                sys_req_perm_use: userSYSrequisitorUse,
-                //sys_req_perm_manager: userSYSrequisitorManager,
-                sys_req_perm_admin: userSYSrequisitorAdmin,
-                sys_cal_perm_use: userSYScalendarUse,
-                //sys_cal_perm_manager: userSYScalendarManager,
-                sys_cal_perm_admin: userSYScalendarAdmin
-
-            }).table("jcv_users_permissions").then(data => {
-                if(data != ''){
-
-
-                    //Sistema de email
-                    const textOne = 'Conta criada com sucesso!';
-                    const textTwo = `Sua conta foi criada com sucesso. Ao fazer o login uma tela será exibida para cadastrar sua nova senha.`;
-                    emailSystemExe.sendMailExe(userEmailCorporativo, 'Conta Criada', 'Conta Criada', 'Sistema JCV', userName, textOne, textTwo);
-
-
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi cadastrado com sucesso, um e-mail de confirmação foi enviado!");
-                    res.redirect("/painel/system/users");
-                }
+    
+                jcv_userNamePrimary: userName,
+                jcv_userNameSecundary: userName,
+                jcv_userCpf: userCPF,
+                jcv_userPassword: null,
+                jcv_userEmailCorporate: userEmailCorporativo,
+                jcv_userEmailFolks: userEmailPessoal,
+                jcv_userSector: userSetor,
+                jcv_userUnity: userUnidade,
+                jcv_userExtension: userRamal,
+                jcv_userManager: userGestor,
+                jcv_userCassification: userType,
+                jcv_userEnabled: userAtivo,
+                jcv_sysEmail: userSYSemail
+    
+            }).table("jcv_users").then(data => { 
+                database.insert({
+    
+                    sys_perm_idUser: data,
+                    sys_blz_perm_use: userSYSbelezaUse,
+                    sys_blz_perm_manager: userSYSbelezaManager,
+                    sys_blz_perm_admin: userSYSbelezaAdmin,
+                    sys_req_perm_use: userSYSrequisitorUse,
+                    //sys_req_perm_manager: userSYSrequisitorManager,
+                    sys_req_perm_admin: userSYSrequisitorAdmin,
+                    sys_cal_perm_use: userSYScalendarUse,
+                    //sys_cal_perm_manager: userSYScalendarManager,
+                    sys_cal_perm_admin: userSYScalendarAdmin
+    
+                }).table("jcv_users_permissions").then(data => {
+                    if(data != ''){
+    
+    
+                        //Sistema de email
+                        const textOne = 'Conta criada com sucesso!';
+                        const textTwo = `Sua conta foi criada com sucesso. Ao fazer o login uma tela será exibida para cadastrar sua nova senha.`;
+                        emailSystemExe.sendMailExe(userEmailCorporativo, 'Conta Criada', 'Conta Criada', 'Sistema JCV', userName, textOne, textTwo);
+    
+    
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi cadastrado com sucesso, um e-mail de confirmação foi enviado!");
+                        res.redirect("/painel/system/users");
+                    }
+                })
+    
             })
 
-        })
+        }
+
+        
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres!");
         res.redirect("/painel/system/users");
