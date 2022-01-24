@@ -28,6 +28,9 @@
                             <div class="req-new-container-button">
                                 <button class="req-new-button-default" id="button-insert-item" type="button">Adicionar</button>
                             </div>
+                            <div class="req-new-container-solic">
+                                <span id="req-item-open">Solicitar cadastro</span>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -102,10 +105,28 @@
         </div>
     </div>
 </section>
+<section class="req-item-new-main" id="req-item-new-main">
+    <div class="req-item-new-cont">
+        <i id="req-item-close" class="ri-close-line"></i>
+        <form class="req-item-new-form" action="" method="post">
+            <label for="">Insira o item abaixo que deseja seu cadastro no requisitor de materiais</label>
+            <input name="input-item-register" type="text" placeholder="Descreva o item...">
+            <button type="submit" formaction="./new/item/request">Enviar</button>
+        </form>
+    </div>
+</section>
 <script>
     $(function(){
 
         $.fn.functionSetDinamic(false, '');//Não adicionando ids de itens existentes
+
+        $("#req-item-close").click(function(){
+            $("#req-item-new-main").fadeOut();
+        })
+        $("#req-item-open").click(function(){
+            $("#req-item-new-main").fadeIn();
+            $("#req-item-new-main").css('display','flex');
+        })
 
         //Pegando a lista de itens
         let dataOne = '<%- locals.arrayItems %>';

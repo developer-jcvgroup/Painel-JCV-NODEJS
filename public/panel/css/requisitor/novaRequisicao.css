@@ -126,6 +126,74 @@
     cursor: pointer;
 }
 
+/* CONTAINER PARA SOLICITAR CADASTRO DE ITENS */
+.req-new-container-solic{
+    display: flex;
+    align-items: center;
+}
+.req-new-container-solic span{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    cursor: pointer;
+    text-decoration: underline;
+}
+.req-item-new-main{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.req-item-new-cont{
+    width: 700px;
+    max-height: 80%;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+}
+.req-item-new-cont i{
+    font-size: 1.5rem;
+    color: var(--color-one);
+    cursor: pointer;
+}
+.req-item-new-form{
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.req-item-new-form label{
+    font-size: 0.8rem;
+    color: var*--color-one;
+}
+.req-item-new-form input{
+    width: 100%;
+    margin: 24px 0;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+.req-item-new-form button{
+    margin-top: 12px;
+    width: fit-content;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
 /************************/
 /************************/
 /* TABELA */

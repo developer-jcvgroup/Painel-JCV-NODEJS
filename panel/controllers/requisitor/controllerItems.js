@@ -2,6 +2,9 @@ const moment = require("moment");
 const { type } = require("os");
 moment.locale('pt-BR');
 
+//Sistema de emails
+const emailSystemExe = require('../system/emailSystem');
+
 const database = require("../../database/database");
 
 exports.adminListAllItems = async (req,res) =>{
@@ -53,4 +56,43 @@ exports.deleteItem = async (req,res) => {
             res.redirect("/painel/requisitor/items");
         }
     })
+}
+
+exports.requestItemAdmin = async (req,res) =>{
+
+    const itemRegister = req.body['input-item-register']
+
+    const userRequest = await database
+    .select("jcv_userNamePrimary")
+    .where({jcv_id: GLOBAL_DASH[0]})
+    .table("jcv_users")
+    .then( data => {return data})
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    //Email para os ADMINS do sistema
+    database
+    .select("jcv_users.jcv_userEmailCorporate")
+    .where({sys_req_perm_admin: 1, jcv_sysEmail: 1})
+    .table("jcv_users_permissions")
+    .join('jcv_users', 'jcv_users_permissions.sys_perm_idUser', '=', 'jcv_users.jcv_id')
+    .then( data => {
+
+        if(data != ''){
+            //Transformando em array
+            let arrMail = []
+            for(let index = 0; index < data.length; index++){
+                arrMail.push(data[index].jcv_userEmailCorporate)
+            }
+
+            //Sistema de email: ADMIN
+            const textOne = 'Foi solitado um cadastro de novo item';
+            const textTwo = `O usuario <b>${userRequest[0].jcv_userNamePrimary}</b> solicitou o cadastro do item: <b>${itemRegister}</b>`;
+            emailSystemExe.sendMailExe(arrMail, 'Cadastro de item', 'Cadastro de item', 'Requisitor de Materiais', 'Administradores', textOne, textTwo);
+        }
+        
+    })
+
+    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Solicitação recebida pelo usuario!");
+    res.redirect("/painel/requisitor/Novo");
 }

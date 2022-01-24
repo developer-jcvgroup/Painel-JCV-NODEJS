@@ -63,6 +63,7 @@ router.post("/action/define/pass", homePanel.indexSetPass)
 //Requisitor: Novo Pedido
 router.get("/requisitor/Novo", authenticate, getPermissions, requisitorMateriais.listAllinformations)
 router.post("/requisitor/create/order", authenticate, requisitorMateriais.createOrder);
+router.post("/requisitor/new/item/request", authenticate, itemsRequisitor.requestItemAdmin)
 
 //Requisitor: Editar Pedido
 router.get("/requisitor/EditarRequisicao/:id?", authenticate, getPermissions, requisitorMateriais.editRequestUser);
