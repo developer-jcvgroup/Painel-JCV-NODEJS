@@ -5,7 +5,7 @@
     <section class="profile-section-center-main">
         <div class="profile-container-main-style"></div>
         <div class="profile-container-info-user">
-            <form class="profile-container-image-user" action="./perfil/update/image" method="post" enctype="multipart/form-data">
+            <form class="profile-container-image-user" id="form-save-profile" action="./perfil/update/image" method="post" enctype="multipart/form-data">
                 <% if(arrayData[0]['jcv_userImageIcon'] != null){ %>
                     <img class="profile-img-user" src="/panel/img/img-user/<%= arrayData[0]['jcv_userImageIcon'] %>" alt="">
                 <% }else{ %>
@@ -14,7 +14,7 @@
                 <div class="profile-container-edit">
                     <input id="input-edit-img" type="file" name="userImageUpload" accept="image/png, image/jpeg" required>
                     <label for="input-edit-img"><i class="ri-edit-line"></i></label>
-                    <button type="submit"><i class="ri-save-line"></i></button>
+                    <button id="button-save-profile" type="submit"><i class="ri-save-line"></i></button>
                 </div>
             </form>
             <form class="profile-container-info-user-set" action="./perfil/update" method="post">
@@ -97,9 +97,12 @@
                 document.getElementById("img-user-preview").src = e.target.result;
             };       
             file.readAsDataURL(this.files[0]);
+
             $.fn.sys_popupSystem("SYS01","Preview habilitado, salve a imagem!")
         }
     }
+    
+
     document.getElementById("input-edit-img").addEventListener("change", readImage, false);
 
     $("#profile-recovery-open").click(function(){
