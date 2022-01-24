@@ -11,6 +11,18 @@ async function getPermissions (req, res, next) {
         return data;
     })
 
+    const getDataUser = await database
+    .select("jcv_userEmailCorporate")
+    .where({jcv_id: GLOBAL_DASH[0]})
+    .table("jcv_users")
+    .then(data => {return data})
+
+    if(getDataUser[0].jcv_userEmailCorporate == null){
+
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| <b>Antes de utilizar os apps. Você precisa cadastrar um email!</b>");
+        res.redirect("/painel/perfil")
+    }else{
+
     //Pegando e tranformando em array a URL
     const urlPage = req.path.split('/');urlPage.shift();
 
@@ -43,7 +55,6 @@ async function getPermissions (req, res, next) {
             res.redirect("/painel");
         }
     }
-
 
     //REQUISITOR DE MATERIAIS
     if(urlPage[0] == "requisitor"){
@@ -136,7 +147,7 @@ async function getPermissions (req, res, next) {
 
     }
 
-
+    }
 
 
 }

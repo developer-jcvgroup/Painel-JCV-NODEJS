@@ -87,9 +87,7 @@ authenticate = async (req, res, next) => {
             }else{
                 next();
             }
-
             
-
         }else{
             req.session.cookieLogin = undefined;
             res.redirect("/login");
