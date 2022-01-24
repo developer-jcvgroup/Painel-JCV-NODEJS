@@ -316,7 +316,7 @@
 
 .event-edit-event-reminder-room{
     width: fit-content;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 .event-edit-event-reminder-room label{

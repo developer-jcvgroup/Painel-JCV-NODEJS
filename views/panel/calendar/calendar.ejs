@@ -408,9 +408,9 @@
 
                     <div class="calendar-event-reminder-room" id="room-and-unty-<%= atualIndex %>" >
                         <label for="">Sala</label>
-                        <select name="calendar-register-room">
+                        <select name="calendar-register-room-<%= atualIndex %>">
                             <% getAllRooms.forEach(element => { %>
-
+                                    
                                 <% if(element.sys_calendar_roomUnity == atualIndex){ %>
                                     <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
                                 <% } %>
@@ -554,26 +554,41 @@
     let idArray = [];
     //ADICIONANDO PESSOAS
     $("#button-add-person").click(function(){
+
         //Usuario a ser adicionado
         const valIdUser = $("#insert-person").val().split('-')[0];
         const valPerson = $("#insert-person").val().split('-')[1];
 
-        if(idArray.indexOf(parseInt(valIdUser)) != -1){
-            $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+        if(valIdUser == '' || valPerson == ''){
+            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
         }else{
-            idArray.push(parseInt(valIdUser))
-            $(".calendar-event-persons-list")
-            .append(
-            `<div class="calendar-event-person-box" id="person-id-${valIdUser}">
-                <input readonly type="text" value="${valPerson}">
-                <input hidden value="${valIdUser}" name="calendar-register-persons"/>
-                <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
-            </div>`
-            )
+            
+            console.log(idArray.indexOf(parseInt(valIdUser)))
 
-            console.log(idArray)
+            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+            }else{
 
-            $("#insert-person").val('')
+                if(isNaN(valIdUser)){
+                    $.fn.sys_popupSystem("SYS02", "Usuario inválido")
+                }else{
+
+                    idArray.push(parseInt(valIdUser))
+
+                    $(".calendar-event-persons-list")
+                    .append(
+                    `<div class="calendar-event-person-box" id="person-id-${valIdUser}">
+                        <input readonly type="text" value="${valPerson}">
+                        <input hidden value="${valIdUser}" name="calendar-register-persons"/>
+                        <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                    </div>`
+                    )
+
+                    console.log(idArray)
+
+                    $("#insert-person").val('')
+                }
+            }
         }
     })
     function functionRemovePerson(id){
@@ -623,7 +638,8 @@
     $("select#calendar-register-location").change(function(){
         let valueSelect = $(this).val();
 
-        if(valueSelect == 'not'){
+        /* validar */
+        /* if(valueSelect == 'not'){
             console.log('AAAAAAAAAA')
             $(".calendar-event-locate-name input").css('display','flex')
             $(".calendar-event-locate-name input").attr('name','calendar-register-location')//Atribuindo o name ao input
@@ -632,7 +648,7 @@
             $(".calendar-event-locate-name input").css('display','none')
             $("#calendar-register-location").attr('name','calendar-register-location')
             $(".calendar-event-locate-name input").attr('name','xxx')
-        }
+        } */
     })
 
     /* EVENTO DIA INTEIRO */

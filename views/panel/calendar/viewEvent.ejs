@@ -230,22 +230,57 @@
                 </select>
             </div>
             <!--  -->
-            <div class="event-edit-event-reminder-room">
-                <label for="">Sala</label>
-                <select name="event-edit-register-room">
-                    <% if(allDataEvent[0].sys_calendar_roomId == 1){ %>
-                        <option value="1">Não usarei</option>
-                    <% }else{ %>
-                        <option value="<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></option>
-                    <% } %>
-        
-                    <option disabled></option>
-                    <% getAllRooms.forEach(element => { %>
-                        <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
-                    <% }) %>
-                    <option value="1">Não usarei</option>
-                </select>
-            </div>
+
+
+            <% let atualIndex = allLocations[0].sys_unity_id %>
+            
+            <% for(let i = 0; i < allLocations.length; i++){ %>
+                
+                <% if(allLocations[i].sys_unity_id == atualIndex){ %>
+                    <!-- console.log("é igual: "+resultData[i].jcv_userNameSecundary) -->
+                    <!-- <span>1</span> -->
+
+                    <div class="event-edit-event-reminder-room" id="room-and-unty-<%= atualIndex %>" >
+                        <label for="">Sala</label>
+                        <select name="event-edit-register-room-<%= atualIndex %>">
+                            <option value="<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></option>
+                            <option disabled></option>
+                            <% getAllRooms.forEach(element => { %>
+                                    
+                                <% if(element.sys_calendar_roomUnity == atualIndex){ %>
+                                    <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
+                                <% } %>
+
+                            <% }) %>
+                            <option value="1">Não usarei</option>
+                        </select>
+                    </div>
+
+
+                <% }else{ %>
+                    
+                    <!-- console.log("Mudou para: "+resultData[i].jcv_userNameSecundary) -->
+                    <% atualIndex = allLocations[i].sys_unity_id %>
+                    <% i-- %>
+                <% } %>
+            <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
         </div>
         <!--  -->
         <hr style="margin: 30px 0;">
@@ -322,26 +357,32 @@
 
     //ADICIONANDO PESSOAS
     $("#button-add-person").click(function(){
+
         //Usuario a ser adicionado
         const valIdUser = $("#insert-person").val().split('-')[0];
         const valPerson = $("#insert-person").val().split('-')[1];
 
-        if(idArray.indexOf(parseInt(valIdUser)) != -1){
-            $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+        if(valIdUser == '' || valPerson == ''){
+            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
         }else{
-            idArray.push(parseInt(valIdUser))
-            $(".event-edit-event-persons-list")
-            .append(
-            `<div class="event-edit-event-person-box" id="person-id-${valIdUser}">
-                <input readonly type="text" value="${valPerson}">
-                <input hidden value="${valIdUser}" name="event-edit-register-persons"/>
-                <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
-            </div>`
-            )
 
-            console.log(idArray)
+            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+            }else{
+                idArray.push(parseInt(valIdUser))
+                $(".event-edit-event-persons-list")
+                .append(
+                `<div class="event-edit-event-person-box" id="person-id-${valIdUser}">
+                    <input readonly type="text" value="${valPerson}">
+                    <input hidden value="${valIdUser}" name="event-edit-register-persons"/>
+                    <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                </div>`
+                )
 
-            $("#insert-person").val('')
+                console.log(idArray)
+
+                $("#insert-person").val('')
+            }
         }
     })
     function functionRemovePerson(id){
@@ -357,9 +398,10 @@
 
     /* SELECIONANDO A SALA */
     $("select#event-edit-register-location").change(function(){
-        let valueSelect = $(this).val();
+        let valueSelect = parseInt($(this).val());
 
-        if(valueSelect == 'not'){
+        /* Validar */
+        /* if(valueSelect == 'not'){
             $(".event-edit-event-locate-name input").css('display','flex')
             $(".event-edit-event-locate-name input").attr('name','event-edit-calendar-register-location')//Atribuindo o name ao input
             $("#event-edit-register-location").attr('name','xxx')
@@ -367,7 +409,7 @@
             $(".event-edit-event-locate-name input").css('display','none')
             $("#event-edit-register-location").attr('name','event-edit-calendar-register-location')
             $(".event-edit-event-locate-name input").attr('name','xxx')
-        }
+        } */
     })
 
     /* CLOSE DISPLAY EVENT DAY */
@@ -377,6 +419,17 @@
     /* CLOSE DISPLAY EVENT DAY */
     $("#event-edit-close-event").click(function(){
         $("#event-edit-display-event").fadeOut();
+    })
+
+    //Sistema de salas para o calendario
+    let aptionValueSet = $("select#event-edit-register-location").val()
+    $("#room-and-unty-"+aptionValueSet).fadeIn().css('display','flex')
+    $("select#event-edit-register-location").change(function(){
+        let optionValue = $(this).val();
+
+        $(".event-edit-event-reminder-room").css('display','none');
+        $("#room-and-unty-"+optionValue).fadeIn().css('display','flex')
+        
     })
 
 </script>

@@ -26,7 +26,7 @@ exports.listAllinformations = async (req,res) =>{
     
     `).then( data => {return data[0]})
 
-    //Listando todos os gestores
+    //Listando todos os gestores e representantes
     const allManager = await database.select().where({jcv_userCassification: 2, jcv_userCassification: 1}).table("jcv_users").then( data => {
         return data;
     })
@@ -47,9 +47,16 @@ exports.listAllinformations = async (req,res) =>{
 
 exports.saveNewUser = async (req,res) => {
     
-    const userCPF = parseInt(req.body['save-new-cpf'].split('.').join("").split('-').join(""));
+    let userCPF = parseInt(req.body['save-new-cpf'].split('.').join("").split('-').join(""));
 
-    if(userCPF.toString().length == 11){
+    function pad(num, size) {
+        num = num.toString();
+        while (num.length < size) num = "0" + num;
+        return num;
+    }
+    userCPF = pad(userCPF,11)
+
+    if(userCPF.length == 11){
         
         const userName = req.body['save-new-name'];
         const userUnidade = req.body['save-new-unidade'];
@@ -60,7 +67,7 @@ exports.saveNewUser = async (req,res) => {
         const userSetor = req.body['save-new-setor'];
 
         const userSYSrequisitorUse = req.body['save-new-sys-requsitor-use'] == 'on' ? 1 : 0;
-        const userSYSrequisitorManager = req.body['save-new-sys-requsitor-manager'] == 'on' ? 1 : 0;
+        //const userSYSrequisitorManager = req.body['save-new-sys-requsitor-manager'] == 'on' ? 1 : 0;
         const userSYSrequisitorAdmin = req.body['save-new-sys-requsitor-admin'] == 'on' ? 1 : 0;
 
         const userSYSbelezaUse = req.body['save-new-sys-beleza-use'] == 'on' ? 1 : 0;
@@ -68,7 +75,7 @@ exports.saveNewUser = async (req,res) => {
         const userSYSbelezaAdmin = req.body['save-new-sys-beleza-admin'] == 'on' ? 1 : 0;
 
         const userSYScalendarUse = req.body['save-new-sys-calendar-use'] == 'on' ? 1 : 0;
-        const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
+        //const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
         const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin'] == 'on' ? 1 : 0;
 
         const userType = parseInt(req.body['save-new-sys-type-user']);
@@ -80,7 +87,7 @@ exports.saveNewUser = async (req,res) => {
             jcv_userNamePrimary: userName,
             jcv_userNameSecundary: userName,
             jcv_userCpf: userCPF,
-            jcv_userPassword: userCPF,
+            jcv_userPassword: null,
             jcv_userEmailCorporate: userEmailCorporativo,
             jcv_userEmailFolks: userEmailPessoal,
             jcv_userSector: userSetor,
@@ -96,13 +103,13 @@ exports.saveNewUser = async (req,res) => {
 
                 sys_perm_idUser: data,
                 sys_blz_perm_use: userSYSbelezaUse,
-                sys_blz_perm_manager: userSYSrequisitorManager,
+                sys_blz_perm_manager: userSYSbelezaManager,
                 sys_blz_perm_admin: userSYSbelezaAdmin,
                 sys_req_perm_use: userSYSrequisitorUse,
-                sys_req_perm_manager: userSYSbelezaManager,
+                //sys_req_perm_manager: userSYSrequisitorManager,
                 sys_req_perm_admin: userSYSrequisitorAdmin,
                 sys_cal_perm_use: userSYScalendarUse,
-                sys_cal_perm_manager: userSYScalendarManager,
+                //sys_cal_perm_manager: userSYScalendarManager,
                 sys_cal_perm_admin: userSYScalendarAdmin
 
             }).table("jcv_users_permissions").then(data => {
@@ -131,9 +138,16 @@ exports.editSaveUser = async (req,res) => {
 
     const idUser = req.body['user-action-save-edit'];
 
-    const userCPF = parseInt(req.body['save-edit-cpf-'+idUser].split('.').join("").split('-').join(""));
-    
-    if(userCPF.toString().length == 11){
+    let userCPF = parseInt(req.body['save-edit-cpf-'+idUser].split('.').join("").split('-').join(""));
+
+    function pad(num, size) {
+        num = num.toString();
+        while (num.length < size) num = "0" + num;
+        return num;
+    }
+    userCPF = pad(userCPF,11)
+
+    if(userCPF.length == 11){
 
         const userName = req.body['save-edit-name-'+idUser];
         const userUnidade = req.body['save-edit-unidade-'+idUser];
@@ -193,10 +207,10 @@ exports.editSaveUser = async (req,res) => {
                     sys_blz_perm_manager: userSYSbelezaManager,
                     sys_blz_perm_admin: userSYSbelezaAdmin,
                     sys_req_perm_use: userSYSrequisitorUse,
-                    sys_req_perm_manager: userSYSrequisitorManager,
+                    //sys_req_perm_manager: userSYSrequisitorManager,
                     sys_req_perm_admin: userSYSrequisitorAdmin,
                     sys_cal_perm_use: userSYScalendarUse,
-                    sys_cal_perm_manager: userSYScalendarManager,
+                    //sys_cal_perm_manager: userSYScalendarManager,
                     sys_cal_perm_admin: userSYScalendarAdmin
         
                 }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
@@ -212,10 +226,10 @@ exports.editSaveUser = async (req,res) => {
                     sys_blz_perm_manager: userSYSbelezaManager,
                     sys_blz_perm_admin: userSYSbelezaAdmin,
                     sys_req_perm_use: userSYSrequisitorUse,
-                    sys_req_perm_manager: userSYSrequisitorManager,
+                    //sys_req_perm_manager: userSYSrequisitorManager,
                     sys_req_perm_admin: userSYSrequisitorAdmin,
                     sys_cal_perm_use: userSYScalendarUse,
-                    sys_cal_perm_manager: userSYScalendarManager,
+                    //sys_cal_perm_manager: userSYScalendarManager,
                     sys_cal_perm_admin: userSYScalendarAdmin
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){

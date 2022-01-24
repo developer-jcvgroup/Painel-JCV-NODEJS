@@ -159,7 +159,7 @@ exports.saveNewEvent = async (req,res) => {
     const eventHourInitial = req.body['calendar-register-hour-initial'];
     const eventHourFinal = req.body['calendar-register-hour-final'];
     const eventReminder = req.body['calendar-register-reminder'];//FORMATO EM MINUTOS
-    const eventRoom = req.body['calendar-register-room'];//0 REPRESENTA NÃO USAREI SALA
+    const eventRoom = req.body['calendar-register-room-'+eventLocation];//0 REPRESENTA NÃO USAREI SALA
     const eventPersons = req.body['calendar-register-persons'];
 
     if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
@@ -449,8 +449,6 @@ exports.viewEvent = async (req,res) => {
     }
 }
 
-
-
 exports.editSaveNewEvent = async (req,res) => {
     const idEvent = req.body['button-edit-event'];//Id do evento
 
@@ -465,7 +463,7 @@ exports.editSaveNewEvent = async (req,res) => {
     const eventHourInitial = req.body['event-edit-register-hour-initial'];
     const eventHourFinal = req.body['event-edit-register-hour-final'];
     const eventReminder = req.body['event-edit-register-reminder'];//FORMATO EM MINUTOS
-    const eventRoom = req.body['event-edit-register-room'];//0 REPRESENTA NÃO USAREI SALA
+    const eventRoom = req.body['event-edit-register-room-'+eventLocation];//0 REPRESENTA NÃO USAREI SALA
 
     const eventPersons = req.body['event-edit-register-persons'];
     

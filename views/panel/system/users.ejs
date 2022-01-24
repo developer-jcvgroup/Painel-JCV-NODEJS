@@ -85,12 +85,6 @@
                                                 <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-use" id="">
                                             </div>
 
-                                            <!-- Gestor -->
-                                            <div class="sys-container-two-box">
-                                                <label for="">Gestor</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-manager" id="">
-                                            </div>
-
                                             <!-- admin -->
 
                                             <div class="sys-container-two-box">
@@ -131,12 +125,6 @@
                                             <div class="sys-container-two-box">
                                                 <label for="">Utilizar</label>
                                                 <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-use" id="">
-                                            </div>
-
-                                            <!-- Gestor -->
-                                            <div class="sys-container-two-box">
-                                                <label for="">Gestor</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-manager" id="">
                                             </div>
 
                                             <!-- admin -->
@@ -256,17 +244,6 @@
                                                             <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-use-<%= element.jcv_id %>">
                                                         <% } %>
                                                     </div>
-
-                                                    <!-- manager -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Gestor</label>
-
-                                                        <% if(element.sys_req_perm_manager == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-manager-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-manager-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
         
                                                     <!-- admin -->
                                                     <div class="sys-container-two-box">
@@ -334,17 +311,6 @@
                                                             <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
                                                         <% }else{ %>
                                                             <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-
-                                                    <!-- manager -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Gestor</label>
-                                                        
-                                                        <% if(element.sys_cal_perm_manager == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-manager-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-manager-<%= element.jcv_id %>">
                                                         <% } %>
                                                     </div>
         
