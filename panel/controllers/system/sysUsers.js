@@ -27,7 +27,7 @@ exports.listAllinformations = async (req,res) =>{
     `).then( data => {return data[0]})
 
     //Listando todos os gestores e representantes
-    const allManager = await database.select().where({jcv_userCassification: 2, jcv_userCassification: 1}).table("jcv_users").then( data => {
+    const allManager = await database.select().whereIn('jcv_userCassification', [1,2,4]).table("jcv_users").then( data => {
         return data;
     })
 
@@ -118,7 +118,7 @@ exports.saveNewUser = async (req,res) => {
 
                     //Sistema de email
                     const textOne = 'Conta criada com sucesso!';
-                    const textTwo = `Sua conta foi criada com sucesso e sua senha provisória é <b>${userCPF}</b>. Ao fazer o login uma tela será exibida para cadastrar sua nova senha.`;
+                    const textTwo = `Sua conta foi criada com sucesso. Ao fazer o login uma tela será exibida para cadastrar sua nova senha.`;
                     emailSystemExe.sendMailExe(userEmailCorporativo, 'Conta Criada', 'Conta Criada', 'Sistema JCV', userName, textOne, textTwo);
 
 

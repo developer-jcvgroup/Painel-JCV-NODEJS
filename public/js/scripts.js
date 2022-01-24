@@ -472,7 +472,6 @@ $(function(){
 
     $.fn.orderByTableColumns = function (tableId, orderByClick){
         var table = $(tableId);
-        console.log(table)
     
         $(orderByClick)
         .wrapInner('<span title="Coluna Ordenada"/>')

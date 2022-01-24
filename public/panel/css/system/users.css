@@ -166,6 +166,16 @@
     background: var(--background-two);
 }
 
+.sys-users-table-list thead th:nth-last-child(1) {
+    right: 0;
+    z-index: 1;
+}
+.sys-users-table-list tbody td:nth-last-child(1) {
+    right: 0;
+    z-index: 1;
+    background: var(--background-two);
+}
+
 /**************************/
 /**************************/
 /* container two */

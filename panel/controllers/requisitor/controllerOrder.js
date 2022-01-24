@@ -737,7 +737,9 @@ exports.actionCommandsORders = async(req,res) => {
             }else if(actionCommand == "CMD03"){
                 //Requisições enviadas
 
-                sendRequests(req,res,idsOrders);
+                modifiOrderStatus(req,res,idsOrders,"CMD03")
+
+                //sendRequests(req,res,idsOrders);
 
                 //modifiOrderStatus(req,res,idsOrders,"CMD03") ver e excluir
             }else if(actionCommand == "CMD04"){
@@ -797,10 +799,10 @@ exports.searchMyRequest = async (req,res) => {
     //Validando se a busca é vazia
     if(resultSearch != ""){
         req.flash('resultSearchMyRequests', resultSearch)
-        res.redirect("/painel/requisitor/minhasRequisicoes");
+        res.redirect("/painel/requisitor/MinhasRequisicoes");
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
-        res.redirect("/painel/requisitor/minhasRequisicoes");
+        res.redirect("/painel/requisitor/MinhasRequisicoes");
     }
 }
 
@@ -1856,5 +1858,7 @@ async function modifiOrderStatus(req,res,ids,code){
 }
 
 async function sendRequests (req,res,idsOrders){
+
+
     res.redirect("/painel/requisitor/enviarRequisicoes/"+idsOrders)
 }

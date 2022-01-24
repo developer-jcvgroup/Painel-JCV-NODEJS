@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 // Static
 app.use(express.static("public"));
 
-app.use(express.urlencoded({extended: false})); //Pegar dados dos forms ou Rotas
+app.use(express.urlencoded({extended: false, parameterLimit: 1000000})); //Pegar dados dos forms ou Rotas
 app.use(express.json()); //Aceitar json
 app.use(cookieParser())
 
