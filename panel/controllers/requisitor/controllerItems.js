@@ -93,6 +93,6 @@ exports.requestItemAdmin = async (req,res) =>{
         
     })
 
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Solicitação recebida pelo usuario!");
+    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Solicitação recebida pelo administrador!");
     res.redirect("/painel/requisitor/Novo");
 }
