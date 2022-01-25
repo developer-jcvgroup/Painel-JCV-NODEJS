@@ -49,17 +49,45 @@
 }
 .sys-box-search{
     width: 50%;
+    display: flex;
+    align-items: center;
     margin-top: 32px;
-    background: cornflowerblue;
 }
 .sys-box-search input[type=text]{
-    width: 100%;
+    width: 40%;
     padding: 8px;
     color: var(--color-one);
     font-size: 0.8rem;
     border: 0;
     border-bottom: 1px solid var(--color-one);
     outline: 0;
+}
+.sys-box-search button:nth-child(2){
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+}
+.sys-box-search button:nth-child(3){
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    border: 1px solid var(--color-one);
 }
 
 /***************************************/

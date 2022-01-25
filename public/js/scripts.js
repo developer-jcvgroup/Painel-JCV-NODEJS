@@ -8,6 +8,12 @@ $(function(){
 
     //Paginação
     $.fn.paginationTableMain = function (selectTable, amountRow, removeRow){
+        if($(selectTable).is(':visible')){
+            $('#nav').fadeOut()
+        }else{
+            $('#nav').fadeIn()
+        }
+
         $(selectTable).after('<div id="nav" class="pagination-nav-list-main"></div>');
 
         var rowsShown = amountRow;
@@ -200,43 +206,48 @@ $(function(){
         });
     }
 
-    $.fn.searchInputTableInputs = function(tableRows, inputSearchTable){
+    $.fn.searchInputTableInputs = function(tableRows, inputSearchTable, commandButton){
 
-            var $rows = $(tableRows+' tr')    
-            var searchText = $(inputSearchTable).val()
-                $rows
-                .show()
-                .filter(function() {
-                var $inputs = $(this).find("input:text");
-                var found = searchText.length == 0; // for empty search, show all rows
-                for (var i=0; i < $inputs.length && !found; i++) {
-                    var text = $inputs.eq(i).val().replace(/\s+/g, ' ');
-                    found = text.length > 0 && text.indexOf(searchText) >= 0;
-                }
-                return !found;
-            })
-            .hide();
-            var $rows = $(tableRows+' tr')
-
-            /////////////////////////////////////////////////
-            /////////////////////////////////////////////////
-            $(inputSearchTable).keyup(function() {
-            var searchText = $(this).val()
-                $rows
-                .show()
-                .filter(function() {
-                var $inputs = $(this).find("input:text");
-                var found = searchText.length == 0; // for empty search, show all rows
-                for (var i=0; i < $inputs.length && !found; i++) {
-                    var text = $inputs.eq(i).val().replace(/\s+/g, ' ');
-                    found = text.length > 0 && text.indexOf(searchText) >= 0;
-                }
-                return !found;
-            })
-            .hide();
-            });
-
+        var $rows = $(tableRows+' tr')    
+        var searchText = $(inputSearchTable).val()
+            $rows
+            .show()
+            .filter(function() {
+            var $inputs = $(this).find("input:text");
+            var found = searchText.length == 0; // for empty search, show all rows
+            for (var i=0; i < $inputs.length && !found; i++) {
+                var text = $inputs.eq(i).val().replace(/\s+/g, ' ');
+                found = text.length > 0 && text.indexOf(searchText) >= 0;
+            }
+            return !found;
+        })
+        .hide();
         
+        $.fn.loadSpin(0)
+        var $rows = $(tableRows+' tr')
+
+        /////////////////////////////////////////////////
+        /////////////////////////////////////////////////
+        //Valida se é por button ou digitando
+        if(commandButton == 1){
+            $(inputSearchTable).keyup(function() {
+                var searchText = $(this).val()
+                    $rows
+                    .show()
+                    .filter(function() {
+                    var $inputs = $(this).find("input:text");
+                    var found = searchText.length == 0; // for empty search, show all rows
+                    for (var i=0; i < $inputs.length && !found; i++) {
+                        var text = $inputs.eq(i).val().replace(/\s+/g, ' ');
+                        found = text.length > 0 && text.indexOf(searchText) >= 0;
+                    }
+                    return !found;
+                })
+                .hide();
+                //console.log('final 2')
+            });
+        }
+
     }
 
     ///////////////////////////////////////////////////////////////////////

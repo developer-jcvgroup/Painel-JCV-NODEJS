@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="/panel/css/requisitor/itemsRequisicao.css">
 
+<script>
+    let divLoader = document.getElementById('sys-section-loader')
+    
+    divLoader.style.display = 'flex';
+</script>
+
 <section class="items-container-main">
     <section class="items-container-page">
         <div class="items-container-identify-page">
@@ -97,28 +103,42 @@
     </section>
 </section>
 <script>
-    $(function(){
-        //Checknox all
-        $("#checkbox-select-all").click(function(){
-            var checkSet = $(this).is(':checked');
-            var inputsCheckedmodel = $('.checkbox-select-single');
+    $(window).on("load", function (e) {
+        $(function(){
 
-            if(checkSet == true){
-                inputsCheckedmodel.prop('checked', true);
-            }else{
-                inputsCheckedmodel.prop('checked', false);
-            }
+            //Paginação das tabelas
+            setTimeout(() => {
+                $.fn.paginationTableMain('#items-table',20,2);
+            }, 1000);
+
+            $("#input-search-requests").keyup(function(){
+                if($(this).val() == ''){
+                    console.log('aaaa')
+                    setTimeout(() => {
+                        $.fn.paginationTableMain('#items-table',20,2);
+                    }, 500);
+                }
+            })
+
+            //Filtro dinamico em inputs
+            $.fn.searchInputTableInputs('#items-table','#input-search-requests',1)
+
+            //Checknox all
+            $("#checkbox-select-all").click(function(){
+                var checkSet = $(this).is(':checked');
+                var inputsCheckedmodel = $('.checkbox-select-single');
+
+                if(checkSet == true){
+                    inputsCheckedmodel.prop('checked', true);
+                }else{
+                    inputsCheckedmodel.prop('checked', false);
+                }
+            })
+            $(".checkbox-select-single").click(function(){
+                $("#checkbox-select-all").prop("checked", false)
+            })
+            
+            $.fn.inputValidateCaracters("#input-validate-caracteres")
         })
-        $(".checkbox-select-single").click(function(){
-            $("#checkbox-select-all").prop("checked", false)
-        })
-        
-        $.fn.inputValidateCaracters("#input-validate-caracteres")
-
-        //Paginação das tabelas
-        $.fn.paginationTableMain('#items-table',20,2);
-
-        //Filtro dinamico em inputs
-        $.fn.searchInputTableInputs('#items-table','#input-search-requests')
     })
 </script>

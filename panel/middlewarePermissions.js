@@ -84,7 +84,7 @@ async function getPermissions (req, res, next) {
         if(urlPage[1] == "ListaRequisicoes" && resultPermissions[0].sys_req_perm_admin == 1){
             return next();
         }
-        if(urlPage[1] == "Items" && resultPermissions[0].sys_req_perm_admin == 1){
+        if(urlPage[1] == "items" && resultPermissions[0].sys_req_perm_admin == 1){
             return next();
         }
 

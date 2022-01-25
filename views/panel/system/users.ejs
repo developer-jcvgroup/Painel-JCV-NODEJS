@@ -1,6 +1,12 @@
 <link rel="stylesheet" href="/panel/css/system/users.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
+<script>
+    let divLoader = document.getElementById('sys-section-loader')
+    
+    divLoader.style.display = 'flex';
+</script>
+
 <section class="sys-users-container-main">
     <section class="sys-users-container-page">
         <div class="sys-users-container-identify-page">
@@ -12,6 +18,8 @@
             <div class="sys-section-container-main">
                 <div class="sys-box-search">
                     <input type="text" placeholder="Busque por CPF, nome, email, ramal, unidade.." id="input-search-table">
+                    <button id="input-button-search">Procurar</button>
+                    <button id="input-button-search-clear">Limpar</button>
                 </div>
             </div>
         </section>
@@ -417,44 +425,72 @@
     </section>
 </section>
 <script>
-    $(function(){
-        //Input mask
-        $('#insert-cpf').mask('000.000.000-00');
-        $(".user-insert-cpf").mask('000.000.000-00');
+    $(window).on("load", function (e) {
+        $(function(){
+            //Paginação das tabelas
+            $.fn.paginationTableMain('#sys-users-table-list',10,2);
 
-        if(Cookies.get('SEARCH-INPUT')){
-            $("#input-search-table").val(Cookies.get('SEARCH-INPUT'))   
-        }
+            //Input mask
+            $('#insert-cpf').mask('000.000.000-00');
+            $(".user-insert-cpf").mask('000.000.000-00');
 
-        //Paginação das tabelas
-        $.fn.paginationTableMain('#sys-users-table-list',10,2);
-
-        //Criando um cookie para salvar sempre o que o
-        //usuario digitar
-        $("#input-search-table").keyup(function(){
-
-            if($(this).val().length <  1){
-                Cookies.remove('SEARCH-INPUT')    
+            if(Cookies.get('SEARCH-INPUT')){
+                $("#input-search-table").val(Cookies.get('SEARCH-INPUT'))   
+                $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
             }
 
-            Cookies.set('SEARCH-INPUT', $(this).val())
+            //Criando um cookie para salvar sempre o que o
+            //usuario digitar
+            $("#input-search-table").keyup(function(){
 
+                if($(this).val().length <  1){
+                    Cookies.remove('SEARCH-INPUT')    
+                }
+
+                Cookies.set('SEARCH-INPUT', $(this).val())
+
+            })
+
+            //$("#sys-section-loader").fadeIn();
+            //Filtro dinamico em inputs
+            $("#input-button-search").click(function(){
+                
+
+                if($("#input-search-table").val() == ''){
+                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                }else{
+                    $.fn.loadSpin(1);
+                    
+                    setTimeout(()=>{
+                        $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
+                    },1000)
+                }  
+            })
+
+            $("#input-button-search-clear").click(function(){
+                $.fn.loadSpin(1);
+
+                setTimeout(()=>{
+                    $.fn.searchInputTableInputs('#sys-users-table-list','#input-button-search-clear',0)
+                    $.fn.paginationTableMain('#sys-users-table-list',10,2);
+                    $("#input-search-table").val('')
+                    Cookies.remove('SEARCH-INPUT') 
+                },1000)
+            })
+
+            $(".save-new-name").keyup(function() {
+                var valor = $(this).val().replace(/[^a-zA-Z 0-9]+/g,'');
+                $(this).val(valor);
+            });
+
+            //Sistema de caracteres inteligentes
+            $.fn.inputCaractersValidation("#insert-name-func")
+            $.fn.inputCaractersValidation(".update-name-func")
+
+            //Ordenação da tabela
+            $.fn.orderByTableColumns("#sys-users-table-list",".order-by-command")
         })
-
-        //Filtro dinamico em inputs
-        $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table')
-
-        $(".save-new-name").keyup(function() {
-            var valor = $(this).val().replace(/[^a-zA-Z 0-9]+/g,'');
-            $(this).val(valor);
-        });
-
-        //Sistema de caracteres inteligentes
-        $.fn.inputCaractersValidation("#insert-name-func")
-        $.fn.inputCaractersValidation(".update-name-func")
-
-        //Ordenação da tabela
-        $.fn.orderByTableColumns("#sys-users-table-list",".order-by-command")
     })
+    
 
 </script>
