@@ -7,46 +7,51 @@ const database = require("./database/database");
 //Pagina inicial
 router.get("/", async (req,res)=>{
 
-    const linkspecial = req.query['linkspecial']
-    const allAuthor = await database.select("sys_phrase_string","sys_phrase_author").where({sys_phrase_enalbed: 1}).orderBy("sys_phrase_order", "ASC").table("jcv_sys_phrase").then( data => {
-        
-        let arrFrase = '';
-        let arrAutor = '';
+    if(enabledPanel == 1){
+        res.redirect('/maintenance')
+    }else{
 
-        data.forEach(element => {
-            arrFrase += element.sys_phrase_string+'//';
-            arrAutor += element.sys_phrase_author+'//';
-        });
+        const linkspecial = req.query['linkspecial']
+        const allAuthor = await database.select("sys_phrase_string","sys_phrase_author").where({sys_phrase_enalbed: 1}).orderBy("sys_phrase_order", "ASC").table("jcv_sys_phrase").then( data => {
+            
+            let arrFrase = '';
+            let arrAutor = '';
 
-        let arr = [arrFrase,arrAutor]
-        return arr;
-    })
-
-    //Pegando todas as contas que não possui uma senha
-    const allAccountPass = await database
-    .select("jcv_userCpf")
-    .where({jcv_userPassword: null})
-    .table("jcv_users")
-    .then( data => {
-
-        let newArr = []
-        if(data != ''){
             data.forEach(element => {
-                newArr.push(element.jcv_userCpf)
+                arrFrase += element.sys_phrase_string+'//';
+                arrAutor += element.sys_phrase_author+'//';
             });
-        }else{
-            newArr.push('')
-        }
-        return newArr;
 
-    })
+            let arr = [arrFrase,arrAutor]
+            return arr;
+        })
 
-    res.render("login/index", {
-        frasesIndex: allAuthor[0], 
-        authorIndex: allAuthor[1], 
-        linkspecial: linkspecial,
-        allAccountPass: allAccountPass
-    })
+        //Pegando todas as contas que não possui uma senha
+        const allAccountPass = await database
+        .select("jcv_userCpf")
+        .where({jcv_userPassword: null})
+        .table("jcv_users")
+        .then( data => {
+
+            let newArr = []
+            if(data != ''){
+                data.forEach(element => {
+                    newArr.push(element.jcv_userCpf)
+                });
+            }else{
+                newArr.push('')
+            }
+            return newArr;
+
+        })
+
+        res.render("login/index", {
+            frasesIndex: allAuthor[0], 
+            authorIndex: allAuthor[1], 
+            linkspecial: linkspecial,
+            allAccountPass: allAccountPass
+        })
+    }
 })
 
 /**********************/

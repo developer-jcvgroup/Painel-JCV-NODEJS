@@ -15,6 +15,11 @@ app.use(cookieParser())
 
 app.use(flash());
 
+//Esta variavel define se o sistema pode ser ou não liberado, seria a tela de manutenção!
+//1 = manutenção
+//0 = sem manutenção
+global.enabledPanel = 1;
+
 //sessions
 app.use(session({
     secret: "qualu77asadasfdas!@#", 
@@ -34,7 +39,16 @@ app.get("/", (req,res)=>{
         loginContr = true
     }
 
-    res.render("web/index", {loginContr: loginContr})
+    if(enabledPanel == 1){
+        res.redirect('/maintenance')
+    }else{
+        res.render("web/index", {loginContr: loginContr})
+    }
+})
+
+app.get('/maintenance', (req,res) => {
+    
+    res.render("maintenance/maintenance")
 })
 
 //Require do painel

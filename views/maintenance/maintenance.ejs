@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>JCV Group - Manutenção</title>
+</head>
+<style>
+    /* Css somente da dashboard */
+
+:root{
+    --color-one: #222224;
+    --color-two: #343a40;
+    --color-three: #51555a;
+    --color-nine: #949ca53f;
+    --color-five: #868f99;
+    --color-eight: #c3c5c7;
+}
+
+/* VALORES UNIVERSAIS */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+body, html{
+    width: 100%;
+    height: 100%;
+}
+
+.index-section-main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    object-fit: cover;
+}
+.index-image-set{
+    width: 100%;
+    width: 100%;
+    max-width: 1920px;
+    object-fit: cover;
+}
+
+.index-spin{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 1920px; 
+    height: 100%;
+    max-height: 1000px;
+    background-color: var(--color-one);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    margin: 0px;
+}
+
+#container {
+    position: absolute;
+    margin: auto;
+    width: 100vw;
+    height: 80pt;
+    top: 0;
+    bottom: 0;
+
+    filter: url(#threshold) blur(0.6px);
+}
+
+#text1,
+#text2 {
+    position: absolute;
+    width: 100%;
+    display: inline-block;
+
+    
+    font-size: 70pt;
+    color: var(--color-eight);
+    text-align: center;
+
+    user-select: none;
+}
+
+@media only screen and (max-width: 700px){
+    #text1,
+    #text2{
+        font-size: 50pt;
+    }
+}
+@media only screen and (max-width: 400px){
+    #text1,
+    #text2{
+        font-size: 30pt;
+    }
+}
+</style>
+<body>
+    <section class="index-section-main">
+        <img class="index-image-set" src="/web/maintenance.png" alt="">
+    </section>
+    <div class="index-spin" id="indexSpin">
+
+
+        <div id="container">
+            <span id="text1"></span>
+            <span id="text2"></span>
+        </div>
+        
+        <svg id="filters">
+            <defs>
+                <filter id="threshold">
+                    <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0
+                                            0 1 0 0 0
+                                            0 0 1 0 0
+                                            0 0 0 255 -140" />
+                </filter>
+            </defs>
+        </svg>
+
+
+
+    </div>
+</body>
+<script>
+
+
+
+
+
+const elts = {
+    text1: document.getElementById("text1"),
+    text2: document.getElementById("text2")
+};
+
+const texts = [
+    "Seu novo painel",
+    "está a caminho..",
+    ";)",
+];
+
+const morphTime = 1;
+const cooldownTime = 1.5;
+
+let textIndex = texts.length - 1;
+let time = new Date();
+let morph = 0;
+let cooldown = cooldownTime;
+
+elts.text1.textContent = texts[textIndex % texts.length];
+elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+
+function doMorph() {
+    morph -= cooldown;
+    cooldown = 0;
+
+    let fraction = morph / morphTime;
+
+    if (fraction > 1) {
+        cooldown = cooldownTime;
+        fraction = 1;
+    }
+
+    setMorph(fraction);
+}
+
+function setMorph(fraction) {
+    elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+    elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+
+    fraction = 1 - fraction;
+    elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+    elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+
+    elts.text1.textContent = texts[textIndex % texts.length];
+    elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+}
+
+function doCooldown() {
+    morph = 0;
+
+    elts.text2.style.filter = "";
+    elts.text2.style.opacity = "100%";
+
+    elts.text1.style.filter = "";
+    elts.text1.style.opacity = "0%";
+}
+
+let count = 0;
+function animate() {
+    requestAnimationFrame(animate);
+
+    let newTime = new Date();
+    let shouldIncrementIndex = cooldown > 0;
+    let dt = (newTime - time) / 1000;
+    time = newTime;
+
+    cooldown -= dt;
+
+    if (cooldown <= 0) {
+        if (shouldIncrementIndex) {
+            textIndex++;
+
+            if(count != 2){
+                count++
+            }else{
+                $("#container").fadeOut()
+                $("#indexSpin").animate({ backgroundColor: "transparent" }, "slow");
+                $("#indexSpin").fadeOut();
+            }
+        }
+
+        doMorph();
+    } else {
+        doCooldown();
+    }
+}
+
+animate();
+
+
+    
+
+</script>
+</html>
