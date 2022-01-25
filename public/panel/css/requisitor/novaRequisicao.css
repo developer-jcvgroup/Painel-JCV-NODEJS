@@ -113,7 +113,7 @@
 .req-new-container-button{
     display: flex;
     align-items: center;
-    margin: 0 36px;
+    margin-left: 36px;
 }
 .req-new-button-default{
     outline: 0;
@@ -130,6 +130,7 @@
 .req-new-container-solic{
     display: flex;
     align-items: center;
+    margin-left: 24px;
 }
 .req-new-container-solic span{
     font-size: 0.9rem;
@@ -192,6 +193,28 @@
     color: var(--color-four);
     background: var(--color-one);
     cursor: pointer;
+}
+
+/* CAMPO PARA MINAHS SOLICITAÇÕES */
+.req-new-container-list{
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+}
+.req-new-container-list a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    border: 1px solid var(--color-one);
 }
 
 /************************/
