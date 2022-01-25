@@ -405,6 +405,7 @@
     justify-content: center;
     align-items: center;
     background: rgba(128, 128, 128, 0.308);
+    z-index: 3;
 }
 .calendar-event-box{
     width: 40%;
@@ -502,6 +503,7 @@
 .calendar-event-operation{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     margin-bottom: 24px;
 }
@@ -805,6 +807,9 @@
         width: 95%;
         align-items: center;
         padding-left: 0;
+    }
+    .calendar-event-operation-day{
+        margin: 20px 8px;
     }
 
 }

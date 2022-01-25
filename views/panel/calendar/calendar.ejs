@@ -78,7 +78,12 @@
                                 <!--  -->
                                 <div class="calendar-menu-events-ul-two">
                                     <span><%= element.sys_calendar_eventName %></span>
-                                    <span><%= element.jcv_userNamePrimary.split(' ')[0] %> <%= element.jcv_userNamePrimary.split(' ')[1] %> | <%= element.sys_calendar_eventDate %></span>
+                                    <% if(element.sys_calendar_eventPublic == 1){ %>
+                                        <span>Evento Publico | <%= element.sys_calendar_eventDate %></span>
+                                    <% }else{ %>
+                                        <span><b>Evento Privado</b> | <%= element.sys_calendar_eventDate %></span>
+                                    <% } %>
+                                    
                                 </div>
                             </a>
                             <hr style="width: 95%; margin: 7px 0;">
@@ -376,7 +381,7 @@
                     <% allLocations.forEach(element => { %>
                     <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
                     <% }) %>
-                    <option value="not">Outro local</option>
+                    <!-- <option value="not">Outro local</option> -->
                 </select>
             </div>
             <!--  -->
@@ -416,7 +421,7 @@
                                 <% } %>
 
                             <% }) %>
-                            <option value="1">Não usarei</option>
+                            <!-- <option value="1">Não usarei</option> -->
                         </select>
                     </div>
 

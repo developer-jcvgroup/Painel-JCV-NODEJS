@@ -94,8 +94,10 @@
 .view-room-title-event{
     display: flex;
     align-items: baseline;
+    align-items: baseline;
 }
-.view-room-title-event span:nth-child(1){
+.view-room-title-event a{
+    text-decoration: none;
     font-size: 1.2rem;
     color: var(--color-one);
 }

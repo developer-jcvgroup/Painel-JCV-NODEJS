@@ -12,7 +12,7 @@
                         <div class="view-room-info-row">
                             <div class="view-room-icon"><i class="ri-calendar-check-line"></i></div>
                             <div class="view-room-title-event">
-                                <span><%= element.sys_calendar_eventName %></span>
+                                <span><a class="class-loader" href="/painel/calendario/event/<%= element.sys_calendar_eventId %>/<%= element.sys_calendar_eventDate %> "><%= element.sys_calendar_eventName %></a></span>
                                 <span><b><%= element.sys_calendar_eventDate %></b> - <%= element.sys_calendar_eventHours %></span>
                             </div>
                         </div>
