@@ -18,7 +18,7 @@ app.use(flash());
 //Esta variavel define se o sistema pode ser ou não liberado, seria a tela de manutenção!
 //1 = manutenção
 //0 = sem manutenção
-global.enabledPanel = 0;
+global.enabledPanel = 1;
 
 //sessions
 app.use(session({
@@ -55,7 +55,7 @@ app.get('/maintenance', (req,res) => {
 const jcvPanel = require("./panel/app")
 app.use("/painel", jcvPanel);
 
-app.listen(80, ()=>{
+app.listen(80, () =>{
     console.log(" ")
     console.log("Servidor Rodando")
     console.log(" ")
