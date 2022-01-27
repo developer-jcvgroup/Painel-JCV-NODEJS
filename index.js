@@ -48,11 +48,10 @@ app.get("/", (req,res)=>{
 
 app.get('/maintenance', (req,res) => {
 
-
-    if(enabledPanel == 0){
-        res.redirect("/")
-    }else{
+    if(enabledPanel == 1){
         res.render("maintenance/maintenance")
+    }else{
+        res.redirect("/")
     }
     
 })
