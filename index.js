@@ -47,8 +47,12 @@ app.get("/", (req,res)=>{
 })
 
 app.get('/maintenance', (req,res) => {
-    
-    res.render("maintenance/maintenance")
+
+    if(enabledPanel == 0){
+        res.render("/")
+    }else{
+        res.render("maintenance/maintenance")
+    }
 })
 
 //Require do painel
