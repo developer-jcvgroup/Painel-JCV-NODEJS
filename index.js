@@ -48,11 +48,13 @@ app.get("/", (req,res)=>{
 
 app.get('/maintenance', (req,res) => {
 
+
     if(enabledPanel == 0){
-        res.render("/")
+        res.redirect("/")
     }else{
         res.render("maintenance/maintenance")
     }
+    
 })
 
 //Require do painel
