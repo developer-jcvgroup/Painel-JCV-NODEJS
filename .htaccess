@@ -22,7 +22,7 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L,NE]
 
 # Redirect all trafic to NODE.JS server. 
 # It must be running and, in this case, listening to port 60000
-RewriteRule ^$ http://127.0.0.1:60000/ [P,L]
+RewriteRule ^$ http://45.82.72.240/ [P,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ http://127.0.0.1:60000/$1 [P,L]
+RewriteRule ^(.*)$ http://45.82.72.240/$1 [P,L]
