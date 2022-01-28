@@ -135,3 +135,41 @@
     font-size: 0.9rem;
     white-space: nowrap;
 }
+
+
+/* RESPONSIVE */
+@media only screen and (max-width: 500px) {
+    .system-section-notification{
+        width: 100%;
+    }.sys-notifi-container-main{
+        right: 0;
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-two{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-two{
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-one{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-one{
+        width: 100%;
+    }
+
+    .sys-notifi-container-msg-center-three{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .sys-notifi-box-three{
+        width: 100%;
+    }
+}
