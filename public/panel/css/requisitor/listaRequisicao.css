@@ -219,6 +219,28 @@
     cursor: pointer;
 }
 
+/* CAMPO PARA MINAHS SOLICITAÇÕES */
+.all-orders-container-list{
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+}
+.all-orders-container-list a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    border: 1px solid var(--color-one);
+}
+
 /************************/
 /************************/
 /* TABELA */
