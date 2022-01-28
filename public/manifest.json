@@ -3,7 +3,7 @@
     "short_name": "JCV",
     "lang": "pt-BR",
     "start_url": "/?utm_source=homescreen_icon",
-    "scope": "/",
+    "scope": "/jcv.net.br",
     "display": "standalone",
     "theme_color": "#ffffff",
     "icons": [
