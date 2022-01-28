@@ -176,11 +176,14 @@
 
     .sys-notifi-text-three span{
         white-space: normal;
+        text-align: center;
     }
     .sys-notifi-text-one span{
         white-space: normal;
+        text-align: center;
     }
     .sys-notifi-text-two span{
         white-space: normal;
+        text-align: center;
     }
 }
