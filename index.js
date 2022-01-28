@@ -52,8 +52,7 @@ app.get('/maintenance', (req,res) => {
         res.render("maintenance/maintenance")
     }else{
         res.redirect("/")
-    }
-    
+    } 
 })
 
 //Require do painel
