@@ -64,7 +64,7 @@ authenticate = async (req, res, next) => {
 
             //Aqui eu predefino a url das salas no calendario
             //isto é importante pois não consigo pegar o link cheio usando o express e portanto tenho que definir manualmente
-            global.GLOBAL_LINK_QR = 'http://192.168.15.121:8080/painel/calendario/viewRoom/'
+            global.GLOBAL_LINK_QR = 'https://jcv.net.br/painel/calendario/viewRoom/'
 
             //-------------------------------------------------------
             //-------------------------------------------------------
