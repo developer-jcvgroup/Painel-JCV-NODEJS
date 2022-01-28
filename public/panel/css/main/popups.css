@@ -172,4 +172,15 @@
     .sys-notifi-box-three{
         width: 100%;
     }
+
+
+    .sys-notifi-text-three span{
+        white-space: normal;
+    }
+    .sys-notifi-text-one span{
+        white-space: normal;
+    }
+    .sys-notifi-text-two span{
+        white-space: normal;
+    }
 }
