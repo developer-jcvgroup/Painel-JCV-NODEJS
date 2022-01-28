@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
-var path = require("path");
-process.chdir(path.dirname(__filename));
 
 // Static
 app.use(express.static("public"));
