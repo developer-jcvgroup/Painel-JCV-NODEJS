@@ -33,52 +33,6 @@
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
     <title>JCV Group</title>
 </head>
-<script>
-$(function(){
-    
-    //Limpa os caches gerados pelo pwa
-    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
-    self.caches.delete('JCV-Group-Sistema');//Nome do cache
-
-    $('.popup-close').click(function(){
-        $('#section-main-sobre-nos').fadeOut();
-        $('.popup-container-close').fadeOut();
-    })
-
-    $('#icon-transparencia').click(function(){
-        var popup = $('#popup-container-display-transparencia');
-
-        $('#section-main-sobre-nos').css('display', 'flex');
-        popup.fadeIn();
-        popup.css('display', 'flex');
-    })
-
-    $('#icon-energia').click(function(){
-        var popup = $('#popup-container-display-energia');
-
-        $('#section-main-sobre-nos').css('display', 'flex');
-        popup.fadeIn();
-        popup.css('display', 'flex');
-    })
-
-    $('#icon-respeito').click(function(){
-        var popup = $('#popup-container-display-respeito');
-
-        $('#section-main-sobre-nos').css('display', 'flex');
-        popup.fadeIn();
-        popup.css('display', 'flex');
-    })
-
-    $('#ponto-online').click(function(){
-        var popup = $('#popup-container-display-ponto');
-
-        $('#section-main-sobre-nos').css('display', 'flex');
-        popup.fadeIn();
-        popup.css('display', 'flex');
-    })
-
-})
-</script>
 <body>
 <section class="section-main-body">
     <section class="section-image-page-body">
@@ -372,5 +326,49 @@ $(function(){
 </section>
 </body>
 <script>
+    $(function(){
+        
+        //Limpa os caches gerados pelo pwa
+        self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+        self.caches.delete('JCV-Group-Sistema');//Nome do cache
+    
+        $('.popup-close').click(function(){
+            $('#section-main-sobre-nos').fadeOut();
+            $('.popup-container-close').fadeOut();
+        })
+    
+        $('#icon-transparencia').click(function(){
+            var popup = $('#popup-container-display-transparencia');
+    
+            $('#section-main-sobre-nos').css('display', 'flex');
+            popup.fadeIn();
+            popup.css('display', 'flex');
+        })
+    
+        $('#icon-energia').click(function(){
+            var popup = $('#popup-container-display-energia');
+    
+            $('#section-main-sobre-nos').css('display', 'flex');
+            popup.fadeIn();
+            popup.css('display', 'flex');
+        })
+    
+        $('#icon-respeito').click(function(){
+            var popup = $('#popup-container-display-respeito');
+    
+            $('#section-main-sobre-nos').css('display', 'flex');
+            popup.fadeIn();
+            popup.css('display', 'flex');
+        })
+    
+        $('#ponto-online').click(function(){
+            var popup = $('#popup-container-display-ponto');
+    
+            $('#section-main-sobre-nos').css('display', 'flex');
+            popup.fadeIn();
+            popup.css('display', 'flex');
+        })
+    
+    })
 </script>
 </html>
