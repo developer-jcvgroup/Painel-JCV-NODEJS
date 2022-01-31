@@ -3,8 +3,11 @@ const app = express();
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const flash = require("connect-flash");
+const path = require("path");
 
 app.set("view engine", "ejs");
+
+process.chdir(path.dirname(__filename));
 
 // Static
 app.use(express.static("public"));
