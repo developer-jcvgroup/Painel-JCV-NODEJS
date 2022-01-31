@@ -20,6 +20,7 @@ app.use(flash());
 //0 = sem manutenção
 global.enabledPanel = 0;
 
+
 //sessions
 app.use(session({
     secret: "qualu77asadasfdas!@#", 
