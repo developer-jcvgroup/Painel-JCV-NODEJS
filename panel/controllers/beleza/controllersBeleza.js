@@ -721,7 +721,7 @@ async function createTagsOrders(ids,req,res){
                     fs.unlinkSync(data.filename)
                 },2000) */
 
-                //res.download(data.filename);
+                res.download(data.filename);
             })
         }
         // render or error
