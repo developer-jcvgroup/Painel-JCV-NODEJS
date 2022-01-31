@@ -707,6 +707,8 @@ async function createTagsOrders(ids,req,res){
         // render on success
         if(result) {
 
+            console.log(result)
+
             const options = {
                 type: 'pdf',
                 format: 'A4',
