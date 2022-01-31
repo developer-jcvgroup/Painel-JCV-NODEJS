@@ -14,5 +14,5 @@
         }
     ],
     "background_color": "#000000",
-    "prefer_related_applications": true
+    "prefer_related_applications": false
 }
