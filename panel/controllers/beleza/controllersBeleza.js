@@ -1,9 +1,12 @@
 const database = require("../../database/database");
 const getPermissions = require("../../middlewarePermissions");
 const fs = require('fs');
+const path = require("path");
 
 const moment = require("moment");
 moment.locale('pt-BR');
+
+process.chdir(path.dirname(__filename));
 
 //URL arquivos para download
 const URLdownloads = '/home/jcv/app/public/panel/downloads/beleza/';
