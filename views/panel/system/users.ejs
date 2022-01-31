@@ -441,10 +441,26 @@
 
             //Criando um cookie para salvar sempre o que o
             //usuario digitar
-            $("#input-search-table").keyup(function(){
+            $("#input-search-table").keyup(function(e){
 
                 if($(this).val().length <  1){
                     Cookies.remove('SEARCH-INPUT')    
+                }
+
+                var code = e.key; // recommended to use e.key, it's normalized across devices and languages
+                if(code==="Enter") e.preventDefault();
+
+                if(code === "Enter"){
+
+                    if($(this).val() == ''){
+                        $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                    }else{
+                        $.fn.loadSpin(1);
+                        
+                        setTimeout(()=>{
+                            $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
+                        },1000)
+                    } 
                 }
 
                 Cookies.set('SEARCH-INPUT', $(this).val())
