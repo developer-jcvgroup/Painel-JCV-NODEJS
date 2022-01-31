@@ -713,7 +713,7 @@ async function createTagsOrders(ids,req,res){
 
             //res.send(result)
             const caracteresAleatorios = Math.random().toString(36).substring(5);
-            pdf.create(result, options).toFile("home/jcv/app/public/panel/downloads/beleza/ETIQUETAS-PDF.pdf", (err,data) => {
+            pdf.create(result, options).toFile("home/jcv/app/public/panel/downloads/beleza/ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
 
                 setTimeout(()=> {
                     fs.unlinkSync(data.filename)
