@@ -723,9 +723,9 @@ async function createTagsOrders(ids,req,res){
                     fs.unlinkSync(data.filename)
                 },2000) */
 
-                setTimeout(()=> {
+                /* setTimeout(()=> {
                     res.download(data.filename);
-                },2000)
+                },2000) */
 
                 //res.download(data.filename);
             })
