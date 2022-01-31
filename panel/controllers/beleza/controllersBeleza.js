@@ -700,7 +700,7 @@ async function createTagsOrders(ids,req,res){
     const pdf = require('html-pdf');
     const ejs = require('ejs');
     
-    ejs.renderFile('/home/jcv/app/views/panel/beleza/HTMLpdfstyle.ejs', {arrayData: resultData, dateNow: generateDate()}, function(err, result) {
+    ejs.renderFile('home/jcv/app/views/panel/beleza/HTMLpdfstyle.ejs', {arrayData: resultData, dateNow: generateDate()}, function(err, result) {
         // render on success
         if(result) {
 
@@ -713,7 +713,7 @@ async function createTagsOrders(ids,req,res){
 
             //res.send(result)
             const caracteresAleatorios = Math.random().toString(36).substring(5);
-            pdf.create(result, options).toFile("/home/jcv/app/public/panel/downloads/beleza/ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
+            pdf.create(result, options).toFile("home/jcv/app/public/panel/downloads/beleza/ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
 
                 console.log(data.filename)
 
@@ -721,7 +721,7 @@ async function createTagsOrders(ids,req,res){
                     fs.unlinkSync(data.filename)
                 },2000) */
 
-                res.download(data.filename);
+                //res.download(data.filename);
             })
         }
         // render or error
