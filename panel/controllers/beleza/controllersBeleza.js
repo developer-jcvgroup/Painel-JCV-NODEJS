@@ -715,7 +715,7 @@ async function createTagsOrders(ids,req,res){
             const caracteresAleatorios = Math.random().toString(36).substring(5);
             pdf.create(result, options).toFile("public/panel/downloads/beleza/ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
 
-                console.log(data.filename)
+                console.log(data)
 
                 /* setTimeout(()=> {
                     fs.unlinkSync(data.filename)
