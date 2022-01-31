@@ -1,12 +1,9 @@
 const database = require("../../database/database");
 const getPermissions = require("../../middlewarePermissions");
 const fs = require('fs');
-const path = require("path");
 
 const moment = require("moment");
 moment.locale('pt-BR');
-
-process.chdir(path.dirname(__filename));
 
 //URL arquivos para download
 const URLdownloads = '/home/jcv/app/public/panel/downloads/beleza/';
@@ -723,7 +720,7 @@ async function createTagsOrders(ids,req,res){
             pdf.create(result, options).toFile(URLdownloads+"ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
                 setTimeout(()=> {
                     fs.unlinkSync(data.filename)
-                },500)
+                },2000)
 
                 res.download(data.filename);
             })
