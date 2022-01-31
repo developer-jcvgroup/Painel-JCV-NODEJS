@@ -148,8 +148,7 @@
     .pdf-etiqueta-main{
         width: 100%;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
         border: 2px solid #222224;
         border-radius: 4px;
         padding: 8px;
@@ -157,10 +156,12 @@
 
     .pdf-title-etiquetas{
         font-size: 0.8rem;
+        text-transform: uppercase;
     }
     .pdf-body-etiquetas{
         font-size: 0.8rem;
         font-weight: bold;
+        text-transform: uppercase;
     }
 </style>
     
@@ -178,7 +179,7 @@
     <table style="margin-bottom: 10px" class="pdf-table-list">
         <thead>
             <tr>
-                <th>Funcionario</th>
+                <th>Solicitante</th>
                 <th>Shampoo</th>
                 <th>Tratamento</th>
                 <th>Gestor</th>
@@ -190,13 +191,6 @@
 
         <% if(arrayData[i].jcv_userNameSecundary == atualIndex){ %>
             <!-- Listando aqui corretamente -->
-
-
-            
-
-
-
-
             <tr>
                 <td><%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></td>
                 <td><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></td>
@@ -205,15 +199,10 @@
                 <td>
                     <div class="pdf-etiqueta-main">
                         <span class="pdf-body-etiquetas">Solicitante: <%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></span>
-                        <br>
                         <span class="pdf-body-etiquetas">Gestor: <%= arrayData[i].jcv_userNameSecundary.split(' ')[0] %> <%= arrayData[i].jcv_userNameSecundary.split(' ')[1] %></span>
                         <br>
-                        <br>
-                        <span class="pdf-title-etiquetas"><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></span>
-                        <br>
-                        <span class="pdf-title-etiquetas"><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></span>
-                        <br>
-                        <br>
+                        <span class="pdf-title-etiquetas"><b>SH: </b><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></span>
+                        <span class="pdf-title-etiquetas"><b>TRAT: </b><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></span>
                         <span class="pdf-title-etiquetas">Ref.: <%= arrayData[i].sys_blz_requestReference %> </span>
                     </div>
                 </td>
@@ -229,7 +218,7 @@
             <table class="pdf-table-list">
                 <thead>
                     <tr style="border: 1px solid black;">
-                        <th>Funcionario</th>
+                        <th>Solicitante</th>
                         <th>Shampoo</th>
                         <th>Tratamento</th>
                         <th>Gestor</th>
