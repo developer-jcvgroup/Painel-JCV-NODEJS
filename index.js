@@ -21,7 +21,7 @@ app.use(flash());
 //Esta variavel define se o sistema pode ser ou não liberado, seria a tela de manutenção!
 //1 = manutenção
 //0 = sem manutenção
-global.enabledPanel = 0;
+global.enabledPanel = 1;
 
 
 //sessions
