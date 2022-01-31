@@ -407,5 +407,9 @@ $(function(){
                 deferredPrompt = null;
             });
     }
+
+    window.addEventListener('appinstalled', (evt) => {
+        console.log("appinstalled fired", evt);
+    });
 </script>
 </html>
