@@ -373,6 +373,11 @@ $(function(){
 <button style="position: absolute; top: 0; width: 500px; height: 500px;" id="setup_button" onclick="installApp()">Installer</button>
 </body>
 <script>
+
+    window.addEventListener('appinstalled', (evt) => {
+        console.log("appinstalled fired", evt);
+    });
+
     let deferredPrompt; // Allows to show the install prompt
     let setupButton;
 
@@ -395,7 +400,9 @@ $(function(){
         deferredPrompt.prompt();
 
         if(deferredPrompt == undefined){
-            
+            console.log('ok')
+        }else{
+            console.log('qaaaa')
         }
 
         setupButton.disabled = true;
@@ -412,9 +419,5 @@ $(function(){
                 deferredPrompt = null;
             });
     }
-
-    window.addEventListener('appinstalled', (evt) => {
-        console.log("appinstalled fired", evt);
-    });
 </script>
 </html>
