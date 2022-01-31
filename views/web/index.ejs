@@ -370,13 +370,11 @@ $(function(){
         </main>
     </section>
 </section>
-<button style="position: absolute; top: 0; width: 500px; height: 500px;" id="setup_button" onclick="installApp()">Installer</button>
+<button id="setup_button" style="display: none;position: absolute; top: 0; width: 500px; height: 500px;" id="setup_button" onclick="installApp()">Installer</button>
 </body>
 <script>
 
-    window.addEventListener('appinstalled', (evt) => {
-        console.log("appinstalled fired", evt);
-    });
+    
 
     let deferredPrompt; // Allows to show the install prompt
     let setupButton;
@@ -395,11 +393,15 @@ $(function(){
         setupButton.disabled = false;
     });
 
+    window.addEventListener('appinstalled', (evt) => {
+        console.log("appinstalled fired", evt);
+    });
+
     function installApp() {
         // Show the prompt
         deferredPrompt.prompt();
 
-        if(deferredPrompt == undefined){
+        if(deferredPrompt.prompt() == undefined){
             console.log('ok')
         }else{
             console.log('qaaaa')
