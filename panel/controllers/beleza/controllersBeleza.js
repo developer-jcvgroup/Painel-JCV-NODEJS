@@ -700,7 +700,7 @@ async function createTagsOrders(ids,req,res){
     const pdf = require('html-pdf');
     const ejs = require('ejs');
     
-    ejs.renderFile('home/jcv/app/views/panel/beleza/HTMLpdfstyle.ejs', {arrayData: resultData, dateNow: generateDate()}, function(err, result) {
+    ejs.renderFile('/home/jcv/app/views/panel/beleza/HTMLpdfstyle.ejs', {arrayData: resultData, dateNow: generateDate()}, function(err, result) {
         // render on success
         if(result) {
 
