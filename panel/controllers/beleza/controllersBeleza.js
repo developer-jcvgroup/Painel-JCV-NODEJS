@@ -5,9 +5,6 @@ const fs = require('fs');
 const moment = require("moment");
 moment.locale('pt-BR');
 
-//URL arquivos para download
-const URLdownloads = '/home/jcv/app/public/panel/downloads/beleza/';
-
 //Mes de referencia
 function getMonthReferece(){
     return moment().add(1, 'M').format('MM-YYYY')
@@ -715,9 +712,8 @@ async function createTagsOrders(ids,req,res){
             } 
 
             //res.send(result)
-            
             const caracteresAleatorios = Math.random().toString(36).substring(5);
-            pdf.create(result, options).toFile(URLdownloads+"ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
+            pdf.create(result, options).toFile("/home/jcv/app/public/panel/downloads/beleza/ETIQUETAS-PDF-"+caracteresAleatorios+".pdf", (err,data) => {
 
                 /* setTimeout(()=> {
                     fs.unlinkSync(data.filename)
