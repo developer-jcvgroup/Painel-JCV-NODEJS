@@ -11,11 +11,11 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
     const nodemailer = require('nodemailer');
 
     const transporter = nodemailer.createTransport({
-        host: "smtp.jcv.net.br",
+        host: "jcv.net.br",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: "nao-responda=jcv.net.br",
+            user: "nao-responda@jcv.net.br",
             pass: "!@#naoresponda123"
         },
         tls: { rejectUnauthorized: false },

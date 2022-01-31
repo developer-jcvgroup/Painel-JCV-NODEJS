@@ -9,6 +9,8 @@ app.set("view engine", "ejs");
 
 process.chdir(path.dirname(__filename));
 
+const systemCalendarEvents = require('./system/systemAlertCalendar')
+
 // Static
 app.use(express.static("public"));
 
