@@ -53,6 +53,6 @@ async function lembreteCalendar(){
 }
 
 cron.schedule('0,15,30 * * * *', function() {
-    console.log("Executando a tarefa a cada 15.30 e 60 minutos minutos")
+    console.log("Executando a tarefa a cada 15,30 e 60 minutos minutos: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     lembreteCalendar()
 });

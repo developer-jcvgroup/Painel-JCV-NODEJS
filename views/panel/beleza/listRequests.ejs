@@ -37,6 +37,7 @@
                                 <select name="" id="status-select-filter">
                                     <option value=""></option>
                                     <!-- <option value="1">Pedente</option> -->
+                                    <option value="1">Pendentes</option>
                                     <option value="2">Solicitado</option>
                                     <option value="3">Cancelados</option>
                                     <option value="4">Separados</option>
@@ -81,7 +82,62 @@
                     </form>
                 </section>
             </section>
-        </section>        
+        </section>   
+        
+        <% if(resultSearchDataPend != ''){ %>
+
+            <form class="requests-container-list-all" action="./actions/orders/commands" method="post">
+                <section class="section-requests-list-center">
+                    <div class="requests-title-box"><span>Lista de solicitações</span></div>
+                    
+                    <div class="requests-container-table">
+                        <table class="request-list-table" id="request-list-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Solicitante</th>
+                                    <th>Unidade</th>
+                                    <th></th>
+                                    <th>Produtos</th>
+                                    <th>Status</th>
+                                    <th>Ref.:</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% resultSearchDataPend.forEach(element => { %>
+                                    <tr class="request-row-check-mark">
+                                        <td></td>
+                                        <td><b><%= element.jcv_userNamePrimary %></b></td>
+                                        <td><%= element.sys_unity_name %></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="requests-container-products">
+                                                <span><b>Shampoo: PEDENTE</span>
+                                                <span><b>Tratamento: PEDENTE</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Pendente
+                                        </td>
+                                        <td><b><%= resultReferenceDate %></b></td>
+                                        <td></td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table> 
+                    </div>
+                </section>
+            </form>
+
+
+        <% }else{ %>
+            <!--  -->
+        <% } %>
 
         <% if(locals.resultSearchData != ""){ %>
         <form class="requests-container-list-all" action="./actions/orders/commands" method="post">

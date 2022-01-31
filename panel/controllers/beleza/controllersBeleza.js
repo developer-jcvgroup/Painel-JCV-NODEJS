@@ -170,34 +170,55 @@ exports.listRequests = async (req,res) => {
 
     //Renderizando tudo
     var page = "beleza/listRequests";
-    res.render("panel/index", {page: page, monthReference: getMonthReferece(), unidades: unidades, blzGestor: blzGestor, yearNow: yearNow, resultSearchData: req.flash('resultSearchData')})
+    res.render("panel/index", {page: page, monthReference: getMonthReferece(), unidades: unidades, blzGestor: blzGestor, yearNow: yearNow, resultSearchData: req.flash('resultSearchData'), resultSearchDataPend: req.flash('resultSearchDataPend'), resultReferenceDate: req.flash('resultReferenceDate')})
 }
 
 exports.searchRequests = async (req,res) => {
     let referenceDate = req.body.blzReferenceMonth;
-    let blzStatus = req.body['sys-filter-input-selects-Status'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Status']+')' : "LIKE '%%'";
+    let blzStatus = req.body['sys-filter-input-selects-Status'] != undefined ? req.body['sys-filter-input-selects-Status'] == 1 ?  1 : 'in ('+req.body['sys-filter-input-selects-Status']+')' : "LIKE '%%'";
 
     let listUnitys = req.body['sys-filter-input-selects-Unidade'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Unidade']+')' : "LIKE '%%'";
     let listGestores = req.body['sys-filter-input-selects-Gestor'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Gestor']+')' : "LIKE '%%'";
 
-    database
-    .select('jcv_blz_orders.sys_blz_id','jcv_blz_orders.sys_blz_userName','jcv_unitys.sys_unity_name',
-    'jcv_users.jcv_userNameSecundary', 'jcv_blz_orders.sys_blz_tratmentOne','jcv_blz_orders.sys_blz_tratmentTwo',
-    'jcv_blz_orders.sys_blz_requestStatus','jcv_blz_orders.sys_blz_requestReference','jcv_blz_orders.sys_blz_requestCreate')
-    .table("jcv_blz_orders")
-    .join('jcv_unitys', 'jcv_blz_orders.sys_blz_userUnity', '=', 'jcv_unitys.sys_unity_id')
-    .join('jcv_users', 'jcv_blz_orders.sys_blz_userManager', '=', 'jcv_users.jcv_id')
-    .whereRaw("jcv_blz_orders.sys_blz_requestReference LIKE '%"+referenceDate+"%' AND jcv_blz_orders.sys_blz_requestStatus "+blzStatus+" AND jcv_blz_orders.sys_blz_userManager "+listGestores+" AND jcv_unitys.sys_unity_id "+listUnitys+" ORDER BY jcv_blz_orders.sys_blz_id DESC")
-    .then(data => {
-        
-        if(data != ""){
-            req.flash('resultSearchData', data)
-            res.redirect("/painel/beleza/solicitacoes");
-        }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhum dado encontrado para sua busca");
-            res.redirect("/painel/beleza/solicitacoes");
-        }
-    })
+    if(blzStatus == 1){        
+        database
+        .raw(`
+            SELECT * FROM jcv_users e JOIN jcv_users_permissions ON jcv_id = sys_perm_idUser JOIN jcv_unitys ON e.jcv_userUnity = sys_unity_id  
+            WHERE e.jcv_userUnity ${listUnitys} AND e.jcv_userManager ${listGestores} AND NOT EXISTS 
+            (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference = '${referenceDate}')
+        `)
+        //.join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
+        .then( data => {
+
+            if(data != ""){
+                req.flash('resultSearchDataPend', data[0])
+                req.flash('resultReferenceDate',referenceDate)
+                res.redirect("/painel/beleza/solicitacoes");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrado em sua busca");
+                res.redirect("/painel/beleza/solicitacoes");
+            }
+        })
+    }else{
+        database
+        .select('jcv_blz_orders.sys_blz_id','jcv_blz_orders.sys_blz_userName','jcv_unitys.sys_unity_name',
+        'jcv_users.jcv_userNameSecundary', 'jcv_blz_orders.sys_blz_tratmentOne','jcv_blz_orders.sys_blz_tratmentTwo',
+        'jcv_blz_orders.sys_blz_requestStatus','jcv_blz_orders.sys_blz_requestReference','jcv_blz_orders.sys_blz_requestCreate')
+        .table("jcv_blz_orders")
+        .join('jcv_unitys', 'jcv_blz_orders.sys_blz_userUnity', '=', 'jcv_unitys.sys_unity_id')
+        .join('jcv_users', 'jcv_blz_orders.sys_blz_userManager', '=', 'jcv_users.jcv_id')
+        .whereRaw("jcv_blz_orders.sys_blz_requestReference LIKE '%"+referenceDate+"%' AND jcv_blz_orders.sys_blz_requestStatus "+blzStatus+" AND jcv_blz_orders.sys_blz_userManager "+listGestores+" AND jcv_unitys.sys_unity_id "+listUnitys+" ORDER BY jcv_blz_orders.sys_blz_id DESC")
+        .then(data => {
+            
+            if(data != ""){
+                req.flash('resultSearchData', data)
+                res.redirect("/painel/beleza/solicitacoes");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrada em sua busca");
+                res.redirect("/painel/beleza/solicitacoes");
+            }
+        })
+    }
 }
 
 exports.listProducts = async (req,res) => {

@@ -205,6 +205,10 @@ tr:nth-child(even) {
     padding: 4px;
     font-size: 0.8rem;
     border: 1px solid var(--color-five);
+    
+}
+.room-setings-table-salas tr td input[type=color]{
+    cursor: pointer;
 }
 
 /* */

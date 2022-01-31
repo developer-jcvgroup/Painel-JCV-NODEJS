@@ -143,7 +143,7 @@ body, html{
     align-items: center;
 }
 .index-logo{
-    width: 25%;
+    width: 45%;
     object-fit: cover;
 }
 
@@ -210,10 +210,11 @@ body, html{
     align-items: center;
 }
 .index-row-commands button{
+    width: 50%;
     height: fit-content;
     outline: 0;
     border: 0;
-    padding: 8px 18px;
+    padding: 10px 18px;
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
@@ -231,14 +232,14 @@ body, html{
 
 .index-help-pass{
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
     display: flex;
     justify-content: center;
 }
 .index-help-pass span{
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     text-decoration: underline;
-    color: var(--color-five);
+    color: var(--color-two);
     cursor: pointer;
 }
 
@@ -255,6 +256,7 @@ body, html{
     justify-content: center;
     align-items: center;
     z-index: 3;
+    background-color: rgba(128, 128, 128, 0.342);
 }
 .index-recover-container-main{
     width: 400px;
@@ -545,7 +547,7 @@ body, html{
         margin-top: -250px;
     }
     .index-logo{
-        width: 20%;
+        width: 25%;
     }
 
     .index-container-msg-sys{
