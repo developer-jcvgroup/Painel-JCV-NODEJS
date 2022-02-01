@@ -197,9 +197,17 @@
                             <% for(let i = 1; i <= AllDays; i++){ %>
                                 <li>
                                     <div onclick="openOptionsDays('<%= i %>/<%= monthNow %>')" class="calendar-day-box">
-                                        <div id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
-                                            <span><%= i %></span>
-                                        </div>
+
+                                        <% if(i < 10){ %>
+                                            <div id="day-<%= '0'+i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                <span><%= i %></span>
+                                            </div>
+                                        <% }else{ %>
+                                            <div id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                <span><%= i %></span>
+                                            </div>
+                                        <% } %>
+
                                         <!--  -->
 
                                         <div class="calendar-day-box-list-events">
@@ -465,6 +473,7 @@
 
         //Setando a data no calendario
         const dateNowCalendar = "<%- dayNow %>";
+        console.log(dateNowCalendar)
         $("#day-"+dateNowCalendar).css("color","var(--color-four)")
         $("#day-"+dateNowCalendar).css("background","var(--color-one)")
 

@@ -29,7 +29,7 @@ router.get("/", async (req,res)=>{
         //Pegando todas as contas que não possui uma senha
         const allAccountPass = await database
         .select("jcv_userCpf")
-        .where({jcv_userPassword: null})
+        .where({jcv_userPassword: null, jcv_userPassword: ''})
         .table("jcv_users")
         .then( data => {
 
