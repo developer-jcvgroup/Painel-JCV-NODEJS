@@ -4,6 +4,7 @@ moment.locale('pt-BR');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
+const path = require("path");
 
 //Data atual
 function generateDate(){
@@ -715,6 +716,8 @@ exports.createQrCode = async (req,res) => {
     
     var qr = require('qr-image');
 
+    console.log(path)
+
     var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
     qr_svg.pipe(require('fs').createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png'));
 
@@ -723,9 +726,9 @@ exports.createQrCode = async (req,res) => {
     //let fileDow = 'public/panel/qrcode-rooms/room-'+idRoom+'.png';
     let fileDow = '/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png';
 
-    setTimeout(()=> {
+    /* setTimeout(()=> {
         res.download(fileDow)
-    },1000)
+    },1000) */
     
 }
 

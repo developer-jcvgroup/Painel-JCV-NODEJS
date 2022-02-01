@@ -25,8 +25,6 @@ async function lembreteCalendar(){
             
             let converMinutesHours = moment().add(element.sys_calendar_eventReminder, 'minutes').format("HH:mm");
 
-            converMinutesHours = "14:30"
-
             //Validando se o evento esta prestes a começar
             if(converMinutesHours == element.sys_calendar_eventHours.split(' - ')[0] && element.sys_calendar_eventDate == moment().format("DD/MM/YYYY") ){
                 
@@ -52,7 +50,7 @@ async function lembreteCalendar(){
     })
 }
 
-cron.schedule('0,15,30 * * * *', function() {
-    console.log("Executando a tarefa a cada 15,30 e 60 minutos minutos: "+moment().format("DD-MM-YYYY HH:mm:ss"))
+cron.schedule('1 * * * *', function() {
+    console.log("Executando a tarefa a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     lembreteCalendar()
 });
