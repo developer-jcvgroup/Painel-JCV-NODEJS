@@ -720,7 +720,8 @@ exports.createQrCode = async (req,res) => {
     var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
     qr_svg.pipe(require('fs').createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png'));
 
-    var svg_string = qr.imageSync('I love QR!', { type: 'png' });
+    console.log(qr_svg)
+    //var svg_string = qr.imageSync('I love QR!', { type: 'png' });
 
     //let fileDow = 'public/panel/qrcode-rooms/room-'+idRoom+'.png';
     let fileDow = '/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png';
