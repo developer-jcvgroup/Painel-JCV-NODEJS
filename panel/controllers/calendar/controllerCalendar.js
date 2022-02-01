@@ -715,18 +715,26 @@ exports.editNewRoom = async (req,res) => {
 exports.createQrCode = async (req,res) => {
     const idRoom = req.body['room-qrcode-id'];
 
+    const fs = require('fs');
 
-    var QRCode = require('qrcode')
+    const data = 'Testando a criação de arquivos';
+    fs.writeFile('arquivo.txt', data, (err) => {
+        if (err) throw err;
+    console.log('O arquivo foi criado!');
+    });
+
+
+/*     var QRCode = require('qrcode')
 
     QRCode.toString('I am a pony!',{type:'download'}, function (err, url) {
         res.render(url)
-    })
+    }) */
     
-    var qr = require('qr-image');
+    /* var qr = require('qr-image');
 
     var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
     
-    qr_svg.pipe(require('fs').createWriteStream('../../../room-'+idRoom+'.png'));
+    qr_svg.pipe(require('fs').createWriteStream('../../../room-'+idRoom+'.png')); */
 
     //var svg_string = qr.imageSync('I love QR!', { type: 'png' });
 
