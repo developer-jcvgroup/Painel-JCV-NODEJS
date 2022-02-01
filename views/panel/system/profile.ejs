@@ -28,7 +28,7 @@
                         <input required type="text" value="<%= arrayData[0]['jcv_userCpf'] %>" name="updateCPFUser" id="update-cpf">
                     </div>
 
-                    <% if(arrayData[0]['jcv_userEmailCorporate'] == null){ %>
+                    <% if(arrayData[0]['jcv_userEmailCorporate'] == null || arrayData[0]['jcv_userEmailCorporate'] == ''){ %>
                         <div class="profile-container-input">
                             <label style="color: red;" for="">E-mail 1 (Obrigatorio)</label>
                             <input required style="color: red;" type="email" value="<%= arrayData[0]['jcv_userEmailCorporate'] %>" name="updateEmailUserCorp" placeholder="Insira um email corporativo ou pessoal">
