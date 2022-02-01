@@ -4,8 +4,6 @@ moment.locale('pt-BR');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
-const path = require("path");
-process.chdir(path.dirname(__filename));
 
 //Data atual
 function generateDate(){
@@ -713,28 +711,10 @@ exports.editNewRoom = async (req,res) => {
 }
 
 exports.createQrCode = async (req,res) => {
+
     const idRoom = req.body['room-qrcode-id'];
 
-    var QRCode = require('qrcode')
-
-    QRCode.toString('I am a pony!',{type:'download'}, function (err, url) {
-        res.render("panel/calendar/QrCode",{url: url})
-    })
-    
-    /* var qr = require('qr-image');
-
-    var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
-    
-    qr_svg.pipe(require('fs').createWriteStream('../../../room-'+idRoom+'.png')); */
-
-    //var svg_string = qr.imageSync('I love QR!', { type: 'png' });
-
-    //let fileDow = 'public/panel/qrcode-rooms/room-'+idRoom+'.png';
-    //let fileDow = '/room-'+idRoom+'.png';
-
-    /* setTimeout(()=> {
-        res.download(fileDow)
-    },1000) */
+    res.redirect('https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=https://jcv.net.br/painel/calendario/viewRoom/'+idRoom)
     
 }
 
