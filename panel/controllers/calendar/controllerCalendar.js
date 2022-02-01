@@ -1,12 +1,13 @@
 const database = require("../../database/database");
 const moment = require("moment");
-moment.locale('pt-BR');
+moment.locale('pt-br');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
 
 //Data atual
 function generateDate(){
+    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
 

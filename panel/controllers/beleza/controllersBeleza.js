@@ -2,7 +2,7 @@ const database = require("../../database/database");
 const getPermissions = require("../../middlewarePermissions");
 
 const moment = require("moment");
-moment.locale('pt-BR');
+moment.locale('pt-br');
 
 //Mes de referencia
 function getMonthReferece(){
@@ -11,7 +11,7 @@ function getMonthReferece(){
 
 //Data atual
 function generateDate(){
-    moment.locale('pt-BR');
+    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
 

@@ -1,6 +1,6 @@
 const moment = require("moment");
 const { type } = require("os");
-moment.locale('pt-BR');
+moment.locale('pt-br');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');

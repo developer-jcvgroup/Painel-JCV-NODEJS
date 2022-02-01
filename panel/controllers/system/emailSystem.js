@@ -1,8 +1,10 @@
 var ejs = require("ejs");
 const moment = require("moment");
+moment.locale('pt-br');
 
 //Data atual
 function generateDate(){
+    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
 

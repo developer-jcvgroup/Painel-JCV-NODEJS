@@ -6,15 +6,14 @@ const fs = require('fs');
 const emailSystemExe = require('../system/emailSystem');
 
 const moment = require("moment");
-const { type } = require("os");
-const { SlowBuffer } = require("buffer");
-moment.locale('pt-BR');
+moment.locale('pt-br');
 
 //URL arquivos para download
 const URLdownloads = 'public/panel/downloads/beleza/';
 
 //Data atual
 function generateDate(){
+    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
 
