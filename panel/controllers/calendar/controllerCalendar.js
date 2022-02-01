@@ -713,17 +713,13 @@ exports.editNewRoom = async (req,res) => {
 }
 
 exports.createQrCode = async (req,res) => {
-    const fs = require('fs');
-    fs.createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room.txt')
-
     const idRoom = req.body['room-qrcode-id'];
     
     var qr = require('qr-image');
 
     var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
-    qr_svg.pipe(require('fs').createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png'));
+    qr_svg.pipe(require('fs').createWriteStream('room-'+idRoom+'.png'));
 
-    console.log(qr_svg)
     //var svg_string = qr.imageSync('I love QR!', { type: 'png' });
 
     //let fileDow = 'public/panel/qrcode-rooms/room-'+idRoom+'.png';
