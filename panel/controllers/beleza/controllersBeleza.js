@@ -11,9 +11,9 @@ function getMonthReferece(){
 
 //Data atual
 function generateDate(){
+    moment.locale('pt-BR');
     return moment().format('LT')+" "+moment().format('L')
 }
-generateDate();
 
 //Beleza: Listando os itens necessários
 exports.sysBLZrequest = async (req, res) =>{
