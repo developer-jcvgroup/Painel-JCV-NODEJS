@@ -5,6 +5,7 @@ moment.locale('pt-BR');
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
 const path = require("path");
+process.chdir(path.dirname(__filename));
 
 //Data atual
 function generateDate(){
@@ -715,8 +716,6 @@ exports.createQrCode = async (req,res) => {
     const idRoom = req.body['room-qrcode-id'];
     
     var qr = require('qr-image');
-
-    console.log(path)
 
     var qr_svg = qr.image(GLOBAL_LINK_QR+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom, { type: 'png' });
     qr_svg.pipe(require('fs').createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room-'+idRoom+'.png'));
