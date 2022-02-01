@@ -714,7 +714,7 @@ exports.createQrCode = async (req,res) => {
 
     const idRoom = req.body['room-qrcode-id'];
 
-    res.redirect('https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=https://jcv.net.br/painel/calendario/viewRoom/'+idRoom)
+    res.redirect('https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=https://jcv.net.br/painel/calendario/viewRoom/'+idRoom+'/?linkspecial=/painel/calendario/viewRoom/'+idRoom)
     
 }
 
