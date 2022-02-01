@@ -3,11 +3,14 @@ const getPermissions = require("../../middlewarePermissions");
 
 const moment = require("moment");
 moment.locale('pt-br');
+moment.tz("2018-11-09T10:00:00", "America/Sao_Paulo")
+
 
 //Mes de referencia
 function getMonthReferece(){
     return moment().add(1, 'M').format('MM-YYYY')
 }
+getMonthReferece()
 
 //Data atual
 function generateDate(){
