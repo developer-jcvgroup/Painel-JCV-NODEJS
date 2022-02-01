@@ -713,6 +713,9 @@ exports.editNewRoom = async (req,res) => {
 }
 
 exports.createQrCode = async (req,res) => {
+    const fs = require('fs');
+    fs.createWriteStream('/home/jcv/app/public/panel/qrcode-rooms/room.txt')
+
     const idRoom = req.body['room-qrcode-id'];
     
     var qr = require('qr-image');
