@@ -54,7 +54,7 @@ router.get("/logout", (req,res)=> {
 })
 
 //Pagina inicial
-router.get("/", authenticate, homePanel.homeInfo)
+router.get("/", authenticate, getPermissions, homePanel.homeInfo)
 router.post("/action/define/pass", homePanel.indexSetPass)
 
 

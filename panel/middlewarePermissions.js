@@ -144,11 +144,11 @@ async function getPermissions (req, res, next) {
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
             res.redirect("/painel");
         }
-
     }
 
+    next();
+    
     }
-
 
 }
 
