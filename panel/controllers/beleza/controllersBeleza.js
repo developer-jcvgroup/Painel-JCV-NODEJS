@@ -3,7 +3,10 @@ const getPermissions = require("../../middlewarePermissions");
 
 const moment = require("moment");
 moment.locale('pt-br');
-moment.tz("2014-10-01 12:00:00", "America/Sao_Paulo")
+
+
+fmt = d => console.log(d.format() + " " + d.tz())
+fmt(moment.tz('2020-11-01', 'America/Sao_Paulo').endOf('month')) // 2020-11-30T23:59:59-02:00 America/Sao_Paulo
 
 //Mes de referencia
 function getMonthReferece(){
@@ -12,9 +15,9 @@ function getMonthReferece(){
 
 //Data atual
 function generateDate(){
-    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
+console.log(generateDate())
 
 //Beleza: Listando os itens necessários
 exports.sysBLZrequest = async (req, res) =>{
