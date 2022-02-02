@@ -10,7 +10,6 @@ function generateDate(){
     return moment().format('LT')+" "+moment().format('L')
 }
 
-
 exports.viewCalendarMonth = async (req,res) => {
 
     //Validando se tem o numero do mes na url, caso não

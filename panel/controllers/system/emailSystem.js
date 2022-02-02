@@ -13,11 +13,11 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
     const nodemailer = require('nodemailer');
 
     const transporter = nodemailer.createTransport({
-        host: "jcv.net.br",
+        host: "smtp.vitorstudio.com.br",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: "nao-responda@jcv.net.br",
+            user: "nao-responda=vitorstudio.com.br",
             pass: "!@#naoresponda123"
         },
         tls: { rejectUnauthorized: false },
@@ -34,7 +34,7 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
     });
 
     const mainOptions = {
-        from: 'Sistema | JCV GROUP nao-responda@jcv.net.br',
+        from: 'Sistema | JCV GROUP nao-responda@vitorstudio.com.br',
         to: sysEmails,
         subject: subTitleEmail,
         html: data
