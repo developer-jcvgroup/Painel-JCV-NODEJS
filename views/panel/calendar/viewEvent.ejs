@@ -60,7 +60,7 @@
                     <div class="event-box-main">
                         <% if(allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
                         <form class="event-action-command" method="post">
-                            <button type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event">Excluir Evento</button>
+                            <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event">Excluir Evento</button>
                             <button id="view-open-edit-event-edit" type="button">Editar Evento</button>
                         </form>
                         <% } %>

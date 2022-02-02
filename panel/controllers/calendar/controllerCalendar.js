@@ -197,7 +197,7 @@ exports.saveNewEvent = async (req,res) => {
             })
 
             //Validando os intervalos
-            var format = 'hh:mm';
+            var format = 'HH:mm';
             let validationResult = true;//Inicialemnte a pessoa pode criar o evento
 
             hoursFree.forEach(element => {
@@ -207,17 +207,31 @@ exports.saveNewEvent = async (req,res) => {
                 var timeValidateInicial = moment(eventHourInitial,format);//Horario INICIAL a validar
                 var timeValidateFinal = moment(eventHourFinal,format);//Horario FINAL a validar
 
-                var initialTime = moment(eachElementOne,format).subtract(1, 'minutes');//Horaio inicial
-                var finalTime = moment(eachElementTwo, format).subtract(1, 'minutes');//Horario final
+                var initialTime = moment(eachElementOne,format).subtract(1, 'minute');//Horaio inicial
+                var finalTime = moment(eachElementTwo, format).add(1, 'minute');//Horario final
 
-                if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
+                /* console.log(initialTime.format("HH:mm"))
+                console.log(finalTime.format("HH:mm"))
+                console.log('----')
+                console.log(timeValidateInicial.format("HH:mm"))
+                console.log(timeValidateFinal.format("HH:mm")) */
+
+                console.log(timeValidateInicial.isBetween(initialTime, finalTime))
+                console.log(timeValidateFinal.isBetween(initialTime, finalTime))
+
+                if(timeValidateInicial.isBetween(initialTime, finalTime) == true || timeValidateFinal.isBetween(initialTime, finalTime) == true){
                     console.log("Voce não pode registrar nesse horario")
-                    validationResult = false
+                    validationResult = false;
                 }else{
-                    console.log("Voce pode registrar")
 
-                    if(validationResult == false){
-                        validationResult == true
+                    if(initialTime.isBetween(timeValidateInicial, timeValidateFinal) == true || finalTime.isBetween(timeValidateInicial, timeValidateFinal) == true){
+                        validationResult = false;
+                    }else{
+                        console.log("Voce pode registrar")
+
+                        if(validationResult == false){
+                            validationResult == true
+                        }
                     }
                 }
             });
@@ -237,7 +251,7 @@ exports.saveNewEvent = async (req,res) => {
             }
 
             //Validando os inputs
-            if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
+            if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' || eventRoom == ''){
 
                 if(validationResult == false){
                     res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
@@ -537,13 +551,18 @@ exports.editSaveNewEvent = async (req,res) => {
                 var finalTime = moment(eachElementTwo, format).add(1, 'minutes');//Horario final
 
                 if(timeValidateInicial.isBetween(initialTime, finalTime) || timeValidateFinal.isBetween(initialTime, finalTime)){
-                    //console.log("Voce não pode registrar nesse horario")
+                    console.log("Voce não pode editar nesse horario")
                     validationResult = false;
                 }else{
-                    //console.log("Voce pode registrar")
 
-                    if(validationResult == false){
-                        validationResult == true
+                    if(initialTime.isBetween(timeValidateInicial, timeValidateFinal) == true || finalTime.isBetween(timeValidateInicial, timeValidateFinal) == true){
+                        validationResult = false;
+                    }else{
+                        console.log("Voce pode editar neste horario")
+
+                        if(validationResult == false){
+                            validationResult == true
+                        }
                     }
                 }
             });
