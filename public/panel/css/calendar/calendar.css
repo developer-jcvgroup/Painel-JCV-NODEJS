@@ -186,6 +186,11 @@
     font-weight: lighter;
     color: var(--color-one);
     padding: 6px;
+    display: flex;
+    align-items: center;
+}
+#cal-sep{
+    margin: 0 15px;
 }
 .calendar-select-month-options{
     margin-right: 15px;
@@ -303,6 +308,7 @@
 }
 .claendar-list-events li{
     margin: 5px;
+    padding-bottom: 5px;
 }
 .claendar-list-events li a{
     text-decoration: none;
@@ -756,6 +762,15 @@
     .calendar-menu-open{
         position: absolute;
     } */
+
+    .calendar-select-month-set span{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #cal-sep{
+        display: none;
+    }
 
     .calendar-main-box{
         padding: 0;

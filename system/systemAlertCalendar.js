@@ -1,8 +1,7 @@
 const database = require("./database");
 const moment = require("moment");
-moment.locale('pt-BR');
-
 const cron = require('node-cron');
+moment.locale('pt-BR');
 
 //Sistema de emails
 const emailSystemExe = require('../panel/controllers/system/emailSystem');
@@ -70,7 +69,15 @@ async function lembreteCalendar(){
     })
 }
 
-cron.schedule('1 * * * *', function() {
+/* cron.schedule('* 1 * * * *', function() {
     console.log("Executando a tarefa a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     lembreteCalendar()
+});
+ */
+cron.schedule('*/60 * * * * *', () => {
+    console.log("Executando a tarefa a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
+    lembreteCalendar()
+}, {
+    scheduled: true,
+    timezone: "America/Sao_Paulo"
 });

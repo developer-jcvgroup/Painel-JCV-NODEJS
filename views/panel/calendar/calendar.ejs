@@ -11,12 +11,12 @@
             <!--  -->
             <div class="calendar-menu-icons">
                 <ul class="calendar-menu-list-inc">
-                    <li class="calendar-visible-bottom"><a class="class-loader" href="/painel/calendario/main"><i class="ri-home-3-line"></i></a><hr></li>
-                    <li class="calendar-visible-bottom"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
-                    <li class="calendar-visible-bottom"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
-                    <li class="calendar-visible-bottom"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
+                    <li class="calendar-visible-bottom" title="Calendario" ><a class="class-loader" href="/painel/calendario/main"><i class="ri-home-3-line"></i></a><hr></li>
+                    <li class="calendar-visible-bottom" title="Eventos Públicos"><i id="calendar-events-publics" class="ri-calendar-todo-line"></i></li>
+                    <li class="calendar-visible-bottom" title="Meus Eventos"><i id="calendar-events-my" class="ri-user-search-line"></i></li>
+                    <li class="calendar-visible-bottom" title="Salas"><i id="calendar-events-room" class="ri-door-open-line"></i></li>
                     <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
-                        <li><a class="class-loader" href="../../room/RoomSettings"><i class="ri-add-circle-line"></i></a></li>
+                        <li><a class="class-loader"  title="Configurações" href="../../room/RoomSettings"><i class="ri-settings-3-line"></i></a></li>
                     <% } %>
                 </ul>
             </div>
@@ -160,12 +160,12 @@
                 <div class="calendar-select-month">
                     <div class="calendar-select-month-one">
                         <div class="calendar-select-month-options">
-                            <a href="../<%= previousMonthYear %>"><i class="ri-arrow-up-s-line"></i></a>
-                            <a href="../<%= nextMonthYear %>"><i class="ri-arrow-down-s-line"></i></a>
+                            <a class="class-loader" href="../<%= previousMonthYear %>"><i class="ri-arrow-up-s-line"></i></a>
+                            <a class="class-loader" href="../<%= nextMonthYear %>"><i class="ri-arrow-down-s-line"></i></a>
                         </div>
                         <!--  -->
                         <div class="calendar-select-month-set">
-                            <span><%= nameMonthYear %></span>
+                            <span id="calendar-display-month" ><%= nameMonthYear %></span>
                         </div>
                     </div>
                     <!--  -->
@@ -218,7 +218,7 @@
                                                         <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
                                                             <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
                                                         <% }else{ %>
-                                                            <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></b></a></li>
                                                         <% } %>
                                                         
                                                     <% } %>
@@ -663,6 +663,11 @@
             $(".calendar-event-locate-name input").attr('name','xxx')
         } */
     })
+
+    let monthNow = '<%- monthNow %>'
+    if(moment().format("MM/YYYY") != monthNow){
+        $("#calendar-display-month").append("  <p id='cal-sep'>|<p>  <a class='class-loader' style='font-size: 0.9rem' href='/painel/calendario/main/'>Mês atual <i class='ri-external-link-line'></i></a>")
+    }
 
     /* EVENTO DIA INTEIRO */
     $("#calendar-register-all-day").click(function(){

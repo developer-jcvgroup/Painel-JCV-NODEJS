@@ -11,7 +11,11 @@
                 <div class="event-row-container">
                     <div class="event-box-main">
                         <label>Descrição</label>
-                        <span><%= allDataEvent[0].sys_calendar_eventDescription %></span>
+                        <% if(allDataEvent[0].sys_calendar_eventDescription != ''){ %>
+                            <span><%= allDataEvent[0].sys_calendar_eventDescription %></span>
+                        <% }else{ %>
+                            <span>Sem descrição..</span>
+                        <% } %>
                     </div>
 
                     <div class="event-box-main">
@@ -29,21 +33,21 @@
                     </div>
 
                     <div class="event-box-main">
+                        <label>Sala</label>
+                        <span style="width: fit-content; padding: 4px 6px; border-radius: 4px; border: 1.5px solid <%= allDataEvent[0].sys_calendar_roomColor %>;"><a class="class-loader" style="text-decoration: none; color: <%= allDataEvent[0].sys_calendar_roomColor %>" href="/painel/calendario/viewRoom/<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></a></span>
+                    </div>
+
+                    <div class="event-box-main">
                         <label>Pessoas</label>
-                        <span>
+                        <div class="event-box-main-persons">
                             <% if(allDataPersons == false){ %>
                                 <span>Somente o criador é participante</span>
                             <% }else{ %>
                                 <% allDataPersons.forEach(element => { %>
-                                    <%= element.jcv_userNamePrimary %> <br>
+                                    <span><b><%= element.jcv_userNamePrimary %></b></span>
                                 <% }) %>
                             <% } %>
-                        </span>
-                    </div>
-
-                    <div class="event-box-main">
-                        <label>Sala</label>
-                        <span><%= allDataEvent[0].sys_calendar_roomName %></span>
+                        </div>
                     </div>
 
                     <div class="event-box-main">

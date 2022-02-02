@@ -216,9 +216,6 @@ exports.saveNewEvent = async (req,res) => {
                 console.log(timeValidateInicial.format("HH:mm"))
                 console.log(timeValidateFinal.format("HH:mm")) */
 
-                console.log(timeValidateInicial.isBetween(initialTime, finalTime))
-                console.log(timeValidateFinal.isBetween(initialTime, finalTime))
-
                 if(timeValidateInicial.isBetween(initialTime, finalTime) == true || timeValidateFinal.isBetween(initialTime, finalTime) == true){
                     console.log("Voce não pode registrar nesse horario")
                     validationResult = false;
@@ -773,8 +770,6 @@ exports.viewRoom = async (req,res) => {
                 return data
             })
 
-            
-
             //Buscando todos os usuario
             const userAll = await database
             .select("jcv_id","jcv_userNamePrimary")
@@ -826,8 +821,9 @@ exports.viewEventDay = async (req,res) => {
             .select()
             .where({sys_calendar_eventDate: dayComp})
             .table("jcv_calendar_registers")
-            //.join("jcv_unitys","jcv_calendar_registers.sys_calendar_eventLocation","jcv_unitys.sys_unity_id")
-            //.join("jcv_calendar_rooms","jcv_calendar_registers.sys_calendar_eventRoom","jcv_calendar_rooms.sys_calendar_roomId")
+            .join("jcv_unitys","jcv_calendar_registers.sys_calendar_eventLocation","jcv_unitys.sys_unity_id")
+            .join("jcv_calendar_rooms","jcv_calendar_registers.sys_calendar_eventRoom","jcv_calendar_rooms.sys_calendar_roomId")
+            .orderByRaw("sys_calendar_eventId DESC, sys_calendar_eventRoom")
             .then ( data =>{ return data} )
 
             if(roomInfo != ''){

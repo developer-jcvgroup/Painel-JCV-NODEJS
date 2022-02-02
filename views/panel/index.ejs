@@ -117,7 +117,12 @@
                         <ul class="header-links-nav">
                             <!-- <li><a title="updates" class="class-loader" href="/painel/updates"><i class="ri-refresh-line"></i></a></li> -->
                             <!-- <li><a title="Logs do sistema" class="class-loader" href="/painel/logs"><i class="ri-alert-line"></i></a></li> -->
-                            <li class="notification-container"><a title="Notificações" class="class-loader" href="/painel/notifications"><i class="ri-notification-4-line"></i><div class="notification-main"><span>1</span></div></a></li>
+                            <li class="notification-container">
+                                <!-- <a title="Notificações" class="class-loader" href="/painel/notifications">
+                                    <i class="ri-notification-4-line"></i>
+                                    <div class="notification-main"><span>1</span></div>
+                                </a> -->
+                            </li>
                             <div class="header-separador"></div><!-- separador -->
                         </ul>
                         <ul class="header-nav-dropdown">
@@ -141,17 +146,17 @@
                             </li>
                             <li class="li-info-user-drop" id="li-info-user-drop">
                                 <ul class="navbar-info-user-drop">
-                                    <li><%= GLOBAL_DASH[5] %></li>
+                                    <li><i class="ri-mail-line"></i><span><%= GLOBAL_DASH[5] %></span></li>
                                     <li>
                                         <% if(GLOBAL_DASH[6] != '') { %>
-                                            # <%= GLOBAL_DASH[6] %>
+                                            <i class="ri-account-box-line"></i> #<span><%= GLOBAL_DASH[6] %></span>
                                         <% }else{ %>
-                                            sem ramal
+                                            <i class="ri-account-box-line"></i> Sem ramal :(
                                         <% } %>
                                     </li>
                                     <li><div class="dropdown-separator"></div><!-- separador --></li>
                                     <li><a class="class-loader" href="/painel/perfil">Conta / Configurações</a></li>
-                                    <li><a class="class-loader" href="/painel/logout">Sair</a></li>
+                                    <li><a class="class-loader" href="/painel/logout"><b>Sair</b></a></li>
                                     
                                 </ul>
                             </li>

@@ -19,7 +19,7 @@
     --color-green: #006400;
     --color-yellow: #FCBF49;
 
-    --heigth-header: 48px;
+    --heigth-header: 50px;
 }
 
 /* VALORES UNIVERSAIS */
@@ -47,7 +47,6 @@ body, html{
     justify-content: space-between;
     background: var(--background-one);
     white-space: nowrap;
-    /*background-color: rgba(137, 43, 226, 0.226);*/
 }
 .index-container-main-menu{
     position: fixed;
@@ -118,7 +117,7 @@ body, html{
 }
 .menu-list-set-two li a{
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--color-five);
     transition: 0.5s;
     display: flex;
@@ -160,7 +159,7 @@ body, html{
 /* HEADER */
 .index-main-header{
     width: 100%;
-    height: 46px;
+    height: var(--heigth-header);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -180,7 +179,7 @@ header{
 
 #menu-action{
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .index-header-logo{
@@ -225,7 +224,7 @@ header{
 }
 .header-links-nav li a{
     text-decoration: none;
-    font-size: 0.89rem;
+    font-size: 1rem;
     display: flex;
     color: var(--color-two);
 }
@@ -297,7 +296,7 @@ header{
     margin: 0 12px;
 }
 .info-user-infos span:nth-child(1){
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 }
 .info-user-infos span:nth-child(2){
     font-size: 0.6rem;
@@ -314,10 +313,10 @@ header{
     margin-top: 40px;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
-    z-index: 1;
+    z-index: 10;
 }
 .navbar-info-user-drop{
-    margin: 10px 12px;
+    margin: 16px 19px;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -327,9 +326,16 @@ header{
 
  /* li */
 .navbar-info-user-drop li{
-    font-size: 0.7rem;
-    color:  var(--color-two);
-    margin: 8px 0;
+    font-size: 0.8rem;
+    color: var(--color-two);
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.navbar-info-user-drop li i{
+    font-size: 0.8rem;
+    margin-right: 8px;
+    text-align: center;
 }
 .navbar-info-user-drop li a{
     text-decoration: none;

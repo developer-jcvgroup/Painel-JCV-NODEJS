@@ -67,10 +67,11 @@
             </div>
         </header>
         <div class="header-def-status-login">
-            <% if(loginContr){ %>
-                <a href="/painel"><span>Painel</span> <i class="ri-arrow-right-line"></i></a>
+            <% if(loginContr == ''){ %>
+                <a href="/login"><span>Logar</span></a>
             <% }else{ %>
-                <a href="/login"><span>Logar</span> <i class="ri-login-box-line"></i></a>
+                <a href="/painel"><span>Painel</span></a>
+                <span>Olá <%= loginContr[1].split(' ')[0] %> <%= loginContr[1].split(' ')[1] %></span>
             <% } %>
         </div>
         <main>

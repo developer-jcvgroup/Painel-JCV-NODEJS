@@ -22,7 +22,15 @@
                         <div class="view-room-info-row-col">
                             <div class="view-room-container-desc">
                                 <span>Descrição:</span>
-                                <span><%= element.sys_calendar_eventDescription %></span>
+                                <% if(element.sys_calendar_eventDescription != ''){ %>
+                                    <span><%= element.sys_calendar_eventDescription %></span>
+                                <% }else{ %>
+                                    <span>Sem descrição..</span>
+                                <% } %>
+                            </div>
+                            <div class="view-room-container-desc">
+                                <span>Sala</span>
+                                <span style="width: fit-content; padding: 4px 6px; border-radius: 4px; border: 1.5px solid <%= element.sys_calendar_roomColor %>;"><a class="class-loader" style="text-decoration: none; color: <%= element.sys_calendar_roomColor %>" href="/painel/calendario/viewRoom/<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></a></span>
                             </div>
                             <div class="view-room-container-desc">
                                 <span>Participantes:</span>
@@ -40,7 +48,7 @@
                                             
                                             <% let validation = userAll.map(function(e) { return e.jcv_id; }).indexOf(parseInt(element));%>
                                             <% if(validation > -1) { %>
-                                                <span><%= userAll[validation].jcv_userNamePrimary %></span>
+                                                <span><b><%= userAll[validation].jcv_userNamePrimary %></b></span>
                                             <% } %>
 
 

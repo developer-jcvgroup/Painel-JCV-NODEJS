@@ -25,7 +25,7 @@
 
 /* DISPLAY BODY */
 .beleza-view-section-display-body{
-    width: 90%;
+    width: 95%;
     display: flex;
     justify-content: center;
 }
@@ -64,7 +64,6 @@
 }
 .beleza-view-info span:nth-child(1){
     font-size: 1.3rem;
-    color: rgb(33, 122, 33);
     margin-bottom: 14px;
 }
 .beleza-view-info span:nth-child(2){
@@ -100,7 +99,7 @@
     margin-bottom: 35px;
 }
 .beleza-view-form-row-large span{
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 4px;
     border-bottom: 1px solid var(--color-five);
 }

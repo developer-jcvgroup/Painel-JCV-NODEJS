@@ -9,11 +9,20 @@
             <div class="beleza-view-container-box">
                 <div class="beleza-view-title-box"><span>Programa da Beleza</span></div>
                 <div class="beleza-view-info">
-                    <span>Solicitação concluída!</span>
-                    <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
+                    <% if(requestUser[0].sys_blz_requestStatus == 2){ %>
+                        <span style="color: #10772a;">Solicitação concluída!</span>
+                        <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
+                    <% }else if(requestUser[0].sys_blz_requestStatus == 4){ %>
+                        <span style="color: #10772a;">Solicitação separada!</span>
+                        <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
+                    <% }else if(requestUser[0].sys_blz_requestStatus == 5){ %>
+                        <span style="color: #a41623;">Pedido de cancelamento..</span>
+                        <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
+                    <% } %>
+
                     <% if(statusCancel) { %>
                         <span>Pedido de cancelamento em análise! Aguarde..</span>
-                    <% }else{} %>
+                    <% } %>
                 </div>
                 <div class="beleza-view-container-body">
                     <form class="beleza-view-form" action="">
@@ -42,8 +51,8 @@
                 <i id="click-close-cancel" class="ri-close-line"></i>
             </div>
             <div class="beleza-cancel-msg">
-                <span>Caso não foi você quem solicitou ou quer refazer a sua solicitação você pode pedir o cancelamento ao administrador, lembrando que isso passará por uma análise
-                    antes do cancelamento. Clique no botão abaixo e agurade até que seu pedido seja cancelado.
+                <span>Caso queira refazer a sua solicitação você pode pedir o cancelamento ao administrador, lembrando que isso passará por uma análise
+                    antes do cancelamento. Clique no botão abaixo e aguarde até que seu pedido seja cancelado.
                 </span>
             </div>
             <form class="beleza-cancel-button" action="./request/cancel" method="post">

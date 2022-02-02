@@ -38,7 +38,7 @@ app.use("/login", jcvLogin)
 app.get("/", (req,res)=>{
     let loginContr = false;
     if(req.session.cookieLogin != undefined){
-        loginContr = true
+        loginContr = req.session.cookieLogin
     }
 
     if(enabledPanel == 1){
