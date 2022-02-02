@@ -1,6 +1,7 @@
 const database = require("../../database/database");
 const moment = require("moment");
-moment.locale('pt-br');
+moment.tz.setDefault('America/Sao_Paulo');
+
 const monthReference = moment().add(1, 'M').format('MM-YYYY');
 
 //Sistema de emails

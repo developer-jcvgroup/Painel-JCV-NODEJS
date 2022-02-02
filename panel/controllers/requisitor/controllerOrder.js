@@ -6,7 +6,7 @@ const fs = require('fs');
 const emailSystemExe = require('../system/emailSystem');
 
 const moment = require("moment");
-moment.locale('pt-br');
+moment.tz.setDefault('America/Sao_Paulo');
 
 //URL arquivos para download
 const URLdownloads = 'public/panel/downloads/beleza/';

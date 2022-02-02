@@ -1,6 +1,6 @@
 const moment = require("moment");
 const { type } = require("os");
-moment.locale('pt-br');
+moment.tz.setDefault('America/Sao_Paulo');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');

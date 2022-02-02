@@ -1,6 +1,6 @@
 var ejs = require("ejs");
 const moment = require("moment");
-moment.locale('pt-br');
+moment.tz.setDefault('America/Sao_Paulo');
 
 //Data atual
 function generateDate(){

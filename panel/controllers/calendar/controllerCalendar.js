@@ -1,13 +1,12 @@
 const database = require("../../database/database");
 const moment = require("moment");
-moment.locale('pt-br');
+moment.tz.setDefault('America/Sao_Paulo');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
 
 //Data atual
 function generateDate(){
-    moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
 }
 
