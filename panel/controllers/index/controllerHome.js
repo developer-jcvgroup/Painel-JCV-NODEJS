@@ -37,7 +37,7 @@ getCalendarEvents = async () => {
 
     const getCalendar = await database
     .select()
-    .whereRaw("sys_calendar_eventPersons like '%,"+GLOBAL_DASH[0]+"%' OR sys_calendar_eventPersons like '%"+GLOBAL_DASH[0]+",%'")
+    .whereRaw("sys_calendar_eventPersons like '%,"+GLOBAL_DASH[0]+"%' OR sys_calendar_eventPersons like '%"+GLOBAL_DASH[0]+",%' OR sys_calendar_eventUserId = "+GLOBAL_DASH[0])
     .table("jcv_calendar_registers")
     .limit(3)
     .then( data => {
