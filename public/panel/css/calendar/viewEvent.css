@@ -73,10 +73,7 @@
     flex-wrap: wrap;
 }
 .event-box-main span{
-    font-size: 0.8rem;
     margin-top: 8px;
-    color: var(--color-two);
-
     width: max-content;
     color: var(--color-one);
     padding: 4px 7px;
@@ -85,6 +82,9 @@
     border-radius: 14px;
     margin-right: 5px;
     margin-bottom: 8px;
+}
+.event-box-main:nth-child(1) span{
+    border: none;
 }
 
 .event-action-command button{

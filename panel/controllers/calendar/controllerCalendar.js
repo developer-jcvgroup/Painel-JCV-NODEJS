@@ -160,6 +160,7 @@ exports.saveNewEvent = async (req,res) => {
     const eventReminder = req.body['calendar-register-reminder'];//FORMATO EM MINUTOS
     const eventRoom = req.body['calendar-register-room-'+eventLocation];//0 REPRESENTA NÃO USAREI SALA
     const eventPersons = req.body['calendar-register-persons'];
+    console.log(eventPersons)
 
     if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento nesta data! Data inferiror ao dia atual.");
@@ -232,7 +233,7 @@ exports.saveNewEvent = async (req,res) => {
                     }
                 }
             });
-
+            
             //Convertendo em array string
             let arrNewPerson = '';
             if(typeof(eventPersons) == 'object'){
@@ -244,7 +245,11 @@ exports.saveNewEvent = async (req,res) => {
                 //Nova Array string
                 arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
             }else{
-                arrNewPerson = [GLOBAL_DASH[0]];
+                if(eventPersons != undefined){
+                    arrNewPerson = GLOBAL_DASH[0]+','+eventPersons;
+                }else{
+                    arrNewPerson = [GLOBAL_DASH[0]];
+                }
             }
 
             //Validando os inputs
@@ -295,9 +300,9 @@ exports.saveNewEvent = async (req,res) => {
                                 .table("jcv_users")
                                 .then( dato => {
                                     
-                                    if(dato[0].jcv_userEmailCorporate != ''){
+                                    if(dato[0].jcv_userEmailCorporate != '' || dato[0].jcv_userEmailCorporate != null){
                                         newArrayEamils.push(dato[0].jcv_userEmailCorporate)
-                                    }else if(dato[0].jcv_userEmailFolks != ''){
+                                    }else if(dato[0].jcv_userEmailFolks != '' || dato[0].jcv_userEmailFolks != null){
                                         newArrayEamils.push(dato[0].jcv_userEmailFolks)
                                     }
                                 })
