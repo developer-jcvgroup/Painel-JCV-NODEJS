@@ -18,6 +18,9 @@
                         <% } %>
                     </div>
 
+                    <% let getPersonsStatus = allDataEvent[0].sys_calendar_eventPersons.split(',') %>
+                    <% if(allDataEvent[0].sys_calendar_eventPublic == 1 || allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0] || getPersonsStatus.indexOf(''+GLOBAL_DASH[0]) > -1 ){ %>
+
                     <div class="event-box-main">
                         <label>Horário</label>
                         <span><%= allDataEvent[0].sys_calendar_eventHours %></span>
@@ -65,21 +68,27 @@
                         <% if(allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
                             
                             <% if(allDataEvent[0].sys_calendar_eventDate >= dateNowAcutal.split(' ')[1]){ %>
-                                <% if(allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] > dateNowAcutal.split(' ')[0]){ %>
-                                    <!-- <span>Exibir</span> -->
+                                <% if(allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] > dateNowAcutal.split(' ')[0] || allDataEvent[0].sys_calendar_eventDate >= dateNowAcutal.split(' ')[1]){ %>
+                                    <span>Exibir</span>
                                     <form class="event-action-command" method="post">
                                         <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event">Excluir Evento</button>
                                         <button id="view-open-edit-event-edit" type="button">Editar Evento</button>
                                     </form>
                                 <% }else{ %>
-                                    <!-- <span>não exibir</span> -->
+                                    <span>não exibir</span>
                                 <% } %>
                             <% }else{ %>
-                                <!-- <span>Data do evento menor que hj</span> -->
+                                <span>Data do evento menor que hj</span>
                             <% } %>
 
                         <% } %>
                     </div>
+                    <% }else{ %>
+                        <div class="event-box-main">
+                            <label>Evento</label>
+                            <span>Evento Privado..</span>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>
