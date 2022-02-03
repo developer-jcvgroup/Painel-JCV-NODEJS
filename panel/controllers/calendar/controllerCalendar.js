@@ -160,7 +160,24 @@ exports.saveNewEvent = async (req,res) => {
     const eventReminder = req.body['calendar-register-reminder'];//FORMATO EM MINUTOS
     const eventRoom = req.body['calendar-register-room-'+eventLocation];//0 REPRESENTA NÃO USAREI SALA
     const eventPersons = req.body['calendar-register-persons'];
-    console.log(eventPersons)
+    
+    //Pegando o nome da sala
+    const getRoomName = await database
+    .select("sys_calendar_roomName")
+    .where({sys_calendar_roomId: eventRoom})
+    .table("jcv_calendar_rooms")
+    .then( data => {
+        return data[0].sys_calendar_roomName
+    })
+
+    //Pegando o nome do local
+    const getLocateName = await database
+    .select("sys_unity_name")
+    .where({sys_unity_id: eventLocation})
+    .table("jcv_unitys")
+    .then( data => {
+        return data[0].sys_unity_name
+    })
 
     if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento nesta data! Data inferiror ao dia atual.");
@@ -309,7 +326,7 @@ exports.saveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento criado!';
-                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Nome do evento: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
                             
                         }
@@ -501,6 +518,24 @@ exports.editSaveNewEvent = async (req,res) => {
     const eventRoom = req.body['event-edit-register-room-'+eventLocation];//0 REPRESENTA NÃO USAREI SALA
 
     const eventPersons = req.body['event-edit-register-persons'];
+
+    //Pegando o nome da sala
+    const getRoomName = await database
+    .select("sys_calendar_roomName")
+    .where({sys_calendar_roomId: eventRoom})
+    .table("jcv_calendar_rooms")
+    .then( data => {
+        return data[0].sys_calendar_roomName
+    })
+
+    //Pegando o nome do local
+    const getLocateName = await database
+    .select("sys_unity_name")
+    .where({sys_unity_id: eventLocation})
+    .table("jcv_unitys")
+    .then( data => {
+        return data[0].sys_unity_name
+    })
     
     //Mes que vai ser redirecionado se der sucesso ou erro
     const monthCalendarRedirect = eventDaySet[1]+'/'+eventDaySet[0];
@@ -637,7 +672,7 @@ exports.editSaveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento editado!';
-                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                             
                         }
