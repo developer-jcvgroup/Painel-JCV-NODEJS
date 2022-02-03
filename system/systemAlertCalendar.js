@@ -45,7 +45,7 @@ async function lembreteCalendar(){
                     emailSystemExe.sendMailExe(newArrayEamils, 'Evento Próximo', 'Evento Próximo', 'Calendario', '', textOne, textTwo);
 
                 })
-            }else if(moment().add(1, 'minutes').format("HH:mm") == element.sys_calendar_eventHours.split(' - ')[0]){
+            }else if(moment().add(1, 'minutes').format("HH:mm") == element.sys_calendar_eventHours.split(' - ')[0] && element.sys_calendar_eventDate == moment().format("DD/MM/YYYY")){
                 //Caso nao esteje na hora programada pelo usuario, o sistema manda automaticamente o email faltando 1 minuto para o evento começar
                 //Ou seja, o usuario recebe por padrão 2 emails de aviso sobre o eventos
 
