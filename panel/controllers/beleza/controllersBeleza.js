@@ -920,17 +920,108 @@ async function exportProductsUnity (ids,req,res){
     const ws = wb.addWorksheet('Worksheet Name');
 
     if(ids.length >= 1){
-        const productTwo = await database
-        .raw("SELECT sys_blz_tratmentTwo,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY COUNT(sys_blz_tratmentTwo) DESC")
+
+        let allUnitysOrder = []
+        //Pegando os ids das unidades e tranformando em array
+        await database
+        //.select()
+        .distinct("sys_blz_userUnity")
+        .whereRaw('sys_blz_id in ('+ids+')')
+        .orderByRaw("sys_blz_userUnity")
+        .table("jcv_blz_orders")
+        .then( data => {
+            data.forEach(element => {
+                allUnitysOrder.push(element.sys_blz_userUnity)
+            });
+        })
+
+        //Buscando os pedidos de cada unidade
+        //console.log(allUnitysOrder)
+
+        const headingColumnNames = [
+            "Produto",
+            "Unidade",
+            "Quantidade"
+        ]
+        
+        let headingColumnIndex = 1; //diz que começará na primeira linha
+        headingColumnNames.forEach(heading => { //passa por todos itens do array
+            // cria uma célula do tipo string para cada título
+            ws.cell(1, headingColumnIndex++).string(heading);
+        });
+        
+        let rowIndex = 2;
+
+        allUnitysOrder.forEach(element => {
+
+            database
+            .raw("SELECT sys_blz_tratmentOne,sys_unity_name, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_userUnity = "+element+" AND sys_blz_userUnity in ("+ids+") GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY sys_blz_userUnity, COUNT(sys_blz_tratmentOne) DESC")
+            .then( data => {
+                //console.table(data[0])
+
+                data[0].forEach( record => {
+                    let columnIndex = 1;
+                    Object.keys(record).forEach(columnName =>{
+        
+                        //Verificando se o dado é numero
+                        if(typeof(record[columnName]) === 'number'){
+                            ws.cell(rowIndex,columnIndex++)
+                            .number(record [columnName])
+                        }else{
+                            ws.cell(rowIndex,columnIndex++)
+                            .string(record [columnName])
+                        }
+                    });
+                    rowIndex++;
+                });
+
+            })
+
+            database
+            .raw("SELECT sys_blz_tratmentTwo,sys_unity_name, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_userUnity = "+element+" AND sys_blz_userUnity in ("+ids+") GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY sys_blz_userUnity, COUNT(sys_blz_tratmentTwo) DESC")
+            .then( data => {
+                //console.table(data[0])
+
+                data[0].forEach( record => {
+                    let columnIndex = 1;
+                    Object.keys(record).forEach(columnName =>{
+        
+                        //Verificando se o dado é numero
+                        if(typeof(record[columnName]) === 'number'){
+                            ws.cell(rowIndex,columnIndex++)
+                            .number(record [columnName])
+                        }else{
+                            ws.cell(rowIndex,columnIndex++)
+                            .string(record [columnName])
+                        }
+                    });
+                    rowIndex++;
+                });
+
+            })
+
+        });
+
+        setTimeout(() => {
+            const caracteresAleatorios = Math.random().toString(36).substring(5);
+            const nameData = 'EXPORT-PRODUCTS-'+caracteresAleatorios;
+
+            wb.write(nameData+'.xlsx', res)
+        }, 3000);
+        
+        /* const productTwo = await database
+        .raw("SELECT sys_blz_tratmentTwo,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY sys_blz_userUnity, COUNT(sys_blz_tratmentTwo) DESC")
         .then(data => {
             return data[0];
         })
 
         const productOne = await database
-        .raw("SELECT sys_blz_tratmentOne,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY COUNT(sys_blz_tratmentOne) DESC")
+        .raw("SELECT sys_blz_tratmentOne,sys_blz_userUnity,sys_unity_name, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_id in("+ids+") GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY sys_blz_userUnity, COUNT(sys_blz_tratmentOne) DESC")
         .then(data => {
             return data[0];
         })
+
+        console.log(ids)
 
         let newArrayComp = []
         productOne.forEach(element => {
@@ -971,18 +1062,20 @@ async function exportProductsUnity (ids,req,res){
 
         for(let i = 0; i < ordersExportsUnitys.length; i++){
 
-            if(ordersExportsUnitys[i][3] == atualIndex){
-                //console.log("é igual: "+ordersExportsUnitys[i].sys_blz_userUnity)
+            if(parseInt(ordersExportsUnitys[i][3]) === atualIndex){
+                console.log("é igual: "+ordersExportsUnitys[i][3])
             }else{
 
-                //console.log("Mudou para: "+ordersExportsUnitys[i].sys_blz_userUnity)
+                console.log("Mudou para: "+ordersExportsUnitys[i][3])
                 atualIndex = ordersExportsUnitys[i][3];
                 i--;
                 rowIndex++;
 
+                
                 ordersExportsUnitys.forEach( record => {
                     let columnIndex = 1;
 
+                    //console.log(record[3]+'-'+atualIndex)
                     if(record[3] == atualIndex){
 
                         Object.keys(record).forEach(columnName =>{
@@ -1003,9 +1096,7 @@ async function exportProductsUnity (ids,req,res){
                     }
                 });
             }
-
-
-        }
+        } */
 
         /* let rowIndex = 2;
         productOne.forEach( record => {
@@ -1040,9 +1131,6 @@ async function exportProductsUnity (ids,req,res){
             rowIndex++;
         }); */
 
-        const caracteresAleatorios = Math.random().toString(36).substring(5);
-        const nameData = 'EXPORT-PRODUCTS-'+caracteresAleatorios;
-
-        wb.write(nameData+'.xlsx', res)
+        
     }
 }
