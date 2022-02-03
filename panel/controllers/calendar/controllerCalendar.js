@@ -476,7 +476,8 @@ exports.viewEvent = async (req,res) => {
             allLocations: allLocations, 
             allUsers: newArrUsers,
             getPersonsEvents: getPersonsEvents,
-            getAllRooms: getAllRooms
+            getAllRooms: getAllRooms,
+            dateNowAcutal: generateDate()
         })
     }else{
         console.log('Erro')
