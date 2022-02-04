@@ -207,6 +207,7 @@
     margin-top: 3%;
     display: flex;
     flex-direction: column ;
+    overflow: auto;
 }
 .request-list-table{
     border-collapse: collapse;
