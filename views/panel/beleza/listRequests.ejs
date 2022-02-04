@@ -188,7 +188,16 @@
                         </thead>
                         <tbody>
                             <% resultSearchData.forEach(element => { %>
-                                <tr class="request-row-check-mark">
+
+                                <% if(element.sys_blz_requestStatus == 5){ %>
+                                    <tr style="background-color: #ffe97f;" class="request-row-check-mark">
+                                <% }else if(element.sys_blz_requestStatus == 3){ %>
+                                    <tr style="background-color: #d90427a2;" class="request-row-check-mark">
+                                <% }else{ %>
+                                    <tr class="request-row-check-mark">
+                                <% } %>
+
+                                
                                     <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_id'] %>" name="requestOrderId"></td>
                                     <td><b><%= element['sys_blz_userName'] %></b></td>
                                     <td><%= element['sys_unity_name'] %></td>
