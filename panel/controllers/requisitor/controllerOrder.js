@@ -1644,7 +1644,7 @@ async function exportItemsOrders(req,res,ids){
     const ws = wb.addWorksheet('Worksheet Name');
     
     const itemsOrders = await database
-    .select("jcv_req_orders_items.sys_req_item_orderId","jcv_users.jcv_userNamePrimary","jcv_req_orders_items.sys_req_item_itemAmount","jcv_unitys.sys_unity_name")
+    .select("jcv_req_orders_items.sys_req_item_orderId","jcv_users.jcv_userNamePrimary","jcv_req_orders_items.sys_req_item_itemName","jcv_req_orders_items.sys_req_item_itemAmount","jcv_unitys.sys_unity_name")
     .join('jcv_users', 'jcv_req_orders_items.sys_req_item_userId', '=', 'jcv_users.jcv_id')
     .join('jcv_unitys', 'jcv_users.jcv_userUnity', '=', 'jcv_unitys.sys_unity_id')
     .whereRaw("jcv_req_orders_items.sys_req_item_orderId in("+ids+")")
@@ -1656,6 +1656,7 @@ async function exportItemsOrders(req,res,ids){
     const headingColumnNames = [
         "ID requisição",
         "Solicitante",
+        "Item",
         "Quantidade",
         "Unidade"
     ]
