@@ -35,8 +35,10 @@ const controllerUsers = require("./controllers/system/sysUsers")
 const controllerDepartment = require("./controllers/system/departments")
 //Controller Calendar
 const controllerCalendar = require("./controllers/calendar/controllerCalendar")
-//Consollter System General
+//Consoller System General
 const controllerSystemGeneral = require("./controllers/system/sysGeneral")
+//Controler TradeMkt
+const controllerTrade = require("./controllers/trade/controllerTrade")
 
 /*===================================*/
 //Index: criando informacoes globais do usuario
@@ -176,6 +178,14 @@ router.get("/system/unidades", authenticate, getPermissions, controllerDepartmen
 router.post("/system/unidades/action/save", authenticate, controllerDepartment.saveUnity)
 router.post("/system/unidades/action/save/edit", authenticate, controllerDepartment.saveEditUnity)
 
+/***********************************/
+/***********************************/
+//Trade Mtk: Pagina inicial
+router.get('/trademkt/main', controllerTrade.controllerMain)
+//Trade Mtk: Formulario de visita
+router.get('/trademkt/visit', controllerTrade.visitForm)
+
+/***********************************/
 /***********************************/
 //Pagina: Perfil
 router.get("/perfil", authenticate, controllerProfile.getInfoUser);

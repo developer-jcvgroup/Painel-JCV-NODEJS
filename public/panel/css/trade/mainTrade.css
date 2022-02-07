@@ -1,0 +1,218 @@
+.trade-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.trade-main-section-page{
+    width: 90%;
+}
+
+/* ************************************** */
+/* TITLE PAGE */
+.trade-main-title-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.trade-main-title-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.trade-main-title-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/* ************************************** */
+/* TRADE MKT BODY PAGE */
+.trade-main-container-body{
+    width: 100%;
+    height: calc(100vh - 180px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ************************************** */
+/* LISTA DE FORMULARIOS */
+.trade-main-section-list-forms{
+    min-width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+}
+.trade-main-forms{
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+.trade-main-forms-link{
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.trade-main-forms-link-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.trade-main-forms-link-info span:nth-child(1){
+    font-size: 0.7rem;
+    color: var(--color-two);
+}
+.trade-main-forms-link-info span:nth-child(2){
+    font-size: 1.4rem;
+    color: var(--color-one);
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+.trade-main-forms-link-info span:nth-child(3){
+    font-size: 0.7rem;
+    color: var(--color-two);
+}
+
+.trade-main-forms-link-next{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.trade-main-forms-link-next i{
+    font-size: 1.4rem;
+    color: var(--color-two);
+}
+
+
+/* ************************************** */
+/* MENUS */
+.trade-main-section-menu{
+    width: 35%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+.trade-main-list-links-main{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.trade-main-list-links-main li{
+    padding: 12px;
+    margin: 24px 0;
+}
+
+/*  */
+.trade-main-list-link{
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 5px;
+}
+
+.trade-main-list-link-simbol{
+    min-width: 150px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-one);
+    padding: 32px 10px;
+    border-radius: 5px 0 0 5px;
+}
+.trade-main-list-link-simbol i{
+    font-size: 3rem;
+    color: var(--color-three);
+}
+
+.trade-main-list-link-text{
+    display: flex;
+    align-items: center;
+}
+.trade-main-list-link-text span{
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+.trade-main-link-icon{
+    display: flex;
+    align-items: center;
+}
+.trade-main-link-icon i{
+    font-size: 2rem;
+    color: var(--color-two);
+}
+
+
+.trade-display-actions-pages{
+    position: absolute;
+    width: 100%;
+    max-width: 1920px;
+    height: 100vh;
+    max-height: 1000px;
+    background: rgba(128, 128, 128, 0.267);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.trade-display-actions-pages-box{
+    min-width: 400px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+}
+.trade-display-close{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+.trade-display-close span{
+    font-size: 0.8rem;
+    color: var(--color-two);
+}
+.trade-display-close i{
+    font-size: 2rem;
+    color: var(--color-two);
+    cursor: pointer;
+}
+.trade-display-links-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.trade-display-page-link{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.trade-display-page-link i{
+    color: var(--color-one);
+    font-size: 3rem;
+    margin-bottom: 17px;
+}
+.trade-display-page-link span{
+    color: var(--color-two);
+    font-size: 1rem;
+}
