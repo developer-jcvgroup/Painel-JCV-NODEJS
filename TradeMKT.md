@@ -23,7 +23,6 @@ question_type = 1{Pergunta com resposta}, 2{Pergunta com resposta em checkbox}, 
 
 Modelagem das perguntas dinamicas:
 
-
 {
     question_type: 1,
     question_response: "Aqui vai a reposta da pergunta tipo texto"
