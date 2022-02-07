@@ -1592,7 +1592,7 @@ async function exportItemsOrdersTotal(req,res,ids){
     const wb = new xl.Workbook();
     const ws = wb.addWorksheet('Worksheet Name');
     
-    const itemsOrders = await database.raw("SELECT sys_req_item_itemName, SUM(sys_req_item_itemAmount) AS Qtd FROM jcvpanel.jcv_req_orders_items WHERE jcv_req_orders_items.sys_req_item_orderId in("+ids+") GROUP BY sys_req_item_itemName HAVING COUNT(sys_req_item_itemName) > 0 ORDER BY SUM(sys_req_item_itemName) DESC").then( data => {
+    const itemsOrders = await database.raw("SELECT sys_req_item_itemName, SUM(sys_req_item_itemAmount) AS Qtd FROM jcv_req_orders_items WHERE jcv_req_orders_items.sys_req_item_orderId in("+ids+") GROUP BY sys_req_item_itemName HAVING COUNT(sys_req_item_itemName) > 0 ORDER BY SUM(sys_req_item_itemName) DESC").then( data => {
         return data[0];
     })
 
