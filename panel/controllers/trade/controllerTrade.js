@@ -72,8 +72,13 @@ exports.visitForm = async (req,res) => {
         return data;
     })
 
+    let arrayShops = []
+    allShops.forEach(element => {
+        arrayShops.push(element.jcv_trade_shops_cnpj+' - '+element.jcv_trade_shops_name_fantasy+',')
+    });
+
     var page = "trade/visitaFormulario";
-    res.render("panel/index", {page: page, allShops: allShops})
+    res.render("panel/index", {page: page, allShops: allShops, arrayShops: arrayShops})
 }
 
 exports.visitFormNew = async (req,res) => {
@@ -152,7 +157,7 @@ exports.salesDay = async (req,res) => {
 
     //Vendo os formularios de pesquisa que esta pedente para este usuario
     const getFormsReponse = await database
-    .raw("SELECT locate("+GLOBAL_DASH[0]+", jcv_trade_shops_users) achado,jcv_trade_shops_id,jcv_trade_shops_name FROM jcv_trade_shops")
+    .raw("SELECT locate("+GLOBAL_DASH[0]+", jcv_trade_shops_users) achado,jcv_trade_shops_id,jcv_trade_shops_name_fantasy FROM jcv_trade_shops")
     //.select()
     //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
     //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
@@ -968,6 +973,7 @@ exports.shopsPage = async (req,res) => {
     const allShops = await database
     .select()
     .table("jcv_trade_shops")
+    .orderBy("jcv_trade_shops_enabled","DESC")
     .then( data => {
         return data
     })
@@ -1005,14 +1011,18 @@ exports.shopsRegisterNew = async (req,res) => {
 exports.shopsRegisterEdit = async (req,res) => {
     const id = req.body['action-save-edit-shop'];
 
-    const nameShop = req.body['shop-name-edit-'+id]
+    const cpnjShop = req.body['shop-cnpj-edit-'+id]
+    const nameShopSocial = req.body['shop-name-social-edit-'+id]
+    const nameShopFantasy = req.body['shop-name-fantasy-edit-'+id]
     const regionShop = req.body['shop-name-region-edit-'+id]
     const enabledShop = req.body['shop-enabled-edit-'+id] == 'on' ? 1 : 0;
 
-    if(nameShop != '' && regionShop != ''){
+    if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != ''){
         database
         .update({
-            jcv_trade_shops_name: nameShop,
+            jcv_trade_shops_cnpj: cpnjShop,
+            jcv_trade_shops_name_fantasy: nameShopFantasy,
+            jcv_trade_shops_name_social: nameShopSocial,
             jcv_trade_shops_region: regionShop,
             jcv_trade_shops_enabled: enabledShop
         })
@@ -1020,7 +1030,7 @@ exports.shopsRegisterEdit = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShop+"</b> foi cadastrado com sucesso!.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
                 res.redirect("/painel/trademkt/shops");
             }else{
                 res.redirect("/painel/trademkt/shops");
@@ -1160,7 +1170,7 @@ exports.configShops = async (req,res) => {
 
     //Pegando o nome da loja
     const shopData = await database
-    .select("jcv_trade_shops_id","jcv_trade_shops_name")
+    .select("jcv_trade_shops_id","jcv_trade_shops_name_fantasy")
     .where({jcv_trade_shops_id: idForm})
     .table("jcv_trade_shops")
     .then( data => {
@@ -1213,7 +1223,7 @@ exports.saveSetUsers = async (req,res) => {
 
     //Pegando o nome da loja
     const shopData = await database
-    .select("jcv_trade_shops_id","jcv_trade_shops_name")
+    .select("jcv_trade_shops_id","jcv_trade_shops_name_fantasy")
     .where({jcv_trade_shops_id: idShop})
     .table("jcv_trade_shops")
     .then( data => {
@@ -1230,10 +1240,10 @@ exports.saveSetUsers = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name+"</b> foram atualizados com sucesso!.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b> foram atualizados com sucesso!.");
                 res.redirect("/painel/trademkt/shops");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao atualizar usuarios da loja <b>"+shopData[0].jcv_trade_shops_name+"</b>.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao atualizar usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
                 res.redirect("/painel/trademkt/shops");
             }
         })
@@ -1246,10 +1256,10 @@ exports.saveSetUsers = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram removidos os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name+"</b>.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram removidos os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
                 res.redirect("/painel/trademkt/shops");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name+"</b>.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
                 res.redirect("/painel/trademkt/shops");
             }
         })

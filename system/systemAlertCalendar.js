@@ -49,7 +49,9 @@ async function lembreteCalendar(){
                 //Caso nao esteje na hora programada pelo usuario, o sistema manda automaticamente o email faltando 1 minuto para o evento começar
                 //Ou seja, o usuario recebe por padrão 2 emails de aviso sobre o eventos
 
-                database
+                //Ele não vai mais executar a partir do dia (18/02/2022)
+                
+                /* database
                 .select("jcv_userEmailCorporate")
                 .whereRaw('jcv_id IN ('+element.sys_calendar_eventPersons+')')
                 .table("jcv_users")
@@ -64,7 +66,7 @@ async function lembreteCalendar(){
                     const textTwo = `Existe um evento que esta prestes a iniciar faltando apenas <b>1 minuto!</b>.<br> Nome do evento: <b>${element.sys_calendar_eventName}</b>. <br> Data do evento: <b>${element.sys_calendar_eventDate}</b>. <br> Sala: <b>${element.sys_calendar_roomName}</b>. <br> Local: <b>${element.sys_unity_name}</b>`;
                     emailSystemExe.sendMailExe(newArrayEamils, 'Evento Próximo', 'Evento Próximo', 'Calendario', '', textOne, textTwo);
 
-                })
+                }) */
             }
         });
 

@@ -11,8 +11,8 @@ const systemCalendarEvents = require('./system/systemAlertCalendar')
 // Static
 app.use(express.static("public"));
 
-app.use(express.urlencoded({extended: false, parameterLimit: 1000000})); //Pegar dados dos forms ou Rotas
-app.use(express.json()); //Aceitar json
+app.use(express.urlencoded({extended: false, parameterLimit: 1000000, limit: '50mb'})); //Pegar dados dos forms ou Rotas
+app.use(express.json({limit: '50mb'})); //Aceitar json
 app.use(cookieParser())
 
 app.use(flash());

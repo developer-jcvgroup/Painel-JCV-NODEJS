@@ -14,12 +14,12 @@
                 </div>
                 <div class="sales-day-form-info">
                     <label for="">LOJA</label>
-                    <select name="sales-action-select-shop">
+                    <select name="sales-action-select-shop" id="select-shops">
                         <option value="">Selecione</option>
                         <% shopsAll.forEach(element => { %>
 
                             <% if(element.achado == 1){ %>
-                                <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name %></option>
+                                <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name_fantasy %></option>
                             <% } %>
 
                         <% }) %>
@@ -312,39 +312,42 @@
     /*  */
 
     $("#section-one").css('display','flex');
-    //$("#sales-day-form-title").css('background','black')
-
+    $("#sales-day-form-title").css('background','black')
+    $("#select-shops").css('background','black')
     /*  */
     $("#button-command-next-one").click(function(){
         $("#section-one").css('display','none')
         $("#section-two").fadeIn()
-        //$("#sales-day-form-title").css('background','#43BAC8')
+        $("#sales-day-form-title").css('background','#43BAC8')
+        $("#select-shops").css('background','#43BAC8')
         $("#title-header").text("Retrô Cosméticos")
 
 
-        /* $(".sales-day-form-title-one").css('color', 'var(--color-one)')
+        $(".sales-day-form-title-one").css('color', 'var(--color-one)')
         $(".sales-day-form-info").children("label").css('color', 'var(--color-one)')
         $(".sales-day-form-info").children("input").css({'color': 'var(--color-one)','border':'1px solid var(--color-one)'})
-        $(".sales-day-form-info").children("select").css({'color': 'var(--color-one)','border':'1px solid var(--color-one)'}) */
+        $(".sales-day-form-info").children("select").css({'color': 'var(--color-one)','border':'1px solid var(--color-one)'})
     })
     /*  */
     $("#button-command-back-two").click(function(){
         $("#section-two").css('display','none')
         $("#section-one").fadeIn()
-        //$("#sales-day-form-title").css('background','black')
+        $("#sales-day-form-title").css('background','black')
+        $("#select-shops").css('background','black')
         $("#title-header").text("Felps Professional")
 
 
-        /* $(".sales-day-form-title-one").css('color', 'var(--color-three)')
+        $(".sales-day-form-title-one").css('color', 'var(--color-three)')
         $(".sales-day-form-info").children("label").css('color', 'var(--color-three)')
         $(".sales-day-form-info").children("input").css({'color': 'var(--color-three)','border':'1px solid var(--color-three)'})
-        $(".sales-day-form-info").children("select").css({'color': 'var(--color-three)','border':'1px solid var(--color-three)'}) */
+        $(".sales-day-form-info").children("select").css({'color': 'var(--color-three)','border':'1px solid var(--color-three)'})
     })
     /*  */
     $("#button-command-next-two").click(function(){
         $("#section-two").css('display','none')
         $("#section-three").fadeIn()
-        //$("#sales-day-form-title").css('background','#3A6320')
+        $("#sales-day-form-title").css('background','#3A6320')
+        $("#select-shops").css('background','#3A6320')
         $("#title-header").text("Avenca Cosméticos")
     })
     /*  */
@@ -353,7 +356,8 @@
         $("#section-two").fadeIn()
         $("#title-header").text("Retrô Cosméticos")
 
-        //$("#sales-day-form-title").css('background','#43BAC8')
+        $("#sales-day-form-title").css('background','#43BAC8')
+        $("#select-shops").css('background','#43BAC8')
 
     })
 </script>

@@ -63,7 +63,7 @@ getCalendarEvents = async () => {
 
     let count = 0;
     const getFormsReponse = await database
-    .raw("SELECT locate("+GLOBAL_DASH[0]+", sys_calendar_eventPersons) achado,sys_calendar_eventDate FROM jcv_calendar_registers WHERE sys_calendar_eventMonth = '"+moment().format("MM/YYYY")+"'")
+    .raw("SELECT locate("+GLOBAL_DASH[0]+", sys_calendar_eventPersons) achado,sys_calendar_eventDate,sys_calendar_eventPersons FROM jcv_calendar_registers WHERE sys_calendar_eventMonth = '"+moment().format("MM/YYYY")+"'")
     //.select()
     //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
     //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
@@ -71,7 +71,16 @@ getCalendarEvents = async () => {
     .then( data => { return data[0]})
 
     getFormsReponse.forEach(element => {
-        if(element.achado == 1){
+        let dateSet = element.sys_calendar_eventDate.split('/')[2]+'-'+element.sys_calendar_eventDate.split('/')[1]+'-'+element.sys_calendar_eventDate.split('/')[0]
+        let usersEvents = element.sys_calendar_eventPersons.split(',').map(convertNumber)
+
+        function convertNumber(index){
+            return parseInt(index)
+        }
+
+        //console.log(moment().format("YYYY-MM-DD"))
+
+        if(element.achado == 1 && usersEvents.indexOf(GLOBAL_DASH[0]) > -1 && dateSet > moment().format("YYYY-MM-DD")){
             count++
         }
     });

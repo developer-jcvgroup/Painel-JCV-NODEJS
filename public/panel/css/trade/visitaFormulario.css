@@ -42,6 +42,16 @@
     font-size: 1rem;
     color: var(--color-three);
 }
+.visit-form-info input[type=text]{
+    min-width: 400px;
+    padding: 5px;
+    background: transparent;
+    border: 1px solid var(--color-three);
+    border-radius: 4px;
+    color: var(--color-three);
+    margin: 0 21px;
+    background: var(--color-two);
+}
 .visit-form-info select{
     padding: 5px;
     cursor: pointer;

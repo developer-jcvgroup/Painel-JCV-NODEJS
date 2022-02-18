@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="/panel/css/trade/visitaFormulario.css">
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <section class="visit-form-main-section">
     <form class="visit-form-section-page" method="post">
         <div class="visit-search-link-back">
@@ -14,12 +17,7 @@
                 </div>
                 <div class="visit-form-info">
                     <label for="">LOJA</label>
-                    <select name="visit-shop">
-                        <option value="">Selecione</option>
-                        <% allShops.forEach(element => { %>
-                            <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name %></option>
-                        <% }) %>
-                    </select>
+                    <input type="text" id="input-item-name">
                     <input type="date" name="visit-date" id="date-form-now">
                 </div>
                 <!--  -->
@@ -1232,6 +1230,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     $("#date-form-now").val(moment().format("YYYY-MM-DD"))
+
+    //Autocomplete
+    let arrayUser = '<%- arrayShops %>';
+    let arrayCov = arrayUser.split(',');
+
+    $("#input-item-name").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayCov, request.term);        
+            response(results.slice(0, 10));
+        }
+    });
 
     $(".visit-form-section-questions-checks").click(function(){
 

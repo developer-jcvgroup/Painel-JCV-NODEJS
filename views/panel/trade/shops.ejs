@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="/panel/css/trade/shops.css">
 
 <script src="/js/jquery-paginate.js"></script>
+<script>
+    let divLoader = document.getElementById('sys-section-loader')
+    
+    divLoader.style.display = 'flex';
+</script>
 
 <section class="shop-container-main">
     <section class="shop-container-page">
@@ -40,7 +45,9 @@
                         <thead>
                             <tr>
                                 <th><input type="checkbox" name="" id="checkbox-select-all"></th>
-                                <th>Loja</th>
+                                <th>CNPJ</th>
+                                <th>Razão Social</th>
+                                <th>Nome Fantasia</th>
                                 <th>Região</th>
                                 <th>Cadastrados</th>
                                 <th>Ativo</th>
@@ -51,7 +58,9 @@
 
                             <tr>
                                 <td>    </td>
-                                <td><input type="text" name="shop-name" placeholder="Insira o SKU.."></td>
+                                <td><input type="text" name="shop-name-cnpj" placeholder="Insira CNPJ.."></td>
+                                <td><input type="text" name="shop-name-social" placeholder="Insira RAZÃO SOCIAL.."></td>
+                                <td><input type="text" name="shop-name-fantasia" placeholder="Insira o NOME FANTASIA DA LOJA.."></td>
                                 <td>
                                     <select name="shop-name-region">
                                         <option value="" disabled></option>
@@ -83,12 +92,16 @@
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
+                                <td> </td>
+                                <td> </td>
                             </tr>
 
                             <% allShops.forEach(element => { %>
                             <tr class="request-row-check-mark">
                                 <td><input class="checkbox-select-single" type="checkbox" name="shop-edit-id" value="<%= element.jcv_trade_shops_id %>"></td>
-                                <td><input type="text" name="shop-name-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name %>" placeholder="Insira o SKU.."></td>
+                                <td><input type="text" name="shop-cnpj-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_cnpj %>" placeholder="Insira CNPJ.."></td>
+                                <td><input type="text" name="shop-name-social-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name_social %>" placeholder="Insira RAZÃO SOCIAL.."></td>
+                                <td><input type="text" name="shop-name-fantasy-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name_fantasy %>" placeholder="Insira RAZÃO FANTASIA.."></td>
                                 <td>
                                     <select name="shop-name-region-edit-<%= element.jcv_trade_shops_id %>">
                                         <option value="<%= element.jcv_trade_shops_region %>"><%= element.jcv_trade_shops_region %></option>
@@ -102,7 +115,7 @@
                                 </td>
                                 
                                 <td>
-                                    <b><%= element.jcv_trade_shops_users.split(',').length %></b>
+                                    <b><%= element.jcv_trade_shops_users == '' || element.jcv_trade_shops_users == null ? 0 : element.jcv_trade_shops_users.split(',').length %></b>
                                 </td>
                                 
                                 <td>
@@ -136,31 +149,34 @@
     </section>
 </section>
 <script>
-    $(function(){
+    $(window).on("load", function (e) {
 
-        //Spin load {1: ativo, 2: desativar}
-        $.fn.loadSpin(2) ;
+        $(function(){
+            //Paginação das tabelas
+            $.fn.paginationTableMain('#shop-list-table',40,2);
 
-        //Paginação das tabelas
-        $.fn.paginationTableMain('#shop-list-table',20,2);
+            
 
-        //Checknox all
-        $("#checkbox-select-all").click(function(){
-            var checkSet = $(this).is(':checked');
-            var inputsCheckedmodel = $('.checkbox-select-single');
+            
 
-            if(checkSet == true){
-                inputsCheckedmodel.prop('checked', true);
-            }else{
-                inputsCheckedmodel.prop('checked', false);
-            }
+            //Checknox all
+            $("#checkbox-select-all").click(function(){
+                var checkSet = $(this).is(':checked');
+                var inputsCheckedmodel = $('.checkbox-select-single');
+
+                if(checkSet == true){
+                    inputsCheckedmodel.prop('checked', true);
+                }else{
+                    inputsCheckedmodel.prop('checked', false);
+                }
+            })
+            $(".checkbox-select-single").click(function(){
+                $("#checkbox-select-all").prop("checked", false)
+            })
+
+            //Filtro dinamico em inputs
+            //$.fn.searchInputTableInputs('#shop-list-table','#product-search-rows',1)
+
         })
-        $(".checkbox-select-single").click(function(){
-            $("#checkbox-select-all").prop("checked", false)
-        })
-
-        //Filtro dinamico em inputs
-        $.fn.searchInputTableInputs('#shop-list-table','#product-search-rows',1)
-
     })
 </script>
