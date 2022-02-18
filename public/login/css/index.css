@@ -243,6 +243,23 @@ body, html{
     cursor: pointer;
 }
 
+.index-install-app{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 22px 0;
+}
+.index-install-app button{
+    background: transparent;
+    padding: 7px;
+    border: 1px solid var(--color-one);
+    color: var(--color-one);
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 /**************************/
 /* RECUPERAR SENHA */
 .index-recover-password{
