@@ -71,7 +71,7 @@ getCalendarEvents = async () => {
     .then( data => { return data[0]})
 
     getFormsReponse.forEach(element => {
-        if(element.achado){
+        if(element.achado == 1){
             count++
         }
     });
