@@ -121,15 +121,6 @@
 </section>
 </body>
 <script>
-    
-    //animação das frases
-    let textmsg = '<%- frasesIndex %>'.split('//')
-    let textauthor = '<%- authorIndex %>'.split('//')
-
-    //Array com CPFs sem senha
-    let arrayPassNull = '<%- allAccountPass %>'.split(',')//.map( Number );
-
-
     //PWA
     let deferredPrompt; // Allows to show the install prompt
     let setupButton;
@@ -167,6 +158,15 @@
                 deferredPrompt = null;
             });
     }
+</script>
+<script>
+    
+    //animação das frases
+    let textmsg = '<%- frasesIndex %>'.split('//')
+    let textauthor = '<%- authorIndex %>'.split('//')
+
+    //Array com CPFs sem senha
+    let arrayPassNull = '<%- allAccountPass %>'.split(',')//.map( Number );
 
 </script>
 </html>
