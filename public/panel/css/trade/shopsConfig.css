@@ -1,0 +1,156 @@
+.shop-config-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-config-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.shop-config-container-page{
+    width: 90%;
+}
+
+/* IDENTIFICAÇÃO DA PAGINA */
+.shop-config-container-identify-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.shop-config-container-identify-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.shop-config-container-identify-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/***************************/
+/* PAGINA */
+.shop-config-title-box{
+    width: 100%;
+    display: flex;
+    padding-bottom: 10px;
+}
+.shop-config-title-box span{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/*  */
+.shop-config-search-link-back{display: flex; margin: 20px 0;}
+.shop-config-search-link-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+/*  */
+.shop-config-container-section-center{
+    width: 100%;
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.shop-config-container-description{
+    display: flex;
+    flex-direction: column;
+}
+.shop-config-container-description span{
+    font-size: 1rem;
+    color: var(--color-two);
+    white-space: normal;
+}
+
+.shop-config-container-box-users{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid var(--color-three);
+    padding: 19px;
+    margin-top: 24px;
+}
+.shop-config-actions{
+    display: flex;
+    margin-top: 23px;
+}
+
+
+
+/*  */
+.shop-config-form-list-user{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+.shop-config-form-list-users-set{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-one);
+    padding: 4px;
+    border-radius: 4px;
+    margin: 5px;
+}
+.shop-config-form-list-users-set input{
+    min-width: fit-content;
+    outline: 0;
+    border: none;
+    font-size: 0.9rem;
+    color: var(--color-one);
+}
+.shop-config-form-list-users-set button{
+    border: none;
+    color: var(--color-one);
+    cursor: pointer;
+    font-size: 1rem;
+    background: transparent;
+    display: flex;
+    align-items: center;
+}
+
+/*  */
+.shop-config-form-action-users{
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+}
+.shop-config-form-action-users input{
+    min-width: 450px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-one);
+    border-radius: 4px;
+}
+.shop-config-form-action-users button{
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-two);
+    cursor: pointer;
+    margin: 0 24px;
+}
+
+@media only screen and (max-width: 900px){
+    .shop-config-form-action-users{
+        flex-direction: column;
+        align-items: center;
+    }
+    .shop-config-form-action-users button{
+        margin: 22px 0;
+    }
+    .shop-config-form-action-users input{
+        min-width: 100%;
+    }
+}

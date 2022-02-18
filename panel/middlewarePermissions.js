@@ -1,5 +1,16 @@
 const database = require("./database/database");
 
+async function getUpdates(idUser, moduleOp){
+    //Verificando se existe menssagem de novas atualizações
+    const allUpdate = await database
+    .select()
+    .whereRaw("(sys_update_usersOkUpdate NOT LIKE '%"+idUser+"%' OR sys_update_usersOkUpdate IS NULL) AND sys_update_moduleUp = '"+moduleOp+"'")
+    .table("sys_update")
+    .then( data => { return data; })
+
+    return allUpdate;
+}
+
 async function getPermissions (req, res, next) {
 
     const resultPermissions = await database
@@ -26,8 +37,18 @@ async function getPermissions (req, res, next) {
     //Pegando e tranformando em array a URL
     const urlPage = req.path.split('/');urlPage.shift();
 
+    //PÁGINA INCIAL
+    if(urlPage[0] == ''){
+        //Pegando os updates deste modulo
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD01')
+        return next();
+    }
+
     //PROGRAMA DA BELEZA
     if(urlPage[0] == "beleza"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
 
         let pageError = true;
         //USER:
@@ -58,6 +79,9 @@ async function getPermissions (req, res, next) {
 
     //REQUISITOR DE MATERIAIS
     if(urlPage[0] == "requisitor"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD03')
 
         let pageError = true;
         //USER
@@ -98,6 +122,9 @@ async function getPermissions (req, res, next) {
     //CONFIGURAÇÃO DO SISTEMA
     if(urlPage[0] == "system"){
 
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD06')
+
         let pageError = true;
         //ADMIN GERAL
         if(urlPage[1] == "users" && resultPermissions[0].jcv_userCassification == 1){
@@ -121,6 +148,9 @@ async function getPermissions (req, res, next) {
     //CONFIGURAÇÃO DO CALENDARIO
     if(urlPage[0] == "calendario"){
 
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD04')
+
         let pageError = true;
         //ADMIN GERAL
         if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use == 1){
@@ -136,6 +166,42 @@ async function getPermissions (req, res, next) {
             return next();
         }
         if(urlPage[1] == "viewEvent" && resultPermissions[0].sys_cal_perm_use == 1){
+            return next();
+        }
+
+        //Não foi encontrado
+        if(pageError){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.redirect("/painel");
+        }
+    }
+
+    //TRADE MKT
+    if(urlPage[0] == "trademkt"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD05')
+
+        let pageError = true;
+        if(urlPage[1] == "main" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "formSearch" && resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "visit" && resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "listTrade" && resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "edit" && resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "form" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "salesDay" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
             return next();
         }
 

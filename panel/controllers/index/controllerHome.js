@@ -18,6 +18,32 @@ getBLZstatus = async () => {
     return status;
 }
 
+getTradeInfo = async() => {
+    //Vendo os formularios de pesquisa que esta pedente para este usuario
+    const getFormsReponse = await database
+    .raw("SELECT locate("+GLOBAL_DASH[12]+", jcv_trade_form_create_usersGroups) achado,jcv_trade_form_create_id,jcv_trade_form_create_created_userId,jcv_trade_form_create_titleForm,jcv_trade_form_create_jsonForm,jcv_trade_form_create_usersGroups,jcv_trade_form_res_formId FROM jcv_trade_form_create LEFT JOIN jcv_trade_form_response ON jcv_trade_form_create.jcv_trade_form_create_id = jcv_trade_form_response.jcv_trade_form_res_formId")
+    //.select()
+    //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
+    //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
+    //.table("jcv_trade_form_create")
+    .then( data => { return data[0]})
+
+    let formsIds = []
+    getFormsReponse.forEach(element => {
+        let inspectSet = element.jcv_trade_form_create_usersGroups.split(',').map(converNumber);
+        
+        function converNumber(num){
+            return parseInt(num)
+        }
+
+        if(element.achado == 1 && inspectSet.indexOf(GLOBAL_DASH[12]) > -1 && element.jcv_trade_form_res_formId == null){
+            formsIds.push(element.jcv_trade_form_create_id)
+        }
+    });
+
+    return formsIds.length;
+}
+
 getREQUISITORstatus = async () => {
     const status = await database.select("sys_req_orderStatus").where({sys_req_userId: GLOBAL_DASH[0]}).orderBy("sys_req_idOne","DESC").table("jcv_req_orders").then(data => {;
         return data;
@@ -35,16 +61,41 @@ getREQUISITORstatus = async () => {
 
 getCalendarEvents = async () => {
 
-    const getCalendar = await database
+    let count = 0;
+    const getFormsReponse = await database
+    .raw("SELECT locate("+GLOBAL_DASH[0]+", sys_calendar_eventPersons) achado,sys_calendar_eventDate FROM jcv_calendar_registers WHERE sys_calendar_eventMonth = '"+moment().format("MM/YYYY")+"'")
+    //.select()
+    //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
+    //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
+    //.table("jcv_trade_form_create")
+    .then( data => { return data[0]})
+
+    getFormsReponse.forEach(element => {
+        if(element.achado){
+            count++
+        }
+    });
+
+    
+    /* await database
     .select()
     .whereRaw("sys_calendar_eventPersons like '%,"+GLOBAL_DASH[0]+"%' OR sys_calendar_eventPersons like '%"+GLOBAL_DASH[0]+",%' OR sys_calendar_eventUserId = "+GLOBAL_DASH[0])
     .table("jcv_calendar_registers")
-    .limit(3)
+    //.limit(3)
     .then( data => {
-        return data;
-    })
 
-    return getCalendar;
+        data.forEach(element => {
+            console.log(moment.sys_calendar_eventDate)
+            let date = moment().format("DD/MM/YYYY")
+            if(moment(date).isBefore(moment.sys_calendar_eventDate)){
+                count++
+            }
+        });
+
+        return count;
+    }) */
+
+    return count;
 }
 
 exports.homeInfo = async (req,res)=> {
@@ -54,16 +105,21 @@ exports.homeInfo = async (req,res)=> {
     const BLZstatusOrder = await getBLZstatus();
     const REQUISITORstatus = await getREQUISITORstatus();
 
+    //Trade MKT
+    const TRADEMKTcount = await getTradeInfo();
+
     //Pegadando os 3 primeiros eventos
     const CALENDARcount = await getCalendarEvents();
 
+    
     var page = "home";
     res.render("panel/index", {
         page: page, 
         GLOBAL: GLOBAL_DASH, 
         system_blz_status: BLZstatusOrder, 
         REQUISITORstatus: REQUISITORstatus,
-        CALENDARcount: CALENDARcount
+        CALENDARcount: CALENDARcount,
+        TRADEMKTcount: TRADEMKTcount
     })
 
     

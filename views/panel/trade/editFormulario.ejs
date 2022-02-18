@@ -1,0 +1,174 @@
+<link rel="stylesheet" href="/panel/css/trade/editFormulario.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="form-edit-form-main-section">
+    <form class="form-edit-form-section-page" method="post">
+        <div class="form-edit-form-display">
+            <div class="form-edit-form-title" id="form-edit-form-title">
+                <div class="form-edit-form-title-one">
+                    <span><input required value="<%= getForm[0].jcv_trade_form_create_titleForm %>" type="text" placeholder="Coloque o título do formulario.." name="form-set-title"></span>
+                    <input required value="<%= getForm[0].jcv_trade_form_create_expired.split('/')[2] %>-<%= getForm[0].jcv_trade_form_create_expired.split('/')[1] %>-<%= getForm[0].jcv_trade_form_create_expired.split('/')[0] %>" type="date" name="form-set-date-expired" id="form-set-date-expired">
+                </div>
+                <div class="form-edit-form-title-two">
+                    <img class="form-edit-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+            
+            <!--  -->
+        
+            <div id="fb-editor" class="form-set-styles">
+                <!--  -->
+                <!--  -->
+                <!--  -->   
+            </div>
+            
+            <!--  -->
+            <div class="form-edit-form-box-actions">
+                <div class="setDataWrap form-edit-form-set">
+                
+                    <div class="form-edit-form-action-users">
+                        <input placeholder="Informe quais pessoas podem responder.." id="insert-person" type="text">
+                        <button type="button" id="button-add-person">Adicionar</button>
+                    </div>
+    
+                    <div class="form-edit-form-list-user">
+                        <!--  -->
+                        <!--  -->
+                    </div>
+
+                    <input hidden type="text" id="input-json-set" name="form-edit-json-edit">
+                    <button class="form-edit-form-set-submit" id="getJSON" value="<%= getForm[0].jcv_trade_form_create_id %>" type="submit" formaction="/painel/trademkt/formSearch/editForm" name="form-edit-button-id">Finalizar</button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+
+    //$("#form-set-date-expired").val(moment(moment().format("YYYY-MM-DD"), "YYYY-MM-DD").add(5, 'd').format("YYYY-MM-DD"))
+
+    var options = {
+        dataType: 'json',
+        formData: JSON.parse('<%- getForm[0].jcv_trade_form_create_jsonForm %>'),
+        disableFields: [
+        'button',
+        'file',
+        'date',
+        'text',
+        'hidden'
+        ],
+        disabledActionButtons: ['save','data'],
+        i18n: {
+            override:{
+                'en-US':{
+                    autocomplete: 'Autocompletar',
+                    checkboxGroup: 'Caixa de seleção',
+                    header: 'Titulo Grande',
+                    number: 'Número',
+                    paragraph: 'Paragrafo',
+                    radioGroup: 'Grade de seleção Única',
+                    select: 'Selecione uma opção',
+                    textArea: 'Área de texto',
+                    getStarted: 'Segure e arraste os módulos aqui..',
+                    clear: 'Limpar Formulario',
+                    noFieldsToClear: 'Não existe nenhum modulo no formulário..',
+                    clearAllMessage: 'Deseja realmente limpar o formulário?',
+                    yes: 'Sim',
+                    no: 'Não'
+                }
+            }
+        }
+    };
+    
+    var fbEditor = document.getElementById('fb-editor');
+    var formBuilder = $(fbEditor).formBuilder(options);
+
+    $("#getJSON").click( function() {
+        let b = formBuilder.actions.getData('json');
+        $("#input-json-set").val(b)
+    })
+
+    //LISTANDO OS USUARIOS
+    let dataOne = '5 - PROMOTORAS, 4 - REPRESENTANTES';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#insert-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+
+    idArray = []
+    //Adicionando os usuarios que fazem parte do
+    let dataOneUsers = '<%- allUsersForm %>';
+    let arrayDataOneUsers = dataOneUsers.split(',');
+
+
+    arrayDataOneUsers.forEach(element => {
+        let idUser = parseInt(element.split('-')[0])
+        let nameUser = element.split('-')[1]
+
+        idArray.push(parseInt(idUser))
+        $(".form-edit-form-list-user")
+        .append(
+        `<div class="form-edit-form-list-users-set" id="person-id-${idUser}">
+            <input readonly type="text" value="${nameUser}">
+            <input hidden value="${idUser}" name="form-edit-form-persons"/>
+            <button onclick="functionRemovePerson('${idUser}')" value="${idUser}" type="button"><i class="ri-close-circle-line"></i></button>
+        </div>`
+        )
+    })
+
+    
+    
+    //ADICIONANDO PESSOAS
+    $("#button-add-person").click(function(){
+
+        //Usuario a ser adicionado
+        const valIdUser = $("#insert-person").val().split('-')[0];
+        const valPerson = $("#insert-person").val().split('-')[1];
+
+        if(valIdUser == '' || valPerson == ''){
+            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+        }else{
+
+            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+            }else{
+                idArray.push(parseInt(valIdUser))
+                $(".form-edit-form-list-user")
+                .append(
+                `<div class="form-edit-form-list-users-set" id="person-id-${valIdUser}">
+                    <input readonly type="text" value="${valPerson}">
+                    <input hidden value="${valIdUser}" name="form-edit-form-persons"/>
+                    <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                </div>`
+                )
+
+                console.log(idArray)
+
+                $("#insert-person").val('')
+            }
+        }
+    })
+
+    function functionRemovePerson(id){
+
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    }
+    
+</script>

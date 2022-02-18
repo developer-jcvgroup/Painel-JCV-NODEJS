@@ -1,11 +1,26 @@
 <link rel="stylesheet" href="/panel/css/trade/visitaFormulario.css">
 
 <section class="visit-form-main-section">
-    <section class="visit-form-section-page">
+    <form class="visit-form-section-page" method="post">
+        <div class="visit-search-link-back">
+            <a class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
         <div class="visit-form-display">
             <div class="visit-form-title">
                 <div class="visit-form-title-one">
                     <span>Formulário de Visita - Merchandising</span>
+                </div>
+                <div class="visit-form-info">
+                    <label for="">LOJA</label>
+                    <select name="visit-shop">
+                        <option value="">Selecione</option>
+                        <% allShops.forEach(element => { %>
+                            <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name %></option>
+                        <% }) %>
+                    </select>
+                    <input type="date" name="visit-date" id="date-form-now">
                 </div>
                 <!--  -->
                 <div class="visit-form-title-two">
@@ -14,15 +29,1224 @@
             </div>
 
             <!--  -->
-
+            <hr>
             <div class="visit-form-section">
                 <div class="visit-form-section-title">
                     <span>Seção 1 - Marketing Mix</span>
                 </div>
                 <div class="visit-form-section-desc">
-                    <span>Assinale as opções verificadas na visita de trade marketing</span>
+                    <span>Selecione as opções verificadas na visita de trade marketing</span>
+                </div>
+                <div class="visit-form-section-questions">
+
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-1-step" value="Quais marcas do grupo a loja comercializa:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>FELPS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-1-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FELPS MEN</label>
+                                <input hidden type="checkbox">
+                                <input hidden type="text">
+                                <input name="visit-form-1-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>RETRÔ</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-1-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>AVENCA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-1-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-2-step" value="Quais linhas da felps a loja comercializa:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>QUIABO XBTX</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ANTIRRESÍDUO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ÔMEGA ZERO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>MACADÂMIA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>X REPAIR</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>X FORCE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>X COLOR</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>X NUTRITIVE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BANHO VERNIZ</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>MARULA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>SOS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXTRATO DE BAMBOO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>CACHOS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>SOU LOIRA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>RP PREMIUM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>MATIZADORES</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>PÓ DESCOLORANTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>UNIQ CREAM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ÓLEO DE ARGAN</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>VEGAN OIL KALAHARI</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EQUILÍBRIO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>QUIABO XBTX PÓS PROGRESSIVA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FELPS COLOR TINTURAS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-2-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-3-step" value="Quais linhas da felps men a loja comercializa:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">POKER</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-3-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">BLACK JACK</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-3-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">CRAPS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-3-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-4-step" value="Quais linhas da Retrô cosméticos a loja comercializa:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>MONA & LISA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>LISO MAGIA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>SOUL COCO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>SUPER TÔNICO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ALÔ, É VERA!</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>MANDIOCA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BLOND ANGEL</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ELIZABETH</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-4-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-5-step" value="Quais linhas da avenca cosméticos a loja comercializa:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">MÁSCARA PRETA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">MÁSCARA OURO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">VITAMINA C</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">MÁSCARA PORCELANA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">DETOX PÉ</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">IDEALY</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">ACNEED</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label for="">ÁGUA MICELAR</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-5-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                   <!--  -->
                 </div>
             </div>
+
+            <!--  -->
+
+
+
+            <hr>
+            <div class="visit-form-section">
+                <div class="visit-form-section-title">
+                    <span>Seção 2 - Trade Marketing/Merchandising</span>
+                </div>
+                <div class="visit-form-section-desc">
+                    <span>Selecione as opções verificadas no pdv</span>
+                </div>
+                <div class="visit-form-section-questions">
+
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-6-step" value="Espaço para treinamentos:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-6-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-6-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-6-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-6-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-6-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-7-step" value="Estrutura para compre e aplique:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-7-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-7-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-7-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-7-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-7-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-8-step" value="Recursos na loja: FELPS,RETRÔ e AVENCA. Materiais Gráficos:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>STOPPER</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>WOBBLER</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FAIXA GÔNDOLA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>URNA SORTEIO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>CATÁLOGO FOLDER</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>CATÁLOGO FELPS COLOR</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>COMPRE & GANHE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-8-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-9-step" value="Recursos na loja: FELPS,RETRÔ e AVENCA. Brindes:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>SACOLA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-9-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>SACHÊ 10G</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-9-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>MINIATURA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-9-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OUTROS</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-9-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-10-step" value="Recursos na loja: FELPS,RETRÔ e AVENCA. Felps Color Tinturas:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>TIGELA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-10-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>ESPÁTULA</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-10-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>PINCEL</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-10-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FAIXA COMPRE GANHE OX</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-10-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-11-step" value="RÉGUA ou FAIXA DE GÔNDOLA:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-11-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-11-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-11-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-11-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-11-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-12-step" value="STOPPER:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-12-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-12-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-12-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-12-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-12-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-13-step" value="WOBBLER:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-13-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-13-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-13-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-13-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-13-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-14-step" value="MÓBILE:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-14-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-14-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-14-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-14-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-14-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-15-step" value="BALÃO AÉREO:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-15-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-15-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-15-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-15-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-15-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-16-step" value="CARTAZ AÉREO:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-16-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-16-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-16-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-16-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-16-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-17-step" value="TÓTEM:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-17-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-17-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-17-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-17-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-17-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-18-step" value="TÓTEM ALCOOL GEL:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-18-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-18-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-18-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-18-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-18-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-19-step" value="TÓTEM ELIPTICO DOBRÁVEL:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-19-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-19-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-19-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-19-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-19-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-20-step" value="ADESIVO DE CHÃO:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-20-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-20-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-20-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-20-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-20-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-21-step" value="CAVALETE:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-21-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-21-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-21-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-21-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-21-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-22-step" value="BALCÃO DE PDV:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-22-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-22-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-22-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-22-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-22-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-23-step" value="CUBOS MODULARES:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-23-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-23-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-23-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-23-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-23-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-24-step" value="CLIP STRIP:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-24-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-24-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-24-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-24-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-24-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-25-step" value="VITRINE ADESIVADA:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-25-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-25-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-25-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-25-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-26-step" value="FACHADA ADESIVADA:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-26-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-26-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-26-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-26-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-26-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-27-step" value="TOLDO:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-27-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-27-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-27-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-27-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-27-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                   <!--  -->
+                   <hr>
+                   <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-28-step" value="TV, PAINEL DIGITAL P/ VIDEOS:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>NÃO TEM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-28-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>FRACO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-28-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-28-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-28-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>OPORTUNIDADE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-28-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-29-step" value="RELACIONAMENTO COM STAFF LOJA:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>PADRÃO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-29-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-29-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-29-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box question-box-row">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-30-step" value="FLEXIBILIDADE PARA AÇÕES DE MARCA:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <div class="visit-form-section-questions-checks">
+                                <label>PADRÃO</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-30-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>BOM</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-30-step" hidden type="text">
+                            </div>
+                            <div class="visit-form-section-questions-checks">
+                                <label>EXCELENTE</label>
+                                <input hidden type="checkbox">
+                                <input name="visit-form-30-step" hidden type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--  -->
+
+            <div class="visit-action-form">
+                <button type="button" class="visit-action-form-button-reset">Resetar</button>
+                <button formaction="/painel/trademkt/visit/new" type="submit" class="visit-action-form-button-send">Salvar</button>
+            </div>
         </div>
-    </section>
+    </form>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    $("#date-form-now").val(moment().format("YYYY-MM-DD"))
+
+    $(".visit-form-section-questions-checks").click(function(){
+
+        if($(this).children("input[type='checkbox']").attr("checked") == "checked"){
+            $(this).children("input[type='checkbox']").attr("checked",false)
+
+            $(this).children("input[type='text']").attr("value",'')
+
+            $(this).children("label").css({'background': 'transparent', 'color': 'var(--color-two)'});
+        }else{
+            $(this).children("input[type='checkbox']").attr("checked",true)
+
+            $(this).children("input[type='text']").attr("value",$(this).children("label").text())
+
+            $(this).children("label").css({'background': 'var(--color-two)', 'color': 'var(--color-three)'});
+        }        
+    })
+</script>

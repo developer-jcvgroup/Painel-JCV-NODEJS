@@ -1,0 +1,166 @@
+<link rel="stylesheet" href="/panel/css/trade/shops.css">
+
+<script src="/js/jquery-paginate.js"></script>
+
+<section class="shop-container-main">
+    <section class="shop-container-page">
+        <div class="shop-container-identify-page">
+            <span>Lojas</span>
+            <span>/ Lista de lojas</span>
+        </div>        
+        <form class="shop-container-list-all" method="post">
+            <section class="section-shop-list-center">
+                <div class="shop-title-box"><span>Lista de lojas</span></div>
+
+                <div class="shop-order-srs-search">
+                    <div class="shop-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="product-search-rows">
+                    </div>
+                    <div class="container-actions-checks-shop">
+                        <div class="shop-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="action-shops-select" id="">
+                                <option value="">-- Selecione --</option>
+                                <option value="" disabled></option>
+                                <option value="CMD01">Habilitar</option>
+                                <option value="CMD02">Desabilitar</option>
+                                <option value="CMD03">Exportar Excel</option>
+                            </select>
+                        </div>
+                        <div class="shop-box-actions-checks-button">
+                            <button class="class-loader" formaction="/painel/trademkt/shops/action/execute">Executar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div class="shop-container-table" >
+                    <table class="shop-list-table" id="shop-list-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>Loja</th>
+                                <th>Região</th>
+                                <th>Cadastrados</th>
+                                <th>Ativo</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>    </td>
+                                <td><input type="text" name="shop-name" placeholder="Insira o SKU.."></td>
+                                <td>
+                                    <select name="shop-name-region">
+                                        <option value="" disabled></option>
+                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
+                                        <option value="Região Nordeste">Região Nordeste</option>
+                                        <option value="Região Norte">Região Norte</option>
+                                        <option selected value="Região Sudeste">Região Sudeste</option>
+                                        <option value="Região Sul">Região Sul</option>
+                                    </select>
+                                </td>
+                                <td> </td>
+                                <td>
+                                    <label class="shop-button-switch">
+                                        <input type="checkbox" name="shop-enabled" checked>
+                                        <span class="shop-button-slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="shop-container-actions-table">
+                                        <button formaction="/painel/trademkt/shops/register/shop/new"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+
+                            <% allShops.forEach(element => { %>
+                            <tr class="request-row-check-mark">
+                                <td><input class="checkbox-select-single" type="checkbox" name="shop-edit-id" value="<%= element.jcv_trade_shops_id %>"></td>
+                                <td><input type="text" name="shop-name-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name %>" placeholder="Insira o SKU.."></td>
+                                <td>
+                                    <select name="shop-name-region-edit-<%= element.jcv_trade_shops_id %>">
+                                        <option value="<%= element.jcv_trade_shops_region %>"><%= element.jcv_trade_shops_region %></option>
+                                        <option value="" disabled></option>
+                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
+                                        <option value="Região Nordeste">Região Nordeste</option>
+                                        <option value="Região Norte">Região Norte</option>
+                                        <option value="Região Sudeste">Região Sudeste</option>
+                                        <option value="Região Sul">Região Sul</option>
+                                    </select>
+                                </td>
+                                
+                                <td>
+                                    <b><%= element.jcv_trade_shops_users.split(',').length %></b>
+                                </td>
+                                
+                                <td>
+                                    <% if(element.jcv_trade_shops_enabled == 1){ %>
+                                    <label class="shop-button-switch">
+                                        <input type="checkbox" name="shop-enabled-edit-<%= element.jcv_trade_shops_id %>" checked>
+                                        <span class="shop-button-slider round"></span>
+                                    </label>
+                                    <% }else{ %>
+                                        <label class="shop-button-switch">
+                                            <input type="checkbox" name="shop-enabled-edit-<%= element.jcv_trade_shops_id %>">
+                                            <span class="shop-button-slider round"></span>
+                                        </label>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="shop-container-actions-table">
+                                        <button formaction="/painel/trademkt/shops/register/shop/edit" value="<%= element.jcv_trade_shops_id %>" name="action-save-edit-shop" class="class-loader"><i class="ri-save-line"></i></button>
+                                        <a class="class-loader" href="/painel/trademkt/shops/config/<%= element.jcv_trade_shops_id %>"><i class="ri-user-add-fill"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <% }) %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </form>
+    </section>
+</section>
+<script>
+    $(function(){
+
+        //Spin load {1: ativo, 2: desativar}
+        $.fn.loadSpin(2) ;
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#shop-list-table',20,2);
+
+        //Checknox all
+        $("#checkbox-select-all").click(function(){
+            var checkSet = $(this).is(':checked');
+            var inputsCheckedmodel = $('.checkbox-select-single');
+
+            if(checkSet == true){
+                inputsCheckedmodel.prop('checked', true);
+            }else{
+                inputsCheckedmodel.prop('checked', false);
+            }
+        })
+        $(".checkbox-select-single").click(function(){
+            $("#checkbox-select-all").prop("checked", false)
+        })
+
+        //Filtro dinamico em inputs
+        $.fn.searchInputTableInputs('#shop-list-table','#product-search-rows',1)
+
+    })
+</script>

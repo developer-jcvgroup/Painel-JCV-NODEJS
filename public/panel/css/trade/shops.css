@@ -1,0 +1,398 @@
+.shop-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.shop-container-page{
+    width: 90%;
+}
+
+/* IDENTIFICAÇÃO DA PAGINA */
+.shop-container-identify-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.shop-container-identify-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.shop-container-identify-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/***************************/
+/* PAGINA */
+.shop-title-box{
+    width: 100%;
+    display: flex;
+}
+.shop-title-box span{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+
+
+/* INPUT PARA BUSCAR OS PEDIDOS */
+.shop-order-srs-search{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.shop-order-srs-box{
+    width: 70%;
+}
+.shop-order-srs-box input{
+    width: 50%;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+
+/* container list */
+.shop-container-list-all{
+    width: 100%;
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.section-shop-list-center{
+    width: 100%;
+    padding: 12px;
+}
+
+/* actions shop list */
+.container-actions-checks-shop{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+}
+
+.shop-box-actions-checks{
+    display: flex;
+    flex-direction: column;
+}
+.shop-box-actions-checks label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.shop-box-actions-checks > select{
+    width: 150px;
+    margin-top: 6px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--color-one);
+    border-radius: 5px;
+    cursor: pointer;
+    background: transparent;
+}
+.shop-box-actions-checks-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4%;
+}
+.shop-box-actions-checks-button button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+/*********************/
+/*********************/
+/* TABLE */
+.shop-container-table{
+    width: 100%;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+}
+.shop-list-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.shop-list-table tr th{
+    border: none;
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    background: var(--color-one);
+    color: var(--color-four);
+    font-weight: normal;
+    padding: 6px;
+    font-size: 0.9rem;
+}
+.shop-list-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 6px;
+    color: var(--color-one);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.shop-list-table tr:hover{
+    transition: 0.5s;
+    background: var(--color-seven);
+}
+
+.shop-list-table tr td input[type=text]{
+    width: 100%;
+    outline: 0;
+    border: 0;
+    font-size: 0.9rem;
+    padding: 7px 8px;
+    color: var(--color-one);
+    background: transparent;
+    text-align: left;
+    border-bottom: 1px solid var(--color-one);
+    font-weight: bold;
+}
+
+.shop-list-table tr td select{
+    width: 100%;
+    margin-top: 6px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--color-one);
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--background-two);
+}
+
+/**************************/
+.shop-list-table tr th:nth-child(1){
+    text-align: center;
+    width: 1%;
+}
+.shop-list-table tr th:nth-child(2){
+    text-align: left;
+}
+.shop-list-table tr th:nth-child(3){
+    text-align: center;
+    width: 15%;
+}
+.shop-list-table tr th:nth-child(4){
+    text-align:center;
+    width: 5%;
+}
+.shop-list-table tr th:nth-child(5){
+    text-align:center;
+    width: 5%;
+}
+.shop-list-table tr th:nth-child(6){
+    text-align:center;
+    width: 7%;
+}
+
+
+tr:nth-child(even) {
+    background-color: var(--color-seven);
+}
+
+.shop-list-table tr td:nth-child(4){
+    justify-content: center;
+    text-align: center;
+    width: 6%;
+}
+
+
+.shop-container-actions-table{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.shop-container-actions-table button{
+    margin: 0 9px;
+    background: transparent;
+    color: var(--color-one);
+    border: 0;
+    outline: 0;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.shop-container-actions-table a{
+    text-decoration: none;
+    color: var(--color-one);
+    border: 0;
+    outline: 0;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+
+
+
+
+/********************************/
+/********************************/
+/* switch */
+.shop-button-switch {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 17px;
+}
+  
+.shop-button-switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    outline: 0;
+}
+  
+.shop-button-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-six);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.shop-button-slider:before {
+    position: absolute;
+    content: "";
+    height: 10px;
+    width: 10px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--color-four);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .shop-button-slider {
+    background-color: var(--color-one);
+}
+
+input:focus + .shop-button-slider {
+    box-shadow: 0 0 1px var(--color-one);
+}
+
+input:checked + .shop-button-slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.shop-button-slider.round {
+    border-radius: 17.5px;
+}
+
+.shop-button-slider.round:before {
+    border-radius: 50%;
+}
+
+/*  */
+.shop-search-form-list-user{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+.shop-search-form-list-users-set{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-one);
+    padding: 4px;
+    border-radius: 4px;
+    margin: 5px;
+}
+.shop-search-form-list-users-set input{
+    min-width: fit-content;
+    outline: 0;
+    border: none;
+    font-size: 0.9rem;
+    color: var(--color-one);
+    font-weight: bold;
+}
+.shop-search-form-list-users-set button{
+    border: none;
+    color: var(--color-one);
+    cursor: pointer;
+    font-size: 0.8rem;
+    background: transparent;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 900px){
+    .shop-container-table{
+        overflow: auto;
+    }
+    .shop-list-table{
+        min-width: 800px;
+    }
+    .shop-list-table tr th:nth-child(2){
+        text-align: center;
+        width: 10%;
+    }
+    .shop-list-table tr th:nth-child(3){
+        text-align: center;
+        width: 15%;
+    }
+    .shop-list-table tr th:nth-child(6){
+        text-align: center;
+        width: 10%;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .container-actions-checks-shop{
+        margin: 23px 0;
+        justify-content: center;
+    }
+    .shop-container-identify-page{
+        margin: 26px 0;
+    }
+
+
+    .shop-order-srs-search{
+        flex-direction: column;
+    }
+    .shop-order-srs-box{
+        width: 100%;
+    }
+    .shop-order-srs-box input{
+        width: 100%;
+    }
+    .container-actions-checks-shop{
+        width: 100%;
+        margin-top: 23px;
+        justify-content: center;
+    }
+}

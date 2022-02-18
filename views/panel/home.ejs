@@ -23,12 +23,12 @@
                         </div>
                         <div class="home-main-suspended-box">
                             <div class="main-suspended-info">
-                                <a class="main-suspended-group-info class-loader" href="./painel/calendario/main/">
+                                <a class="main-suspended-group-info class-loader" href="/painel/calendario/main/">
                                     <div class="sys-icon-def">
                                         <img class="sys-icon-size" src="/icons/icon-calendar.png" alt="">
                                     </div>
                                     <span>Calendario</span>
-                                    <span>Você possui <%= CALENDARcount.length %> participação em eventos <i class="ri-external-link-line"></i></span>
+                                    <span>Você possui⠀<b><%= CALENDARcount %></b>⠀participação em eventos <i class="ri-external-link-line"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                         <% if (REQUISITORstatus == true){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/requisitor/MinhasRequisicoes">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/requisitor/MinhasRequisicoes">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
                                         </div>
@@ -58,7 +58,7 @@
                         <% }else{ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/requisitor/Novo">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/requisitor/Novo">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
                                         </div>
@@ -82,7 +82,7 @@
                         <% if(system_blz_status == 2){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/status">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -94,7 +94,7 @@
                         <% }else if(system_blz_status == 1){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/solicitar">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -106,7 +106,7 @@
                         <% }else if(system_blz_status == 3){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/solicitar">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -118,7 +118,7 @@
                         <% }else if(system_blz_status == 4){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/status">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -130,7 +130,7 @@
                         <% }else if(system_blz_status == 5){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/status">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -142,7 +142,7 @@
                         <% }else if(system_blz_status == false){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="./painel/beleza/solicitar">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
@@ -154,8 +154,29 @@
                         <% } %>
                     </div>
                 </div>
-            </div>
-            <% } %>
+                <% } %>
+
+                <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1 || GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title">
+                                <span>Trade MKT</span>
+                            </div>
+                            
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/main">
+                                        <div class="sys-icon-def">
+                                            <img class="sys-icon-size" src="/icons/icon-trade.png" alt="">
+                                        </div>
+                                        <span>Trade Mkt</span>
+                                        <span><%= TRADEMKTcount %> formulário para responder <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
 
             <!-- <div class="home-logs-system">
                 <div class="home-logs-main">

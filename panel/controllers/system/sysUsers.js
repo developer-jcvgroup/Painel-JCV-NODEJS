@@ -7,6 +7,9 @@ const monthReference = moment().add(1, 'M').format('MM-YYYY');
 //Sistema de emails
 const emailSystemExe = require('./emailSystem');
 
+//Scripts dos usuarios
+const usersScript = require('./scripts-users');
+
 function generateDate(){
     moment.locale('pt-br');
     return moment().format('LT')+" "+moment().format('L')
@@ -25,7 +28,7 @@ exports.listAllinformations = async (req,res) =>{
     JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
     JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
 
-    WHERE c1.jcv_userManager = c2.jcv_id
+    WHERE c1.jcv_userManager = c2.jcv_id ORDER BY c1.jcv_userEnabled DESC
     
     `).then( data => {return data[0]})
 
@@ -93,6 +96,9 @@ exports.saveNewUser = async (req,res) => {
             const userSYScalendarUse = req.body['save-new-sys-calendar-use'] == 'on' ? 1 : 0;
             //const userSYScalendarManager = req.body['save-new-sys-calendar-manager'] == 'on' ? 1 : 0;
             const userSYScalendarAdmin = req.body['save-new-sys-calendar-admin'] == 'on' ? 1 : 0;
+
+            const userSYStradeUse = req.body['save-new-sys-trade-use'] == 'on' ? 1 : 0;
+            const userSYStradeAdmin = req.body['save-new-sys-trade-admin'] == 'on' ? 1 : 0;
     
             const userType = parseInt(req.body['save-new-sys-type-user']);
             const userSYSemail = parseInt(req.body['save-new-sys-mails']);
@@ -112,7 +118,7 @@ exports.saveNewUser = async (req,res) => {
                 jcv_userManager: userGestor,
                 jcv_userCassification: userType,
                 jcv_userEnabled: userAtivo,
-                jcv_sysEmail: userSYSemail
+                jcv_sysEmail: userSYSemail,
     
             }).table("jcv_users").then(data => { 
                 database.insert({
@@ -126,7 +132,9 @@ exports.saveNewUser = async (req,res) => {
                     sys_req_perm_admin: userSYSrequisitorAdmin,
                     sys_cal_perm_use: userSYScalendarUse,
                     //sys_cal_perm_manager: userSYScalendarManager,
-                    sys_cal_perm_admin: userSYScalendarAdmin
+                    sys_cal_perm_admin: userSYScalendarAdmin,
+                    sys_tra_perm_use: userSYStradeUse,
+                    sys_tra_perm_admin: userSYStradeAdmin
     
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){
@@ -189,10 +197,17 @@ exports.editSaveUser = async (req,res) => {
         const userSYScalendarManager = req.body['save-edit-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
         const userSYScalendarAdmin = req.body['save-edit-sys-calendar-admin-'+idUser] == 'on' ? 1 : 0;
 
+        const userSYStradeUse = req.body['save-edit-sys-trade-use-'+idUser] == 'on' ? 1 : 0;
+        const userSYStradeAdmin = req.body['save-edit-sys-trade-admin-'+idUser] == 'on' ? 1 : 0;
+
 
         const userType = parseInt(req.body['save-edit-sys-type-user-'+idUser]);
         const userSYSemail = parseInt(req.body['save-edit-sys-mails-'+idUser]);
         const userAtivo = parseInt(req.body['save-edit-active-'+idUser]);
+
+        if(parseInt(userAtivo) == 0){
+            usersScript.alterDataUsers(idUser)
+        }
 
         //Validando se este usuario possui ou nao um cadastro nas permissões
         const validatePermSys = await database
@@ -231,7 +246,9 @@ exports.editSaveUser = async (req,res) => {
                     sys_req_perm_admin: userSYSrequisitorAdmin,
                     sys_cal_perm_use: userSYScalendarUse,
                     //sys_cal_perm_manager: userSYScalendarManager,
-                    sys_cal_perm_admin: userSYScalendarAdmin
+                    sys_cal_perm_admin: userSYScalendarAdmin,
+                    sys_tra_perm_use: userSYStradeUse,
+                    sys_tra_perm_admin: userSYStradeAdmin
         
                 }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                     if(data != ''){

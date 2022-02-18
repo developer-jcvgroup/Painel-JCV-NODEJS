@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/panel/css/trade/formResponse.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="form-response-main-section">
+    <section class="form-response-section-page">
+        <div class="form-response-display">
+            <div class="form-response-title" id="form-response-title">
+                <div class="form-response-title-one">
+                    <span><b><%= getForm[0].jcv_trade_form_create_titleForm %></b></span>
+                    <span><b>Expira em: <%= getForm[0].jcv_trade_form_create_expired %></b></span>
+                </div>
+                <div class="form-response-title-two">
+                    <img class="form-response-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+            
+            <!--  -->
+        
+            <div id="render-container" class="form-set-styles">
+                <!--  -->
+                <!--  -->
+                <!--  -->    
+            </div>
+            
+            <!--  -->
+            <div class="form-response-box-actions">
+                <div class="setDataWrap form-response-set">
+    
+                    <form id="fb-render" class="form-response-list-user" style="width: 100%;" >
+                        <!--  -->
+                        <!--  -->                        
+                    </form>
+                    <form method="post">
+                        <input hidden type="text" value="<%= getForm[0].jcv_trade_form_create_titleForm %>" name="form-response-response-title">
+                        <input hidden type="text" id="get-user-data" name="form-response-response-text">
+                        <button id="button-send-form" class="form-response-set-submit" type="submit" formaction="/painel/trademkt/formSearch/responseForm" value="<%= getForm[0].jcv_trade_form_create_id %>" name="form-send-form">Salvar / Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script src="https://kevinchappell.github.io/formBuilder/assets/js/form-render.min.js"></script>
+<script>
+
+    var formRenderOptions = {
+        formData: '<%- getForm[0].jcv_trade_form_create_jsonForm %>'
+    }
+    var formRenderInstance = $('#render-container').formRender(formRenderOptions);
+
+    
+    $("#button-send-form").click(function () {
+        $("#get-user-data").val(JSON.stringify(formRenderInstance.userData))
+    })
+    
+</script>

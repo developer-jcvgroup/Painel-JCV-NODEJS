@@ -2,9 +2,14 @@
 
 Compilado de apps do jcv group
 
-# Codigo de Cada App
-- JCVAPP01 = Progama da beleza
-- JCVAPP02 = Requsitor de Materiais
+# Codigo de Cada Modulo
+- JCVMOD01 = ALL PAGES
+- JCVMOD02 = Progama da beleza
+- JCVMOD03 = Requsitor de Materiais
+- JCVMOD04 = Calendario
+- JCVMOD05 = Trade MKT
+- JCVMOD06 = Config. Sistema: Geral
+- JCVMOD07 = Perfil Usuario
 
 # Banco do usuarios
 CPF
@@ -256,6 +261,49 @@ Requisitor de Materiais
 * [sys_update_nameUpdate] *VARCHAR* //Nome da atualização 
 * [sys_update_textUpdate] *VARCHAR* //texto da atualização
 * [sys_update_usersOkUpdate] *VARCHAR* //Usuarios que deram OK para não exibir mais a atualização 
+
+
+# ------------------------------------------
+# Tabela Trade MKT pesquisa:
+* [jcv_trade_form_create_id] *PRIMARY KEY* //id
+* [jcv_trade_form_create_created_userId] *VARCHAR* //Id do usuario que criou
+* [jcv_trade_form_create_titleForm] *VARCHAR* //Titulo do formulario
+* [jcv_trade_form_create_jsonForm] *TEXT* //JSON que o formulario manda
+* [jcv_trade_form_create_total_reponse] *INT* //Respostas totais do formulario
+* [jcv_trade_form_create_created_date] *INT* //Data da criação
+* [jcv_trade_form_create_expired] *INT* //Data em que expira  
+* [jcv_trade_form_create_usersList] *VARCHAR* //Lista de usuarios que vao poder responder, caso seja 'null' => todos devem receber (aqueles que tem permissão)  
+* [jcv_trade_form_create_enabled] *INT* //Formulario ativo? 
+
+# Tabela Trade MKT resposta da pesquisa:
+* [jcv_trade_form_res_id] *PRIMARY KEY* //id
+* [jcv_trade_form_res_formId] *VARCHAR* //Id do formulario
+* [jcv_trade_form_res_idUser] *VARCHAR* //Id do usuario que respondeu
+* [jcv_trade_form_res_jsonForm] *TEXT* //JSON que o formulario manda
+* [jcv_trade_form_res_response_date] *INT* //Respostas totais do formulario 
+
+
+# Tabela Trade MKT Lojas:
+* [jcv_trade_shops_id] *PRIMARY KEY* //id
+* [jcv_trade_shops_name] *VARCHAR* //Nome da loja
+* [jcv_trade_shops_enabled] *INT* //Ativo ou desativado
+
+# Tabela Trade Formulario de visita:
+* [jcv_trade_visit_id] *PRIMARY KEY* //id
+* [jcv_trade_visit_userId] *ID* //Id do usuario que respondeu
+* [jcv_trade_visit_date] *VARHCAR* //Data em foi feita a visita
+* [jcv_trade_visit_shopId] *INT* //Id da loja
+* [jcv_trade_visit_created] *VARHCAR* //Data da criação do formulario
+* [jcv_trade_visit_repsonses] *TEXT* //Inserindo o obj das respostas
+
+# Tabela Trade MKT Vendas diarias:
+* [jcv_trade_sales_form_id] *PRIMARY KEY* //id
+* [jcv_trade_sales_form_shopId] *VARCHAR* //Id do formulario
+* [jcv_trade_sales_form_date] *VARCHAR* //Id do usuario que respondeu
+* [jcv_trade_sales_form_userId] *TEXT* //JSON que o formulario manda
+* [jcv_trade_sales_form_infoFelps] *TEXT* //Aqui sera armazenado o objeto com as perguntas e resposta da felps
+* [jcv_trade_sales_form_infoRetro] *TEXT* //Aqui sera armazenado o objeto com as perguntas e resposta da retro 
+* [jcv_trade_sales_form_infoAvenca] *TEXT* //Aqui sera armazenado o objeto com as perguntas e resposta da avenca
 
 
 PADRAO DA URL DINAMICA PARA ACESSO

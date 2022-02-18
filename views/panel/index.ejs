@@ -77,12 +77,27 @@
                 </ul>
                 <% } %>
 
+                <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
                 <ul class="menu-ul-list-set-one">
                     <li id="menu-05"><span>Trade Marketing</span><i class="ri-arrow-down-s-line"></i></li>
                     <ul id="sub-05" class="menu-list-set-two">       
                         <li><a class="class-loader" href="/painel/trademkt/main"><i class="ri-home-2-line"></i><span>Home</span></a></li>
+                        <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
+                        <% } %>
+
+                        <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
+                            <li><a class="class-loader" href="/painel/trademkt/salesDay"><i class="ri-add-line"></i></i><span>Vendas Diárias</span></a></li>
+                        <% } %>
+                        
+                        <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/trademkt/formSearch/new"><i class="ri-add-line"></i></i><span>Formulario de Pesquisa</span></a></li>
+                            <li><a class="class-loader" href="/painel/trademkt/listTrade"><i class="ri-file-list-3-line"></i><span>Lista Formulário de Pesquisa</span></a></li>
+                            <li><a class="class-loader" href="/painel/trademkt/shops"><i class="ri-store-2-line"></i><span>Lojas</span></a></li>
+                        <% } %>
                     </ul>
                 </ul>
+                <% } %>
 
                 <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
                 <ul class="menu-ul-list-set-one">
@@ -227,6 +242,7 @@
                             </span>
                         </div>
                         <div class="sys-update-button">
+                            <input hidden type="text" value="<%= element.sys_update_urlRedirect %>" name="param-url-update-<%= element.sys_update_idUp %>">
                             <button class="class-loader" type="submit" formaction="/painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
                         </div>
                     <% }) %>

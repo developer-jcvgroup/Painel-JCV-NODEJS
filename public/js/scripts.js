@@ -214,7 +214,8 @@ $(function(){
 
     $.fn.searchInputTableInputs = function(tableRows, inputSearchTable, commandButton){
 
-        var $rows = $(tableRows+' tr')    
+        var $rows = $(tableRows+' tr')
+        
         var searchText = $(inputSearchTable).val()
             $rows
             .show()

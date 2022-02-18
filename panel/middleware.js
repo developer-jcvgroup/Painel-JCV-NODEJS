@@ -23,6 +23,7 @@ authenticate = async (req, res, next) => {
             let GLOBALemail = searchUser[0]["jcv_userEmailCorporate"];// E-MAIL
             let GLOBALramal = searchUser[0]["jcv_userExtension"];//Ramal
             let GLOBALimage = searchUser[0]["jcv_userImageIcon"];//Image
+            let GLOBALclassification = searchUser[0]["jcv_userCassification"];//Classificação
 
             //Verificando a senha
             if(searchUser[0]["jcv_userPassword"] == null){
@@ -36,12 +37,7 @@ authenticate = async (req, res, next) => {
                 return data[0].sys_department_name;
             })
 
-            //Verificando se existe menssagem de novas atualizações
-            const allUpdate = await database
-            .select()
-            .whereRaw("(sys_update_usersOkUpdate NOT LIKE '%"+GLOBALuserid+"%' OR sys_update_usersOkUpdate IS NULL)")
-            .table("sys_update")
-            .then( data => { return data; })
+            let allUpdate = []
 
             //Pegando so nome e sobrenome
             let GLOBALuserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0] + " " + searchUser[0]["jcv_userNamePrimary"].split(' ')[1];
@@ -57,9 +53,10 @@ authenticate = async (req, res, next) => {
                 GLOBALramal, 
                 GLOBALimage, 
                 GLOBALuserName, 
-                GLOBALfisrtUserName, 
+                GLOBALfisrtUserName,
                 sectorUser,
-                allUpdate
+                allUpdate,
+                GLOBALclassification
             ];
 
             //Aqui eu predefino a url das salas no calendario

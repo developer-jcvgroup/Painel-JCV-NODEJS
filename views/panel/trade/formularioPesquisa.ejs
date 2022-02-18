@@ -1,0 +1,154 @@
+<link rel="stylesheet" href="/panel/css/trade/formularioPesquisa.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="form-search-form-main-section">
+    <form class="form-search-form-section-page" method="post">
+        <div class="form-search-link-back">
+            <a class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
+        <div class="form-search-form-display">
+            <div class="form-search-form-title" id="form-search-form-title">
+                <div class="form-search-form-title-one">
+                    <span>Novo Formulário⠀⠀-⠀⠀<input required type="text" placeholder="Coloque o título do formulario.." name="form-set-title"></span>
+                    <span>Expira em: <input required type="date" name="form-set-date-expired" id="form-set-date-expired"></span>
+                </div>
+                <div class="form-search-form-title-two">
+                    <img class="form-search-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+            
+            <!--  -->
+        
+            <div id="fb-editor" class="form-set-styles">
+                <!--  -->
+                <!--  -->
+                <!--  -->   
+            </div>
+            
+            <!--  -->
+            <div class="form-search-form-box-actions">
+                <div class="setDataWrap form-search-form-set">
+                
+                    <div class="form-search-form-action-users">
+                        <input placeholder="Informe podem pode responder.." id="insert-person" type="text">
+                        <button type="button" id="button-add-person">Adicionar</button>
+                    </div>
+    
+                    <div class="form-search-form-list-user">
+                        <!--  -->
+                        <!--  -->
+                    </div>
+                    <button class="form-search-form-set-submit" id="getJSON" type="submit" formaction="/painel/trademkt/formSearch/newForm" name="form-set-now">Finalizar</button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+
+    $("#form-set-date-expired").val(moment(moment().format("YYYY-MM-DD"), "YYYY-MM-DD").add(5, 'd').format("YYYY-MM-DD"))
+    
+    var options = {
+        disableFields: [
+        'button',
+        'file',
+        'date',
+        'text',
+        'hidden'
+        ],
+        disabledActionButtons: ['save','data'],
+        i18n: {
+            override:{
+                'en-US':{
+                    autocomplete: 'Autocompletar',
+                    checkboxGroup: 'Caixa de seleção',
+                    header: 'Titulo Grande',
+                    number: 'Número',
+                    paragraph: 'Paragrafo',
+                    radioGroup: 'Grade de seleção Única',
+                    select: 'Selecione uma opção',
+                    textArea: 'Área de texto',
+                    getStarted: 'Segure e arraste os módulos aqui..',
+                    clear: 'Limpar Formulario',
+                    noFieldsToClear: 'Não existe nenhum modulo no formulário..',
+                    clearAllMessage: 'Deseja realmente limpar o formulário?',
+                    yes: 'Sim',
+                    no: 'Não'
+                }
+            }
+        }
+    };
+
+    var fbEditor = document.getElementById('fb-editor');
+    var formBuilder = $(fbEditor).formBuilder(options);
+
+    $("#getJSON").click( function() {
+        let d = formBuilder.actions.getData('json');
+        $(this).val(d)
+    })
+
+
+    //LISTANDO OS USUARIOS
+    let dataOne = '5 - PROMOTORAS, 4 - REPRESENTANTES';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#insert-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+    
+    idArray = []
+    //ADICIONANDO PESSOAS
+    $("#button-add-person").click(function(){
+
+        //Usuario a ser adicionado
+        const valIdUser = $("#insert-person").val().split(' - ')[0];
+        const valPerson = $("#insert-person").val().split(' - ')[1];
+
+        if(valIdUser == '' || valPerson == ''){
+            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+        }else{
+
+            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+            }else{
+                idArray.push(parseInt(valIdUser))
+                $(".form-search-form-list-user")
+                .append(
+                `<div class="form-search-form-list-users-set" id="person-id-${valIdUser}">
+                    <input readonly type="text" value="${valPerson}">
+                    <input hidden value="${valIdUser}" name="form-search-form-persons"/>
+                    <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                </div>`
+                )
+
+                console.log(idArray)
+
+                $("#insert-person").val('')
+            }
+        }
+    })
+
+    function functionRemovePerson(id){
+
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    }
+    
+</script>

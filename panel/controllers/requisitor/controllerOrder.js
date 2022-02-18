@@ -1592,7 +1592,7 @@ async function exportItemsOrdersTotal(req,res,ids){
     const wb = new xl.Workbook();
     const ws = wb.addWorksheet('Worksheet Name');
     
-    const itemsOrders = await database.raw("SELECT sys_req_item_itemName, SUM(sys_req_item_itemAmount) AS Qtd FROM jcvpanel.jcv_req_orders_items WHERE jcv_req_orders_items.sys_req_item_orderId in("+ids+") GROUP BY sys_req_item_itemName HAVING COUNT(sys_req_item_itemName) > 0 ORDER BY SUM(sys_req_item_itemName) DESC").then( data => {
+    const itemsOrders = await database.raw("SELECT sys_req_item_itemName, SUM(sys_req_item_itemAmount) AS Qtd FROM jcv_req_orders_items WHERE jcv_req_orders_items.sys_req_item_orderId in("+ids+") GROUP BY sys_req_item_itemName HAVING COUNT(sys_req_item_itemName) > 0 ORDER BY SUM(sys_req_item_itemName) DESC").then( data => {
         return data[0];
     })
 
@@ -1644,7 +1644,7 @@ async function exportItemsOrders(req,res,ids){
     const ws = wb.addWorksheet('Worksheet Name');
     
     const itemsOrders = await database
-    .select("jcv_req_orders_items.sys_req_item_orderId","jcv_users.jcv_userNamePrimary","jcv_req_orders_items.sys_req_item_itemAmount","jcv_unitys.sys_unity_name")
+    .select("jcv_req_orders_items.sys_req_item_orderId","jcv_users.jcv_userNamePrimary","jcv_req_orders_items.sys_req_item_itemName","jcv_req_orders_items.sys_req_item_itemAmount","jcv_unitys.sys_unity_name")
     .join('jcv_users', 'jcv_req_orders_items.sys_req_item_userId', '=', 'jcv_users.jcv_id')
     .join('jcv_unitys', 'jcv_users.jcv_userUnity', '=', 'jcv_unitys.sys_unity_id')
     .whereRaw("jcv_req_orders_items.sys_req_item_orderId in("+ids+")")
@@ -1656,6 +1656,7 @@ async function exportItemsOrders(req,res,ids){
     const headingColumnNames = [
         "ID requisição",
         "Solicitante",
+        "Item",
         "Quantidade",
         "Unidade"
     ]

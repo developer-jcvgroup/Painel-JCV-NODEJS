@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="/panel/css/trade/shopsConfig.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="/js/jquery-paginate.js"></script>
+
+<section class="shop-config-container-main">
+    <section class="shop-config-container-page">
+        <div class="shop-config-search-link-back">
+            <a class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
+        <!--  -->
+        <div class="shop-config-container-identify-page">
+            <span>Lojas</span>
+            <span>/ Lista de lojas</span>
+        </div>  
+        <!--  -->
+        <form class="shop-config-container-section-center" method="post">
+            <div class="shop-config-container-description">
+                <span>Insira ou edite abaixo os usuarios que estão cadastrados na loja <b><%= shopData[0].jcv_trade_shops_name %></b>.</span>
+                <span>Atualmente esta loja possui <b id="amount-users"></b> usuarios cadastrados. </span>
+            </div>
+            <!--  -->
+            <div class="shop-config-container-box-users">
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                
+            </div>
+            <div class="shop-config-form-action-users">
+                <input id="insert-person" type="text">
+                <button id="button-add-person" type="button">Adicionar</button>
+                <button class="class-loader" type="submit" value="<%= shopData[0].jcv_trade_shops_id %>" name="shop-config-id-shop" formaction="/painel/trademkt/shops/set/users">Salvar</button>
+            </div>
+        </form>
+    </section>
+</section>
+<script>
+    let idArray = [];
+
+    $(function(){
+
+        //Lista de usuarios cadastrados na loja
+        let dataUsersShop = '<%- newArrUsersSet %>';
+        let dataUserArrays = dataUsersShop.split(',')
+        $("#amount-users").text(dataUserArrays == '' ? 0 : dataUserArrays.length)
+        
+        if(dataUserArrays != ''){
+            dataUserArrays.forEach(element => {
+            
+            let valOne = parseInt(element.split(' - ')[0])
+            let valTwo = element.split(' - ')[1]
+
+            idArray.push(valOne)
+
+            $(".shop-config-container-box-users")
+                .append(
+                `<div class="shop-config-form-list-users-set" id="person-id-${valOne}">
+                    <input readonly type="text" value="${valTwo}">
+                    <input hidden value="${valOne}" name="shop-config-set-persons"/>
+                    <button onclick="functionRemovePerson('${valOne}')" value="${valOne}" type="button"><i class="ri-close-circle-line"></i></button>
+                </div>`
+                )
+            });
+        }
+
+        //LISTANDO OS USUARIOS
+        let dataOne = '<%- newArrUsers %>';
+        let arrayDataOne = dataOne.split(',');
+
+        //Primeiro campo
+        $("#insert-person").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+                response(results.slice(0, 5));
+            }
+        });
+        
+        
+        //ADICIONANDO PESSOAS
+        $("#button-add-person").click(function(){
+
+            //Usuario a ser adicionado
+            const valIdUser = $("#insert-person").val().split(' - ')[0];
+            const valPerson = $("#insert-person").val().split(' - ')[1];
+
+            if(valIdUser == '' || valPerson == ''){
+                $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+            }else{
+
+                if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                    $("#insert-person").val('')
+                    $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                }else{
+                    idArray.push(parseInt(valIdUser))
+                    $(".shop-config-container-box-users")
+                    .append(
+                    `<div class="shop-config-form-list-users-set" id="person-id-${valIdUser}">
+                        <input readonly type="text" value="${valPerson}">
+                        <input hidden value="${valIdUser}" name="shop-config-set-persons"/>
+                        <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                    </div>`
+                    )
+
+                    $("#insert-person").val('')
+                }
+            }
+        })
+
+        $("#insert-person").keyup(function(e){
+
+            var code = e.key;
+            if(code === "Enter"){
+                //Usuario a ser adicionado
+                const valIdUser = $("#insert-person").val().split(' - ')[0];
+                const valPerson = $("#insert-person").val().split(' - ')[1];
+
+                if(valIdUser == '' || valPerson == ''){
+                    $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+                }else{
+
+                    if(idArray.indexOf(parseInt(valIdUser)) != -1){
+                        $("#insert-person").val('')
+                        $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                    }else{
+                        idArray.push(parseInt(valIdUser))
+                        $(".shop-config-container-box-users")
+                        .append(
+                        `<div class="shop-config-form-list-users-set" id="person-id-${valIdUser}">
+                            <input readonly type="text" value="${valPerson}">
+                            <input hidden value="${valIdUser}" name="shop-config-set-persons"/>
+                            <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                        </div>`
+                        )
+
+                        $("#insert-person").val('')
+                    }
+                }
+            }
+        })
+    })
+
+    function functionRemovePerson(id){
+
+        console.log(idArray)
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    }
+</script>

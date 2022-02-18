@@ -123,6 +123,9 @@ exports.viewCalendarMonth = async (req,res) => {
         //Pegando o numero do primeiro dia da semana [0,1,2,3,4,5,6]
         const NumberDayWeek =  moment(yearMonth+'-'+monthIndex).startOf('month').format('d');
 
+        //Validando se estamos no mes atual
+        const monthAgo = moment().format("MM/YYYY") == monthIndex+'/'+yearMonth ? 1 : 0
+
         var page = "calendar/calendar";
         res.render("panel/index", {page: page,
             nextMonthYear: nextMonthYear,
@@ -138,7 +141,8 @@ exports.viewCalendarMonth = async (req,res) => {
             allEventsPublic: allEventsPublic,
             allEventsPrivate: allEventsPrivate,
             getAllRooms: getAllRooms,
-            allEventsCount: allEventsCount
+            allEventsCount: allEventsCount,
+            monthAgo: monthAgo
         })
     }
 }
@@ -146,6 +150,7 @@ exports.viewCalendarMonth = async (req,res) => {
 exports.saveNewEvent = async (req,res) => {
     const eventName = req.body['calendar-register-name'];
     const eventDescription = req.body['calendar-register-description'];
+    const eventDateDefault = req.body['calendar-register-date']//Stilo padrão do input data
 
     let eventDaySet = req.body['calendar-register-date'].split('-');
     const eventDay = eventDaySet[2]+'/'+eventDaySet[1]+'/'+eventDaySet[0];
@@ -179,8 +184,8 @@ exports.saveNewEvent = async (req,res) => {
         return data[0].sys_unity_name
     })
 
-    if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento nesta data! Data inferiror ao dia atual.");
+    if(!moment(eventDateDefault).isAfter(moment().format("YYYY-MM-DD")) || moment(eventDateDefault).isSame(moment().format("YYYY-MM-DD"))){
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento nesta data! Data inferiror ao dia atual. ZZ");
         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
     }else{
 
@@ -343,6 +348,16 @@ exports.saveNewEvent = async (req,res) => {
 exports.deleteEvent = async(req,res) => {
     const idEvent = req.body['delete-event'];
 
+    //Pegando info do evento
+    const infoEvent = await database
+    .select()
+    .where({sys_calendar_eventId: idEvent})
+    .table("jcv_calendar_registers")
+    .then( data => {
+        return data
+    })
+
+
 
     //Mandando o email referente ao evento
     database
@@ -383,7 +398,7 @@ exports.deleteEvent = async(req,res) => {
     .table("jcv_calendar_registers")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" deletado com sucesso!");
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
             res.redirect("/painel/calendario/main");
         }
     })

@@ -4,7 +4,7 @@
     <section class="trade-main-section-page">
         <div class="trade-main-title-page">
             <span>Trade Marketing</span>
-            <span>/ pagina inicial</span>
+            <span>/ Home</span>
         </div>
     
         <!--  -->
@@ -12,17 +12,35 @@
         <section class="trade-main-container-body">
             <section class="trade-main-section-list-forms">
                 <div class="trade-main-forms">
-                    <a class="trade-main-forms-link" href="#">
-                        <div class="trade-main-forms-link-info">
-                            <span>Pesquisa de Mercado</span>
-                            <span>Qual produto mais vendido em sua loja?</span>
-                            <span>Esta pesquisa está <b>pendente!</b>, respoda-a.</span>
+
+                    <% let achadoSet = 0; %>
+                    <% if(getFormsReponse != '') { %>
+
+                        <% getFormsReponse.forEach(element => { %>
+
+                            <a class="trade-main-forms-link" href="/painel/trademkt/form/response/<%= element.jcv_trade_form_create_id %>">
+                                <div class="trade-main-forms-link-info">
+                                    <span>Pesquisa de Mercado</span>
+                                    <span><%= element.jcv_trade_form_create_titleForm %></span>
+                                    <span>Esta pesquisa está <b>pendenteXXXXXXX!</b>, respoda-a.</span>
+                                </div>
+                                <div class="trade-main-forms-link-next">
+                                    <span><i class="ri-arrow-right-line"></i></span>
+                                </div>
+                            </a>
+                            <hr style="margin: 19px 0">
+
+                        <!--  -->
+                        <% }) %>
+
+                        
+
+                    <% }else{ %>
+                        <div class="trade-main-forms-not-found">
+                            <img class="trade-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Voce não existe pesquisas em aberto..</span>
                         </div>
-                        <div class="trade-main-forms-link-next">
-                            <span><i class="ri-arrow-right-line"></i></span>
-                        </div>
-                    </a>
-                    <hr>
+                    <% } %>
                 </div>
             </section>
 
@@ -30,21 +48,23 @@
 
             <section class="trade-main-section-menu">
                 <ul class="trade-main-list-links-main">
-                    <li>
-                        <a class="trade-main-list-link" href="#" id="trade-mkt-form-visits">
-                            <div class="trade-main-list-link-simbol">
-                                <i class="ri-file-list-3-line"></i>
-                            </div>
-                            <!--  -->
-                            <div class="trade-main-list-link-text">
-                                <span>Formulário de Visita</span>
-                            </div>
-                            <!--  -->
-                            <div class="trade-main-link-icon">
-                                <i class="ri-arrow-right-s-line"></i>
-                            </div>
-                        </a>
-                    </li>
+                    <% if (getPerm[0].sys_tra_perm_admin == 1){ %>
+                        <li>
+                            <a class="trade-main-list-link" href="#" id="trade-mkt-form-visits">
+                                <div class="trade-main-list-link-simbol">
+                                    <i class="ri-file-list-3-line"></i>
+                                </div>
+                                <!--  -->
+                                <div class="trade-main-list-link-text">
+                                    <span>Formulário de Visita</span>
+                                </div>
+                                <!--  -->
+                                <div class="trade-main-link-icon">
+                                    <i class="ri-arrow-right-s-line"></i>
+                                </div>
+                            </a>
+                        </li>
+                    <% } %>
                     <li>
                         <a class="trade-main-list-link" href="#" id="trade-mkt-sales-days">
                             <div class="trade-main-list-link-simbol">
@@ -60,21 +80,23 @@
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <a class="trade-main-list-link" href="#" id="trade-mkt-search-forms">
-                            <div class="trade-main-list-link-simbol">
-                                <i class="ri-search-line"></i>
-                            </div>
-                            <!--  -->
-                            <div class="trade-main-list-link-text">
-                                <span>Pesquisa de Mercado</span>
-                            </div>
-                            <!--  -->
-                            <div class="trade-main-link-icon">
-                                <i class="ri-arrow-right-s-line"></i>
-                            </div>
-                        </a>
-                    </li>
+                    <% if (getPerm[0].sys_tra_perm_admin == 1){ %>
+                        <li>
+                            <a class="trade-main-list-link" href="#" id="trade-mkt-search-forms">
+                                <div class="trade-main-list-link-simbol">
+                                    <i class="ri-search-line"></i>
+                                </div>
+                                <!--  -->
+                                <div class="trade-main-list-link-text">
+                                    <span>Pesquisa de Mercado</span>
+                                </div>
+                                <!--  -->
+                                <div class="trade-main-link-icon">
+                                    <i class="ri-arrow-right-s-line"></i>
+                                </div>
+                            </a>
+                        </li>
+                    <% } %>
                 </ul>
             </section>
         </section>
@@ -88,11 +110,11 @@
             <i class="trade-close-action ri-close-line"></i>
         </div>
         <div class="trade-display-links-box">
-            <a class="trade-display-page-link" href="/painel/trademkt/visit">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/visit">
                 <i class="ri-add-line"></i>
                 <span>Novo Formulário</span>
             </a>
-            <a class="trade-display-page-link" href="">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
                 <i class="ri-file-list-2-line"></i>
                 <span>Listar de Formulários</span>
             </a>
@@ -106,14 +128,16 @@
             <i class="trade-close-action ri-close-line"></i>
         </div>
         <div class="trade-display-links-box">
-            <a class="trade-display-page-link" href="">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/salesDay">
                 <i class="ri-add-line"></i>
                 <span>Novo Formulário</span>
             </a>
-            <a class="trade-display-page-link" href="">
-                <i class="ri-file-list-2-line"></i>
-                <span>Listar de Formulários</span>
-            </a>
+            <% if (getPerm[0].sys_tra_perm_admin == 1){ %>
+                <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
+                    <i class="ri-file-list-2-line"></i>
+                    <span>Listar de Formulários</span>
+                </a>
+            <% } %>
         </div>
     </div>
 </section>
@@ -124,11 +148,11 @@
             <i class="trade-close-action ri-close-line"></i>
         </div>
         <div class="trade-display-links-box">
-            <a class="trade-display-page-link" href="">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/formSearch/new">
                 <i class="ri-add-line"></i>
                 <span>Nova Pesquisa</span>
             </a>
-            <a class="trade-display-page-link" href="">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
                 <i class="ri-file-list-2-line"></i>
                 <span>Lista de Pesquisas</span>
             </a>

@@ -1,0 +1,406 @@
+.list-trade-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list-trade-container-page{
+    width: 90%;
+}
+
+/* IDENTIFICAÇÃO DA PAGINA */
+.list-trade-container-identify-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.list-trade-container-identify-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.list-trade-container-identify-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/***************************/
+/* PAGINA */
+.list-trade-page-new{
+    width: 100%;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.list-trade-page-center{
+    padding: 12px;
+}
+
+/* BLOCO FINALIZAR PEDIDO */
+.list-trade-information-send{
+    width: 100%;
+}
+.list-trade-title-box{
+    display: flex;
+}
+.list-trade-title-box span{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/* INPUT PARA BUSCAR OS PEDIDOS */
+.all-order-srs-search{
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+.all-order-srs-box{
+    width: 100%;
+}
+.all-order-srs-box input{
+    width: 30%;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+/* INPUT ACTIONS ALL */
+.list-trade-actions{
+    display: flex;
+    align-items: flex-end;
+}
+.list-trade-cont-input{
+    width: 170px;
+    margin-right: 23px;
+    display: flex;
+    flex-direction: column;
+}
+.list-trade-cont-input label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-trade-cont-input select{
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+    cursor: pointer;
+    background: transparent;
+}
+.all-order-action-all{
+    display: flex;
+    align-items: center;
+}
+.all-order-action-all button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+/* */
+.list-trade-finaly-request{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 28px;
+}
+
+/******************************/
+/******************************/
+/* CONTAINER ROW */
+.list-trade-container-row-large{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+}
+.list-trade-container-box-large{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.list-trade-container-box-large label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-trade-container-box-large input[type=text]{
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+
+/*****************/
+/* SINGLE */
+.list-trade-container-row-single{
+    width: 100%;
+    display: flex;
+}
+.list-trade-container-box-single{
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.list-trade-container-box-single-select{
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.list-trade-container-box-single-select label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-trade-container-box-single label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+.list-trade-container-box-single input{
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+}
+.list-trade-container-box-single-select select{
+    width: 150px;
+    margin-top: 6px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+    cursor: pointer;
+    background: transparent;
+}
+
+/* LINKS */
+.list-trade-container-link{
+    margin: 0 36px;
+    display: flex;
+    align-items: center;
+}
+.list-trade-container-link a{
+    color: var(--color-one);
+    font-size: 0.8rem;
+}
+.list-trade-container-link a i{
+    margin-left: 3px;
+}
+
+/* BUTTON */
+.list-trade-container-button{
+    display: flex;
+    align-items: center;
+    margin-left: 26px;
+}
+.list-trade-button-default{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+}
+
+
+/************************/
+/************************/
+/* TABELA */
+.list-trade-section-table{
+    width: 100%;
+    margin-top: 36px;
+    margin-bottom: 36px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.list-trade-container-main-table{
+    padding: 12px;
+}
+
+.list-trade-container-table-set{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 36px;
+}
+
+/* TABLE */
+.list-trade-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.list-trade-table tr th{
+    border: none;
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    font-weight: normal;
+    background: var(--color-one);
+    color: var(--color-four);
+    padding: 6px;
+    font-size: 0.9rem;
+    transition: 0.5s;
+}
+.list-trade-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 13px 6px;
+    color: var(--color-one);
+    font-size: 0.9rem;
+}
+.list-trade-table tr td input{
+    cursor: pointer;
+}
+.list-trade-table tbody tr:hover{
+    background: var(--color-six);
+    transition: 0.5s;
+}
+
+.list-trade-table tr th:nth-child(1){
+    width: 1%;
+}
+.list-trade-table tr th:nth-child(2){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(3){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(4){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(5){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(6){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(7){
+    width: 5%;
+}
+.list-trade-table tr th:nth-child(8){
+    width: 5%;
+    text-align: center;
+}
+
+/*********/
+
+.list-trade-table tr:nth-child(even) {
+    background-color: var(--color-eight);
+}
+
+/* ACTIONS */
+.list-trade-container-actions{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;       
+}
+
+.list-trade-container-actions a{
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--color-one);
+    background: transparent;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+.list-trade-container-actions button{
+    font-size: 1.4rem;
+    color: var(--color-one);
+    background: transparent;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+
+/***************************************/
+/* TEXTOS PERSONALIZADOS PARA O STATUS */
+#all-order-text-green{
+    color: var(--color-green);
+}
+#all-order-text-yellow{
+    color: var(--color-yellow);
+}
+#all-order-text-red{
+    color: var(--color-red);
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 950px) {
+    .list-trade-container-row-large{
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+    .list-trade-container-box-single{
+        margin-left: 0;
+        margin-bottom: 26px;
+    }
+    .list-trade-container-box-single-select{
+        width: 100%;
+        margin-bottom: 26px;
+    }
+    .list-trade-container-box-single-select select {
+        width: 100%;
+    }
+    .list-trade-container-box-single input[type=date]{
+        width: 100%;
+    }
+    .list-trade-container-button{
+        margin: 0;
+        justify-content: center;
+    }
+
+    .list-trade-table{
+        min-width: 900px;
+    }
+    .list-trade-container-table-set{
+        overflow: auto;
+        justify-content: flex-start;
+    }
+
+    .list-trade-container-identify-page{
+        width: 100%;
+        margin: 0;
+        margin: 26px 0;
+    }
+
+    .all-order-srs-box input{
+        width: 100%;
+    }
+
+    .list-trade-actions{
+        width: 100%;
+        align-items: flex-end;
+    }
+    .list-trade-cont-input{
+        width: 100%;
+        margin-top: 23px;
+    }
+
+    .all-order-srs-search{
+        flex-direction: column;
+    }
+}

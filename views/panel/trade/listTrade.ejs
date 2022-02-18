@@ -1,0 +1,371 @@
+<link rel="stylesheet" href="/panel/css/trade/listTrade.css">
+
+<section class="list-trade-container-main">
+    <section class="list-trade-container-page">
+        <div class="list-trade-container-identify-page">
+            <span>Relatorios</span>
+            <span>/ Trade Marketing</span>
+        </div>
+        <form class="list-trade-page-new" method="post">
+            <div class="list-trade-page-center">
+
+                <section class="list-trade-information-send">
+                    <div class="list-trade-title-box"><span>Liste as requisições</span></div>
+                    <div class="list-trade-finaly-request">
+                        <div class="list-trade-container-row-large">
+                            <div class="list-trade-container-box-single">
+                                <label for="">ID</label>
+                                <input type="number" min="1" name="all-id-search" id="">
+                            </div>
+                            <div class="list-trade-container-box-single-select">
+                                <label for="">Relatorio</label>
+                                <select name="list-trade-rel-type" id="list-trade-rel-type">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">Vendas Diárias</option>
+                                    <option value="2">Formulario de Visita</option>
+                                    <option value="3">Pesquisa de Mercado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="list-trade-container-row-large" id="list-trade-vd">
+                            <div class="list-trade-container-box-single-select">
+                                <label for="">Venda Diarias - Usuarios</label>
+                                <select name="" id="list-trade-vd-select-users">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">User 1</option>
+                                    <option value="1">User 2</option>
+                                    <option value="239">User 239</option>
+                                </select>
+                            </div>
+                            <div class="list-trade-container-box-single-select">
+                                <label for="">Venda Diarias - Loja</label>
+                                <select name="" id="list-trade-vd-select-shops">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">Loja 1</option>
+                                    <option value="2">Loja 2</option>
+                                    <option value="3">Loja 1</option>
+                                </select>
+                            </div>
+                            <div class="list-trade-container-box-single">
+                                <label for="">Venda Diarias - Data</label>
+                                <input type="date" name="list-trade-vd-date" id="">
+                            </div>
+                        </div>
+
+                        <div class="list-trade-container-row-large" id="list-trade-fv">
+                            <div class="list-trade-container-box-single-select">
+                                <label for="">Formulário de Visita - Loja</label>
+                                <select name="" id="list-trade-fv-select-shops">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="1">Requisição Efetuada</option>
+                                    <option value="2">Em Separação</option>
+                                    <option value="3">Recebida pelo usuario</option>
+                                    <option value="4">Cancelado</option>
+                                    <option value="5">Pendente</option>
+                                    <option value="6">Requisição Enviada</option>
+                                </select>
+                            </div>
+                            <div class="list-trade-container-box-single">
+                                <label for="">Formulário de Visita - Data</label>
+                                <input type="date" name="list-trade-fv-date" id="">
+                            </div>
+                        </div>
+
+                        <div class="list-trade-container-row-large" id="list-trade-ps">
+                            <div class="list-trade-container-box-single">
+                                <label for="">Pesquisas - Data</label>
+                                <input type="date" name="list-trade-ps-date" id="">
+                            </div>
+                            <div class="list-trade-container-box-single">
+                                <label for="">Pesquisas - Titulo</label>
+                                <input type="text" style="text-transform: none;" name="list-trade-ps-title">
+                            </div>
+                        </div>
+
+                        <div class="list-trade-container-row-large">
+                            <div class="list-trade-container-button">
+                                <button formaction="/painel/trademkt/listTrade/search" class="list-trade-button-default class-loader">Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="list-trade-container-row-large">
+                            <div class="sys-filter-display-main" id="sys-filter-display-main">
+                                <div class="sys-filter-container-col">
+                                    <div class="sys-filter-title">
+                                        <span>Filtros</span>
+                                    </div>
+                                    <div class="sys-filter-component-boxs" id="sys-filter-component-boxs">
+                                        <!--  -->
+                                        <!--  -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </form>
+
+        <% if(locals.resultSearchDataTrade[1] != "" && locals.resultSearchDataTrade[0] == 1){ %>
+        <section class="list-trade-section-table">
+            <form class="list-trade-container-main-table" method="post">
+                <div class="list-trade-title-box"><span>Vendas Diarias</span></div>
+                <div class="all-order-srs-search">
+                    <div class="all-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do solicitante, data, status, unidade.." id="input-search-requests">
+                    </div>
+
+
+                    <div class="list-trade-actions">
+                        <div class="list-trade-cont-input">
+                            <label for="">Ação</label>
+                            <select name="order-action-command-vd" id="">
+                                <option value="">-- AÇÃO --</option>
+                                <option value="" disabled>-- Exportar</option>
+                                <option value="VD01">⠀⠀Exportar Excel</option>
+                            </select>
+                        </div>
+                        <div class="all-order-action-all">
+                            <button formaction="/painel/trademkt/action/vd/action">Executar</button>
+                        </div>
+                    </div>
+                </div>
+                <section class="list-trade-container-table-set">
+                    <table class="list-trade-table" id="list-trade-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>ID</th>
+                                <th>Emitido</th>
+                                <th>Gerado por</th>
+                                <th>Loja</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% resultSearchDataTrade[1].forEach(element => { %>
+                            <tr>
+                                <td><input type="checkbox" value="<%= element.jcv_trade_sales_form_id %>" name="vd-id-actions-all" class="checkbox-select-single"></td>
+                                <td><b>#<%= element.jcv_trade_sales_form_id %></b></td>
+                                <td><%= element.jcv_trade_sales_form_date %></td>
+                                <td><b><%= element.jcv_userNamePrimary %></b></td>
+                                <td><b><%= element.jcv_trade_shops_name %></b></td>
+                                <td><div class="list-trade-container-actions">
+                                    <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
+                                    <button formaction="" value="" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                </div></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </section>
+            </form>
+        </section>
+        <% }else if(locals.resultSearchDataTrade[1] != "" && locals.resultSearchDataTrade[0] == 2){ %>
+            <section class="list-trade-section-table">
+                <form class="list-trade-container-main-table" method="post">
+                    <div class="list-trade-title-box"><span>Formulario de Visita</span></div>
+                    <div class="all-order-srs-search">
+                        <div class="all-order-srs-box">
+                            <input type="text" placeholder="Busque por ID, nome do solicitante, data, status, unidade.." id="input-search-requests">
+                        </div>
+    
+    
+                        <div class="list-trade-actions">
+                            <div class="list-trade-cont-input">
+                                <label for="">Ação</label>
+                                <select name="order-action-command-fv" id="">
+                                    <option value="">-- AÇÃO --</option>
+                                    <option value="" disabled>-- Exportar</option>
+                                    <option value="FV01">⠀⠀Exportar Excel</option>
+                                </select>
+                            </div>
+                            <div class="all-order-action-all">
+                                <button formaction="/painel/trademkt/action/fv/action">Executar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="list-trade-container-table-set">
+                        <table class="list-trade-table" id="list-trade-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                    <th>ID - Usuario</th>
+                                    <th>Criado</th>
+                                    <th>Loja</th>
+                                    <th>Data Respo.</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                                <% resultSearchDataTrade[1].forEach(element => { %>
+                                <tr>
+                                    <td><input type="checkbox" value="<%= element.jcv_trade_visit_id %>" name="fv-id-actions-all" class="checkbox-select-single"></td>
+                                    <td><b>#<%= element.jcv_trade_visit_id %> - <%= element.jcv_userNamePrimary %></b></td>
+                                    <td><%= element.jcv_trade_visit_created %></td>
+                                    <td><b><%= element.jcv_trade_shops_name %></b></td>
+                                    <td><b><%= element.jcv_trade_visit_date %></b></td>
+                                    <td><div class="list-trade-container-actions">
+                                        <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
+                                        <button formaction="" value="" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                    </div></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </section>
+                </form>
+            </section>
+        <% }else if(locals.resultSearchDataTrade[1] != "" && locals.resultSearchDataTrade[0] == 3){ %>
+            <section class="list-trade-section-table">
+                <form class="list-trade-container-main-table" method="post">
+                    <div class="list-trade-title-box"><span>Pesquisa de Mercado</span></div>
+                    <div class="all-order-srs-search">
+                        <div class="all-order-srs-box">
+                            <input type="text" placeholder="Busque por ID, nome do solicitante, data, status, unidade.." id="input-search-requests">
+                        </div>
+    
+    
+                        <div class="list-trade-actions">
+                            <div class="list-trade-cont-input">
+                                <label for="">Ação</label>
+                                <select name="order-action-command-fp" id="">
+                                    <option value="">-- AÇÃO --</option>
+                                    <option value="" disabled>-- Exportar</option>
+                                    <option value="FP01">⠀⠀Exportar Respostas Excel</option>
+                                </select>
+                            </div>
+                            <div class="all-order-action-all">
+                                <button formaction="/painel/trademkt/action/fp/action">Executar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="list-trade-container-table-set">
+                        <table class="list-trade-table" id="list-trade-table">
+                            <thead>
+                                <tr>
+                                    <th>⠀</th>
+                                    <th>ID - Titulo</th>
+                                    <th>Emitido</th>
+                                    <th>Expira em</th>
+                                    <th>Respostas</th>
+                                    <th>Ativo?</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                                <% resultSearchDataTrade[1].forEach(element => { %>
+                                <tr>
+                                    <td><input type="radio" value="<%= element.jcv_trade_form_create_id %>" name="fp-id-actions-all" class="checkbox-select-single"></td>
+                                    <td><b>#<%= element.jcv_trade_form_create_id %> - <%= element.jcv_trade_form_create_titleForm %></b></td>
+                                    <td><%= element.jcv_trade_form_create_created_date %></td>
+                                    <td><b><%= element.jcv_trade_form_create_expired %></b></td>
+                                    <td><b><%= element.jcv_trade_form_create_total_reponse %></b></td>
+
+                                    <td>
+                                        <% if(element.jcv_trade_form_create_enabled == 1){ %>
+                                            <b>Sim</b>
+                                        <% }else{ %>
+                                            <b>Não</b>
+                                        <% } %>
+                                    </td>
+
+                                    <td><div class="list-trade-container-actions">
+                                        <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
+                                        <a class="class-loader" href="/painel/trademkt/formSearch/edit/<%= element.jcv_trade_form_create_id %>"><i class="ri-edit-line"></i></a>
+                                        <button formaction="/painel/trademkt/action/fp/export" value="" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                    </div></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </section>
+                </form>
+            </section>
+        <% } %>
+        
+    </section>
+</section>
+<script>
+    $(function(){
+
+
+        $("#list-trade-fv").css('display','none')
+        $("#list-trade-vd").css('display','none')
+        $("#list-trade-ps").css('display','none')
+
+        $("#list-trade-rel-type").change(function(){
+            let valueSet = $(this).val();
+
+            $.fn.loadSpin(1);
+            
+            if(valueSet == 1){
+                $("#list-trade-fv").fadeOut()
+                $("#list-trade-ps").fadeOut()
+                $("#list-trade-vd").css('display','flex')
+            }else if(valueSet == 2){
+                
+                $("#list-trade-vd").fadeOut()
+                $("#list-trade-ps").fadeOut()
+                $("#list-trade-fv").css('display','flex')
+            }else if(valueSet == 3){
+                $("#list-trade-fv").fadeOut()
+                $("#list-trade-vd").fadeOut()
+                $("#list-trade-ps").css('display','flex')
+            }
+        
+            setInterval(() => {
+                $.fn.loadSpin(0);
+            }, 500);
+        })
+
+
+        //Filtro Vendas Diarias: Usuarios
+        $("#list-trade-vd-select-users").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','list-trade-vd-select-users','VD_Usuarios');
+        })
+        //Filtro Vendas Diarias: Lojas
+        $("#list-trade-vd-select-shops").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','list-trade-vd-select-shops','VD_Shops');
+        })
+
+        //Filtro Formulario de Visitas: Lojas
+        $("#list-trade-fv-select-shops").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','list-trade-fv-select-shops','FV_Shops');
+        })
+
+        //Checknox all
+        $("#checkbox-select-all").click(function(){
+            var checkSet = $(this).is(':checked');
+            var inputsCheckedmodel = $('.checkbox-select-single');
+
+            if(checkSet == true){
+                inputsCheckedmodel.prop('checked', true);
+            }else{
+                inputsCheckedmodel.prop('checked', false);
+            }
+        })
+        $(".checkbox-select-single").click(function(){
+            $("#checkbox-select-all").prop("checked", false)
+        })
+
+
+
+        //Input Search
+        $.fn.searchInputTable('#list-trade-table tr', '#input-search-requests')
+
+        //Paginação das tabelas
+        $.fn.paginationTableMain('#list-trade-table',10,0);
+
+        
+
+
+    })
+</script>

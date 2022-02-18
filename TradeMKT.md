@@ -19,7 +19,7 @@ Este fomrulario informa as vendas diarias POR LOJA das marcas felps, retro avenc
 # Sistema de pesquisa:
 Criar pesquisas para os representantes responder (1 resposta por loja), com modulo que notifique os representantes sobre novas pesquisas
 
-question_type = 1{Pergunta com resposta}, 2{Pergunta com resposta em checkbox}, 3{Pergunta com resposta em checkbox em grade}, 4{Pergunta com reposta S/N}
+question_type = 1{Pergunta com resposta}, 2{Pergunta com resposta em checkbox em grade}, 3{Pergunta com reposta S/N}
 
 Modelagem das perguntas dinamicas:
 
@@ -31,15 +31,6 @@ Modelagem das perguntas dinamicas:
 
 {
     question_type: 2,
-    question_response: {
-        question_ckeck_title: "Titulo da resposta do checkbox simples",
-        question_ckeck_value: 1 OR 0, //Aqui ele define se o input esta on ou off
-    }
-},
-
-
-{
-    question_type: 3,
     question_response: {
 
         question_check_resp_1: {
@@ -58,6 +49,6 @@ Modelagem das perguntas dinamicas:
 
 
 {
-    question_type: 4,
+    question_type: 3,
     question_response_bolean: 1/0
 },

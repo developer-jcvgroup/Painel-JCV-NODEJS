@@ -39,12 +39,15 @@
 /* LISTA DE FORMULARIOS */
 .trade-main-section-list-forms{
     min-width: 500px;
+    max-width: 500px;
     height: 100%;
+    min-height: 450px;
     display: flex;
     flex-direction: column;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 4px;
+    overflow: auto;
 }
 .trade-main-forms{
     padding: 24px;
@@ -111,6 +114,7 @@
 .trade-main-list-links-main li{
     padding: 12px;
     margin: 24px 0;
+    min-width: 450px;
 }
 
 /*  */
@@ -131,8 +135,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-one);
-    padding: 32px 10px;
+    background-color: var(--color-two);
+    padding: 42px 10px;
     border-radius: 5px 0 0 5px;
 }
 .trade-main-list-link-simbol i{
@@ -215,4 +219,51 @@
 .trade-display-page-link span{
     color: var(--color-two);
     font-size: 1rem;
+}
+
+.trade-main-forms-not-found{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.trade-main-forms-not-found span{
+    font-size: 0.8rem;
+    margin-top: 14px;
+}
+.trade-main-forms-error{
+    width: 70%;
+    margin-top: 32px;
+    object-fit: contain;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 900px) {
+    .trade-main-container-body{
+        flex-direction: column;
+    }
+    .trade-main-section-list-forms{
+        min-width: 100%;
+    }
+    .trade-main-section-menu{
+        margin-top: 24px;
+        width: 100%;
+    }
+    .trade-main-list-links-main{
+        height: 100%;
+    }
+    .trade-main-list-link-simbol{
+        min-width: 20%;
+        padding: 32px 10px;
+    }
+    .trade-main-list-links-main li{
+        min-width: 100%;
+    }
+    .trade-main-list-link-text span{
+        font-size: 1.3rem;
+    }
 }

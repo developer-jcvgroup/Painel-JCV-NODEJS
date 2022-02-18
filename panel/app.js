@@ -181,9 +181,35 @@ router.post("/system/unidades/action/save/edit", authenticate, controllerDepartm
 /***********************************/
 /***********************************/
 //Trade Mtk: Pagina inicial
-router.get('/trademkt/main', controllerTrade.controllerMain)
+router.get('/trademkt/main', authenticate, getPermissions, controllerTrade.controllerMain)
 //Trade Mtk: Formulario de visita
-router.get('/trademkt/visit', controllerTrade.visitForm)
+router.get('/trademkt/visit', authenticate, getPermissions, controllerTrade.visitForm)
+router.post('/trademkt/visit/new', authenticate, controllerTrade.visitFormNew)
+router.post('/trademkt/action/fv/action', authenticate, controllerTrade.visitFormModule)
+//Trade Mtk: Vendas diarias
+router.get('/trademkt/salesDay', authenticate, getPermissions, controllerTrade.salesDay)
+router.post('/trademkt/salesDay/new', authenticate, controllerTrade.salesDayRegister)
+//Trade Mtk: Formulario de pesquisa
+router.get('/trademkt/formSearch/new', authenticate, getPermissions, controllerTrade.formSearch)
+router.get('/trademkt/formSearch/edit/:id?', authenticate, getPermissions, controllerTrade.formSearchEdit)
+router.post('/trademkt/formSearch/newForm', authenticate, controllerTrade.formSearchNew)
+router.post('/trademkt/formSearch/editForm', authenticate, controllerTrade.formSearchEditAction)
+//Trade Mtk: Lista Geral
+router.get('/trademkt/listTrade', authenticate, getPermissions, controllerTrade.listTradePage)
+router.post('/trademkt/listTrade/search', authenticate, controllerTrade.listTradeSearch)
+router.post('/trademkt/action/vd/action', authenticate, controllerTrade.actionVDmodule)
+router.post('/trademkt/action/fp/action', authenticate, controllerTrade.actionFPmodule)
+//Trade Mtk: Pagina de resposta
+router.get('/trademkt/form/response/:id', authenticate, getPermissions, controllerTrade.formResponse)
+router.post('/trademkt/formSearch/responseForm', authenticate, controllerTrade.formResponseAction)
+//Trade Mkt: Lojas
+router.get('/trademkt/shops', authenticate, getPermissions, controllerTrade.shopsPage)
+router.post('/trademkt/shops/register/shop/new', authenticate, controllerTrade.shopsRegisterNew)
+router.post('/trademkt/shops/register/shop/edit', authenticate, controllerTrade.shopsRegisterEdit)
+router.post('/trademkt/shops/action/execute', authenticate, controllerTrade.shopsRegisterActions)
+router.get('/trademkt/shops/config/:id?', authenticate, getPermissions, controllerTrade.configShops)
+//
+router.post('/trademkt/shops/set/users', authenticate, controllerTrade.saveSetUsers)
 
 /***********************************/
 /***********************************/

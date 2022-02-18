@@ -216,15 +216,43 @@
                                                     <% if(allEventsMonth[jj].sys_calendar_eventDate == (i < 10 ? '0'+i : i)+'/'+monthNow){ %>
                                                         
                                                         <% let arrayPersons = allEventsMonth[jj].sys_calendar_eventPersons.split(',') %>
-                                                        
-                                                        <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
-                                                            <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
-                                                        <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
-                                                            <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+
+
+                                                        <!-- Validando se é o mes atual -->
+                                                        <% if(monthAgo == 1){ %>
+                                                            <!-- Mes atual -->
+
+                                                            <% if(allEventsMonth[jj].sys_calendar_eventDate < dayNow.split('-')[0]+'/'+dayNow.split('-')[1]+'/'+dayNow.split('-')[2]){ %>
+                                                                <!-- Eventos anteriores da data atual -->
+                                                                
+                                                                <!-- Evento não sera exibido -->
+                                                            <% }else{ %>
+                                                                <!-- Eventos futuro a data atual -->
+    
+                                                                <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
+                                                                    <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                                <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
+                                                                    <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                                <% }else{ %>
+                                                                    <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                                <% } %>
+    
+                                                            <% } %>
                                                         <% }else{ %>
-                                                            <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <!-- Não é o mes atual -->
+                                                            <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
+                                                                <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
+                                                                <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <% }else{ %>
+                                                                <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                            <% } %>
                                                         <% } %>
+
                                                         
+
+
+
                                                     <% } %>
                                                 <% } %>
                                             </ul>

@@ -42,6 +42,7 @@
                                 <th>Requisitor</th>
                                 <th>Progama da Beleza</th>
                                 <th>Calendario</th>
+                                <th>Trade Marketing</th>
 
                                 <th>Classificado</th>
                                 <th>Ativo?</th>
@@ -146,6 +147,24 @@
                                 </td>
 
                                 <td>
+                                    <div class="sys-container-two">
+                                        <div class="sys-container-two-row">
+                                            <div class="sys-container-two-box">
+                                                <label for="">Utilizar</label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-trade-use" id="">
+                                            </div>
+
+                                            <!-- admin -->
+
+                                            <div class="sys-container-two-box">
+                                                <label for=""><b>*Admin*</b></label>
+                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-trade-admin" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
                                     <select name="save-new-sys-type-user" id="">
                                         <option value="0">* Selecione *</option>
                                         <option value="1">Master</option>
@@ -192,11 +211,20 @@
                             
                             <% if(locals.allUsers != ''){ %>
                                 <% allUsers.forEach(element => { %>
-                                    <tr>
+
+                                    <% if(element.jcv_userEnabled == 0){ %>
+                                        <tr style="background: #e01e384b;">
+                                    <% }else{ %>
+                                        <tr>
+                                    <% } %>
+                                    
                                         <td>
                                             <input type="text" name="save-edit-cpf-<%= element.jcv_id %>" value="<%= element.jcv_userCpf %>" class="user-insert-cpf">
                                         </td>
-                                        <td><input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
+                                        
+                                        
+                                        <td>
+                                            <input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
                                         <td>
                                             <input hidden type="text" value="<%= element.sys_unity_name %>">
                                             <select name="save-edit-unidade-<%= element.jcv_id %>">
@@ -330,6 +358,35 @@
                                                             <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
                                                         <% }else{ %>
                                                             <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="sys-container-two">
+                                                <div class="sys-container-two-row">
+
+                                                    <!-- use -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for="">Utilizar</label>
+                                                        
+                                                        <% if(element.sys_tra_perm_use == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-trade-use-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-trade-use-<%= element.jcv_id %>">
+                                                        <% } %>
+                                                    </div>
+        
+                                                    <!-- admin -->
+                                                    <div class="sys-container-two-box">
+                                                        <label for=""><b>*Admin*</b></label>
+                                                        
+                                                        <% if(element.sys_tra_perm_admin == 1){ %>
+                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-trade-admin-<%= element.jcv_id %>">
+                                                        <% }else{ %>
+                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-trade-admin-<%= element.jcv_id %>">
                                                         <% } %>
                                                     </div>
                                                 </div>

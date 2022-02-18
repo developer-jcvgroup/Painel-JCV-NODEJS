@@ -1,0 +1,359 @@
+<link rel="stylesheet" href="/panel/css/trade/vendasDiarias.css">
+
+<section class="sales-day-form-main-section">
+    <form class="sales-day-form-section-page" method="post">
+        <div class="sales-search-link-back">
+            <a class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
+        <div class="sales-day-form-display">
+            <div class="sales-day-form-title" id="sales-day-form-title">
+                <div class="sales-day-form-title-one">
+                    <span>Vendas Diárias - <span id="title-header">Felps Professional</span></span>
+                </div>
+                <div class="sales-day-form-info">
+                    <label for="">LOJA</label>
+                    <select name="sales-action-select-shop">
+                        <option value="">Selecione</option>
+                        <% shopsAll.forEach(element => { %>
+
+                            <% if(element.achado == 1){ %>
+                                <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name %></option>
+                            <% } %>
+
+                        <% }) %>
+                    </select>
+                    <input type="date" name="sales-action-date" id="">
+                </div>
+                <!--  -->
+                <div class="sales-day-form-title-two">
+                    <img class="sales-day-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+
+            <!--  -->
+            <div class="sales-day-form-section" id="section-one">
+                <div class="sales-day-form-section-title">
+                    <span>Felps Professional</span>
+                </div>
+                <div class="sales-day-form-section-desc">
+                    <span>Insira os dados no formulario abaixo</span>
+                </div>
+                <div class="sales-day-form-section-questions">
+
+                    <div class="sales-day-form-section-question-box">
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Numero de peças vendidas:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input type="number" min="0" name="sales-action-number-parts-felps">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label for="">Teve Ação?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-mkt-action-felps" id="sales-day-form-select-one">
+                                    <option selected value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                            <div class="sales-day-form-section-questions-checks-text" id="sales-one-text-one">
+                                <label>QUAL?</label>
+                                <input name="sales-action-mkt-action-felps" type="text">
+                            </div>
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label for="">Produto mais vendido:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input name="sales-action-popular-sale-felps" type="text">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label for="">Loja possui material de marketing?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-matetrial-mkt-felps" id="sales-day-form-select">
+                                    <option value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--  -->
+                </div>
+
+                <div class="sales-day-action-form" id="sales-button-box-one">
+                    <button type="button" class="sales-day-action-form-button-send" id="button-command-next-one">Próximo</button>
+                </div>
+            </div>
+
+            <!--  -->
+            <div class="sales-day-form-section" id="section-two">
+                <div class="sales-day-form-section-title">
+                    <span>Retrô Cosméticos</span>
+                </div>
+                <div class="sales-day-form-section-desc">
+                    <span>Insira os dados no formulario abaixo</span>
+                </div>
+                <div class="sales-day-form-section-questions">
+
+                    <div class="sales-day-form-section-question-box">
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Numero de peças vendidas:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input type="number" min="0" name="sales-action-number-parts-retro">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Teve Ação?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-mkt-action-retro" id="sales-day-form-select-two">
+                                    <option selected value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                            <div class="sales-day-form-section-questions-checks-text" id="sales-two-text-one">
+                                <label>QUAL?</label>
+                                <input name="sales-action-mkt-action-retro" type="text">
+                            </div>
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Produto mais vendido:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input name="sales-action-popular-sale-retro" type="text">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label for="">Loja possui material de marketing?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-matetrial-mkt-retro" id="sales-day-form-select">
+                                    <option value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--  -->
+                </div>
+
+                <div class="sales-day-action-form" id="sales-button-box-two">
+                    <button type="button" class="sales-day-action-form-button-reset" id="button-command-back-two">Voltar</button>
+                    <button type="button" class="sales-day-action-form-button-send" id="button-command-next-two">Próximo</button>
+                </div>
+            </div>
+
+            <!--  -->
+            <div class="sales-day-form-section" id="section-three">
+                <div class="sales-day-form-section-title">
+                    <span>Avenca Cosméticos</span>
+                </div>
+                <div class="sales-day-form-section-desc">
+                    <span>Insira os dados no formulario abaixo</span>
+                </div>
+                <div class="sales-day-form-section-questions">
+
+                    <div class="sales-day-form-section-question-box">
+
+                        <div class="sales-day-form-section-question-title">
+                            <label for="">Numero de peças vendidas:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input type="number" min="0" name="sales-action-number-parts-avenca">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Teve Ação?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-mkt-action-avenca" id="sales-day-form-select-three">
+                                    <option selected value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                            <div class="sales-day-form-section-questions-checks-text" id="sales-three-text-one">
+                                <label>QUAL?</label>
+                                <input name="sales-action-mkt-action-avenca" type="text">
+                            </div>
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Produto mais vendido:</label>
+                        </div>
+
+                        <div class="sales-day-form-section-text">
+                            <input name="sales-action-popular-sale-avenca" type="text">
+                        </div>
+
+                        <!--  -->
+                        <hr>
+                        <!--  -->
+
+                        <div class="sales-day-form-section-question-title">
+                            <label>Loja possui material de marketing?:</label>
+                        </div>
+                        
+                        <div class="sales-day-form-section-question-cont">
+                            <div class="sales-day-form-section-questions-select">
+                                <select name="sales-action-matetrial-mkt-avenca" id="sales-day-form-select">
+                                    <option value="1">SIM</option>
+                                    <option value="0">NÃO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--  -->
+                </div>
+
+                <!--  -->
+
+                <div class="sales-day-action-form" id="sales-button-box-three">
+                    <button type="button" class="sales-day-action-form-button-reset" id="button-command-back-three">Voltar</button>
+                    <button formaction="/painel/trademkt/salesDay/new" type="submit" class="sales-day-action-form-button-send">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<script>
+    //Select actions one
+    $("select#sales-day-form-select-one").change(function(){
+        if($(this).val() == 1){
+            $("#sales-one-text-one").fadeIn()
+        }else{
+            $("#sales-one-text-one").fadeOut()
+        }
+    })
+
+    //Select actions two
+    $("select#sales-day-form-select-two").change(function(){
+        if($(this).val() == 1){
+            $("#sales-two-text-one").fadeIn()
+        }else{
+            $("#sales-two-text-one").fadeOut()
+        }
+    })
+
+    //Select actions three
+    $("select#sales-day-form-select-three").change(function(){
+        if($(this).val() == 1){
+            $("#sales-three-text-one").fadeIn()
+        }else{
+            $("#sales-three-text-one").fadeOut()
+        }
+    })
+
+    /*  */
+    /*  */
+
+    
+
+    /*  */
+    /*  */
+
+    $("#section-one").css('display','flex');
+    //$("#sales-day-form-title").css('background','black')
+
+    /*  */
+    $("#button-command-next-one").click(function(){
+        $("#section-one").css('display','none')
+        $("#section-two").fadeIn()
+        //$("#sales-day-form-title").css('background','#43BAC8')
+        $("#title-header").text("Retrô Cosméticos")
+
+
+        /* $(".sales-day-form-title-one").css('color', 'var(--color-one)')
+        $(".sales-day-form-info").children("label").css('color', 'var(--color-one)')
+        $(".sales-day-form-info").children("input").css({'color': 'var(--color-one)','border':'1px solid var(--color-one)'})
+        $(".sales-day-form-info").children("select").css({'color': 'var(--color-one)','border':'1px solid var(--color-one)'}) */
+    })
+    /*  */
+    $("#button-command-back-two").click(function(){
+        $("#section-two").css('display','none')
+        $("#section-one").fadeIn()
+        //$("#sales-day-form-title").css('background','black')
+        $("#title-header").text("Felps Professional")
+
+
+        /* $(".sales-day-form-title-one").css('color', 'var(--color-three)')
+        $(".sales-day-form-info").children("label").css('color', 'var(--color-three)')
+        $(".sales-day-form-info").children("input").css({'color': 'var(--color-three)','border':'1px solid var(--color-three)'})
+        $(".sales-day-form-info").children("select").css({'color': 'var(--color-three)','border':'1px solid var(--color-three)'}) */
+    })
+    /*  */
+    $("#button-command-next-two").click(function(){
+        $("#section-two").css('display','none')
+        $("#section-three").fadeIn()
+        //$("#sales-day-form-title").css('background','#3A6320')
+        $("#title-header").text("Avenca Cosméticos")
+    })
+    /*  */
+    $("#button-command-back-three").click(function(){
+        $("#section-three").css('display','none')
+        $("#section-two").fadeIn()
+        $("#title-header").text("Retrô Cosméticos")
+
+        //$("#sales-day-form-title").css('background','#43BAC8')
+
+    })
+</script>
