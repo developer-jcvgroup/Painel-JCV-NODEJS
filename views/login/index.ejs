@@ -2,8 +2,28 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="JCV Group">
+    <meta name="apple-mobile-web-app-title" content="JCV Group">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="./index.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script src="/sw.js"></script>
+    <script src="/service-work.js"></script>
+
     <link rel="stylesheet" href="/login/css/index.css">
     <link rel="stylesheet" href="/login/css/spinLoad.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -121,6 +141,10 @@
 </section>
 </body>
 <script>
+    //Limpa os caches gerados pelo pwa
+    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+    self.caches.delete('JCV-Group-Sistema');//Nome do cache
+    
     //PWA
     let deferredPrompt; // Allows to show the install prompt
     let setupButton;
