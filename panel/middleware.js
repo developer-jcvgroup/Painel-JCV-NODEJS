@@ -40,7 +40,9 @@ authenticate = async (req, res, next) => {
             let allUpdate = []
 
             //Pegando so nome e sobrenome
-            let GLOBALuserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0] + " " + searchUser[0]["jcv_userNamePrimary"].split(' ')[1];
+            let nameFirstLast = searchUser[0]["jcv_userNamePrimary"].split(' ').length-1;
+
+            let GLOBALuserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0] + " " + searchUser[0]["jcv_userNamePrimary"].split(' ')[nameFirstLast];
             let GLOBALfisrtUserName = searchUser[0]["jcv_userNamePrimary"].split(' ')[0];
 
             GLOBAL_DASH = [
