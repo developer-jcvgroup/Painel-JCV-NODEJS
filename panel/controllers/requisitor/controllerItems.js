@@ -47,17 +47,6 @@ exports.saveNewItem = async (req,res) => {
     })
 }
 
-exports.deleteItem = async (req,res) => {
-    const idItem = req.body['button-remove-id'];
-
-    database.where({sys_req_itemId: idItem}).delete().table("jcv_req_items").then( data => {
-        if(data == 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item foi excluído com sucesso!");
-            res.redirect("/painel/requisitor/items");
-        }
-    })
-}
-
 exports.requestItemAdmin = async (req,res) =>{
 
     const itemRegister = req.body['input-item-register']

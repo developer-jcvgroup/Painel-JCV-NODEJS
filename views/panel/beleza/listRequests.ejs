@@ -186,7 +186,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="request-list-table-tbody">
                             <% resultSearchData.forEach(element => { %>
 
                                 <% if(element.sys_blz_requestStatus == 5){ %>
@@ -253,7 +253,7 @@ let countButtonsTwo = 0;
 $(function(){
 
     //Input Search
-    $.fn.searchInputTable('#request-list-table tr', '#input-search-requests')
+    $.fn.searchInputTable('#request-list-table-tbody tr', '#input-search-requests')
 
     //Paginação das tabelas
     $.fn.paginationTableMain('#request-list-table',15,0);

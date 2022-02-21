@@ -17,8 +17,7 @@
                 </div>
                 <div class="visit-form-info">
                     <label for="">LOJA</label>
-                    <input type="text" id="input-item-name">
-                    <input type="date" name="visit-date" id="date-form-now">
+                    <input type="text" name="visit-shop" id="input-item-name">
                 </div>
                 <!--  -->
                 <div class="visit-form-title-two">
@@ -1234,7 +1233,6 @@
     //Autocomplete
     let arrayUser = '<%- arrayShops %>';
     let arrayCov = arrayUser.split(',');
-
     $("#input-item-name").autocomplete({
         source: function(request, response) {
             var results = $.ui.autocomplete.filter(arrayCov, request.term);        
@@ -1255,7 +1253,7 @@
 
             $(this).children("input[type='text']").attr("value",$(this).children("label").text())
 
-            $(this).children("label").css({'background': 'var(--color-two)', 'color': 'var(--color-three)'});
+            $(this).children("label").css({'background': 'var(--color-green)', 'color': 'var(--color-four)'});
         }        
     })
 </script>

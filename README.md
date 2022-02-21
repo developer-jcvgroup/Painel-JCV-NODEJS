@@ -306,6 +306,13 @@ Requisitor de Materiais
 * [jcv_trade_sales_form_infoAvenca] *TEXT* //Aqui sera armazenado o objeto com as perguntas e resposta da avenca
 
 
+# Tabela Trade MKT produtos:
+* [jcv_trade_products_id] *PRIMARY KEY* //id
+* [jcv_trade_products_brand] *VARCHAR* //linha do produto
+* [jcv_trade_products_line] *VARCHAR* //linha do produto
+* [jcv_trade_products_product] *VARCHAR* //linha do produto
+* [jcv_trade_products_enable] *INT* //linha do produto
+
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/
 

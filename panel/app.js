@@ -100,7 +100,6 @@ router.post("/requisitor/admin/action/download/myRequest", authenticate, requisi
 router.get("/requisitor/Items", authenticate, getPermissions, itemsRequisitor.adminListAllItems)
 router.post("/requisitor/save/item/edit", authenticate, itemsRequisitor.saveEditItem);
 router.post("/requisitor/save/item/new", authenticate, itemsRequisitor.saveNewItem)
-router.post("/requisitor/delete/item", authenticate, itemsRequisitor.deleteItem)
 
 /***********************************/
 /***********************************/
@@ -210,6 +209,16 @@ router.post('/trademkt/shops/action/execute', authenticate, controllerTrade.shop
 router.get('/trademkt/shops/config/:id?', authenticate, getPermissions, controllerTrade.configShops)
 //
 router.post('/trademkt/shops/set/users', authenticate, controllerTrade.saveSetUsers)
+
+//Trade MKT ações de remover forms
+router.post('/trademkt/remove/fv/form', authenticate, controllerTrade.deleteFV)
+router.post('/trademkt/remove/vd/form', authenticate, controllerTrade.deleteVD)
+
+//Trade MKT: produtos
+router.get('/trademkt/products', authenticate, controllerTrade.tradeProducts)
+router.post('/trademkt/products/save/new', authenticate, controllerTrade.saveNewProduct)
+router.post('/trademkt/products/save/edit', authenticate, controllerTrade.editNewProduct)
+router.post('/trademkt/products/action/execute', authenticate, controllerTrade.actionProductsTrade)
 
 /***********************************/
 /***********************************/

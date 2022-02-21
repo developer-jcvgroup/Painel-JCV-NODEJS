@@ -215,15 +215,27 @@ $(function(){
     $.fn.searchInputTableInputs = function(tableRows, inputSearchTable, commandButton){
 
         var $rows = $(tableRows+' tr')
-        
-        var searchText = $(inputSearchTable).val()
-            $rows
-            .show()
-            .filter(function() {
+
+        let convertString = $(inputSearchTable).val().toLowerCase().replace(/\b[a-z]/g, function(txtjq) {
+            return txtjq.toUpperCase();
+        });
+
+        var searchText = convertString;
+        $rows
+        .show()
+        .filter(function() {
+            
             var $inputs = $(this).find("input:text");
+
             var found = searchText.length == 0; // for empty search, show all rows
+
             for (var i=0; i < $inputs.length && !found; i++) {
-                var text = $inputs.eq(i).val().replace(/\s+/g, ' ');
+                var seqc = $inputs.eq(i).val().toLowerCase();
+
+                var text = seqc.replace(/\b[a-z]/g, function(txtjq) {
+                    return txtjq.toUpperCase();
+                });
+
                 found = text.length > 0 && text.indexOf(searchText) >= 0;
             }
             return !found;

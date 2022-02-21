@@ -74,7 +74,7 @@ exports.visitForm = async (req,res) => {
 
     let arrayShops = []
     allShops.forEach(element => {
-        arrayShops.push(element.jcv_trade_shops_cnpj+' - '+element.jcv_trade_shops_name_fantasy+',')
+        arrayShops.push(element.jcv_trade_shops_id+' - '+element.jcv_trade_shops_name_fantasy+',')
     });
 
     var page = "trade/visitaFormulario";
@@ -83,8 +83,9 @@ exports.visitForm = async (req,res) => {
 
 exports.visitFormNew = async (req,res) => {
 
-    const idShop = parseInt(req.body['visit-shop'])
-    const dateForm = req.body['visit-date'].split('-')[2]+'/'+req.body['visit-date'].split('-')[1]+'/'+req.body['visit-date'].split('-')[0]
+    const idShop = req.body['visit-shop'].split(' - ')[0]
+
+    const dateForm = moment(req.body['visit-date']).format("DD/MM/YYYY")
 
     const shopInfo = await database
     .select()
@@ -98,12 +99,6 @@ exports.visitFormNew = async (req,res) => {
         let objForm = {};
         let indexInput = 1;
     
-
-
-
-
-
-
         function teste(){
             if(req.body['visit-form-'+indexInput+'-step'] != undefined){
     
@@ -137,7 +132,7 @@ exports.visitFormNew = async (req,res) => {
         .table("jcv_trade_visit")
         .then( data => {
             if(data[0] > 0){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario de visita da loja <b>"+shopInfo[0].jcv_trade_shops_name+"</b> realizado com sucesso!");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario de visita da loja <b>"+shopInfo[0].jcv_trade_shops_name_fantasy+"</b> realizado com sucesso!");
                 res.redirect("/painel/trademkt/main");
             }else{
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao registrar o formulario de visita.");
@@ -164,7 +159,50 @@ exports.salesDay = async (req,res) => {
     //.table("jcv_trade_form_create")
     .then( data => { return data[0]})
 
-    
+    const allLines = await database
+    .select()
+    .distinct("jcv_trade_products_line")
+    .where({jcv_trade_products_enable: 1})
+    .table("jcv_trade_products")
+    .then( data => {return data})
+
+    const allProductsFelps = await database
+    .select()
+    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Felps Professional'")
+    .table("jcv_trade_products")
+    .then( data => {return data})
+
+    const allProductsRetro = await database
+    .select()
+    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Retro Cosmeticos'")
+    .table("jcv_trade_products")
+    .then( data => {return data})
+
+    const allProductsAvenca = await database
+    .select()
+    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Avenca Cosmeticos'")
+    .table("jcv_trade_products")
+    .then( data => {return data})
+
+    //Array produtos FELPS
+    let arrayProdFelps = []
+    allProductsFelps.forEach(element => {
+        arrayProdFelps.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+    });
+
+    //Array produtos RETRO
+    let arrayProdRetro = []
+    allProductsRetro.forEach(element => {
+        arrayProdRetro.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+    });
+
+    //Array produtos FELPS
+    let arrayProdAvenca = []
+    allProductsAvenca.forEach(element => {
+        arrayProdAvenca.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+    });
+
+
     /* let formsIds = []
     getFormsReponse.forEach(element => {
         let inspectSet = element.jcv_trade_shops_users.split(',').map(converNumber);
@@ -187,7 +225,14 @@ exports.salesDay = async (req,res) => {
     }) */
 
     var page = "trade/vendasDiarias";
-    res.render("panel/index", {page: page, shopsAll: getFormsReponse})
+    res.render("panel/index", {
+        page: page, 
+        shopsAll: getFormsReponse, 
+        allLines: allLines, 
+        arrayProdFelps: arrayProdFelps,
+        arrayProdRetro: arrayProdRetro,
+        arrayProdAvenca: arrayProdAvenca
+    })
 }
 
 exports.visitFormModule = async (req,res) => {
@@ -203,7 +248,7 @@ exports.visitFormModule = async (req,res) => {
     
         //Exportando..
         const dataFV = await database
-        .select("jcv_trade_visit_id","jcv_trade_visit_date","jcv_userNamePrimary","jcv_trade_shops_name","jcv_trade_visit_repsonses")
+        .select("jcv_trade_visit_id","jcv_trade_visit_date","jcv_userNamePrimary","jcv_trade_shops_name_fantasy","jcv_trade_visit_repsonses")
         .whereIn("jcv_trade_visit_id", idsFV)
         .table("jcv_trade_visit")
         .join("jcv_users","jcv_trade_visit.jcv_trade_visit_userId","jcv_users.jcv_id")
@@ -319,51 +364,69 @@ exports.salesDayRegister = async (req,res) => {
     const productSalesAvenca = req.body['sales-action-number-parts-avenca'] == '' ? "Sem dados.." : req.body['sales-action-number-parts-avenca']
     const actionMKTAvenca = req.body['sales-action-mkt-action-avenca'][0] == 0 ? 'Não Possui' : req.body['sales-action-mkt-action-avenca'][1] ;
     const popularAvenca = req.body['sales-action-popular-sale-avenca'] == '' ? "Sem dados.." : req.body['sales-action-popular-sale-avenca']
-    const materialAvenca = req.body['sales-action-matetrial-mkt-avenca'] == 0 ? "Não" : "Sim"
+    const materialAvenca = req.body['sales-action-matetrial-mkt-avenca'] == 0 ? "Não" : "Sim";
 
-    //Object Felps
-    let objFrom= '{"FELPS Quantidade Vendida": "'+productSalesFelps+'", "FELPS Produto mais vendido": "'+popularFelps+'", "FELPS Ação?": "'+actionMKTFelps+'", "FELPS Loja com material de marketing?": "'+materialFelps+'", "RETRO Quantidade Vendida": "'+productSalesRetro+'", "RETRO Produto mais vendido": "'+popularRetro+'", "RETRO Ação?": "'+actionMKTRetro+'", "RETRO Loja com material de marketing?": "'+materialRetro+'", "AVENCA Quantidade Vendida": "'+productSalesAvenca+'", "AVENCA Produto mais vendido": "'+popularAvenca+'", "AVENCA Ação?": "'+actionMKTAvenca+'", "AVENCA Loja com material de marketing?": "'+materialAvenca+'"}'
+    //Validando o produto
+    const verifyProd = await database
+    .select()
+    .whereRaw(`jcv_trade_products_sku = '${popularFelps.split(" - ")[0]}' OR jcv_trade_products_sku = '${popularRetro.split(" - ")[0]}' OR jcv_trade_products_sku = '${popularAvenca.split(" - ")[0]}'`)
+    .table("jcv_trade_products")
+    .then( data => {return data})
 
+    if(verifyProd != '' && verifyProd.length == 3){
+        //Produtos achados
 
-    if(shopSelect != ''){
-        //Validando se ja possui registro neste dia para esta loja
-        const selectShopValidation = await database
-        .select()
-        .whereRaw("jcv_trade_sales_form_date LIKE '%"+generateDateSingle()+"%' AND jcv_trade_sales_form_shopId = "+shopSelect)
-        .table("jcv_trade_sales_form")
-        .then(data => {
-            if(data != ''){
-                return true
-            }else{
-                return false
-            }
-        })
+        //Object Felps
+        let objFrom= '{"FELPS Quantidade Vendida": "'+productSalesFelps+'", "FELPS Produto mais vendido": "'+popularFelps+'", "FELPS Ação?": "'+actionMKTFelps+'", "FELPS Loja com material de marketing?": "'+materialFelps+'", "RETRO Quantidade Vendida": "'+productSalesRetro+'", "RETRO Produto mais vendido": "'+popularRetro+'", "RETRO Ação?": "'+actionMKTRetro+'", "RETRO Loja com material de marketing?": "'+materialRetro+'", "AVENCA Quantidade Vendida": "'+productSalesAvenca+'", "AVENCA Produto mais vendido": "'+popularAvenca+'", "AVENCA Ação?": "'+actionMKTAvenca+'", "AVENCA Loja com material de marketing?": "'+materialAvenca+'"}';
 
-        //Validando..
-        if(selectShopValidation == false){
-
-            database
-            .insert({
-                jcv_trade_sales_form_shopId: parseInt(shopSelect),
-                jcv_trade_sales_form_date: generateDate(),
-                jcv_trade_sales_form_userId: GLOBAL_DASH[0],
-                jcv_trade_sales_form_obForm: objFrom
-            })
+        if(shopSelect != ''){
+            //Validando se ja possui registro neste dia para esta loja
+            const selectShopValidation = await database
+            .select()
+            .whereRaw("jcv_trade_sales_form_date LIKE '%"+moment(dateRegister).format("DD/MM/YYYY")+"%' AND jcv_trade_sales_form_shopId = "+shopSelect)
             .table("jcv_trade_sales_form")
-            .then( data => {
-                if(data[0] > 0){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Registro da venda diaria da loja foi realizado com sucesso.");
-                    res.redirect("/painel/trademkt/main");
+            .then(data => {
+                if(data != ''){
+                    return true
+                }else{
+                    return false
                 }
             })
+    
+            //Validando..
+            if(selectShopValidation == false){
+    
+                database
+                .insert({
+                    jcv_trade_sales_form_shopId: parseInt(shopSelect),
+                    jcv_trade_sales_form_date: generateDate(),
+                    jcv_trade_sales_form_userId: GLOBAL_DASH[0],
+                    jcv_trade_sales_form_obForm: objFrom
+                })
+                .table("jcv_trade_sales_form")
+                .then( data => {
+                    if(data[0] > 0){
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Registro da venda diaria da loja foi realizado com sucesso.");
+                        res.redirect("/painel/trademkt/main");
+                    }
+                })
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Esta lojá já possui um registro na data informada.");
+                res.redirect("/painel/trademkt/main");
+            }
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Já possui um registro na data informada e na loja selecionada.");
-            res.redirect("/painel/trademkt/main");
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
+            res.redirect("/painel/trademkt/salesDay");
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
+        //Não encontrado
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Os produtos inseridos são inválidos!.");
         res.redirect("/painel/trademkt/salesDay");
     }
+
+    
+
+    
 
     
 }
@@ -509,8 +572,23 @@ exports.formResponseAction = async (req,res) => {
 }
 
 exports.listTradePage = async (req,res) => {
+
+    //Formulario de Visitas e Vendas diárias: pegando todas as lojas
+    const allShops = await database
+    .select()
+    .where({jcv_trade_shops_enabled: 1})
+    .table("jcv_trade_shops")
+    .then( data => {
+        return data;
+    })
+
+    let arrayShops = []
+    allShops.forEach(element => {
+        arrayShops.push(element.jcv_trade_shops_id+' - '+element.jcv_trade_shops_name_fantasy+',')
+    });
+
     var page = "trade/listTrade";
-    res.render("panel/index", {page: page, resultSearchDataTrade: req.flash('resultSearchDataTrade')})
+    res.render("panel/index", {page: page, allShops: arrayShops, resultSearchDataTrade: req.flash('resultSearchDataTrade')})
 }
 
 exports.listTradeSearch = async (req,res) => {
@@ -521,7 +599,7 @@ exports.listTradeSearch = async (req,res) => {
 
         //Vendas Diarias
         let VDusuarios = req.body['sys-filter-input-selects-VD_Usuarios'] != undefined ? req.body['sys-filter-input-selects-VD_Usuarios'] : "";
-        let VDshops = req.body['sys-filter-input-selects-VD_Shops'] != undefined ? req.body['sys-filter-input-selects-VD_Shops'] : "";
+        let VDshops = req.body['list-trade-VD-shop'] != undefined ? req.body['list-trade-VD-shop'] : "";
         let VDdate = req.body['list-trade-vd-date'] != '' ? req.body['list-trade-vd-date'].split('-')[2]+'/'+req.body['list-trade-vd-date'].split('-')[1]+'/'+req.body['list-trade-vd-date'].split('-')[0] : '';
 
         if(VDusuarios != ''){
@@ -531,7 +609,7 @@ exports.listTradeSearch = async (req,res) => {
         }
 
         if(VDshops != ''){
-            VDshops = 'IN ('+VDshops+') ';
+            VDshops = 'IN ('+VDshops.split(' - ')[0]+') ';
         }else{
             VDshops = 'LIKE "%%"';
         }
@@ -541,6 +619,8 @@ exports.listTradeSearch = async (req,res) => {
         }else{
             VDdate = 'LIKE "%%"'
         }
+
+        //console.log("jcv_trade_sales_form_userId "+VDusuarios+" AND jcv_trade_sales_form_shopId "+VDshops+" AND jcv_trade_sales_form_date "+VDdate)
 
         database
         .select()
@@ -563,11 +643,11 @@ exports.listTradeSearch = async (req,res) => {
     }else if(typeOperation == 2){
         //Formulario de visita
 
-        let FVshops = req.body['sys-filter-input-selects-FV_Shops'] != undefined ? req.body['sys-filter-input-selects-FV_Shops'] : "";
+        let FVshops = req.body['list-trade-FV-shop'] != undefined ? req.body['list-trade-FV-shop'] : "";
         let FVdate = req.body['list-trade-fv-date'] != '' ? req.body['list-trade-fv-date'].split('-')[2]+'/'+req.body['list-trade-fv-date'].split('-')[1]+'/'+req.body['list-trade-fv-date'].split('-')[0] : '';
 
         if(FVshops != ''){
-            FVshops = 'IN ('+FVshops+') ';
+            FVshops = 'IN ('+FVshops.split(' - ')[0]+') ';
         }else{
             FVshops = 'LIKE "%%"';
         }
@@ -584,6 +664,7 @@ exports.listTradeSearch = async (req,res) => {
         .join("jcv_users","jcv_trade_visit.jcv_trade_visit_userId","jcv_users.jcv_id")
         .join("jcv_trade_shops","jcv_trade_visit.jcv_trade_visit_shopId","jcv_trade_shops.jcv_trade_shops_id")
         .table("jcv_trade_visit")
+        .orderBy("jcv_trade_visit_id","DESC")
         .then( data => {
 
             if(data != ''){
@@ -652,7 +733,7 @@ exports.actionVDmodule = async (req,res) => {
        
         //Exportando..
         const dataVD = await database
-        .select("jcv_trade_shops_name","jcv_trade_sales_form_date","jcv_userNamePrimary","jcv_trade_sales_form_obForm")
+        .select("jcv_trade_shops_name_fantasy","jcv_trade_sales_form_date","jcv_userNamePrimary","jcv_trade_sales_form_obForm")
         .whereIn("jcv_trade_sales_form_id", idsVD)
         .table("jcv_trade_sales_form")
         .join("jcv_users","jcv_trade_sales_form.jcv_trade_sales_form_userId","jcv_users.jcv_id")
@@ -983,21 +1064,25 @@ exports.shopsPage = async (req,res) => {
 }
 
 exports.shopsRegisterNew = async (req,res) => {
-    const nameShop = req.body['shop-name']
+    const cnpjRegisterNow = req.body['shop-name-cnpj']
+    const nameShopSocial = req.body['shop-name-social']
+    const nameShopFantasy = req.body['shop-name-fantasia']
     const regionShop = req.body['shop-name-region']
     const enabledShop = req.body['shop-enabled'] == 'on' ? 1 : 0;
 
-    if(nameShop != '' && regionShop != ''){
+    if(nameShopSocial != '' && cnpjRegisterNow != ''){
         database
         .insert({
-            jcv_trade_shops_name: nameShop,
+            jcv_trade_shops_cnpj: cnpjRegisterNow,
+            jcv_trade_shops_name_social: nameShopSocial,
+            jcv_trade_shops_name_fantasy: nameShopFantasy,
             jcv_trade_shops_region: regionShop,
             jcv_trade_shops_enabled: enabledShop
         })
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShop+"</b> foi cadastrado com sucesso!.");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
                 res.redirect("/painel/trademkt/shops");
             }
         })
@@ -1268,4 +1353,162 @@ exports.saveSetUsers = async (req,res) => {
     
 
 
+}
+
+exports.deleteFV = async (req,res) => {
+    const fvId = req.body['fv-button-admin-remove-request']
+    
+    database
+    .delete()
+    .where({jcv_trade_visit_id: fvId})
+    .table("jcv_trade_visit")
+    .then( data => {
+        if(data == 1){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            res.redirect("/painel/trademkt/listTrade");
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            res.redirect("/painel/trademkt/listTrade");
+        }
+    })
+}
+
+exports.deleteVD = async (req,res) => {
+    const vdId = req.body['vd-button-admin-remove-request']
+    
+    database
+    .delete()
+    .where({jcv_trade_sales_form_id: vdId})
+    .table("jcv_trade_sales_form")
+    .then( data => {
+        if(data == 1){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            res.redirect("/painel/trademkt/listTrade");
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            res.redirect("/painel/trademkt/listTrade");
+        }
+    })
+}
+
+exports.tradeProducts = async (req,res) => {
+
+    //Todos os produtos
+    const allProducts = await database
+    .select()
+    .table("jcv_trade_products")
+    .then( data => {return data})
+
+    var page = "trade/products";
+    res.render("panel/index", {
+        page: page,
+        allProducts: allProducts
+        
+    })
+}
+
+exports.saveNewProduct = async (req,res) => {
+
+    const productSku = req.body['product-sku']
+    const productBrand = req.body['product-brand']
+    const productLine = req.body['product-line']
+    const productName = req.body['product-name']
+    const productEnabled = req.body['product-enabled'] == 'on' ? 1 : 0
+
+    if(productSku != '' || productBrand != '' || productLine != '' || productName != ''){
+        database
+        .insert({
+            jcv_trade_products_sku: productSku,
+            jcv_trade_products_brand: productBrand,
+            jcv_trade_products_line: productLine,
+            jcv_trade_products_product: productName,
+            jcv_trade_products_enable: productEnabled
+        })
+        .table("jcv_trade_products")
+        .then( data => {
+            if(data[0] != ''){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> registrado com sucesso!.");
+                res.redirect("/painel/trademkt/products");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao adicionar o <b>"+productName+"</b>.");
+                res.redirect("/painel/trademkt/products");
+            }
+        })
+    }
+
+}
+
+exports.editNewProduct = async (req,res) => {
+    const idProd = req.body['button-product-id']
+
+    const productSku = req.body['product-sku-edit-'+idProd]
+    const productBrand = req.body['product-brand-edit-'+idProd]
+    const productLine = req.body['product-line-edit-'+idProd]
+    const productName = req.body['product-name-edit-'+idProd]
+    const productEnabled = req.body['product-enabled-edit-'+idProd] == 'on' ? 1 : 0
+
+    if(productSku != '' || productBrand != '' || productLine != '' || productName != ''){
+        database
+        .update({
+            jcv_trade_products_sku: productSku,
+            jcv_trade_products_brand: productBrand,
+            jcv_trade_products_line: productLine,
+            jcv_trade_products_product: productName,
+            jcv_trade_products_enable: productEnabled
+        })
+        .where({jcv_trade_products_id: idProd})
+        .table("jcv_trade_products")
+        .then( data => {
+            if(data[0] != ''){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> editado com sucesso!.");
+                res.redirect("/painel/trademkt/products");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao editar o <b>"+productName+"</b>.");
+                res.redirect("/painel/trademkt/products");
+            }
+        })
+    }
+
+}
+
+exports.actionProductsTrade = async (req,res) => {
+    const typeOp = req.body['action-products-select']
+    const idsOp = typeof(req.body['products-edit-id']) == 'object' ? req.body['products-edit-id'] : [req.body['products-edit-id']] 
+
+    if(typeOp == 'CMD01'){
+        database
+        .update({
+            jcv_trade_products_enable: 1
+        })
+        .whereIn("jcv_trade_products_id", idsOp)
+        .table("jcv_trade_products")
+        .then( data => {
+            if(data[0] != ''){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>HABILITADOS</b> com sucesso!.");
+                res.redirect("/painel/trademkt/products");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao habilitar os produtos!.");
+                res.redirect("/painel/trademkt/products");
+            }
+        })
+    }else if(typeOp == 'CMD02'){
+        database
+        .update({
+            jcv_trade_products_enable: 0
+        })
+        .whereIn("jcv_trade_products_id", idsOp)
+        .table("jcv_trade_products")
+        .then( data => {
+            if(data[0] != ''){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>DESABILITADOS</b> com sucesso!.");
+                res.redirect("/painel/trademkt/products");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao desabilitar os produtos!.");
+                res.redirect("/painel/trademkt/products");
+            }
+        })
+    }else{
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Escolha uma operação");
+        res.redirect("/painel/trademkt/products");
+    }
 }

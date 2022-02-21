@@ -48,7 +48,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="items-table-tbody">
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -91,7 +91,6 @@
 
                                     <td><div class="items-container-actions">
                                         <button formaction="./save/item/edit" value="<%= element['sys_req_itemId'] %>" class="class-loader" name="button-edit-id" title="Remover item"><i class="ri-save-line"></i></button>
-                                        <button formaction="./delete/item" value="<%= element['sys_req_itemId'] %>" class="class-loader" name="button-remove-id" title="Remover item"><i class="ri-delete-bin-line"></i></button>
                                     </div></td>
                                 </tr>
                             <% }) %>
@@ -121,7 +120,7 @@
             })
 
             //Filtro dinamico em inputs
-            $.fn.searchInputTableInputs('#items-table','#input-search-requests',1)
+            $.fn.searchInputTableInputs('#items-table-tbody','#input-search-requests',1)
 
             //Checknox all
             $("#checkbox-select-all").click(function(){

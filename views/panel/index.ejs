@@ -16,6 +16,12 @@
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
     <title>JCV Group | Painel</title>
 </head>
+<script>
+    //evita todos os form post do sistema
+    if(window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href)
+    }
+</script>
 <body>
 <section class="sys-section-loader" id="sys-section-loader">
     <section class="sys-section-load-main">
@@ -82,18 +88,20 @@
                     <li id="menu-05"><span>Trade Marketing</span><i class="ri-arrow-down-s-line"></i></li>
                     <ul id="sub-05" class="menu-list-set-two">       
                         <li><a class="class-loader" href="/painel/trademkt/main"><i class="ri-home-2-line"></i><span>Home</span></a></li>
-                        <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
-                            <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
-                        <% } %>
 
                         <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
                             <li><a class="class-loader" href="/painel/trademkt/salesDay"><i class="ri-add-line"></i></i><span>Vendas Diárias</span></a></li>
+                        <% } %>
+
+                        <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
                         <% } %>
                         
                         <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
                             <li><a class="class-loader" href="/painel/trademkt/formSearch/new"><i class="ri-add-line"></i></i><span>Formulario de Pesquisa</span></a></li>
                             <li><a class="class-loader" href="/painel/trademkt/listTrade"><i class="ri-file-list-3-line"></i><span>Lista Formulário de Pesquisa</span></a></li>
                             <li><a class="class-loader" href="/painel/trademkt/shops"><i class="ri-store-2-line"></i><span>Lojas</span></a></li>
+                            <li><a class="class-loader" href="/painel/trademkt/products"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
                         <% } %>
                     </ul>
                 </ul>

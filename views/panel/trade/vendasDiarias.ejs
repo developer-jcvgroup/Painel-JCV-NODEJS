@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="/panel/css/trade/vendasDiarias.css">
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <section class="sales-day-form-main-section">
     <form class="sales-day-form-section-page" method="post">
         <div class="sales-search-link-back">
@@ -24,7 +27,7 @@
 
                         <% }) %>
                     </select>
-                    <input type="date" name="sales-action-date" id="">
+                    <input type="date" name="sales-action-date" id="date-form-now">
                 </div>
                 <!--  -->
                 <div class="sales-day-form-title-two">
@@ -82,7 +85,7 @@
                         </div>
 
                         <div class="sales-day-form-section-text">
-                            <input name="sales-action-popular-sale-felps" type="text">
+                            <input name="sales-action-popular-sale-felps" id="product-best-sale-felps" class="product-best-sale" type="text">
                         </div>
 
                         <!--  -->
@@ -161,7 +164,7 @@
                         </div>
 
                         <div class="sales-day-form-section-text">
-                            <input name="sales-action-popular-sale-retro" type="text">
+                            <input name="sales-action-popular-sale-retro" id="product-best-sale-retro" class="product-best-sale" type="text">
                         </div>
 
                         <!--  -->
@@ -241,7 +244,7 @@
                         </div>
 
                         <div class="sales-day-form-section-text">
-                            <input name="sales-action-popular-sale-avenca" type="text">
+                            <input name="sales-action-popular-sale-avenca" id="product-best-sale-avenca" class="product-best-sale" type="text">
                         </div>
 
                         <!--  -->
@@ -275,7 +278,10 @@
         </div>
     </form>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
+    $("#date-form-now").val(moment().format("YYYY-MM-DD"))
+
     //Select actions one
     $("select#sales-day-form-select-one").change(function(){
         if($(this).val() == 1){
@@ -306,6 +312,32 @@
     /*  */
     /*  */
 
+    //Autocomplete FELPS
+    let arrayProdFelps = '<%- arrayProdFelps %>';
+    $("#product-best-sale-felps").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayProdFelps.split(','), request.term);        
+            response(results.slice(0, 10));
+        }
+    });
+
+    //Autocomplete RETRO
+    let arrayProdRetro = '<%- arrayProdRetro %>';
+    $("#product-best-sale-retro").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayProdRetro.split(','), request.term);        
+            response(results.slice(0, 10));
+        }
+    });
+
+    //Autocomplete AVENCA
+    let arrayProdAvenca = '<%- arrayProdAvenca %>';
+    $("#product-best-sale-avenca").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayProdAvenca.split(','), request.term);        
+            response(results.slice(0, 10));
+        }
+    });
     
 
     /*  */

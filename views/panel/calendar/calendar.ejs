@@ -604,11 +604,14 @@
         const valIdUser = $("#insert-person").val().split('-')[0];
         const valPerson = $("#insert-person").val().split('-')[1];
 
-        if(valIdUser == '' || valPerson == ''){
+        let validateUser = arrayDataOne.indexOf($("#insert-person").val())
+
+        if(valIdUser == '' || valPerson == '' || validateUser == -1){
             $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+            $("#insert-person").val('')
         }else{
-            
-            console.log(idArray.indexOf(parseInt(valIdUser)))
+
+            //console.log(idArray.indexOf(parseInt(valIdUser)))
 
             if(idArray.indexOf(parseInt(valIdUser)) != -1){
                 $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")

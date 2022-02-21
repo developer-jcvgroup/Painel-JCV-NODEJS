@@ -192,14 +192,14 @@
         <% if(arrayData[i].jcv_userNameSecundary == atualIndex){ %>
             <!-- Listando aqui corretamente -->
             <tr>
-                <td><%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></td>
+                <td><%= arrayData[i].sys_blz_userName %></td>
                 <td><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></td>
                 <td><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></td>
                 <td><%= arrayData[i].jcv_userNameSecundary.split(' ')[0] %> <%= arrayData[i].jcv_userNameSecundary.split(' ')[1] %></td>
                 <td>
                     <div class="pdf-etiqueta-main">
-                        <span class="pdf-body-etiquetas">Solicitante: <%= arrayData[i].sys_blz_userName.split(' ')[0] %> <%= arrayData[i].sys_blz_userName.split(' ')[1] %></span>
-                        <span class="pdf-body-etiquetas">Gestor: <%= arrayData[i].jcv_userNameSecundary.split(' ')[0] %> <%= arrayData[i].jcv_userNameSecundary.split(' ')[1] %></span>
+                        <span class="pdf-body-etiquetas">Solicitante: <%= arrayData[i].sys_blz_userName %></span>
+                        <span class="pdf-body-etiquetas">Gestor: <%= arrayData[i].jcv_userNameSecundary %></span>
                         <br>
                         <span class="pdf-title-etiquetas"><b>SH: </b><%= arrayData[i].sys_blz_tratmentOne.split('-')[1] %></span>
                         <span class="pdf-title-etiquetas"><b>TRAT: </b><%= arrayData[i].sys_blz_tratmentTwo.split('-')[1] %></span>

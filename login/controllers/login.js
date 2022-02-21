@@ -100,14 +100,16 @@ exports.resetPassWord = async (req,res) => {
                 const textTwo = `Sua foi redefinida!. Ao fazer o login uma tela para cadastrar uma nova senha será exibida.`;
                 emailSystemExe.sendMailExe(arr, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_userNamePrimary, textOne, textTwo);
 
-                res.cookie('SYS-NOTIFICATION-EXE01', "SYS02| Um email foi enviado!");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Um email foi enviado!");
                 res.redirect("/login");
             }else{
                 //error
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| CPF não encontrado");
+                res.redirect("/login");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE01', "SYS02| Insira seu CPF para a recuperação");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira seu CPF para a recuperação");
         res.redirect("/login");
     }
 }

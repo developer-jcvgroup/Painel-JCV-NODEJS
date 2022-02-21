@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="/panel/css/trade/listTrade.css">
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <section class="list-trade-container-main">
     <section class="list-trade-container-page">
         <div class="list-trade-container-identify-page">
@@ -38,14 +41,9 @@
                                     <option value="239">User 239</option>
                                 </select>
                             </div>
-                            <div class="list-trade-container-box-single-select">
+                            <div class="list-trade-container-box-single">
                                 <label for="">Venda Diarias - Loja</label>
-                                <select name="" id="list-trade-vd-select-shops">
-                                    <option value="">-- Selecione --</option>
-                                    <option value="1">Loja 1</option>
-                                    <option value="2">Loja 2</option>
-                                    <option value="3">Loja 1</option>
-                                </select>
+                                <input type="text" name="list-trade-VD-shop" id="vd-all-shops">
                             </div>
                             <div class="list-trade-container-box-single">
                                 <label for="">Venda Diarias - Data</label>
@@ -54,17 +52,9 @@
                         </div>
 
                         <div class="list-trade-container-row-large" id="list-trade-fv">
-                            <div class="list-trade-container-box-single-select">
+                            <div class="list-trade-container-box-single">
                                 <label for="">Formulário de Visita - Loja</label>
-                                <select name="" id="list-trade-fv-select-shops">
-                                    <option value="">-- Selecione --</option>
-                                    <option value="1">Requisição Efetuada</option>
-                                    <option value="2">Em Separação</option>
-                                    <option value="3">Recebida pelo usuario</option>
-                                    <option value="4">Cancelado</option>
-                                    <option value="5">Pendente</option>
-                                    <option value="6">Requisição Enviada</option>
-                                </select>
+                                <input type="text" name="list-trade-FV-shop" id="fv-all-shops">
                             </div>
                             <div class="list-trade-container-box-single">
                                 <label for="">Formulário de Visita - Data</label>
@@ -151,10 +141,10 @@
                                 <td><b>#<%= element.jcv_trade_sales_form_id %></b></td>
                                 <td><%= element.jcv_trade_sales_form_date %></td>
                                 <td><b><%= element.jcv_userNamePrimary %></b></td>
-                                <td><b><%= element.jcv_trade_shops_name %></b></td>
+                                <td><b><%= element.jcv_trade_shops_name_fantasy %></b></td>
                                 <td><div class="list-trade-container-actions">
                                     <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
-                                    <button formaction="" value="" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                    <button formaction="/painel/trademkt/remove/vd/form" value="<%= element.jcv_trade_sales_form_id %>" name="vd-button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
                                 </div></td>
                             </tr>
                             <% }) %>
@@ -206,11 +196,11 @@
                                     <td><input type="checkbox" value="<%= element.jcv_trade_visit_id %>" name="fv-id-actions-all" class="checkbox-select-single"></td>
                                     <td><b>#<%= element.jcv_trade_visit_id %> - <%= element.jcv_userNamePrimary %></b></td>
                                     <td><%= element.jcv_trade_visit_created %></td>
-                                    <td><b><%= element.jcv_trade_shops_name %></b></td>
+                                    <td><b><%= element.jcv_trade_shops_name_fantasy %></b></td>
                                     <td><b><%= element.jcv_trade_visit_date %></b></td>
                                     <td><div class="list-trade-container-actions">
                                         <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
-                                        <button formaction="" value="" name="button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                        <button formaction="/painel/trademkt/remove/fv/form" value="<%= element.jcv_trade_visit_id %>" name="fv-button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
                                     </div></td>
                                 </tr>
                                 <% }) %>
@@ -323,6 +313,22 @@
             }, 500);
         })
 
+        //Autocomplete
+        let arrayUser = '<%- allShops %>';
+        let arrayCov = arrayUser.split(',');
+        $("#vd-all-shops").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayCov, request.term);        
+                response(results.slice(0, 10));
+            }
+        });
+
+        $("#fv-all-shops").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayCov, request.term);        
+                response(results.slice(0, 10));
+            }
+        });
 
         //Filtro Vendas Diarias: Usuarios
         $("#list-trade-vd-select-users").change(function(){

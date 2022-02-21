@@ -51,7 +51,7 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sys-users-table-list-tbody">
 
 
 
@@ -224,7 +224,9 @@
                                         
                                         
                                         <td>
-                                            <input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>"></td>
+                                            <input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>">
+                                            
+                                        </td>
                                         <td>
                                             <input hidden type="text" value="<%= element.sys_unity_name %>">
                                             <select name="save-edit-unidade-<%= element.jcv_id %>">
@@ -493,7 +495,7 @@
 
             if(Cookies.get('SEARCH-INPUT')){
                 $("#input-search-table").val(Cookies.get('SEARCH-INPUT'))   
-                $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
+                $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
             }
 
             //Criando um cookie para salvar sempre o que o
@@ -515,7 +517,7 @@
                         $.fn.loadSpin(1);
                         
                         setTimeout(()=>{
-                            $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
+                            $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
                         },1000)
                     } 
                 }
@@ -535,7 +537,7 @@
                     $.fn.loadSpin(1);
                     
                     setTimeout(()=>{
-                        $.fn.searchInputTableInputs('#sys-users-table-list','#input-search-table',0)
+                        $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
                     },1000)
                 }  
             })
@@ -544,7 +546,7 @@
                 $.fn.loadSpin(1);
 
                 setTimeout(()=>{
-                    $.fn.searchInputTableInputs('#sys-users-table-list','#input-button-search-clear',0)
+                    $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-button-search-clear',0)
                     $.fn.paginationTableMain('#sys-users-table-list',10,2);
                     $("#input-search-table").val('')
                     Cookies.remove('SEARCH-INPUT') 
@@ -561,7 +563,7 @@
             $.fn.inputCaractersValidation(".update-name-func")
 
             //Ordenação da tabela
-            $.fn.orderByTableColumns("#sys-users-table-list",".order-by-command")
+            $.fn.orderByTableColumns("#sys-users-table-list-tbody",".order-by-command")
         })
     })
     

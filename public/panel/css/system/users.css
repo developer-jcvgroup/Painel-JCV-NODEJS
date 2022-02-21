@@ -165,7 +165,7 @@
 .sys-users-table-list tbody tr td input[type=text]{
     border: 1px solid var(--color-seven);
     padding: 6px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 .sys-input-table-large-one{
     width: 400px;

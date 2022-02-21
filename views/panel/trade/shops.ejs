@@ -19,7 +19,9 @@
 
                 <div class="shop-order-srs-search">
                     <div class="shop-order-srs-box">
-                        <input type="text" placeholder="Busque por ID, nome do item.." id="product-search-rows">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="input-search-table">
+                        <button type="button" id="input-button-search">Buscar</button>
+                        <button type="button" id="input-button-search-clear">Limpar</button>
                     </div>
                     <div class="container-actions-checks-shop">
                         <div class="shop-box-actions-checks">
@@ -54,7 +56,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="shop-list-table-tbody">
 
                             <tr>
                                 <td>    </td>
@@ -155,6 +157,31 @@
             //Paginação das tabelas
             $.fn.paginationTableMain('#shop-list-table',40,2);
 
+            $("#input-button-search").click(function(){
+                
+
+                if($("#input-search-table").val() == ''){
+                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                }else{
+                    $.fn.loadSpin(1);
+                    
+                    setTimeout(()=>{
+                        $.fn.searchInputTableInputs('#shop-list-table-tbody','#input-search-table',0)
+                    },1000)
+                }  
+            })
+
+            $("#input-button-search-clear").click(function(){
+                $.fn.loadSpin(1);
+
+                //$("#input-search-table").val('')
+                setTimeout(()=>{
+                    $.fn.searchInputTableInputs('#shop-list-table-tbody','#input-button-search-clear',0)
+                    $.fn.paginationTableMain('#shop-list-table',40,2);
+                    $("#input-search-table").val('')
+                    //Cookies.remove('SEARCH-INPUT') 
+                },1000)
+            })
             
 
             

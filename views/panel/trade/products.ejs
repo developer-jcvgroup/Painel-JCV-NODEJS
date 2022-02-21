@@ -1,0 +1,299 @@
+<link rel="stylesheet" href="/panel/css/trade/products.css">
+
+<script src="/js/jquery-paginate.js"></script>
+<script>
+    let divLoader = document.getElementById('sys-section-loader')
+    
+    divLoader.style.display = 'flex';
+</script>
+
+<section class="products-container-main">
+    <section class="products-container-page">
+        <div class="products-container-identify-page">
+            <span>Produtos</span>
+            <span>/ Lista de produtos</span>
+        </div>        
+        <form class="products-container-list-all" method="post">
+            <section class="section-products-list-center">
+                <div class="products-title-box"><span>Lista de lojas</span></div>
+
+                <div class="products-order-srs-search">
+                    <div class="products-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="input-search-table">
+                        <button type="button" id="input-button-search">Buscar</button>
+                        <button type="button" id="input-button-search-clear">Limpar</button>
+                    </div>
+                    <div class="container-actions-checks-products">
+                        <div class="products-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="action-products-select" id="">
+                                <option value="">-- Selecione --</option>
+                                <option value="" disabled></option>
+                                <option value="CMD01">Habilitar</option>
+                                <option value="CMD02">Desabilitar</option>
+                            </select>
+                        </div>
+                        <div class="products-box-actions-checks-button">
+                            <button class="class-loader" formaction="/painel/trademkt/products/action/execute">Executar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div class="products-container-table" >
+                    <table class="products-list-table" id="products-list-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>SKU</th>
+                                <th>Marca</th>
+                                <th>Linha</th>
+                                <th>Produto</th>
+                                <th>Ativo?</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-list-table-tbody">
+
+                            <tr>
+                                <td>    </td>
+                                <td><input type="text" name="product-sku" placeholder="Insira SKU.."></td>
+                                <td>
+                                    <select name="product-brand" id="">
+                                        <option value="">Marca</option>
+                                        <option value="Felps Professional">Felps Professional</option>
+                                        <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                                        <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="product-line" id="">
+                                        <option value="QUIABO XBTX">QUIABO XBTX</option>
+                                        <option value="ANTIRRESIDUO">ANTIRRESIDUO</option>
+                                        <option value="OMEGA ZERO">OMEGA ZERO</option>
+                                        <option value="MACADAMIA">MACADAMIA</option>
+                                        <option value="X REPAIR">X REPAIR</option>
+                                        <option value="X FORCE">X FORCE</option>
+                                        <option value="X COLOR">X COLOR</option>
+                                        <option value="X NUTRITIVE">X NUTRITIVE</option>
+                                        <option value="BANHO DE VERNIZ">BANHO DE VERNIZ</option>
+                                        <option value="MARULA">MARULA</option>
+                                        <option value="SOS">SOS</option>
+                                        <option value="EXTRATO DE BAMBOO">EXTRATO DE BAMBOO</option>
+                                        <option value="CACHOS">CACHOS</option>
+                                        <option value="SOU LOIRA">SOU LOIRA</option>
+                                        <option value="RP PREMIUM">RP PREMIUM</option>
+                                        <option value="MATIZADORES">MATIZADORES</option>
+                                        <option value="PO DESCOLORANTE">PO DESCOLORANTE</option>
+                                        <option value="UNIQ CREAM">UNIQ CREAM</option>
+                                        <option value="OLEO DE ARGAN">OLEO DE ARGAN</option>
+                                        <option value="VEGAN OIL KALAHARI">VEGAN OIL KALAHARI</option>
+                                        <option value="EQUILIBRIO">EQUILIBRIO</option>
+                                        <option value="QUIABO XBTX PROGRESSIVA">QUIABO XBTX PROGRESSIVA</option>
+                                        <option value="POKER">POKER</option>
+                                        <option value="BLACK JACK">BLACK JACK</option>
+                                        <option value="CRAPS">CRAPS</option>
+                                        <option value="COLOR">COLOR</option>
+                                        <option value="UNIQ CREAM">UNIQ CREAM</option>
+                                        <option disabled></option>
+                                        <option value="MONA & LISA">MONA & LISA</option>
+                                        <option value="LISO MAGIA">LISO MAGIA</option>
+                                        <option value="SOUL COCO">SOUL COCO</option>
+                                        <option value="SUPER TONICO">SUPER TONICO</option>
+                                        <option value="ALO, E VERA">ALO, E VERA</option>
+                                        <option value="MANDIOCA">MANDIOCA</option>
+                                        <option value="BLOND ANGEL">BLOND ANGEL</option>
+                                        <option value="ELIZABETH">ELIZABETH</option>
+                                        <option value="PODER DOS CACHOS">PODER DOS CACHOS</option>
+                                        <option disabled></option>
+                                        <option value="MASCARA PRETA">MASCARA PRETA</option>
+                                        <option value="GOLDEN">GOLDEN</option>
+                                        <option value="VITAMINA C">VITAMINA C</option>
+                                        <option value="PORCELANA">PORCELANA</option>
+                                        <option value="DETOX PE">DETOX PE</option>
+                                        <option value="IDEALY">IDEALY</option>
+                                        <option value="ACNEED">ACNEED</option>
+                                        <option value="AGUA MICELAR">AGUA MICELAR</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="product-name" placeholder="Insira o nome do produto.."></td>
+                                <td>
+                                    <label class="products-button-switch">
+                                        <input type="checkbox" name="product-enabled" checked>
+                                        <span class="products-button-slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="products-container-actions-table">
+                                        <button formaction="/painel/trademkt/products/save/new"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+
+                            </tr>
+
+                            <% allProducts.forEach(element => { %>
+                            <tr class="request-row-check-mark">
+                                <td><input class="checkbox-select-single" type="checkbox" name="products-edit-id" value="<%= element.jcv_trade_products_id %>"></td>
+                                <td><input type="text" name="product-sku-edit-<%= element.jcv_trade_products_id %>" value="<%= element.jcv_trade_products_sku %>" placeholder="Insira SKU.."></td>
+                                <td>
+                                    <select name="product-brand-edit-<%= element.jcv_trade_products_id %>">
+                                        <option value="<%= element.jcv_trade_products_brand %>"><%= element.jcv_trade_products_brand %></option>
+                                        <option disabled></option>
+                                        <option value="Felps Professional">Felps Professional</option>
+                                        <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                                        <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="product-line-edit-<%= element.jcv_trade_products_id %>">
+                                        <option value="<%= element.jcv_trade_products_line %>"><%= element.jcv_trade_products_line %></option>
+                                        <option disabled></option>
+                                        <option value="QUIABO XBTX">QUIABO XBTX</option>
+                                        <option value="ANTIRRESIDUO">ANTIRRESIDUO</option>
+                                        <option value="OMEGA ZERO">OMEGA ZERO</option>
+                                        <option value="MACADAMIA">MACADAMIA</option>
+                                        <option value="X REPAIR">X REPAIR</option>
+                                        <option value="X FORCE">X FORCE</option>
+                                        <option value="X COLOR">X COLOR</option>
+                                        <option value="X NUTRITIVE">X NUTRITIVE</option>
+                                        <option value="BANHO DE VERNIZ">BANHO DE VERNIZ</option>
+                                        <option value="MARULA">MARULA</option>
+                                        <option value="SOS">SOS</option>
+                                        <option value="EXTRATO DE BAMBOO">EXTRATO DE BAMBOO</option>
+                                        <option value="CACHOS">CACHOS</option>
+                                        <option value="SOU LOIRA">SOU LOIRA</option>
+                                        <option value="RP PREMIUM">RP PREMIUM</option>
+                                        <option value="MATIZADORES">MATIZADORES</option>
+                                        <option value="PO DESCOLORANTE">PO DESCOLORANTE</option>
+                                        <option value="UNIQ CREAM">UNIQ CREAM</option>
+                                        <option value="OLEO DE ARGAN">OLEO DE ARGAN</option>
+                                        <option value="VEGAN OIL KALAHARI">VEGAN OIL KALAHARI</option>
+                                        <option value="EQUILIBRIO">EQUILIBRIO</option>
+                                        <option value="QUIABO XBTX PROGRESSIVA">QUIABO XBTX PROGRESSIVA</option>
+                                        <option value="POKER">POKER</option>
+                                        <option value="BLACK JACK">BLACK JACK</option>
+                                        <option value="CRAPS">CRAPS</option>
+                                        <option value="COLOR">COLOR</option>
+                                        <option value="UNIQ CREAM">UNIQ CREAM</option>
+                                        <option disabled></option>
+                                        <option value="MONA & LISA">MONA & LISA</option>
+                                        <option value="LISO MAGIA">LISO MAGIA</option>
+                                        <option value="SOUL COCO">SOUL COCO</option>
+                                        <option value="SUPER TONICO">SUPER TONICO</option>
+                                        <option value="ALO, E VERA">ALO, E VERA</option>
+                                        <option value="MANDIOCA">MANDIOCA</option>
+                                        <option value="BLOND ANGEL">BLOND ANGEL</option>
+                                        <option value="ELIZABETH">ELIZABETH</option>
+                                        <option value="PODER DOS CACHOS">PODER DOS CACHOS</option>
+                                        <option disabled></option>
+                                        <option value="MASCARA PRETA">MASCARA PRETA</option>
+                                        <option value="GOLDEN">GOLDEN</option>
+                                        <option value="VITAMINA C">VITAMINA C</option>
+                                        <option value="PORCELANA">PORCELANA</option>
+                                        <option value="DETOX PE">DETOX PE</option>
+                                        <option value="IDEALY">IDEALY</option>
+                                        <option value="ACNEED">ACNEED</option>
+                                        <option value="AGUA MICELAR">AGUA MICELAR</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="product-name-edit-<%= element.jcv_trade_products_id %>" value="<%= element.jcv_trade_products_product %>" placeholder="Insira O NOME DO PRODUTO..">
+                                </td>
+                                
+                                <td>
+                                    <% if(element.jcv_trade_products_enable == 1){ %>
+                                    <label class="products-button-switch">
+                                        <input type="checkbox" name="product-enabled-edit-<%= element.jcv_trade_products_id %>" checked>
+                                        <span class="products-button-slider round"></span>
+                                    </label>
+                                    <% }else{ %>
+                                        <label class="products-button-switch">
+                                            <input type="checkbox" name="product-enabled-edit-<%= element.jcv_trade_products_id %>">
+                                            <span class="products-button-slider round"></span>
+                                        </label>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="products-container-actions-table">
+                                        <button formaction="/painel/trademkt/products/save/edit" value="<%= element.jcv_trade_products_id %>" name="button-product-id" class="class-loader"><i class="ri-save-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <% }) %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </form>
+    </section>
+</section>
+<script>
+    $(window).on("load", function (e) {
+
+        $(function(){
+            //Paginação das tabelas
+            $.fn.paginationTableMain('#products-list-table',40,2);
+
+            $("#input-button-search").click(function(){
+                
+
+                if($("#input-search-table").val() == ''){
+                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                }else{
+                    $.fn.loadSpin(1);
+                    
+                    setTimeout(()=>{
+                        $.fn.searchInputTableInputs('#products-list-table-tbody','#input-search-table',0)
+                    },1000)
+                }  
+            })
+
+            $("#input-button-search-clear").click(function(){
+                $.fn.loadSpin(1);
+
+                //$("#input-search-table").val('')
+                setTimeout(()=>{
+                    $.fn.searchInputTableInputs('#products-list-table-tbody','#input-button-search-clear',0)
+                    $.fn.paginationTableMain('#products-list-table',40,2);
+                    $("#input-search-table").val('')
+                    //Cookies.remove('SEARCH-INPUT') 
+                },1000)
+            })
+            
+
+            
+
+            //Checknox all
+            $("#checkbox-select-all").click(function(){
+                var checkSet = $(this).is(':checked');
+                var inputsCheckedmodel = $('.checkbox-select-single');
+
+                if(checkSet == true){
+                    inputsCheckedmodel.prop('checked', true);
+                }else{
+                    inputsCheckedmodel.prop('checked', false);
+                }
+            })
+            $(".checkbox-select-single").click(function(){
+                $("#checkbox-select-all").prop("checked", false)
+            })
+
+            //Filtro dinamico em inputs
+            //$.fn.searchInputTableInputs('#products-list-table','#product-search-rows',1)
+
+        })
+    })
+</script>

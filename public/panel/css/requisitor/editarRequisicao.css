@@ -23,6 +23,19 @@
     color: var(--color-one);
 }
 
+/*  */
+.link-container-back{
+    display: flex;
+    align-items: center;
+    margin: 13px 0;
+}
+.link-container-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+/*  */
+
 /***************************/
 /* PAGINA */
 .edit-order-page-new{

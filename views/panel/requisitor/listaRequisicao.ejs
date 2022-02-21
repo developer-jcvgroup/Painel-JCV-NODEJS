@@ -133,7 +133,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="all-orders-table-tbody">
 
                             <% resultSearchDataRequisitor.forEach(element => { %>
                             <tr>
@@ -156,7 +156,7 @@
                                     <% } else if(element['sys_req_orderStatus'] == 5) { %>
                                         <b id="all-order-text-yellow">Requisição Pendente</b>
                                     <% } else if(element['sys_req_orderStatus'] == 6) { %>
-                                        <b>Requisição enviada</b>
+                                        Requisição enviada
                                     <% } %>
                                 
                                 </td>
@@ -223,7 +223,7 @@
 
 
         //Input Search
-        $.fn.searchInputTable('#all-orders-table tr', '#input-search-requests')
+        $.fn.searchInputTable('#all-orders-table-tbody tr', '#input-search-requests')
 
         //Paginação das tabelas
         $.fn.paginationTableMain('#all-orders-table',10,0);
