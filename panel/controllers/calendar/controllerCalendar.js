@@ -184,8 +184,8 @@ exports.saveNewEvent = async (req,res) => {
         return data[0].sys_unity_name
     })
 
-    if(!moment(eventDateDefault).isAfter(moment().format("YYYY-MM-DD")) || moment(eventDateDefault).isSame(moment().format("YYYY-MM-DD"))){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento nesta data! Data inferiror ao dia atual. ZZ");
+    if(moment(eventDateDefault).isBefore(moment().format("YYYY-MM-DD"))){
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Data inferiror a data atual.");
         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
     }else{
 
