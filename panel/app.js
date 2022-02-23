@@ -184,7 +184,6 @@ router.get('/trademkt/main', authenticate, getPermissions, controllerTrade.contr
 //Trade Mtk: Formulario de visita
 router.get('/trademkt/visit', authenticate, getPermissions, controllerTrade.visitForm)
 router.post('/trademkt/visit/new', authenticate, controllerTrade.visitFormNew)
-router.post('/trademkt/action/fv/action', authenticate, controllerTrade.visitFormModule)
 //Trade Mtk: Vendas diarias
 router.get('/trademkt/salesDay', authenticate, getPermissions, controllerTrade.salesDay)
 router.post('/trademkt/salesDay/new', authenticate, controllerTrade.salesDayRegister)
@@ -198,6 +197,8 @@ router.get('/trademkt/listTrade', authenticate, getPermissions, controllerTrade.
 router.post('/trademkt/listTrade/search', authenticate, controllerTrade.listTradeSearch)
 router.post('/trademkt/action/vd/action', authenticate, controllerTrade.actionVDmodule)
 router.post('/trademkt/action/fp/action', authenticate, controllerTrade.actionFPmodule)
+router.post('/trademkt/action/fv/action', authenticate, controllerTrade.visitFormModule)
+router.post('/trademkt/fv/export-pdf', authenticate, controllerTrade.exportFVPDF)
 //Trade Mtk: Pagina de resposta
 router.get('/trademkt/form/response/:id', authenticate, getPermissions, controllerTrade.formResponse)
 router.post('/trademkt/formSearch/responseForm', authenticate, controllerTrade.formResponseAction)

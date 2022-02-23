@@ -26,7 +26,6 @@
             <!--  -->
             <div class="form-edit-form-box-actions">
                 <div class="setDataWrap form-edit-form-set">
-                
                     <div class="form-edit-form-action-users">
                         <input placeholder="Informe quais pessoas podem responder.." id="insert-person" type="text">
                         <button type="button" id="button-add-person">Adicionar</button>
@@ -95,7 +94,7 @@
     })
 
     //LISTANDO OS USUARIOS
-    let dataOne = '5 - PROMOTORAS, 4 - REPRESENTANTES';
+    let dataOne = '<%- arrayUsersAll %>'
     let arrayDataOne = dataOne.split(',');
 
     //Primeiro campo
@@ -107,16 +106,16 @@
     });
 
     idArray = []
-    //Adicionando os usuarios que fazem parte do
+    //Adicionando os usuarios que fazem parte do form
     let dataOneUsers = '<%- allUsersForm %>';
     let arrayDataOneUsers = dataOneUsers.split(',');
 
 
     arrayDataOneUsers.forEach(element => {
-        let idUser = parseInt(element.split('-')[0])
-        let nameUser = element.split('-')[1]
+        let idUser = element.split(' - ')[0]
+        let nameUser = element.split(' - ')[1]
 
-        idArray.push(parseInt(idUser))
+        idArray.push(idUser)
         $(".form-edit-form-list-user")
         .append(
         `<div class="form-edit-form-list-users-set" id="person-id-${idUser}">
@@ -127,23 +126,23 @@
         )
     })
 
-    
-    
     //ADICIONANDO PESSOAS
     $("#button-add-person").click(function(){
 
         //Usuario a ser adicionado
-        const valIdUser = $("#insert-person").val().split('-')[0];
-        const valPerson = $("#insert-person").val().split('-')[1];
+        const valIdUser = $("#insert-person").val().split(' - ')[0];
+        const valPerson = $("#insert-person").val().split(' - ')[1];
 
-        if(valIdUser == '' || valPerson == ''){
+        let validateUser = arrayDataOne.indexOf($("#insert-person").val())
+
+        if(valIdUser == '' || valPerson == '' || validateUser == -1){
             $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
         }else{
 
-            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+            if(idArray.indexOf(valIdUser) != -1){
                 $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
             }else{
-                idArray.push(parseInt(valIdUser))
+                idArray.push(valIdUser)
                 $(".form-edit-form-list-user")
                 .append(
                 `<div class="form-edit-form-list-users-set" id="person-id-${valIdUser}">

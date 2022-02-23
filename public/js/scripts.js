@@ -6,6 +6,17 @@ $(function(){
         window.history.replaceState(null, null, window.location.href)
     }
 
+    $.fn.closePagination = function (typeOf){
+        
+        if(typeOf == 1){
+            //Exibe a paginação
+            $('.pagination-nav-list-main').css('display','flex');
+        }else{
+            //Esconde a paginação
+            $('.pagination-nav-list-main').css('display','none');
+        }
+    }
+
     //Paginação
     $.fn.paginationTableMain = function (selectTable, amountRow, removeRow){
         if($(selectTable).is(':visible')){
@@ -200,8 +211,18 @@ $(function(){
     }
 
     $.fn.searchInputTable = function(tableRows, inputSearchTable){
+        
         const rows = $(''+tableRows+'');
         $(inputSearchTable).keyup(function() {
+            
+            if($(this).val() != ''){
+                console.log('fechar')
+                $.fn.closePagination(0)//Fechar a paginação
+            }else{
+                console.log('abrir')
+                $.fn.closePagination(1)//Abrir a paginação
+            }
+
             var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
             
             rows.show().filter(function() {
@@ -210,6 +231,8 @@ $(function(){
                 return !~text.indexOf(val);
             }).hide();
         });
+
+        
     }
 
     $.fn.searchInputTableInputs = function(tableRows, inputSearchTable, commandButton){
@@ -242,6 +265,7 @@ $(function(){
         })
         .hide();
         
+        $.fn.closePagination()
         $.fn.loadSpin(0)
         var $rows = $(tableRows+' tr')
 

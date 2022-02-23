@@ -251,6 +251,10 @@
 }
 
 /*  */
+#weeks-mobile{
+    display: none;
+}
+/*  */
 .calendar-week-days-list{
     width: 100%;
     height: 100%;
@@ -701,14 +705,15 @@
     min-width: fit-content;
     outline: 0;
     border: none;
-    font-size: 0.7rem;
+    padding: 5px;
+    font-size: 0.8rem;
     color: var(--color-one);
 }
 .calendar-event-person-box button{
     border: none;
     color: var(--color-one);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
     background: transparent;
     display: flex;
     align-items: center;
@@ -747,6 +752,10 @@
 }
 /*  */
 
+
+.calendar-cicle{
+    display: none;
+}
 /************************/
 /************************/
 /* RESPONSIVE */
@@ -771,6 +780,12 @@
     }
     #cal-sep{
         display: none;
+    }
+    #weeks-desktop{
+        display: none;
+    }
+    #weeks-mobile{
+        display: flex;
     }
 
     .calendar-main-box{
@@ -811,12 +826,22 @@
         min-width: 95%;
     }
 
-    .calendar-day-box-list-events{
+    .claendar-list-events li a{
         display: none;
+    }
+    .calendar-cicle{
+        display: flex;
     }
 
     .calendar-week-days li{
-        font-size: 0.6rem;
+        font-size: 0.9rem;
+    }
+    .calendar-day-box-day span{
+        font-size: 0.8rem;
+    }
+    .calendar-day-box-day{
+        min-width: 25px;
+        height: 25px;
     }
 
     .calendar-menu-events-main-cent{

@@ -72,9 +72,9 @@ exports.visitForm = async (req,res) => {
         return data;
     })
 
-    let arrayShops = []
+    let arrayShops = ''
     allShops.forEach(element => {
-        arrayShops.push(element.jcv_trade_shops_id+' - '+element.jcv_trade_shops_name_fantasy+',')
+        arrayShops+=element.jcv_trade_shops_cnpj+' @# '+element.jcv_trade_shops_name_social+'|*|'
     });
 
     var page = "trade/visitaFormulario";
@@ -83,13 +83,14 @@ exports.visitForm = async (req,res) => {
 
 exports.visitFormNew = async (req,res) => {
 
-    const idShop = req.body['visit-shop'].split(' - ')[0]
+    const nameShop = req.body['visit-shop']
+    const CNPJshop = req.body['visit-shop-cnpj']
 
     const dateForm = moment(req.body['visit-date']).format("DD/MM/YYYY")
 
     const shopInfo = await database
     .select()
-    .where({jcv_trade_shops_id: idShop})
+    .where({jcv_trade_shops_name_social: nameShop, jcv_trade_shops_cnpj: CNPJshop})
     .table("jcv_trade_shops")
     .then( data => {
         return data;
@@ -125,7 +126,7 @@ exports.visitFormNew = async (req,res) => {
         .insert({
             jcv_trade_visit_userId: GLOBAL_DASH[0],
             jcv_trade_visit_date: dateForm,
-            jcv_trade_visit_shopId: idShop,
+            jcv_trade_visit_shopId: shopInfo[0].jcv_trade_shops_id,
             jcv_trade_visit_created: generateDate(),
             jcv_trade_visit_repsonses: newObjForm
         })
@@ -143,21 +144,30 @@ exports.visitFormNew = async (req,res) => {
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Loja não encontrada.");
         res.redirect("/painel/trademkt/visit");
     }
-
-    
-
 }
 
 exports.salesDay = async (req,res) => {
 
     //Vendo os formularios de pesquisa que esta pedente para este usuario
     const getFormsReponse = await database
-    .raw("SELECT locate("+GLOBAL_DASH[0]+", jcv_trade_shops_users) achado,jcv_trade_shops_id,jcv_trade_shops_name_fantasy FROM jcv_trade_shops")
+    .raw("SELECT locate("+GLOBAL_DASH[0]+", jcv_trade_shops_users) achado,jcv_trade_shops_id,jcv_trade_shops_name_social FROM jcv_trade_shops")
     //.select()
     //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
     //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
     //.table("jcv_trade_form_create")
-    .then( data => { return data[0]})
+    .then( data => {
+        
+        //console.log(data)
+
+        let arrayNew = []
+        data[0].forEach(element => {
+            if(element.achado > 0){
+                arrayNew.push([element.jcv_trade_shops_id ,element.jcv_trade_shops_name_social])
+            }
+        });
+
+        return arrayNew
+    })
 
     const allLines = await database
     .select()
@@ -331,17 +341,40 @@ exports.visitFormModule = async (req,res) => {
 
         wb.write(nameData+'.xlsx', res);//o res faz o download
 
+    }else{
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma ação!");
+        res.redirect("/painel/trademkt/listTrade");
+    }
+        
+}
 
+exports.exportFVPDF = async (req,res) => {
+    const idsFV = req.body['fv-button-pdf-generate']
+    console.log(idsFV)
 
+    const ejs = require('ejs');
 
+    const getInfoFormVisit = await database
+    .select()
+    .where({jcv_trade_visit_id: idsFV})
+    .table("jcv_trade_visit")
+    .join("jcv_trade_shops","jcv_trade_visit.jcv_trade_visit_shopId","jcv_trade_shops.jcv_trade_shops_id")
+    .then( data => { return data})
 
-
-
-
-
-
-
-
+    if(getInfoFormVisit.length >= 1){
+        ejs.renderFile('views/panel/trade/StylePDF.ejs', {getInfoFormVisit: getInfoFormVisit}, function(err, result) {
+            // render on success
+            if(result) {
+    
+                res.send(result)
+            }else {
+                res.end('An error occurred');
+                console.log(err);
+            }
+        });
+    }else{
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione apenas um pedido por vez!");
+        res.redirect("/painel/trademkt/listTrade");
     }
 }
 
@@ -433,19 +466,58 @@ exports.salesDayRegister = async (req,res) => {
 
 
 exports.formSearch = async (req,res) => {
+
+    //Lista de todos os usuarios que fazem parte da TRADE MKT
+    const allUsersTrade = await database
+    .select("sys_perm_idUser","jcv_userNamePrimary","jcv_id")
+    .where({sys_tra_perm_use: 1})
+    .table("jcv_users_permissions")
+    .join("jcv_users","jcv_users_permissions.sys_perm_idUser","jcv_users.jcv_id")
+    .then(data => {return data;})
+
+    let arrayUser = []
+    allUsersTrade.forEach(element => {
+        arrayUser.push(element.jcv_id+' - '+element.jcv_userNamePrimary)
+    });
+
+    //Estes dados são inseridos manualmente por conta de não haver uma tabela dinamica
+    //para cada usuario cadastrado.
+    arrayUser.push('GRP05 - PROMOTORAS')
+    arrayUser.push('GRP04 - REPRESENTANTES')
+
     var page = "trade/formularioPesquisa";
-    res.render("panel/index", {page: page})
+    res.render("panel/index", {
+        page: page,
+        arrayUser: arrayUser
+    })
 }
 
 exports.formSearchNew = async (req,res) => {
 
+
     const titleForm = req.body['form-set-title'];
     const jsonForm = req.body['form-set-now'];
     const dateExpired = req.body['form-set-date-expired'].split('-')[2]+'/'+req.body['form-set-date-expired'].split('-')[1]+'/'+req.body['form-set-date-expired'].split('-')[0]
-    const personsForm = req.body['form-search-form-persons'] 
+
+    //Sistema que valida o que é grupo de usuarios (Classificado dos usuarios) e ID's dos usuarios
+    const personsForm = typeof(req.body['form-search-form-persons']) != 'object' ? [req.body['form-search-form-persons']] : req.body['form-search-form-persons']
+
+    //Separando o que é GRUPO e USUARIOS
+    let stringGroupsUsers = '';//Grupos de usuarios
+    let stringUsersSet = '';//Usuarios individuais
+
+    personsForm.forEach(element => {
+        if(element.indexOf("GRP") > -1){
+            stringGroupsUsers+=element+',';
+        }else{
+            stringUsersSet+=element+',';
+        }
+    });
+    stringGroupsUsers = stringGroupsUsers.substring(0, stringGroupsUsers.length - 1);
+    stringUsersSet = stringUsersSet.substring(0, stringUsersSet.length - 1);
 
     //Convertendo em array string
-    let arrNewPerson = '';
+    /* let arrNewPerson = '';
     if(typeof(personsForm) == 'object'){
         
         personsForm.forEach(element => {
@@ -456,7 +528,7 @@ exports.formSearchNew = async (req,res) => {
         arrNewPerson = arrNewPerson.substring(0, arrNewPerson.length - 1);
     }else{
         arrNewPerson = personsForm;
-    }
+    } */
 
     database
     .insert({
@@ -467,7 +539,9 @@ exports.formSearchNew = async (req,res) => {
         jcv_trade_form_create_created_date: generateDate(),
         jcv_trade_form_create_expired: dateExpired,
         jcv_trade_form_create_enabled: 1,
-        jcv_trade_form_create_usersGroups: arrNewPerson
+
+        jcv_trade_form_create_usersGroups: stringGroupsUsers,
+        jcv_trade_form_create_usersSet: stringUsersSet
     })
     .table("jcv_trade_form_create")
     .then( data => {
@@ -584,7 +658,7 @@ exports.listTradePage = async (req,res) => {
 
     let arrayShops = []
     allShops.forEach(element => {
-        arrayShops.push(element.jcv_trade_shops_id+' - '+element.jcv_trade_shops_name_fantasy+',')
+        arrayShops.push(element.jcv_trade_shops_id+' - '+element.jcv_trade_shops_name_social+',')
     });
 
     var page = "trade/listTrade";
@@ -962,6 +1036,7 @@ exports.actionFPmodule = async (req,res) => {
         const nameData = 'EXPORT-FORM-PESQUISA-'+caracteresAleatorios;
 
         wb.write(nameData+'.xlsx', res);//o res faz o download
+
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Ação</b>.");
         res.redirect("/painel/trademkt/listTrade");
@@ -981,9 +1056,28 @@ exports.formSearchEdit = async(req,res) => {
         return data;
     })
 
+    //Lista de todos os usuarios que fazem parte da TRADE MKT
+    const allUsersTrade = await database
+    .select("sys_perm_idUser","jcv_userNamePrimary","jcv_id")
+    .where({sys_tra_perm_use: 1})
+    .table("jcv_users_permissions")
+    .join("jcv_users","jcv_users_permissions.sys_perm_idUser","jcv_users.jcv_id")
+    .then(data => {return data;})
+
+    let arrayUsersAll = []
+    allUsersTrade.forEach(element => {
+        arrayUsersAll.push(element.jcv_id+' - '+element.jcv_userNamePrimary)
+    });
+
+    //Estes dados são inseridos manualmente por conta de não haver uma tabela dinamica
+    //para cada usuario cadastrado.
+    arrayUsersAll.push('GRP05 - PROMOTORAS')
+    arrayUsersAll.push('GRP04 - REPRESENTANTES')
+
+    //Pegando usuarios do form
     const allUsersForm = await database
     .select("jcv_userNamePrimary","jcv_id")
-    .whereRaw("jcv_id IN ("+getForm[0].jcv_trade_form_create_usersGroups+")")
+    .whereRaw("jcv_id IN ("+getForm[0].jcv_trade_form_create_usersSet+")")
     .table("jcv_users")
     .then( data => {
         return data;
@@ -992,8 +1086,37 @@ exports.formSearchEdit = async(req,res) => {
     //Criando um array
     let newArrUsers = []
     allUsersForm.forEach(element => {
-        newArrUsers.push(element.jcv_id+'-'+element.jcv_userNamePrimary);
+        newArrUsers.push(element.jcv_id+' - '+element.jcv_userNamePrimary);
     });
+
+    //Validando os grupos deste formulario
+    const Allgroups = await database
+    .select("jcv_trade_form_create_usersGroups")
+    .table("jcv_trade_form_create")
+    .where({jcv_trade_form_create_id: idForm})
+    .then( data => {
+        return data;
+    })
+
+    //Validando se os grupos foram definidos
+    if(Allgroups != ''){
+
+        let arrGrps = Allgroups[0].jcv_trade_form_create_usersGroups.split(',')
+        
+        arrGrps.forEach(element => {
+            if(element == 'GRP05'){
+                newArrUsers.push('GRP05 - PROMOTORAS')
+            }else if(element == 'GRP04'){
+                newArrUsers.push('GRP04 - REPRESENTANTES')
+            }
+        });
+
+    }
+
+    //Estes dados são inseridos manualmente por conta de não haver uma tabela dinamica
+    //para cada usuario cadastrado.
+    //newArrUsers.push('GRP05 - PROMOTORAS')
+    //newArrUsers.push('GRP04 - REPRESENTANTES')
 
     /* const allUsers = await database
     .select("jcv_userNamePrimary","jcv_id")
@@ -1010,7 +1133,7 @@ exports.formSearchEdit = async(req,res) => {
     }); */
 
     var page = "trade/editFormulario";
-    res.render("panel/index", {page: page, getForm: getForm, allUsersForm: newArrUsers})
+    res.render("panel/index", {page: page, getForm: getForm, allUsersForm: newArrUsers, arrayUsersAll: arrayUsersAll})
 }
 
 exports.formSearchEditAction = async (req,res) => {
@@ -1019,6 +1142,22 @@ exports.formSearchEditAction = async (req,res) => {
     
     const jsonNew = req.body['form-edit-json-edit']
     const idForm = req.body['form-edit-button-id']
+
+    const personsForm = typeof(req.body['form-edit-form-persons']) == 'object' ? req.body['form-edit-form-persons'] : [req.body['form-edit-form-persons']]
+
+    //Separando o que é GRUPO e USUARIOS
+    let stringGroupsUsers = '';//Grupos de usuarios
+    let stringUsersSet = '';//Usuarios individuais
+
+    personsForm.forEach(element => {
+        if(element.indexOf("GRP") > -1){
+            stringGroupsUsers+=element+',';
+        }else{
+            stringUsersSet+=element+',';
+        }
+    });
+    stringGroupsUsers = stringGroupsUsers.substring(0, stringGroupsUsers.length - 1);
+    stringUsersSet = stringUsersSet.substring(0, stringUsersSet.length - 1);
 
     database
     .select()
@@ -1031,7 +1170,10 @@ exports.formSearchEditAction = async (req,res) => {
             jcv_trade_form_create_jsonForm: jsonNew,
             jcv_trade_form_create_edited_date: generateDate(),
             jcv_trade_form_create_titleForm: titleForm,
-            jcv_trade_form_create_expired: dateExpired
+            jcv_trade_form_create_expired: dateExpired,
+
+            jcv_trade_form_create_usersGroups: stringGroupsUsers,
+            jcv_trade_form_create_usersSet: stringUsersSet
         })
         .where({jcv_trade_form_create_id: idForm})
         .table("jcv_trade_form_create")

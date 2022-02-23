@@ -5,6 +5,11 @@
 
 <section class="list-trade-container-main">
     <section class="list-trade-container-page">
+        <div class="list-config-search-link-back">
+            <a class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
         <div class="list-trade-container-identify-page">
             <span>Relatorios</span>
             <span>/ Trade Marketing</span>
@@ -32,7 +37,7 @@
                         </div>
 
                         <div class="list-trade-container-row-large" id="list-trade-vd">
-                            <div class="list-trade-container-box-single-select">
+                            <!-- <div class="list-trade-container-box-single-select">
                                 <label for="">Venda Diarias - Usuarios</label>
                                 <select name="" id="list-trade-vd-select-users">
                                     <option value="">-- Selecione --</option>
@@ -40,7 +45,7 @@
                                     <option value="1">User 2</option>
                                     <option value="239">User 239</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="list-trade-container-box-single">
                                 <label for="">Venda Diarias - Loja</label>
                                 <input type="text" name="list-trade-VD-shop" id="vd-all-shops">
@@ -200,6 +205,7 @@
                                     <td><b><%= element.jcv_trade_visit_date %></b></td>
                                     <td><div class="list-trade-container-actions">
                                         <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
+                                        <button formaction="/painel/trademkt/fv/export-pdf" value="<%= element.jcv_trade_visit_id %>" name="fv-button-pdf-generate"><i class="ri-printer-line"></i></button>
                                         <button formaction="/painel/trademkt/remove/fv/form" value="<%= element.jcv_trade_visit_id %>" name="fv-button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
                                     </div></td>
                                 </tr>

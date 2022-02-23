@@ -69,6 +69,7 @@
     margin: 24px 0;
 }
 .form-edit-form-action-users input{
+    min-width: 350px;
     outline: 0;
     border: 0;
     padding: 5px 5px;
@@ -106,14 +107,15 @@
     min-width: fit-content;
     outline: 0;
     border: none;
-    font-size: 0.7rem;
+    padding: 6px;
+    font-size: 0.8rem;
     color: var(--color-one);
 }
 .form-edit-form-list-users-set button{
     border: none;
     color: var(--color-one);
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
     background: transparent;
     display: flex;
     align-items: center;

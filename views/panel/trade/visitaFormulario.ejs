@@ -16,8 +16,12 @@
                     <span>Formulário de Visita - Merchandising</span>
                 </div>
                 <div class="visit-form-info">
+                    <label for="">CNPJ</label>
+                    <input required class="visit-form-input-single" type="text" name="visit-shop-cnpj" id="input-shop-cnpj">
+                </div>
+                <div class="visit-form-info">
                     <label for="">LOJA</label>
-                    <input type="text" name="visit-shop" id="input-item-name">
+                    <input required class="visit-form-input-large" type="text" name="visit-shop" id="input-shop-name">
                 </div>
                 <!--  -->
                 <div class="visit-form-title-two">
@@ -1230,15 +1234,108 @@
 <script>
     $("#date-form-now").val(moment().format("YYYY-MM-DD"))
 
-    //Autocomplete
-    let arrayUser = '<%- arrayShops %>';
-    let arrayCov = arrayUser.split(',');
-    $("#input-item-name").autocomplete({
+
+    //Array com o CNPJ puro e NOME SOCIAL puro
+    const allInofShops = '<%- arrayShops %>'
+    const convertShops = allInofShops.split('|*|')
+    
+    //Pegando so os CNPJ's
+    const allCNPJ = []
+    convertShops.forEach(element => {
+        allCNPJ.push(element.split(' @# ')[0])
+    })
+
+    //Pegando so os NOME SOCIAL da loja
+    const allShopsName = []
+    convertShops.forEach(element => {
+        allShopsName.push(element.split(' @# ')[1])
+    })
+    allShopsName.pop()
+
+    //Autocomplete do CNPJ
+    let valueSetCNPJ = '';
+    $("#input-shop-cnpj").autocomplete({
         source: function(request, response) {
-            var results = $.ui.autocomplete.filter(arrayCov, request.term);        
+            var results = $.ui.autocomplete.filter(allCNPJ, request.term);        
             response(results.slice(0, 10));
+            
+            $('.ui-menu-item-wrapper').click(function () {
+
+                convertShops.forEach(element => {
+
+                //Aqui eu verifico se o NOME existe no element, caso sim ele pega busca novamente
+                //utilizando o nome e o cnpj na matriz pricipal
+                //1° Busco a string, 2° busco o valor na matriz
+                let searchInput = element.indexOf($(this).text());
+
+                //Achamos algo na string
+                if(searchInput > -1 ){
+                    valueSetShop = element.split(' @# ')[1]
+                }
+
+                });
+
+                $("#input-shop-name").val(valueSetShop)
+                valueSetShop = undefined;//Após a inserção, ele reseta o input
+            })
         }
-    });
+    })
+
+    //Autocomplete do NOME SOCIAL
+    $("#input-shop-name").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(allShopsName, request.term);        
+            response(results.slice(0, 10));
+            
+            let valueSetShop = 0;
+            $('.ui-menu-item-wrapper').click(function () {
+
+                convertShops.forEach(element => {
+
+                    //Aqui eu verifico se o NOME existe no element, caso sim ele pega busca novamente
+                    //utilizando o nome e o cnpj na matriz pricipal
+                    //1° Busco a string, 2° busco o valor na matriz
+                    let searchInput = element.indexOf($(this).text());
+
+                    //Achamos algo na string
+                    if(searchInput > -1 ){
+                        valueSetShop = element.split(' @# ')[0]
+                    }
+
+                });
+
+                $("#input-shop-cnpj").val(valueSetShop)
+                valueSetShop = undefined
+            })
+        }
+    })
+
+
+    
+    /* $("#input-shop-name").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(allShopsName, request.term);        
+            response(results.slice(0, 10));
+            
+            $('.ui-menu-item-wrapper').click(function () {
+
+                let aaaa = convertShops.map(validationString)
+
+                //Função para mapear e identificar se o dado X CONTEM no array XX
+                function validationString (valueArr) {
+
+                    let reps = valueArr.indexOf($(this).text())
+
+                    if(reps > -1){
+                        valueSetCNPJ = convertShops[reps].split(' @# ')[1]
+                    }
+                }
+
+                //console.log(teste)
+                $("#input-shop-cnpj").val(valueSetCNPJ)
+            })
+        }
+    }); */
 
     $(".visit-form-section-questions-checks").click(function(){
 

@@ -21,9 +21,7 @@
                         <option value="">Selecione</option>
                         <% shopsAll.forEach(element => { %>
 
-                            <% if(element.achado == 1){ %>
-                                <option value="<%= element.jcv_trade_shops_id %>"><%= element.jcv_trade_shops_name_fantasy %></option>
-                            <% } %>
+                            <option value="<%= element[0] %>"><%= element[1] %></option>
 
                         <% }) %>
                     </select>

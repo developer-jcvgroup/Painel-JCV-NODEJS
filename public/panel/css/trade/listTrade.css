@@ -23,6 +23,14 @@
     color: var(--color-one);
 }
 
+/*  */
+.list-config-search-link-back{display: flex; margin: 20px 0;}
+.list-config-search-link-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+
 /***************************/
 /* PAGINA */
 .list-trade-page-new{

@@ -1,0 +1,130 @@
+.pdf-trade-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    -webkit-print-color-adjust:exact;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+.pdf-trade-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+    border: 2px solid var(--color-two);
+    padding: 5px;
+}
+
+/*  */
+.pdf-trade-header-logo{
+    width: 70px;
+    min-width: 70px;
+}
+.pdf-trade-img{
+    width: 100%;
+    object-fit: contain;
+}
+
+/*  */
+.pdf-trade-header-title{
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+}
+.pdf-trade-header-title span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-two);
+    margin-bottom: 10px;
+}
+.pdf-trade-header-title span{
+    font-size: 0.8rem;
+    color: var(--color-two);
+}
+
+/*  */
+/*  */
+/*  */
+.pdf-trade-form-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0;
+    padding: 0 24px;
+}
+.pdf-trade-form-section-title{
+    font-size: 0.8rem;
+    color: var(--color-two);
+}
+.pdf-trade-form-section-desc{
+    margin-top: 10px;
+    font-size: 1rem;
+    color: var(--color-two);
+}
+
+/*  */
+.pdf-trade-form-section-questions{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*  */
+.pdf-trade-form-section-question-box{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+}
+.question-box-row{
+    flex-direction: row !important;
+    align-items: center;
+    
+}
+.question-box-row .pdf-trade-form-section-question-title {
+    min-width: 250px;
+}
+.question-box-row label{
+    margin-right: 17px;
+}
+.pdf-trade-form-section-question-title{
+    display: flex;
+}
+.pdf-trade-form-section-question-title input{
+    font-size: 0.8rem;
+    color: var(--color-two);
+    font-weight: bold;
+    border: none;
+    outline: 0;
+    width: -webkit-fill-available;
+}
+.pdf-trade-form-section-question-cont{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 12px;
+}
+.pdf-trade-form-section-questions-checks{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin-right: 14px;
+    margin-bottom: 14px;
+}
+.pdf-trade-form-section-questions-checks label{
+    font-size: 0.8rem;
+    color: var(--color-two);
+    padding: 5px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--color-three);
+}
+.pdf-trade-form-section-questions-checks input[type=checkbox]{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin: 0 4px;
+}

@@ -336,7 +336,7 @@ exports.saveNewEvent = async (req,res) => {
                             
                         }
 
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+date[0]+" registrado com sucesso!");
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> registrado com sucesso!");
                         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                     }
                 })

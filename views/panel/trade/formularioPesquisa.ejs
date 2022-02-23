@@ -33,7 +33,7 @@
                 <div class="setDataWrap form-search-form-set">
                 
                     <div class="form-search-form-action-users">
-                        <input placeholder="Informe podem pode responder.." id="insert-person" type="text">
+                        <input placeholder="Insira GRUPOS, USURIOS.." id="insert-person" type="text">
                         <button type="button" id="button-add-person">Adicionar</button>
                     </div>
     
@@ -97,7 +97,7 @@
 
 
     //LISTANDO OS USUARIOS
-    let dataOne = '5 - PROMOTORAS, 4 - REPRESENTANTES';
+    let dataOne = '<%- arrayUser %>';
     let arrayDataOne = dataOne.split(',');
 
     //Primeiro campo
@@ -116,14 +116,16 @@
         const valIdUser = $("#insert-person").val().split(' - ')[0];
         const valPerson = $("#insert-person").val().split(' - ')[1];
 
-        if(valIdUser == '' || valPerson == ''){
+        let validateUser = arrayDataOne.indexOf($("#insert-person").val())
+
+        if(valIdUser == '' || valPerson == '' || validateUser == -1){
             $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
         }else{
 
-            if(idArray.indexOf(parseInt(valIdUser)) != -1){
+            if(idArray.indexOf(valIdUser) != -1){
                 $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
             }else{
-                idArray.push(parseInt(valIdUser))
+                idArray.push(valIdUser)
                 $(".form-search-form-list-user")
                 .append(
                 `<div class="form-search-form-list-users-set" id="person-id-${valIdUser}">

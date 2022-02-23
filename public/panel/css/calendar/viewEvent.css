@@ -398,14 +398,15 @@
     min-width: fit-content;
     outline: 0;
     border: none;
-    font-size: 0.7rem;
+    padding: 5px;
+    font-size: 0.8rem;
     color: var(--color-one);
 }
 .event-edit-event-person-box button{
     border: none;
     color: var(--color-one);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
     background: transparent;
     display: flex;
     align-items: center;
