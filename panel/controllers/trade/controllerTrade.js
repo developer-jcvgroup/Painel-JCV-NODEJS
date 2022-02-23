@@ -24,35 +24,77 @@ exports.controllerMain = async (req,res) =>{
         return data
     })
 
-    //Vendo os formularios de pesquisa que esta pedente para este usuario
     const getFormsReponse = await database
-    .raw("SELECT locate("+GLOBAL_DASH[12]+", jcv_trade_form_create_usersGroups) achado,jcv_trade_form_create_id,jcv_trade_form_create_created_userId,jcv_trade_form_create_titleForm,jcv_trade_form_create_jsonForm,jcv_trade_form_create_usersGroups,jcv_trade_form_res_formId FROM jcv_trade_form_create LEFT JOIN jcv_trade_form_response ON jcv_trade_form_create.jcv_trade_form_create_id = jcv_trade_form_response.jcv_trade_form_res_formId")
+    .select("jcv_trade_form_create_titleForm","jcv_trade_form_create_id","jcv_trade_form_create_usersSet",
+    "jcv_trade_form_create_usersGroups","jcv_trade_form_create_usersListResponse","jcv_trade_form_create_expired")
+    .where({jcv_trade_form_create_enabled: 1})
+    .table("jcv_trade_form_create")
+    .then( data => {return data})
+
+    //Vendo os formularios de pesquisa que esta pedente para este usuario
+    /* const getFormsReponse = await database
+    .raw("SELECT locate('GRP0"+GLOBAL_DASH[12]+"', jcv_trade_form_create_usersGroups) achado,jcv_trade_form_create_id,jcv_trade_form_create_created_userId,jcv_trade_form_create_titleForm,jcv_trade_form_create_jsonForm,jcv_trade_form_create_usersGroups,jcv_trade_form_res_formId FROM jcv_trade_form_create LEFT JOIN jcv_trade_form_response ON jcv_trade_form_create.jcv_trade_form_create_id = jcv_trade_form_response.jcv_trade_form_res_formId")
     //.select()
     //.whereRaw("jcv_trade_form_create_usersGroups LIKE '%,"+GLOBAL_DASH[12]+"' OR jcv_trade_form_create_usersGroups LIKE '"+GLOBAL_DASH[12]+",%' AND jcv_trade_form_create_usersListResponse IS NULL")
     //.leftJoin("jcv_trade_form_response","jcv_trade_form_create.jcv_trade_form_create_id","jcv_trade_form_response.jcv_trade_form_res_formId")
     //.table("jcv_trade_form_create")
-    .then( data => { return data[0]})
+    .then( data => {
+
+        return data[0];
+
+    })
 
     let formsIds = []
     getFormsReponse.forEach(element => {
-        let inspectSet = element.jcv_trade_form_create_usersGroups.split(',').map(converNumber);
-        
-        function converNumber(num){
-            return parseInt(num)
-        }
 
-        if(element.achado == 1 && inspectSet.indexOf(GLOBAL_DASH[12]) > -1 && element.jcv_trade_form_res_formId == null){
+        console.log(element.achado)
+
+        if(element.achado > 1){
             formsIds.push(element.jcv_trade_form_create_id)
         }
+
+        let inspectSet = element.jcv_trade_form_create_usersGroups > '' ? element.jcv_trade_form_create_usersGroups.split(',') : 0;
+        let inspectUsers = element.jcv_trade_form_create_usersSet > '' ? element.jcv_trade_form_create_usersSet.split(',') : 0;
+
+        console.log(inspectUsers)
+
+        if(inspectSet != '' || inspectUsers != ''){
+
+            if(element.achado == 1 && inspectSet.indexOf('GRP0'+GLOBAL_DASH[12]) > -1 && element.jcv_trade_form_res_formId == null){
+                formsIds.push(element.jcv_trade_form_create_id)
+            }else if(element.achado == 1 && inspectUsers.indexOf(GLOBAL_DASH[0]) > -1 && element.jcv_trade_form_res_formId == null){
+                formsIds.push(element.jcv_trade_form_create_id)
+            }
+        }
+
     });
 
-    const getFormsResp = await database
-    .select()
-    .whereIn("jcv_trade_form_create_id", formsIds)
-    .table("jcv_trade_form_create")
-    .then( data => {
-        return data;
-    })
+    console.log(formsIds) */
+
+    let getFormsResp = []
+    getFormsReponse.forEach(element => {
+        
+        let arrayUsers = element.jcv_trade_form_create_usersSet.split(',')
+        let arrayGroups = element.jcv_trade_form_create_usersGroups.split(',')
+        let responsesGet = element.jcv_trade_form_create_usersListResponse != null ? element.jcv_trade_form_create_usersListResponse.split(',') : []
+
+        if(arrayUsers.indexOf(''+GLOBAL_DASH[0]) > -1 && responsesGet.indexOf(''+GLOBAL_DASH[0]) == -1){
+
+
+            getFormsResp.push([element.jcv_trade_form_create_id, element.jcv_trade_form_create_titleForm, element.jcv_trade_form_create_expired])
+
+
+        }else if(arrayGroups.indexOf('GRP0'+GLOBAL_DASH[12]) > -1 && responsesGet.indexOf(''+GLOBAL_DASH[0]) == -1){
+
+
+            getFormsResp.push([element.jcv_trade_form_create_id, element.jcv_trade_form_create_titleForm, element.jcv_trade_form_create_expired])
+
+
+        }else{
+            //Faça nada
+        }
+
+    });
 
     var page = "trade/mainTrade";
     res.render("panel/index", {

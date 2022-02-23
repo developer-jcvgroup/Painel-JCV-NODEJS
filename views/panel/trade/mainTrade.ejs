@@ -18,17 +18,18 @@
 
                         <% getFormsReponse.forEach(element => { %>
 
-                            <a class="trade-main-forms-link" href="/painel/trademkt/form/response/<%= element.jcv_trade_form_create_id %>">
+                            <a class="trade-main-forms-link" href="/painel/trademkt/form/response/<%= element[0] %>">
                                 <div class="trade-main-forms-link-info">
                                     <span>Pesquisa de Mercado</span>
-                                    <span><%= element.jcv_trade_form_create_titleForm %></span>
-                                    <span>Esta pesquisa está <b>pendenteXXXXXXX!</b>, respoda-a.</span>
+                                    <span><%= element[1] %></span>
+                                    <span>Esta pesquisa está <b>pendente!</b>, respoda-o.</span>
+                                    <span><b>Expira em: <%= element[2] %></b></span>
                                 </div>
                                 <div class="trade-main-forms-link-next">
                                     <span><i class="ri-arrow-right-line"></i></span>
                                 </div>
                             </a>
-                            <hr style="margin: 19px 0">
+                            <hr style="margin: 10px 0">
 
                         <!--  -->
                         <% }) %>
