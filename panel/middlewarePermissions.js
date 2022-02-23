@@ -47,6 +47,9 @@ async function getPermissions (req, res, next) {
     //PROGRAMA DA BELEZA
     if(urlPage[0] == "beleza"){
 
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
+
         let pageError = true;
         //USER:
         if(urlPage[1] == "solicitar" && resultPermissions[0].sys_blz_perm_use == 1){
@@ -67,9 +70,6 @@ async function getPermissions (req, res, next) {
             return next();
         }
 
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
-
         //Não foi encontrado
         if(pageError){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
@@ -79,6 +79,9 @@ async function getPermissions (req, res, next) {
 
     //REQUISITOR DE MATERIAIS
     if(urlPage[0] == "requisitor"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD03')
 
         let pageError = true;
         //USER
@@ -108,9 +111,6 @@ async function getPermissions (req, res, next) {
         if(urlPage[1] == "items" && resultPermissions[0].sys_req_perm_admin == 1){
             return next();
         }
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD03')
 
         //Não foi encontrado
         if(pageError){
@@ -148,6 +148,9 @@ async function getPermissions (req, res, next) {
     //CONFIGURAÇÃO DO CALENDARIO
     if(urlPage[0] == "calendario"){
 
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD04')
+
         let pageError = true;
         //ADMIN GERAL
         if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use == 1){
@@ -166,9 +169,6 @@ async function getPermissions (req, res, next) {
             return next();
         }
 
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD04')
-
         //Não foi encontrado
         if(pageError){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
@@ -178,6 +178,9 @@ async function getPermissions (req, res, next) {
 
     //TRADE MKT
     if(urlPage[0] == "trademkt"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD05')
 
         let pageError = true;
         if(urlPage[1] == "main" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
@@ -201,9 +204,6 @@ async function getPermissions (req, res, next) {
         if(urlPage[1] == "salesDay" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
             return next();
         }
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD05')
         
         //Não foi encontrado
         if(pageError){
