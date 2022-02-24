@@ -692,7 +692,7 @@ exports.editSaveNewEvent = async (req,res) => {
                             
                         }
                         
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento #"+idEvent+" editado com sucesso!");
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> editado com sucesso!");
                         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                     }
                 })
