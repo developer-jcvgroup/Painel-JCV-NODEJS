@@ -82,16 +82,15 @@ getCalendarEvents = async () => {
     .then( data => { return data[0]})
 
     getFormsReponse.forEach(element => {
-        let dateSet = element.sys_calendar_eventDate.split('/')[2]+'-'+element.sys_calendar_eventDate.split('/')[1]+'-'+element.sys_calendar_eventDate.split('/')[0]
+        let dateSet = moment(element.sys_calendar_eventDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        //let dateSet = element.sys_calendar_eventDate.split('/')[2]+'-'+element.sys_calendar_eventDate.split('/')[1]+'-'+element.sys_calendar_eventDate.split('/')[0]
         let usersEvents = element.sys_calendar_eventPersons.split(',').map(convertNumber)
 
         function convertNumber(index){
             return parseInt(index)
         }
-
-        //console.log(moment().format("YYYY-MM-DD"))
-
-        if(element.achado == 1 && usersEvents.indexOf(GLOBAL_DASH[0]) > -1 && dateSet > moment().format("YYYY-MM-DD")){
+        
+        if(element.achado > 1 && usersEvents.indexOf(GLOBAL_DASH[0]) && dateSet >= moment().format("YYYY-MM-DD")){
             count++
         }
     });
