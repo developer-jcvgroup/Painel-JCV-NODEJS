@@ -6,7 +6,7 @@ const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 
-const systemCalendarEvents = require('./system/systemAlertCalendar')
+const systemCalendarEvents = require('./system/scriptsSystemAll')
 
 // Static
 app.use(express.static("public"));

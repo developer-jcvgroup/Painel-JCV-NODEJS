@@ -448,62 +448,48 @@ exports.salesDayRegister = async (req,res) => {
     .table("jcv_trade_products")
     .then( data => {return data})
 
-    if(verifyProd != '' && verifyProd.length == 3){
-        //Produtos achados
+    //Object Felps
+    let objFrom= '{"FELPS Quantidade Vendida": "'+productSalesFelps+'", "FELPS Produto mais vendido": "'+popularFelps+'", "FELPS Ação?": "'+actionMKTFelps+'", "FELPS Loja com material de marketing?": "'+materialFelps+'", "RETRO Quantidade Vendida": "'+productSalesRetro+'", "RETRO Produto mais vendido": "'+popularRetro+'", "RETRO Ação?": "'+actionMKTRetro+'", "RETRO Loja com material de marketing?": "'+materialRetro+'", "AVENCA Quantidade Vendida": "'+productSalesAvenca+'", "AVENCA Produto mais vendido": "'+popularAvenca+'", "AVENCA Ação?": "'+actionMKTAvenca+'", "AVENCA Loja com material de marketing?": "'+materialAvenca+'"}';
 
-        //Object Felps
-        let objFrom= '{"FELPS Quantidade Vendida": "'+productSalesFelps+'", "FELPS Produto mais vendido": "'+popularFelps+'", "FELPS Ação?": "'+actionMKTFelps+'", "FELPS Loja com material de marketing?": "'+materialFelps+'", "RETRO Quantidade Vendida": "'+productSalesRetro+'", "RETRO Produto mais vendido": "'+popularRetro+'", "RETRO Ação?": "'+actionMKTRetro+'", "RETRO Loja com material de marketing?": "'+materialRetro+'", "AVENCA Quantidade Vendida": "'+productSalesAvenca+'", "AVENCA Produto mais vendido": "'+popularAvenca+'", "AVENCA Ação?": "'+actionMKTAvenca+'", "AVENCA Loja com material de marketing?": "'+materialAvenca+'"}';
+    if(shopSelect != ''){
+        //Validando se ja possui registro neste dia para esta loja
+        const selectShopValidation = await database
+        .select()
+        .whereRaw("jcv_trade_sales_form_date LIKE '%"+moment(dateRegister).format("DD/MM/YYYY")+"%' AND jcv_trade_sales_form_shopId = "+shopSelect)
+        .table("jcv_trade_sales_form")
+        .then(data => {
+            if(data != ''){
+                return true
+            }else{
+                return false
+            }
+        })
 
-        if(shopSelect != ''){
-            //Validando se ja possui registro neste dia para esta loja
-            const selectShopValidation = await database
-            .select()
-            .whereRaw("jcv_trade_sales_form_date LIKE '%"+moment(dateRegister).format("DD/MM/YYYY")+"%' AND jcv_trade_sales_form_shopId = "+shopSelect)
+        //Validando..
+        if(selectShopValidation == false){
+
+            database
+            .insert({
+                jcv_trade_sales_form_shopId: parseInt(shopSelect),
+                jcv_trade_sales_form_date: generateDate(),
+                jcv_trade_sales_form_userId: GLOBAL_DASH[0],
+                jcv_trade_sales_form_obForm: objFrom
+            })
             .table("jcv_trade_sales_form")
-            .then(data => {
-                if(data != ''){
-                    return true
-                }else{
-                    return false
+            .then( data => {
+                if(data[0] > 0){
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Registro da venda diaria da loja foi realizado com sucesso.");
+                    res.redirect("/painel/trademkt/main");
                 }
             })
-    
-            //Validando..
-            if(selectShopValidation == false){
-    
-                database
-                .insert({
-                    jcv_trade_sales_form_shopId: parseInt(shopSelect),
-                    jcv_trade_sales_form_date: generateDate(),
-                    jcv_trade_sales_form_userId: GLOBAL_DASH[0],
-                    jcv_trade_sales_form_obForm: objFrom
-                })
-                .table("jcv_trade_sales_form")
-                .then( data => {
-                    if(data[0] > 0){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Registro da venda diaria da loja foi realizado com sucesso.");
-                        res.redirect("/painel/trademkt/main");
-                    }
-                })
-            }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Esta lojá já possui um registro na data informada.");
-                res.redirect("/painel/trademkt/main");
-            }
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
-            res.redirect("/painel/trademkt/salesDay");
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Esta lojá já possui um registro na data informada.");
+            res.redirect("/painel/trademkt/main");
         }
     }else{
-        //Não encontrado
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Os produtos inseridos são inválidos!.");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
         res.redirect("/painel/trademkt/salesDay");
     }
-
-    
-
-    
-
-    
 }
 
 
@@ -1089,6 +1075,7 @@ exports.actionFPmodule = async (req,res) => {
 exports.formSearchEdit = async(req,res) => {
 
     const idForm = req.params['id']
+    //console.log(idForm)
 
     const getForm = await database
     .select()
@@ -1116,20 +1103,34 @@ exports.formSearchEdit = async(req,res) => {
     arrayUsersAll.push('GRP05 - PROMOTORAS')
     arrayUsersAll.push('GRP04 - REPRESENTANTES')
 
-    //Pegando usuarios do form
-    const allUsersForm = await database
-    .select("jcv_userNamePrimary","jcv_id")
-    .whereRaw("jcv_id IN ("+getForm[0].jcv_trade_form_create_usersSet+")")
-    .table("jcv_users")
-    .then( data => {
-        return data;
-    })
 
-    //Criando um array
-    let newArrUsers = []
-    allUsersForm.forEach(element => {
-        newArrUsers.push(element.jcv_id+' - '+element.jcv_userNamePrimary);
-    });
+    let validationRes = getForm[0].jcv_trade_form_create_usersSetsp != '' ? getForm[0].jcv_trade_form_create_usersSet.split(',') : '';
+
+    let allUsersForm;
+    let newArrUsers = [];
+
+    //console.log(validationRes)
+    if(validationRes != ''){
+        //console.log('tem')
+        //Pegando usuarios do form
+        allUsersForm = await database
+        .select("jcv_userNamePrimary","jcv_id")
+        .whereIn("jcv_id", validationRes)
+        .table("jcv_users")
+        .then( data => {
+            return data;
+        })
+
+        //Criando um array
+        allUsersForm.forEach(element => {
+            newArrUsers.push(element.jcv_id+' - '+element.jcv_userNamePrimary);
+        });
+    }else{
+        //console.log('nao tem')
+        allUsersForm = ['']
+    }
+
+    
 
     //Validando os grupos deste formulario
     const Allgroups = await database
@@ -1183,7 +1184,8 @@ exports.formSearchEditAction = async (req,res) => {
     const dateExpired = req.body['form-set-date-expired'].split('-')[2]+'/'+req.body['form-set-date-expired'].split('-')[1]+'/'+req.body['form-set-date-expired'].split('-')[0]
     
     const jsonNew = req.body['form-edit-json-edit']
-    const idForm = req.body['form-edit-button-id']
+    const idForm = parseInt(req.body['form-edit-button-id'])
+    //console.log(idForm)
 
     const personsForm = typeof(req.body['form-edit-form-persons']) == 'object' ? req.body['form-edit-form-persons'] : [req.body['form-edit-form-persons']]
 
@@ -1695,4 +1697,92 @@ exports.actionProductsTrade = async (req,res) => {
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Escolha uma operação");
         res.redirect("/painel/trademkt/products");
     }
+}
+
+exports.deleteFPform = async (req,res) => {
+    const idForm = req.body['button-admin-remove-form'] 
+    //console.log('deletar formulario e respostas')
+    const backUpIdForm = idForm;
+
+    //Zerando as respostas
+    database
+    .update({jcv_trade_form_create_total_reponse: 0})
+    .where({jcv_trade_form_create_id: idForm})
+    .table("jcv_trade_form_create")
+    .then( data => {
+        //ok
+    })
+
+    database
+    .delete()
+    .where({jcv_trade_form_create_id: idForm})
+    .table("jcv_trade_form_create")
+    .then( data => {
+        if(data > 0){
+
+            //Deletando as respostas
+            database
+            .delete()
+            .where({jcv_trade_form_res_formId: idForm})
+            .table("jcv_trade_form_response")
+            .then( data => {
+                if(data > 0){
+
+                    //Zerando as respostas
+                    database
+                    .update({jcv_trade_form_create_total_reponse: 0})
+                    .where({jcv_trade_form_create_id: backUpIdForm})
+                    .table("jcv_trade_form_create")
+                    .then( data => {
+                        //ok
+                    })
+                    
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario e suas respostas deletados com sucesso");
+                    res.redirect("/painel/trademkt/listTrade");
+
+                }else{
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao deletar seu formulario");
+                    res.redirect("/painel/trademkt/listTrade");
+                }
+            })
+
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao deletar as resposts do formulario. Elas já foram excluidas.");
+            res.redirect("/painel/trademkt/listTrade");
+        }
+    })
+}
+
+exports.removeFPresponses = async (req,res) => {
+    const idForm = req.body['button-admin-remove-responses']
+    //console.log('remover respostas')
+
+    const backUpIdForm = idForm
+
+    //Deletando as respostas
+    database
+    .delete()
+    .where({jcv_trade_form_res_formId: idForm})
+    .table("jcv_trade_form_response")
+    .then( data => {
+        if(data > 0){
+
+            //Zerando as respostas
+            database
+            .update({jcv_trade_form_create_total_reponse: 0})
+            .where({jcv_trade_form_create_id: backUpIdForm})
+            .table("jcv_trade_form_create")
+            .then( data => {
+                //ok
+            })
+            
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Respostas do formulário foram deletados com sucesso");
+            res.redirect("/painel/trademkt/listTrade");
+
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhuma resposta encontrada para este formulario");
+            res.redirect("/painel/trademkt/listTrade");
+        }
+    })
+
 }

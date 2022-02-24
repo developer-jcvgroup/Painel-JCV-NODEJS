@@ -73,9 +73,61 @@ async function lembreteCalendar(){
     })
 }
 
+async function validationTradeForms(){
+
+    function alterStatusForm(id){
+        database
+        .update({jcv_trade_form_create_enabled: 0})
+        .where({jcv_trade_form_create_id: id})
+        .table("jcv_trade_form_create")
+        .then( data => {
+            if(data != 0){
+                //console.log(data)
+            }
+        })
+    }
+
+    //Pegando todos os formularios
+    database
+    .select()
+    .where({jcv_trade_form_create_enabled: 1})
+    .table("jcv_trade_form_create")
+    .then(data => {
+
+        //console.log(data)
+        
+        if(data != ''){
+            data.forEach(element => {
+
+                let convDatOne = moment(element.jcv_trade_form_create_expired, 'DD/MM/YYYY')
+                let convDatTwo = moment().format('YYYY-MM-DD')
+                if(moment(convDatOne).isBefore(convDatTwo)){
+                    console.log('este evento ja expirou')
+
+                    //Função para desabilitar o form
+                    alterStatusForm(element.jcv_trade_form_create_id)
+                }else{
+                    console.log('este form ainda pode ser respondido')
+                }
+
+            })
+        }else{
+            //Não existe forms para ser validado
+        }
+    })
+}
+
 cron.schedule('*/60 * * * * *', () => {
-    console.log("Executando a tarefa a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
+    console.log("Executando a tarefa CALENDAR INITIAL EVENT a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     lembreteCalendar()
+}, {
+    scheduled: true,
+    timezone: "America/Sao_Paulo"
+});
+
+cron.schedule('0 0 0 * * *', () => {
+    console.log("Executando a tarefa VALIDE FORM TRADE a cada dia: "+moment().format("DD-MM-YYYY HH:mm:ss"))
+    validationTradeForms()
 }, {
     scheduled: true,
     timezone: "America/Sao_Paulo"

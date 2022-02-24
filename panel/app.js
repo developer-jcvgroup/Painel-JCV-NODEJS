@@ -199,6 +199,9 @@ router.post('/trademkt/action/vd/action', authenticate, controllerTrade.actionVD
 router.post('/trademkt/action/fp/action', authenticate, controllerTrade.actionFPmodule)
 router.post('/trademkt/action/fv/action', authenticate, controllerTrade.visitFormModule)
 router.post('/trademkt/fv/export-pdf', authenticate, controllerTrade.exportFVPDF)
+//Ação no Form de Pesquisa
+router.post('/trademkt/action/fp/deleteForm', authenticate, controllerTrade.deleteFPform)
+router.post('/trademkt/action/fp/removeResponses', authenticate, controllerTrade.removeFPresponses)
 //Trade Mtk: Pagina de resposta
 router.get('/trademkt/form/response/:id', authenticate, getPermissions, controllerTrade.formResponse)
 router.post('/trademkt/formSearch/responseForm', authenticate, controllerTrade.formResponseAction)

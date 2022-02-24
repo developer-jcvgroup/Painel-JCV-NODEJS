@@ -96,11 +96,11 @@ exports.resetPassWord = async (req,res) => {
                 let arr = [data[0].jcv_userEmailCorporate, data[0].jcv_userEmailFolks]
                 
                 //Sistema de email
-                const textOne = 'Recentemente você solicitou a redefinição de senha, abaixo terá sua nova senha de acesso.';
-                const textTwo = `Sua foi redefinida!. Ao fazer o login uma tela para cadastrar uma nova senha será exibida.`;
+                const textOne = 'Você solicitou a <b>redefinição de sua senha</b> no painel do JCV GROUP.';
+                const textTwo = `Sua senha foi redefinida!. <b>Efetue o login usando somente seu CPF</b> e em seguida uma tela pedira para você inserir sua nova senha.`;
                 emailSystemExe.sendMailExe(arr, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_userNamePrimary, textOne, textTwo);
 
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Um email foi enviado!");
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Um e-mail foi enviado, senha resetada com sucesso");
                 res.redirect("/login");
             }else{
                 //error
