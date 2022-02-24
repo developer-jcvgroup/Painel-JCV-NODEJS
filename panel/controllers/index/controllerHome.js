@@ -89,8 +89,8 @@ getCalendarEvents = async () => {
         function convertNumber(index){
             return parseInt(index)
         }
-        
-        if(element.achado > 1 && usersEvents.indexOf(GLOBAL_DASH[0]) && dateSet >= moment().format("YYYY-MM-DD")){
+
+        if(element.achado > 0 && usersEvents.indexOf(GLOBAL_DASH[0]) >-1 && dateSet >= moment().format("YYYY-MM-DD")){
             count++
         }
     });
