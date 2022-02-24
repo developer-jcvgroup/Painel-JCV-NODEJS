@@ -54,6 +54,7 @@
     font-weight: bold;
     background: var(--color-two);
 }
+/*  */
 .sales-day-form-info input[type=date]{
     margin: 0 21px;
     font-weight: bold;
