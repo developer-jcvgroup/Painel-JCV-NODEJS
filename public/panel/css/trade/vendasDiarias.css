@@ -65,15 +65,6 @@
     border: 1px solid var(--color-three);
     border-radius: 4px;
 }
-.sales-day-form-info input[type=date]::-webkit-calendar-picker-indicator {
-    color: red;
-    opacity: 1;
-    display: block;
-    background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
-    width: 20px;
-    height: 20px;
-    border-width: thin;
-}
 
 /*  */
 .sales-day-form-title-two{
