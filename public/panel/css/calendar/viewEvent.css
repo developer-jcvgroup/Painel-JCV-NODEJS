@@ -448,6 +448,11 @@
 /************************/
 /************************/
 /* RESPONSIVE */
+@media only screen and (max-width: 800px){
+    .event-edit-event-box{
+        width: 95% !important;
+    }
+}
 @media only screen and (max-width: 550px){
     .event-title-day{
         flex-direction: column;
