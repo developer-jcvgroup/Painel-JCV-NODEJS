@@ -7,11 +7,13 @@ async function getUpdates(idUser, moduleOp){
     .raw(`
         SELECT *
         FROM sys_update
-        WHERE NOT CONCAT(',', sys_update_usersOkUpdate, ',')
+        WHERE sys_update_usersOkUpdate = null OR NOT CONCAT(',', sys_update_usersOkUpdate, ',')
         REGEXP CONCAT('[,]', '${idUser}', '[,]') AND sys_update_moduleUp = '${moduleOp}'
     `)
     //.raw("SELECT locate("+idUser+", sys_update_usersOkUpdate) achado,sys_update.* FROM sys_update WHERE NOT locate("+idUser+", sys_update_usersOkUpdate) > 0 AND sys_update_moduleUp = '"+moduleOp+"'")
     .then( data => { return data[0]; })
+
+    console.log(allUpdate)
 
     return allUpdate;
 }
