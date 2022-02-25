@@ -6,17 +6,16 @@
         <div class="profile-container-main-style"></div>
         <div class="profile-container-info-user">
             <form class="profile-container-image-user" id="form-save-profile" action="./perfil/update/image" method="post" enctype="multipart/form-data">
-                <% if(arrayData[0]['jcv_userImageIcon'] != null){ %>
-                    <img class="profile-img-user" src="/panel/img/img-user/<%= arrayData[0]['jcv_userImageIcon'] %>" alt="">
+                <% if(arrayData[0].jcv_userImageIcon != null){ %>
+                    <img style="background: transparent;" class="profile-img-user" src="<%= arrayData[0].jcv_userImageIcon %>" alt="">
                 <% }else{ %>
                     <img id="img-user-preview" class="profile-img-user"></img>
                 <% } %>
                 <div class="profile-container-edit">
-                    <input id="input-edit-img" type="file" name="userImageUpload" accept="image/png, image/jpeg" required>
-                    <label for="input-edit-img"><i class="ri-edit-line"></i></label>
-                    <button id="button-save-profile" type="submit"><i class="ri-save-line"></i></button>
+                    <label id="input-edit-img"><i class="ri-edit-line"></i></label>
                 </div>
             </form>
+
             <form class="profile-container-info-user-set" action="./perfil/update" method="post">
                 <div class="profile-row-form">
                     <div class="profile-container-input">
@@ -95,23 +94,212 @@
         </div>
     </section>
 </section>
-<!-- <script src="/js/jquery-3.5.1.min.js"></script> -->
+
+<!--  -->
+<section class="avataars-section" id="avataars-section">
+    <div class="avataars-main">
+        <div class="avataars-main-box">
+            <div class="avataars-main-title">
+                <span>Defina seu Avatar!</span>
+                <i id="close-screen-avataars" class="ri-close-line"></i>
+            </div>
+            <!--  -->
+            <div class="avataars-image">
+                <% if(arrayData[0].jcv_userImageIcon != null){ %>
+                    <img id="avataars-image" src="<%= arrayData[0].jcv_userImageIcon %>">
+                <% }else{ %>
+                    <img id="avataars-image" src="https://avataaars.io/?avatarStyle=Circle&topType=NoHair&accessoriesType=Blank&facialHairType=Blank&clotheType=ShirtCrewNeck&clotheColor=White&eyeType=Default&eyebrowType=Default&mouthType=Eating&skinColor=Light">
+                <% } %>
+                
+            </div>
+            <!--  -->
+            <div class="avataars-main-style">
+                <div class="avataars-boxs">
+                    <label for="topType">Tipo</label>
+                    <div>
+                        <select id="topType" class="form-control">
+                        <option value="NoHair">Sem cabelo</option>
+                        <option value="Eyepatch">Olhar</option>
+                        <option value="Hat">Chapéu</option>
+                        <option value="Hijab">Hijab</option>
+                        <option value="Turban">Turbante</option>
+                        <option value="WinterHat1">Chapéu de inverno 1</option>
+                        <option value="WinterHat2">Chapéu de inverno 2</option>
+                        <option value="WinterHat3">Chapéu de inverno 3</option>
+                        <option value="WinterHat4">Chapéu de inverno 4</option>
+                        <option value="LongHairBigHair">Cabelo comprido, cabelo grande</option>
+                        <option value="LongHairBob">Bob de cabelo comprido</option>
+                        <option value="LongHairBun">Coque de cabelo comprido</option>
+                        <option value="LongHairCurly">Cabelo comprido encaracolado</option>
+                        <option value="LongHairCurvy">Cabelo comprido curvilíneo</option>
+                        <option value="LongHairDreads">Dreads de cabelo comprido</option>
+                        <option value="LongHairFrida">Frida de cabelo comprido</option>
+                        <option value="LongHairFro">Cabelo Comprido Afro</option>
+                        <option value="LongHairFroBand">Faixa para cabelo comprido</option>
+                        <option value="LongHairNotTooLong">Cabelo comprido não muito comprido</option>
+                        <option value="LongHairShavedSides">Cabelo comprido raspado nas laterais</option>
+                        <option value="LongHairMiaWallace">Cabelo comprido Mia Wallace</option>
+                        <option value="LongHairStraight">Cabelo comprido liso</option>
+                        <option value="LongHairStraight2">Cabelo Comprido Liso 2</option>
+                        <option value="LongHairStraightStrand">Mecha Reta de Cabelo Comprido</option>
+                        <option value="ShortHairDreads01">Dreads de cabelo curto 01</option>
+                        <option value="ShortHairDreads02">Dreads de cabelo curto 02</option>
+                        <option value="ShortHairFrizzle">Cabelo Curto Frio</option>
+                        <option value="ShortHairShaggyMullet">Tainha desgrenhada de cabelo curto</option>
+                        <option value="ShortHairShortCurly">Cabelo Curto Curto Cacheado</option>
+                        <option value="ShortHairShortFlat">Cabelo Curto Curto liso</option>
+                        <option value="ShortHairShortRound">Cabelo Curto Curto Redondo</option>
+                        <option value="ShortHairShortWaved">Cabelo Curto Onda Curta</option>
+                        <option value="ShortHairSides">Lados de cabelo curto</option>
+                        <option value="ShortHairTheCaesar">Cabelo Curto O César</option>
+                        <option value="ShortHairTheCaesarSidePart">Cabelo Curto A Parte Lateral César</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="accessoriesType">👓 Acessórios</label>
+                    <div>
+                        <select id="accessoriesType" class="form-control">                 
+                            <option value="Blank">Em branco</option>
+                            <option value="Kurt">Kurt</option>
+                            <option value="Prescription01">Prescrição 01</option>
+                            <option value="Prescription02">Prescrição 02</option>
+                            <option value="Round">Rodada</option>
+                            <option value="Sunglasses">Óculos de sol</option>
+                            <option value="Wayfarers">Wayfarers</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="hairColor">💈 Cor dos olhos</label>
+                    <div>
+                        <select id="hairColor" class="form-control">
+                            <option value="Auburn">Auburn</option>
+                            <option value="Black">Preto</option>
+                            <option value="Blonde">Loiro</option>
+                            <option value="BlondeGolden">Loiro Dourado</option>
+                            <option value="Brown">Marrom</option>
+                            <option value="BrownDark">Marrom Escuro</option>
+                            <option value="PastelPink">Rosa Pastel</option>
+                            <option value="Blue">Azul</option>
+                            <option value="Platinum">Platina</option>
+                            <option value="Red">Vermelho</option>
+                            <option value="SilverGray">Cinza Prateado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="facialHairType">🧔 Cabelo Facial</label>
+                    <div>
+                        <select id="facialHairType" class="form-control">
+                            <option value="Blank">Em branco</option>
+                            <option value="BeardMedium">Barba Média</option>
+                            <option value="BeardLight">Luz da barba</option>
+                            <option value="BeardMajestic">Barba Majestic</option>
+                            <option value="MoustacheFancy">Fantástico de bigode</option>
+                            <option value="MoustacheMagnum">Bigode Magnum</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="clotheType">👔 Roupas</label>
+                    <div>
+                        <select id="clotheType" class="form-control">
+                            <option value="BlazerShirt">Camisa blazer</option>
+                            <option value="BlazerSweater">Blazer Suéter</option>
+                            <option value="CollarSweater">Suéter com gola</option>
+                            <option value="GraphicShirt">Camisa gráfica</option>
+                            <option value="Hoodie">Moleque</option>
+                            <option value="Overall">Geral</option>
+                            <option value="ShirtCrewNeck">Camisa com gola redonda</option>
+                            <option value="ShirtScoopNeck">Pescoço da camisa</option>
+                            <option value="ShirtVNeck">Camisa VNeck</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="eyeType">👀 Olhos</label>
+                    <div>
+                        <select id="eyeType" class="form-control">
+                            <option value="Close">Fechado</option>
+                            <option value="Cry">Chore</option>
+                            <option value="Default">Padrão</option>
+                            <option value="Dizzy">Tonto</option>
+                            <option value="EyeRoll">Rolagem dos Olhos</option>
+                            <option value="Happy">Feliz</option>
+                            <option value="Hearts">Coração</option>
+                            <option value="Side">Lado</option>
+                            <option value="Squint">Squint</option>
+                            <option value="Surprised">Surpreso</option>
+                            <option value="Wink">Piscadela</option>
+                            <option value="WinkWacky">Pisca Maluca</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="eyebrowType">🤨 Sobrancelha</label>
+                    <div>
+                        <select id="eyebrowType" class="form-control">
+                            <option value="Angry">Irritado</option>
+                            <option value="AngryNatural">Irritado Natural</option>
+                            <option value="Default">Padrão</option>
+                            <option value="DefaultNatural">Padrão Natural</option>
+                            <option value="FlatNatural">Plano Natural</option>
+                            <option value="RaisedExcited">Raised Animado</option>
+                            <option value="RaisedExcitedNatural">Raised Animado Natural</option>
+                            <option value="SadConcerned">Triste Preocupado</option>
+                            <option value="SadConcernedNatural">Triste Preocupado Natural</option>
+                            <option value="UnibrowNatural">Unibrow Natural</option>
+                            <option value="UpDown">Para cima para baixo</option>
+                            <option value="UpDownNatural">Para cima para baixo natural</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="mouthType">👄 Boca</label>
+                    <div>
+                        <select id="mouthType" class="form-control">
+                            <option value="Concerned">Preocupado</option>
+                            <option value="Default">Padrão</option>
+                            <option value="Disbelief">Descrença</option>
+                            <option value="Eating">Comer</option>
+                            <option value="Grimace">Cara</option>
+                            <option value="Sad">Triste</option>
+                            <option value="ScreamOpen">Grito Aberto</option>
+                            <option value="Serious">Sério</option>
+                            <option value="Smile">Sorriso</option>
+                            <option value="Tongue">Língua</option>
+                            <option value="Twinkle">Twinkle</option>
+                            <option value="Vomit">Vômito</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="avataars-boxs">
+                    <label for="skinColor">🎨 Pele</label>
+                    <div>
+                        <select id="skinColor" class="form-control">
+                            <option value="Tanned">Bronzeado</option>
+                            <option value="Yellow">Amarelho</option>
+                            <option value="Pale">Pardo</option>
+                            <option value="Light">Claro</option>
+                            <option value="Brown">Marrom</option>
+                            <option value="DarkBrown">Marrom Escuro</option>
+                            <option value="Black">Preto</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <form method="post" class="avataars-actions">
+                <button class="class-loader" type="submit" formaction="/painel/perfil/update/image" name="avataaars-button-save" id="button-save-avataars">Salvar</button>
+            </form>
+        </div>
+    </div>
+</section>
 <script>
 
-    function readImage() {
-        if (this.files && this.files[0]) {
-            var file = new FileReader();
-            file.onload = function(e) {
-                document.getElementById("img-user-preview").src = e.target.result;
-            };       
-            file.readAsDataURL(this.files[0]);
+    //Sistema de avataars
 
-            $.fn.sys_popupSystem("SYS01","Preview habilitado, salve a imagem!")
-        }
-    }
-    
-
-    document.getElementById("input-edit-img").addEventListener("change", readImage, false);
 
     $("#profile-recovery-open").click(function(){
         $("#profile-recover-pass").fadeIn();
@@ -123,5 +311,53 @@
     })
     
     $('#update-cpf').mask('000.000.000-00');
+
+
+    $("#input-edit-img").click(function(){
+        $("#avataars-section").fadeIn()
+        $("#avataars-section").css({'display':'flex'})
+    })
+    $("#close-screen-avataars").click(function(){
+        $("#avataars-section").fadeOut()
+    })
+    /* ********************* */
+    /* ********************* */
+    /* ********************* */
+    let arrayAvataars = [];
+    let index = 0;
+    $(".form-control").on("change",function(){
+
+        //Pegando o nome e convert em variavel
+        let valueGet = $(this).val();
+        let variable = $(this).attr('id')
+
+        if(arrayAvataars.indexOf(variable) == -1){
+        arrayAvataars.push(variable, valueGet)
+        }else{
+        let testeB = arrayAvataars.indexOf(variable);
+        arrayAvataars[testeB+1] = valueGet
+        }
+
+        let textUrl = '';
+        arrayAvataars.forEach(element => {
+            
+            if(index == 0){
+                //1°
+                textUrl+=element+'='
+                index = 1
+            }else{
+                //2°
+                textUrl+=element+'&'
+                index = 0
+            }
+
+        });
+
+        $("#avataars-image").attr('src','https://avataaars.io/?'+textUrl)
+        $("#button-save-avataars").attr('value', 'https://avataaars.io/?'+textUrl)
+        //$("#avataars-image").attr('value','https://avataaars.io/?'+textUrl)
+    })
+
+
     
 </script>

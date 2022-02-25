@@ -44,8 +44,6 @@ exports.sysNewpassword = async (req,res) => {
 
 exports.updateDataUser = async (req,res) =>{
 
-  var imageUser = req.body.userImageUpload;
-
   var userName = req.body.updateNameUser;
   var userEmailCorp = req.body.updateEmailUserCorp;
   var userEmailPer = req.body.updateEmailUserPer;
@@ -72,15 +70,15 @@ exports.updateDataUser = async (req,res) =>{
 
 
 exports.updateImageUser = async (req,res) => {
+  const urlAvataars = req.body['avataaars-button-save'];
 
-
-  await database.update({jcv_userImageIcon: req.file.filename}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
+  await database.update({jcv_userImageIcon: urlAvataars}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
-      res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Imagem atualizada com sucesso!");
+      res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Avataars atualizada com sucesso!");
       res.redirect("/painel/perfil");
     }
   }).catch(err => {
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao atualizar seus dados!");
+    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars ao atualizar seus dados!");
     res.redirect("/painel/perfil");
   })
 

@@ -63,19 +63,6 @@
     color: var(--color-five);
     margin: 0 8px;
 }
-.profile-container-edit button{
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--color-five);
-    background: transparent;
-    border: none;
-    outline: 0;
-    margin: 0 8px;
-}
-#input-edit-img{
-    display: none;
-}
-
 
 /*****************************/
 /* INFO USER */
@@ -91,6 +78,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 24px;
 }
 .profile-container-input{
     width: 310px;
@@ -265,6 +253,111 @@
     box-shadow: 0 0 4px 0 var(--color-three);
 }
 
+/* ****************************** */
+/* ****************************** */
+/* ****************************** */
+.avataars-section{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    max-height: 1000px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    background: rgba(128, 128, 128, 0.226);
+}
+.avataars-main{
+    width: 700px;
+    max-height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 4px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+}
+.avataars-main-box{
+    width: 100%;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+}
+.avataars-main-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.avataars-main-box span{
+    font-size: 1rem;
+}
+.avataars-main-box i{
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.avataars-main-style{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+/*  */
+.avataars-boxs{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.avataars-boxs label{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    padding: 11px 0;
+}
+.avataars-boxs select {
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--color-seven);
+    cursor: pointer;
+}
+
+.avataars-image{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#avataars-image{
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+}
+
+.avataars-actions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.avataars-actions button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+}
 /*********************************/
 /* RESPONSIVE */
 @media only screen and (max-width: 750px) {
