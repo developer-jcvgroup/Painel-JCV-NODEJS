@@ -2,11 +2,16 @@ const database = require("./database/database");
 
 async function getUpdates(idUser, moduleOp){
     //Verificando se existe menssagem de novas atualizações
+
     const allUpdate = await database
-    .select()
-    .whereRaw("(sys_update_usersOkUpdate NOT LIKE '%"+idUser+"%' OR sys_update_usersOkUpdate IS NULL) AND sys_update_moduleUp = '"+moduleOp+"'")
-    .table("sys_update")
-    .then( data => { return data; })
+    .raw(`
+        SELECT *
+        FROM sys_update
+        WHERE NOT CONCAT(',', sys_update_usersOkUpdate, ',')
+        REGEXP CONCAT('[,]', '${idUser}', '[,]') AND sys_update_moduleUp = '${moduleOp}'
+    `)
+    //.raw("SELECT locate("+idUser+", sys_update_usersOkUpdate) achado,sys_update.* FROM sys_update WHERE NOT locate("+idUser+", sys_update_usersOkUpdate) > 0 AND sys_update_moduleUp = '"+moduleOp+"'")
+    .then( data => { return data[0]; })
 
     return allUpdate;
 }
