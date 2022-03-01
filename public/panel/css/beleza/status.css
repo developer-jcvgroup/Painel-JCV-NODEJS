@@ -99,6 +99,7 @@
     margin-bottom: 35px;
 }
 .beleza-view-form-row-large span{
+    overflow: scroll;
     font-size: 1rem;
     padding: 4px;
     border-bottom: 1px solid var(--color-five);

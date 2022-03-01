@@ -2,52 +2,31 @@
 <section class="notifications-main-section">
     <section class="notifications-section-viewer-event">
 
+        <div class="notifications-back-event-edit">
+            <a class="class-loader" href="/painel">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
 
-        <!-- <div class="notifications-title-page"><span>Notificações</span></div>
+        <div class="notifications-title-page"><span>Notificações</span></div>
+        
+        <% allNot.forEach(element =>{ %>
         <div class="notifications-calendar-box">
-            <div class="notifications-title-day"><span>Requisitor de Materiais</span><span>04 de outubro de 2021 / 13:00h</span></div>
+            <div class="notifications-title-day"><span><%= element.jcv_notifications_title %></span><span><%= element.jcv_notifications_created %></span></div>
             <div class="notifications-calendar-cont-main">
                 <div class="notifications-row-container">
                     <div class="notifications-box-main">
                         <label>Descrição</label>
-                        <span>asasasasasa as asa asa sa sa asas asasasasasa as asa asa sa sa asas</span>
-                    </div>
-
-                    <div class="notifications-box-main">
-                        <label>Notificado ás:</label>
-                        <span>Dás 08:00h ás 17:00h</span>
+                        <span><%- element.jcv_notifications_message %></span>
                     </div>
 
                     <div class="notifications-action-command">
-                        <a href="#">Acessar a página</a>
+                        <a href="<%= element.jcv_notifications_link %>">Acessar a página</a>
                     </div>
                 </div>
             </div>
         </div>
-
         <hr>
-
-        <div class="notifications-calendar-box">
-            <div class="notifications-title-day"><span>Requisitor de Materiais</span><span>04 de outubro de 2021 / 13:00h</span></div>
-            <div class="notifications-calendar-cont-main">
-                <div class="notifications-row-container">
-                    <div class="notifications-box-main">
-                        <label>Descrição</label>
-                        <span>asasasasasa as asa asa sa sa asas asasasasasa as asa asa sa sa asas</span>
-                    </div>
-
-                    <div class="notifications-box-main">
-                        <label>Notificado ás:</label>
-                        <span>Dás 08:00h ás 17:00h</span>
-                    </div>
-
-                    <div class="notifications-action-command">
-                        <a href="#">Acessar a página</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-
+        <% }) %>
     </section>
 </section>

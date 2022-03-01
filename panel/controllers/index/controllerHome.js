@@ -129,7 +129,6 @@ exports.homeInfo = async (req,res)=> {
 
     //Pegadando os 3 primeiros eventos
     const CALENDARcount = await getCalendarEvents();
-
     
     var page = "home";
     res.render("panel/index", {

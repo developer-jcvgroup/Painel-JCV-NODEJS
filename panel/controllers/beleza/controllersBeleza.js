@@ -2,6 +2,7 @@ const database = require("../../database/database");
 const getPermissions = require("../../middlewarePermissions");
 
 const moment = require("moment");
+const { count } = require("console");
 moment.tz.setDefault('America/Sao_Paulo');
 
 //Mes de referencia
@@ -82,10 +83,29 @@ exports.finalizarSolicitacao = async (req,res) => {
                 sys_blz_requestCreate: generateDate(),//Data Atual
                 sys_blz_requestStatus: 2
             }).table("jcv_blz_orders").then(data => {
-                //Registro confirmado
-                //Redirecionando para a pagina status
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
-                res.redirect("/painel/beleza/status");
+
+                let nameUserComp = GLOBAL_DASH[1].split(' ')
+                let countParts = nameUserComp.length -1;
+
+                //Criando a notificação do programa da beleza para os GESTORES
+                database
+                .insert({
+                    jcv_notifications_type: 'JCVMOD02',
+                    jcv_notifications_usersId: JSON.stringify([GLOBAL_DASH[4]]),
+                    jcv_notifications_users_view: '[]',
+                    jcv_notifications_title: 'Beleza',
+                    jcv_notifications_message: ' '+nameUserComp[0]+' '+nameUserComp[countParts]+' fez sua solicitação referente ao mês <b>'+getMonthReferece()+'</b>',
+                    jcv_notifications_link: '/painel/beleza/solicitar',
+                    jcv_notifications_created: generateDate(),
+                    jcv_notifications_enabled: 1
+                })
+                .table("jcv_notifications")
+                .then( datas => {
+                    //Registro confirmado
+                    //Redirecionando para a pagina status
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
+                    res.redirect("/painel/beleza/status");
+                })
             }).catch(err => {
                 //Erro ao registrar
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Erro ao registrar sua solcitação, erro interno");

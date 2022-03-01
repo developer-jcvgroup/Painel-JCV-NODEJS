@@ -62,7 +62,7 @@ exports.saveNewUser = async (req,res) => {
     }
     userCPF = pad(userCPF,11)
 
-    if(userCPF.length == 11){
+    if(userCPF.length == 11 || req.body['save-new-setor'] != ''){
 
 
         const validationCPF = await database
@@ -157,7 +157,7 @@ exports.saveNewUser = async (req,res) => {
 
         
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres!");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres, ou o setor não foi definido!");
         res.redirect("/painel/system/users");
     }
 }

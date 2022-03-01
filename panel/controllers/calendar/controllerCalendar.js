@@ -336,8 +336,28 @@ exports.saveNewEvent = async (req,res) => {
                             
                         }
 
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> registrado com sucesso!");
-                        res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+                        let convertArrPer = arrNewPerson.split(',').map(convertString)
+                        function convertString(value){
+                            return parseInt(value)
+                        }
+
+                        //Adicionando este evento ao painel de notificações
+                        database
+                        .insert({
+                            jcv_notifications_type: 'JCVMOD04',
+                            jcv_notifications_usersId: JSON.stringify(convertArrPer),
+                            jcv_notifications_users_view: '[]',
+                            jcv_notifications_title: 'Calendário',
+                            jcv_notifications_message: 'O evento <b>'+eventName+'</b> foi criado e conta com sua participação',
+                            jcv_notifications_link: '/painel/calendario/main',
+                            jcv_notifications_created: generateDate(),
+                            jcv_notifications_enabled: 1
+                        })
+                        .table("jcv_notifications")
+                        .then( data => {
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> registrado com sucesso!");
+                            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+                        })
                     }
                 })
             }   

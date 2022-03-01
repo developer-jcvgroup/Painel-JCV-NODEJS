@@ -13,8 +13,6 @@ async function getUpdates(idUser, moduleOp){
     //.raw("SELECT locate("+idUser+", sys_update_usersOkUpdate) achado,sys_update.* FROM sys_update WHERE NOT locate("+idUser+", sys_update_usersOkUpdate) > 0 AND sys_update_moduleUp = '"+moduleOp+"'")
     .then( data => { return data[0]; })
 
-    console.log(allUpdate)
-
     return allUpdate;
 }
 

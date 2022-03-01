@@ -7,12 +7,12 @@
         <div class="profile-container-info-user">
             <form class="profile-container-image-user" id="form-save-profile" action="./perfil/update/image" method="post" enctype="multipart/form-data">
                 <% if(arrayData[0].jcv_userImageIcon != null){ %>
-                    <img style="background: transparent;" class="profile-img-user" src="<%= arrayData[0].jcv_userImageIcon %>" alt="">
+                    <img style="cursor: pointer; background: transparent;" class="input-edit-img profile-img-user" src="<%= arrayData[0].jcv_userImageIcon %>" alt="">
                 <% }else{ %>
-                    <img id="img-user-preview" class="profile-img-user"></img>
+                    <img style="cursor: pointer;" class="input-edit-img profile-img-user"></img>
                 <% } %>
                 <div class="profile-container-edit">
-                    <label id="input-edit-img"><i class="ri-edit-line"></i></label>
+                    <label class="input-edit-img"><i class="ri-edit-line"></i></label>
                 </div>
             </form>
 
@@ -152,7 +152,7 @@
                         <option value="ShortHairShortWaved">Cabelo Curto Onda Curta</option>
                         <option value="ShortHairSides">Lados de cabelo curto</option>
                         <option value="ShortHairTheCaesar">Cabelo Curto O César</option>
-                        <option value="ShortHairTheCaesarSidePart">Cabelo Curto A Parte Lateral César</option>
+                        <option value="ShortHairTheCaesarSidePart">Cabelo Curto A Parte Lateral</option>
                         </select>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                     </div>
                 </div>
                 <div class="avataars-boxs">
-                    <label for="hairColor">💈 Cor dos olhos</label>
+                    <label for="hairColor">💈 Cor dos cabelos</label>
                     <div>
                         <select id="hairColor" class="form-control">
                             <option value="Auburn">Auburn</option>
@@ -284,7 +284,7 @@
                             <option value="Light">Claro</option>
                             <option value="Brown">Marrom</option>
                             <option value="DarkBrown">Marrom Escuro</option>
-                            <option value="Black">Preto</option>
+                            <option value="Black">Moreno</option>
                         </select>
                     </div>
                 </div>
@@ -299,8 +299,6 @@
 <script>
 
     //Sistema de avataars
-
-
     $("#profile-recovery-open").click(function(){
         $("#profile-recover-pass").fadeIn();
         $("#profile-recover-pass").css("display","flex");
@@ -312,10 +310,63 @@
     
     $('#update-cpf').mask('000.000.000-00');
 
+    /* ********************* */
+    /* ********************* */
+    /* ********************* */
+    let arrayAvataars = [];
+    let textUrl = '';//Esta string é convertida em url para gerar os avatares
 
-    $("#input-edit-img").click(function(){
+    $(".input-edit-img").click(function(){
         $("#avataars-section").fadeIn()
         $("#avataars-section").css({'display':'flex'})
+
+        let linkAv = '<%- arrayData[0].jcv_userImageIcon %>';
+        if(linkAv != ''){
+            $("#avataars-image").attr('src',linkAv)
+
+            //Pegando as variaveis de da url do avatar
+            let arrayVar = linkAv.split('/?')[1].split('&')
+            
+            arrayVar.forEach(element => {
+
+                let keyVar = element.split('=')[0];
+                let valueVar = element.split('=')[1];
+                
+                if(valueVar != '' && keyVar != ''){
+                    arrayAvataars.push(element.split('=')[0], element.split('=')[1])
+                }
+            });
+
+            //console.log(arrayAvataars)
+
+            //Array de id das opções de custom
+            let customIdsBox = {
+                typeTop: 'typeTop',
+                accessoriesType: 'accessoriesType',
+                hairColor: 'hairColor',
+                facialHairType: 'facialHairType',
+                clotheType: 'clotheType',
+                eyeType: 'eyeType',
+                eyebrowType: 'eyebrowType',
+                mouthType: 'mouthType',
+                skinColor: 'skinColor'
+            }
+
+            textUrl = linkAv.split('/?')[1]
+            
+            arrayVar.forEach(element => {
+                let keyValue = element.split('=');
+
+                if(customIdsBox[keyValue[0]]){
+
+                    $('#'+customIdsBox[keyValue[0]]+' option[value="'+keyValue[1]+'"]').attr("selected", "selected")
+                    
+                    //console.log(arrayAvataars)//arrayAvataars)
+                }
+
+            });
+        }
+
     })
     $("#close-screen-avataars").click(function(){
         $("#avataars-section").fadeOut()
@@ -323,24 +374,29 @@
     /* ********************* */
     /* ********************* */
     /* ********************* */
-    let arrayAvataars = [];
-    let index = 0;
+    //let arrayAvataars = [];
+    //let index = 0;
     $(".form-control").on("change",function(){
 
         //Pegando o nome e convert em variavel
         let valueGet = $(this).val();
         let variable = $(this).attr('id')
 
+        //console.log(arrayAvataars)
+
         if(arrayAvataars.indexOf(variable) == -1){
-        arrayAvataars.push(variable, valueGet)
+            arrayAvataars.push(variable, valueGet)
         }else{
-        let testeB = arrayAvataars.indexOf(variable);
-        arrayAvataars[testeB+1] = valueGet
+            let testeB = arrayAvataars.indexOf(variable);
+            arrayAvataars[testeB+1] = valueGet
         }
 
-        let textUrl = '';
+        let index = 0;
+        textUrl = ''
         arrayAvataars.forEach(element => {
             
+            //console.log(element)
+
             if(index == 0){
                 //1°
                 textUrl+=element+'='
@@ -352,6 +408,8 @@
             }
 
         });
+
+        //console.log(textUrl)
 
         $("#avataars-image").attr('src','https://avataaars.io/?'+textUrl)
         $("#button-save-avataars").attr('value', 'https://avataaars.io/?'+textUrl)

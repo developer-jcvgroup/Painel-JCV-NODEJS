@@ -219,12 +219,12 @@ header{
     align-items: center;
 }
 
-.header-links-nav li{
+.header-links-nav > li{
     margin-left: 22px;
 }
-.header-links-nav li a{
+.header-links-nav > li > a{
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
     display: flex;
     color: var(--color-two);
 }
@@ -232,15 +232,16 @@ header{
 /* NOTIFICATION */
 .notification-container{
     display: flex;
+    flex-direction: row-reverse;
 }
 .notification-main{
     margin-top: -7px;
     margin-left: -8px;
-    width: 13px;
-    height: 13px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background: var(--color-two);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -250,6 +251,73 @@ header{
     color: var(--color-three);
 }
 
+.notification-container-box{
+    display: none;
+    margin-top: calc(var(--heigth-header) - 24px);
+    padding: 23px;
+    width: 370px;
+    min-height: 50px;
+    max-height: 600px;
+    position: absolute;
+    overflow: auto;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-one);
+    border-radius: 4px;
+}
+
+.notification-ul-list{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+.notification-ul-list li{
+    height: fit-content;
+}
+.notification-ul-list-link{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    object-fit: contain;
+}
+.notification-link-icon{
+    min-width: 40px;
+    max-width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+.notification-link-icon-image{
+    width: 100%;
+    object-fit: contain;
+}
+.notification-message{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.notification-message span:nth-child(1){
+    font-size: 0.8rem;
+    color: var(--color-two);
+    white-space: normal;
+}
+.notification-message span:nth-child(2){
+    font-size: 0.6rem;
+    color: var(--color-two);
+    white-space: normal;
+    margin-top: 10px;
+}
+.notification-message-all{
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+.notification-message-all i{
+    margin-left: 5px;
+}
+
+/*  */
 .header-separador{
     width: 1px;
     height: 25px;

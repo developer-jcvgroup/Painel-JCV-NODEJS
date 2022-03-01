@@ -10,6 +10,7 @@
 .notifications-section-viewer-event{
     width: 90%;
     margin-top: 28px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     background: var(--background-two);
@@ -17,10 +18,20 @@
     white-space: normal;
 }
 
+/*  */
+.notifications-back-event-edit{
+    display: flex;
+}
+.notifications-back-event-edit a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+/*  */
 
 .notifications-title-page{
     width: 100%;
-    padding: 0 18px;
+    
     display: flex;
     margin: 23px 0;
 }
@@ -31,7 +42,7 @@
 
 .notifications-calendar-box{
     width: 100%;
-    padding: 0 18px;
+    
     display: flex;
     flex-direction: column;
     margin-top: 16px;

@@ -313,6 +313,15 @@ Requisitor de Materiais
 * [jcv_trade_products_product] *VARCHAR* //linha do produto
 * [jcv_trade_products_enable] *INT* //linha do produto
 
+# Tabela notificações:
+* [jcv_notifications_id] *PRIMARY KEY* //id
+* [jcv_notifications_type] *VARCHAR* //Tipo da notificação: SYS: Notifcação de sistema, JCVMODXX: Por app
+* [jcv_notifications_users_groups] *VARCHAR* //Grupos de usuarios
+* [jcv_notifications_users_single] *VARCHAR* //Por usuarios pré selecionados
+* [jcv_notifications_title] *VARCHAR*
+* [jcv_notifications_message] *VARCHAR*
+* [jcv_notifications_enabled] *INT*
+
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/
 

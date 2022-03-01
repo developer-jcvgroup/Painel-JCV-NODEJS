@@ -13,6 +13,7 @@
     <script src="/js/jquery.sortElements.js"></script>
     <script src="/js/js.cookie.min.js"></script>
     <script src="/js/scripts.js"></script>
+    <script src="/js/scriptNotifications.js"></script>
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
     <title>Painel | JCV Group</title>
 </head>
@@ -148,10 +149,46 @@
                             <!-- <li><a title="updates" class="class-loader" href="/painel/updates"><i class="ri-refresh-line"></i></a></li> -->
                             <!-- <li><a title="Logs do sistema" class="class-loader" href="/painel/logs"><i class="ri-alert-line"></i></a></li> -->
                             <li class="notification-container">
-                                <!-- <a title="Notificações" class="class-loader" href="/painel/notifications">
-                                    <i class="ri-notification-4-line"></i>
-                                    <div class="notification-main"><span>1</span></div>
-                                </a> -->
+                                <a title="Notificações" id="click-open-notifications" href="#">
+                                    <i class="ri-notification-3-line"></i>
+                                    <div class="notification-main" id="notification-main"><span id="count-notifications">0</span></div>
+                                </a>
+
+                                <div class="notification-container-box" id="notification-container-box">
+                                    <ul class="notification-ul-list" id="notification-ul-list">
+
+
+                                        <!-- <li>
+                                            <a class="notification-ul-list-link" href="">
+                                                <div class="notification-link-icon">
+                                                    <img class="notification-link-icon-image" src="http://localhost:8080/icons/icon-calendar.png" alt="">
+                                                </div>
+                                                <div class="notification-message">
+                                                    <span><b>Calendário:</b> Um novo evento foi registrado onde você é um dos participantes</span>
+                                                    <span>Há 2 minutos</span>
+                                                </div>
+                                            </a>                                            
+                                        </li>
+
+                                        <hr style="margin: 19px 0;">
+                                        <li>
+                                            <a class="notification-ul-list-link" href="">
+                                                <div class="notification-link-icon">
+                                                    <img class="notification-link-icon-image" src="http://localhost:8080/icons/icon-calendar.png" alt="">
+                                                </div>
+                                                <div class="notification-message">
+                                                    <span><b>Calendário:</b> Um novo evento foi registrado onde você é um dos participantes</span>
+                                                    <span>Há 2 minutos</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <hr style="margin: 19px 0;">
+                                        <li><a class="notification-message-all" href=""><span>Ver todos os eventos</span> <i class="ri-arrow-right-line"></i></a></li> -->
+                                    </ul>
+                                    <div id="display-not-notification" style="width: 100%;height: 50px;display: none;justify-content: center;align-items: center;">
+                                        <span style="font-size: 0.8rem" >Você não possui notificações. <a href="/painel/notifications">Exibir notificações</a></span>
+                                    </div>
+                                </div>
                             </li>
                             <div class="header-separador"></div><!-- separador -->
                         </ul>
@@ -319,6 +356,105 @@
     })
 </script>
 <% } %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+<script>
+
+    const socket = io("http://localhost:8080")
+
+    /*  */
+    /*  */
+    /*  */
+    socket.emit("getNotificationsAllCount","<%= GLOBAL_DASH[0] %>") 
+    setInterval(() => {
+        socket.emit("getNotificationsAllCount","<%= GLOBAL_DASH[0] %>")    
+    }, 1500);
+
+    //window.notificationApi = 0;
+
+    socket.on("reponseNotificationsAllCount", (dataAll) => {
+        //console.log(dataAll)
+        //console.log(dataAll.length)
+
+        if(dataAll.length >= 1){
+            $("#notification-main").css('display','flex')
+            $("#count-notifications").text(dataAll.length)
+        }
+    })
+
+    $("#click-open-notifications").click(function(){
+        $("#display-not-notification").css('display','flex')
+        $("#notification-container-box").toggle()
+
+        $("#notification-ul-list").empty()
+        socket.emit("getNotificationsAll","<%= GLOBAL_DASH[0] %>")
+        
+        actionsNotifications ()
+    })
+
+    function actionsNotifications (){
+
+        socket.on("reponseNotificationsAll", (dataGet) => {
+            $("#notification-ul-list").empty()
+            if(dataGet != ''){
+                //Exibe as notificações
+                
+                $("#notification-main").css('display','none')//Desabilitando as notificações numbers
+                //Desabilita a box de nenhuma notificação
+                $("#display-not-notification").css('display','none')
+
+                //notificationApi = 0
+                //Confirm que o usuario leu
+                socket.emit("okayNotifications", {dataGet: dataGet, idUser: "<%= GLOBAL_DASH[0] %>"})
+
+                let arrayApps = {
+                    JCVMOD02: 'icon-progama-da-beleza.png',
+                    JCVMOD03: 'icon-requisitor.png',
+                    JCVMOD04: 'icon-calendar.png',
+                    JCVMOD05: 'icon-trade.png',
+                }
+
+                dataGet.forEach(element => {
+
+                    let hourCreate = moment(element.jcv_notifications_created.split(' ')[0],'HH:mm')
+                    let hourNow = moment()
+
+                    let agoTime = moment(hourCreate - hourNow).format('m[ minuto(s) atrás.]')
+
+                    $("#notification-ul-list").append(`
+                    <li>
+                        <a class="class-loader notification-ul-list-link" href="${element.jcv_notifications_link}">
+                            <div class="notification-link-icon">
+                                <img class="notification-link-icon-image" src="${arrayApps[element.jcv_notifications_type] == undefined ? 'http://localhost:8080/logos/pwa-192.png' : 'http://localhost:8080/icons/'+arrayApps[element.jcv_notifications_type] }" >
+                            </div>
+                            <!--  -->
+                            <div class="notification-message">
+                                <span><b>${element.jcv_notifications_title}</b> ${element.jcv_notifications_message}</span>
+                                <span>Agora a pouco</span>
+                            </div>
+                        </a>                                            
+                    </li>
+                    <hr style="margin: 19px 0;">
+                    `)
+
+                    
+                });
+
+                $("#notification-ul-list").append('<li><a class="class-loader notification-message-all" href="/painel/notifications"><span>Ver todos as notificações</span> <i class="ri-arrow-right-line"></i></a></li>')
+                $("#notification-main").css('display','none')
+
+                //console.log('aaaaaa')
+                //view++
+            }else{
+                //Nenhuma notificação salva
+                //console.log('bbbbbbb')
+            }
+        })
+    }
+
+    //notificationAPIaction('Teste do titulo','Olá aqui é uma notificação do api notifications','https://www.javascripttutorial.net/web-apis/javascript-notification/')
+
+</script>
 
 </body>
 </html>

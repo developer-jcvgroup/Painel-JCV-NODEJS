@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const multer  = require('multer');
 
+//const io = require('socket.io')(http)
+
 const getPermissions = require("./middlewarePermissions");
+const io = require('socket.io')
 
 //middle
 const authenticate = require("./middleware");
@@ -40,13 +43,15 @@ const controllerSystemGeneral = require("./controllers/system/sysGeneral")
 //Controler TradeMkt
 const controllerTrade = require("./controllers/trade/controllerTrade")
 
-/*===================================*/
-//Index: criando informacoes globais do usuario
+//Controller Notifications
+const controllerNotifications = require("./controllers/system/controllerNotifications")
 
 
 
 /*===================================*/
 
+
+/*===================================*/
 
 
 //Logout
@@ -266,14 +271,7 @@ router.post("/update/closeAll", authenticate, controllerSystemGeneral.closeUpdat
 /***********************************/
 /***********************************/
 //Notificações: Pagina inicial
-router.get("/notifications", authenticate,(req,res)=>{
-
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Em desenvolvimento...");
-    res.redirect("/painel")
-
-    /* var page = "system/notifications";
-    res.render("panel/index", {page: page}) */
-})
+router.get("/notifications", authenticate, controllerSystemGeneral.listNotificationsUser)
 
 /***********************************/
 /***********************************/
