@@ -157,9 +157,9 @@
         console.log("beforeinstallprompt fired");
         if (setupButton == undefined) {
             setupButton = document.getElementById("setup_button");
-        }else{
-            alert('Você possui o aplicativo em sua lista de apps')
         }
+
+        alert('Você possui o aplicativo em sua lista de apps')
         // Show the setup button
         setupButton.style.display = "inline";
         setupButton.disabled = false;
