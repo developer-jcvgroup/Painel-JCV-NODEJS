@@ -159,15 +159,13 @@
             setupButton = document.getElementById("setup_button");
         }
 
-        
         // Show the setup button
         setupButton.style.display = "inline";
         setupButton.disabled = false;
 
-        if(setupButton.disabled){
+        if(!$("#setup_button").is(':visible')){
             alert('Você possui o aplicativo em sua lista de apps')
         }
-        
     });
 
 
