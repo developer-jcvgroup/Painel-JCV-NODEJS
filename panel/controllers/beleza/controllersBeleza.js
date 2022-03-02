@@ -70,46 +70,59 @@ exports.finalizarSolicitacao = async (req,res) => {
         if(data != "" && Object.keys(data).length === 2){
             const insertProductOne = data[0]["sys_blz_productSKU"]+" - "+data[0]["sys_blz_productName"];
             const insertProductTwo = data[1]["sys_blz_productSKU"]+" - "+data[1]["sys_blz_productName"];
-            
-            //Registrando o pedido
-            database.insert({
-                sys_blz_userId: GLOBAL_DASH[0],
-                sys_blz_userName: GLOBAL_DASH[1],
-                sys_blz_userUnity: GLOBAL_DASH[2],
-                sys_blz_userManager: GLOBAL_DASH[4],
-                sys_blz_tratmentOne: insertProductOne,
-                sys_blz_tratmentTwo: insertProductTwo,
-                sys_blz_requestReference: getMonthReferece(),//Mes atual
-                sys_blz_requestCreate: generateDate(),//Data Atual
-                sys_blz_requestStatus: 2
-            }).table("jcv_blz_orders").then(data => {
 
-                let nameUserComp = GLOBAL_DASH[1].split(' ')
-                let countParts = nameUserComp.length -1;
+            //Validando se já existe pedido feito
+            database
+            .select("sys_blz_id")
+            .where({sys_blz_userId: GLOBAL_DASH[0], sys_blz_requestReference: getMonthReferece()})
+            .table("jcv_blz_orders")
+            .then( dataValid => {
 
-                //Criando a notificação do programa da beleza para os GESTORES
-                database
-                .insert({
-                    jcv_notifications_type: 'JCVMOD02',
-                    jcv_notifications_usersId: JSON.stringify([GLOBAL_DASH[4]]),
-                    jcv_notifications_users_view: '[]',
-                    jcv_notifications_title: 'Beleza',
-                    jcv_notifications_message: ' '+nameUserComp[0]+' '+nameUserComp[countParts]+' fez sua solicitação referente ao mês <b>'+getMonthReferece()+'</b>',
-                    jcv_notifications_link: '/painel/beleza/solicitar',
-                    jcv_notifications_created: generateDate(),
-                    jcv_notifications_enabled: 1
-                })
-                .table("jcv_notifications")
-                .then( datas => {
-                    //Registro confirmado
-                    //Redirecionando para a pagina status
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
+                if(dataValid == ''){
+                    //Registrando o pedido
+                    database.insert({
+                        sys_blz_userId: GLOBAL_DASH[0],
+                        sys_blz_userName: GLOBAL_DASH[1],
+                        sys_blz_userUnity: GLOBAL_DASH[2],
+                        sys_blz_userManager: GLOBAL_DASH[4],
+                        sys_blz_tratmentOne: insertProductOne,
+                        sys_blz_tratmentTwo: insertProductTwo,
+                        sys_blz_requestReference: getMonthReferece(),//Mes atual
+                        sys_blz_requestCreate: generateDate(),//Data Atual
+                        sys_blz_requestStatus: 2
+                    }).table("jcv_blz_orders").then(data => {
+
+                        let nameUserComp = GLOBAL_DASH[1].split(' ')
+                        let countParts = nameUserComp.length -1;
+
+                        //Criando a notificação do programa da beleza para os GESTORES
+                        database
+                        .insert({
+                            jcv_notifications_type: 'JCVMOD02',
+                            jcv_notifications_usersId: JSON.stringify([GLOBAL_DASH[4]]),
+                            jcv_notifications_users_view: '[]',
+                            jcv_notifications_title: 'Beleza',
+                            jcv_notifications_message: ' '+nameUserComp[0]+' '+nameUserComp[countParts]+' fez sua solicitação referente ao mês <b>'+getMonthReferece()+'</b>',
+                            jcv_notifications_link: '/painel/beleza/solicitar',
+                            jcv_notifications_created: generateDate(),
+                            jcv_notifications_enabled: 1
+                        })
+                        .table("jcv_notifications")
+                        .then( datas => {
+                            //Registro confirmado
+                            //Redirecionando para a pagina status
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
+                            res.redirect("/painel/beleza/status");
+                        })
+                    }).catch(err => {
+                        //Erro ao registrar
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Erro ao registrar sua solcitação, erro interno");
+                        res.redirect("/painel/beleza/solicitar");
+                    })
+                }else{
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Benefício referente ao mês ("+getMonthReferece()+") já registrado!");
                     res.redirect("/painel/beleza/status");
-                })
-            }).catch(err => {
-                //Erro ao registrar
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Erro ao registrar sua solcitação, erro interno");
-                res.redirect("/painel/beleza/solicitar");
+                }
             })
         }else{
             //Erro ao validar os produtos
