@@ -305,9 +305,9 @@ exports.saveNewEvent = async (req,res) => {
                     if(date != ''){
 
                         //Mandando emails para os os usuarios que irão participar
+                        let arrayPersonSend;
                         if(arrNewPerson != ''){
 
-                            let arrayPersonSend;
                             if(typeof(arrNewPerson) == 'object'){
                                 arrayPersonSend = arrNewPerson;
                             }else{
@@ -336,7 +336,7 @@ exports.saveNewEvent = async (req,res) => {
                             
                         }
 
-                        let convertArrPer = arrNewPerson.split(',').map(convertString)
+                        let convertArrPer = arrayPersonSend.map(convertString)
                         function convertString(value){
                             return parseInt(value)
                         }
