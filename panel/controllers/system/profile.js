@@ -72,14 +72,19 @@ exports.updateDataUser = async (req,res) =>{
 exports.updateImageUser = async (req,res) => {
   const urlAvataars = req.body['avataaars-button-save'];
 
+  if(urlAvataars.length > 20){
   await database.update({jcv_userImageIcon: urlAvataars}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
       res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Avataars atualizada com sucesso!");
       res.redirect("/painel/perfil");
     }
   }).catch(err => {
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars ao atualizar seus dados!");
+    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars: erro ao atualizar seus dados!");
     res.redirect("/painel/perfil");
   })
+  }else{
+    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Avataars: não foi idenficado nenhuma modificação.");
+    res.redirect("/painel/perfil");
+  }
 
 }
