@@ -132,89 +132,12 @@
         <div class="event-edit-event-operation">
             <div class="event-edit-event-operation-initial">
                 <label for="">Das</label>
-                <select name="event-edit-register-hour-initial" id="event-edit-register-hour-initial">
-                    <option value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] %>"><%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] %></option>
-                    <option disabled></option>
-                    <option value="06:00">06:00</option>
-                    <option value="06:30">06:30</option>
-                    <option value="07:00">07:00</option>
-                    <option value="07:30">07:30</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option>
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="18:30">18:30</option>
-                    <option value="19:00">19:00</option>
-                    <option value="19:30">19:30</option>
-                    <option value="20:00">20:00</option>
-                    <option value="20:30">20:30</option>
-                    <option value="21:00">21:00</option>
-                    <option value="21:30">21:30</option>
-                    <option value="22:00">22:00</option>
-                    <option value="22:30">22:30</option>
-                    <option value="23:00">23:00</option>
-                    <option value="23:30">23:30</option>
-                </select>
+                <input type="time" value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[0] %>" name="event-edit-register-hour-initial" id="">
             </div>
             <!--  -->
             <div class="event-edit-event-operation-final">
-                <label for="">Das</label>
-                <select name="event-edit-register-hour-final" id="event-edit-register-hour-final">
-                    <option value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[1] %>"><%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[1] %></option>
-                    <option disabled></option>
-                    <option value="06:30">06:30</option>
-                    <option value="07:00">07:00</option>
-                    <option value="07:30">07:30</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option>
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="18:30">18:30</option>
-                    <option value="19:00">19:00</option>
-                    <option value="19:30">19:30</option>
-                    <option value="20:00">20:00</option>
-                    <option value="20:30">20:30</option>
-                    <option value="21:00">21:00</option>
-                    <option value="21:30">21:30</option>
-                    <option value="22:00">22:00</option>
-                    <option value="22:30">22:30</option>
-                    <option value="23:00">23:00</option>
-                    <option value="23:30">23:30</option>
-                </select>
+                <label for="">Ás</label>
+                <input type="time" value="<%= allDataEvent[0].sys_calendar_eventHours.split(' - ')[1] %>" name="event-edit-register-hour-final" id="">
             </div>   
             <!--  -->
             <div class="event-edit-event-operation-sep"></div><!-- SEPARATOR -->
@@ -242,24 +165,6 @@
                 </select>
             </div>
             <!--  -->
-            <div class="event-edit-event-locate-name">
-                <input id="event-edit-register-location-name" type="text" placeholder="Insira o nome do local..">
-            </div>
-        </div>
-        <!--  -->
-        <div class="event-edit-event-reminder">
-            <div class="event-edit-event-reminder-box">
-                <label for="">Lembre-me</label>
-                <select  name="event-edit-register-reminder">
-                    <!-- FORMATO EM MINUTOS -->
-                    <option value="60">1 Hora antes</option>
-                    <option value="30">30 minutos antes</option>
-                    <option value="15">15 minutos antes</option>
-                </select>
-            </div>
-            <!--  -->
-
-
             <% let atualIndex = allLocations[0].sys_unity_id %>
             
             <% for(let i = 0; i < allLocations.length; i++){ %>
@@ -293,6 +198,25 @@
                     <% i-- %>
                 <% } %>
             <% } %>
+            <!--  -->
+            <div class="event-edit-event-reminder-box">
+                <label for="">Lembre-me</label>
+                <select  name="event-edit-register-reminder">
+                    <!-- FORMATO EM MINUTOS -->
+                    <option value="60">1 Hora antes</option>
+                    <option value="30">30 minutos antes</option>
+                    <option value="15">15 minutos antes</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="event-edit-event-locate-name">
+                <input id="event-edit-register-location-name" type="text" placeholder="Insira o nome do local..">
+            </div>
+        </div>
+        <!--  -->
+        <div class="event-edit-event-reminder">
+            
+            <!--  -->
 
 
 
@@ -316,8 +240,9 @@
         <!--  -->
         <div class="event-edit-event-persons">
             <div class="event-edit-event-persons-filter">
-                <input type="text" placeholder="Pessoas que participarão do evento" id="insert-person">
-                <button type="button" id="button-add-person">Adicionar</button>
+                <span>Adicione ou remova pessoas deste evento</span>
+                <input type="text" placeholder="Inserir participantes para este evento.." id="insert-person">
+                <button hidden type="button" id="button-add-person">Adicionar</button>
             </div>
             <!--  -->
             <div class="event-edit-event-persons-list">
@@ -355,8 +280,8 @@
         $("#event-edit-register-all-day").click(function(){
             //$('#calendar-register-hour-initial option[value=06:00]').attr('selected','selected');
 
-            $("#event-edit-register-hour-initial").val("06:00").change();
-            $("#event-edit-register-hour-final").val("00:00").change();
+            //$("#event-edit-register-hour-initial").val("06:00").change();
+            //$("#event-edit-register-hour-final").val("00:00").change();
         })
     })
 
@@ -370,6 +295,12 @@
         source: function(request, response) {
             var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
             response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            //console.log(i.item.value)
+            setTimeout(() => {
+                $("#button-add-person").trigger('click')
+            }, 100);
         }
     });
 

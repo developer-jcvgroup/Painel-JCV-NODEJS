@@ -114,8 +114,8 @@
     background: rgba(128, 128, 128, 0.308);
 }
 .event-edit-event-box{
-    width: 40%;
-    max-height: 600px;
+    width: 50%;
+    height: 90%;
     display: flex;
     padding: 15px;
     background: var(--background-two);
@@ -135,7 +135,7 @@
 }
 .event-edit-event-day-title-set span{
     font-weight: lighter;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--color-two);
 }
 .event-edit-event-day-title-close i{
@@ -158,7 +158,7 @@
 }
 .event-edit-event-select-day input[type=date]{
     font-size: 0.8rem;
-    padding: 3px 7px;
+    padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
 }
@@ -178,10 +178,10 @@
 .event-edit-event-set-name input{
     width: 100%;
     outline: 0;
-    border: 1px solid var(--color-two);
-    font-size: 1rem;
-    padding: 6px;
-    border-radius: 4px;
+    border: none;
+    border-bottom: 1px solid var(--color-two);
+    font-size: 1.2rem;
+    padding: 7px 10px;
 }
 
 /*  */
@@ -228,6 +228,12 @@
     color: var(--color-one);
     cursor: pointer;
 }
+.event-edit-event-operation-initial input[type=time]{
+    font-size: 0.8rem;
+    padding: 7px 10px;
+    color: var(--color-one);
+    cursor: pointer;
+}
 
 .event-edit-event-operation-final{
     display: flex;
@@ -242,6 +248,12 @@
 .event-edit-event-operation-final select{
     font-size: 0.8rem;
     padding: 3px 7px;
+    color: var(--color-one);
+    cursor: pointer;
+}
+.event-edit-event-operation-final input[type=time]{
+    font-size: 0.8rem;
+    padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
 }
@@ -273,6 +285,7 @@
     display: flex;
     align-items: flex-end;
     margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 .event-edit-event-locate-cont{
     width: fit-content;
@@ -286,7 +299,7 @@
 }
 .event-edit-event-locate-cont select{
     font-size: 0.8rem;
-    padding: 3px 7px;
+    padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
 }
@@ -314,7 +327,7 @@
     width: fit-content;
     display: flex;
     flex-direction: column;
-    margin-right: 20px;
+    margin-left: 2%;
 }
 .event-edit-event-reminder-box label{
     font-size: 0.7rem;
@@ -322,7 +335,7 @@
 }
 .event-edit-event-reminder-box select{
     font-size: 0.8rem;
-    padding: 3px 7px;
+    padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
 }
@@ -332,6 +345,7 @@
     width: fit-content;
     display: none;
     flex-direction: column;
+    margin-left: 2%;
 }
 .event-edit-event-reminder-room label{
     font-size: 0.7rem;
@@ -339,7 +353,7 @@
 }
 .event-edit-event-reminder-room select{
     font-size: 0.8rem;
-    padding: 3px 7px;
+    padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
 }
@@ -353,28 +367,21 @@
 .event-edit-event-persons-filter{
     width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 15px;
 }
+.event-edit-event-persons-filter span{
+    margin-bottom: 7px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+}
 .event-edit-event-persons-filter > input{
-    width: 100%;
+    width: 280px;
     outline: 0;
     border: 1px solid var(--color-five);
-    font-size: 0.8rem;
-    padding: 6px;
+    font-size: 0.9rem;
+    padding: 12px 10px;
     border-radius: 4px;
-}
-.event-edit-event-persons-filter button{
-    outline: 0;
-    border: 0;
-    padding: 8px 18px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    color: var(--color-four);
-    background: var(--color-one);
-    cursor: pointer;
-    margin-left: 15px;
-    border: 1px solid var(--color-one);
 }
 
 .event-edit-event-persons-list{
@@ -398,8 +405,8 @@
     min-width: fit-content;
     outline: 0;
     border: none;
-    padding: 5px;
-    font-size: 0.8rem;
+    padding: 6px 7px;
+    font-size: 0.9rem;
     color: var(--color-one);
 }
 .event-edit-event-person-box button{
@@ -451,6 +458,9 @@
 @media only screen and (max-width: 800px){
     .event-edit-event-box{
         width: 95% !important;
+    }
+    .event-edit-event-locate-cont{
+        margin-left: 2%;
     }
 }
 @media only screen and (max-width: 550px){

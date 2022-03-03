@@ -177,9 +177,11 @@
                         </div>
                     </div>
                     <!--  -->
-                    <div class="calendar-new-event" id="open-new-event-display-day">
-                        <i class="ri-add-line"></i>
-                        <span>Novo Evento</span>
+                    <div class="calendar-new-event">
+                        <i id="open-new-event-display-day" class="ri-add-line"></i>
+                        <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
+                            <a class="class-loader"  title="Configurações" href="../../room/RoomSettings"><i class="ri-settings-3-line"></i></a>
+                        <% } %>
                     </div>
                 </div>
 
@@ -247,22 +249,107 @@
                                                                 <!-- Eventos futuro a data atual -->
     
                                                                 <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
-                                                                    <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a><p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle"><i class="ri-checkbox-blank-circle-fill"></i></p></li>
+                                                                    <li>
+                                                                        <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                            <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
+                                                                                ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                            </b>
+                                                                        </a>
+                                                                        <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
+                                                                            <i class="ri-checkbox-blank-circle-fill"></i>
+                                                                        </p>
+                                                                        <div class="calendar-info-floating">
+                                                                            <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
+                                                                            <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
+                                                                                <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                            <% }else{ %>
+                                                                                <span>Sem descrição..</span>
+                                                                            <% } %>
+                                                                            <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
+                                                                        </div>
+                                                                    </li>
                                                                 <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
-                                                                    <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a><p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle"><i class="ri-checkbox-blank-circle-fill"></i></p></li>
+                                                                    <li>
+                                                                        <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                            <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
+                                                                                ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                            </b>
+                                                                        </a>
+                                                                        <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
+                                                                            <i class="ri-checkbox-blank-circle-fill"></i>
+                                                                        </p>
+                                                                        <div class="calendar-info-floating">
+                                                                            <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
+                                                                            <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
+                                                                                <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                            <% }else{ %>
+                                                                                <span>Sem descrição..</span>
+                                                                            <% } %>
+                                                                            <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
+                                                                        </div>
+                                                                    </li>
                                                                 <% }else{ %>
-                                                                    <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a><p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle"><i class="ri-checkbox-blank-circle-line"></i></p></li>
+                                                                    <li>
+                                                                        <a class="close-options-days-link class-loader" style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                            <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-line"></i>⠀
+                                                                            <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                        </a>
+                                                                        <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
+                                                                            <i class="ri-checkbox-blank-circle-line"></i>
+                                                                        </p>
+                                                                    </li>
                                                                 <% } %>
     
                                                             <% } %>
                                                         <% }else{ %>
                                                             <!-- Não é o mes atual -->
                                                             <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
-                                                                <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a><p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle"><i class="ri-checkbox-blank-circle-fill"></i></p></li>
+                                                                <li>
+                                                                    <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                        <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
+                                                                            ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                        </b>
+                                                                    </a>
+                                                                    <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
+                                                                        <i class="ri-checkbox-blank-circle-fill"></i>
+                                                                    </p>
+                                                                    <div class="calendar-info-floating">
+                                                                        <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
+                                                                        <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
+                                                                            <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                        <% }else{ %>
+                                                                            <span>Sem descrição..</span>
+                                                                        <% } %>
+                                                                        <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;">Omega</span></span>
+                                                                    </div>
+                                                                </li>
                                                             <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
-                                                                <li><a class="class-loader" style="background: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><b><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %></b> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a><p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle"><i class="ri-checkbox-blank-circle-fill"></i></p></li>
+                                                                <li><a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                    <b style="font-weight: 700;">
+                                                                        <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
+                                                                        ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                    </b>
+                                                                </a>
+                                                                <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
+                                                                    <i class="ri-checkbox-blank-circle-fill"></i>
+                                                                </p>
+                                                                <div class="calendar-info-floating">
+                                                                    <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
+                                                                    <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
+                                                                        <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                    <% }else{ %>
+                                                                        <span>Sem descrição..</span>
+                                                                    <% } %>
+                                                                    <span><b><%= arrayPersons.length %> pessoa(s)</b></span>
+                                                                </div>
+                                                            </li>
                                                             <% }else{ %>
-                                                                <li><a class="class-loader" style="background: transparent; color: <%= allEventsMonth[jj].sys_calendar_roomColor %>; border: 1.5px solid <%= allEventsMonth[jj].sys_calendar_roomColor %>;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> "><%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[1] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %></a></li>
+                                                                <li>
+                                                                    <a class="close-options-days-link class-loader" style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                        <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-line"></i>
+                                                                        ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
+                                                                    </a>
+                                                                </li>
                                                             <% } %>
                                                         <% } %>
 
@@ -293,7 +380,7 @@
         </div>
         <div class="calendar-options-list">
             <div id="open-event-display-day" class="calendar-display-new">
-                <i class="ri-add-circle-line"></i>
+                <i class="ri-add-line"></i>
                 <span>Novo Evento</span>
             </div>
             <!--  -->
@@ -337,85 +424,12 @@
         <div class="calendar-event-operation">
             <div class="calendar-event-operation-initial">
                 <label for="">Das</label>
-                <select name="calendar-register-hour-initial" id="calendar-register-hour-initial">
-                    <option value="06:00">06:00</option>
-                    <option value="06:30">06:30</option>
-                    <option value="07:00">07:00</option>
-                    <option value="07:30">07:30</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option>
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="18:30">18:30</option>
-                    <option value="19:00">19:00</option>
-                    <option value="19:30">19:30</option>
-                    <option value="20:00">20:00</option>
-                    <option value="20:30">20:30</option>
-                    <option value="21:00">21:00</option>
-                    <option value="21:30">21:30</option>
-                    <option value="22:00">22:00</option>
-                    <option value="22:30">22:30</option>
-                    <option value="23:00">23:00</option>
-                    <option value="23:30">23:30</option>
-                </select>
+                <input type="time" value="06:00" placeholder="06:00" name="calendar-register-hour-initial" id="">
             </div>
             <!--  -->
             <div class="calendar-event-operation-final">
-                <label for="">Das</label>
-                <select name="calendar-register-hour-final" id="calendar-register-hour-final">
-                    <option value="06:30">06:30</option>
-                    <option value="07:00">07:00</option>
-                    <option value="07:30">07:30</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option>
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="18:30">18:30</option>
-                    <option value="19:00">19:00</option>
-                    <option value="19:30">19:30</option>
-                    <option value="20:00">20:00</option>
-                    <option value="20:30">20:30</option>
-                    <option value="21:00">21:00</option>
-                    <option value="21:30">21:30</option>
-                    <option value="22:00">22:00</option>
-                    <option value="22:30">22:30</option>
-                    <option value="23:00">23:00</option>
-                    <option value="23:30" selected>23:30</option>
-                </select>
+                <label for="">Ás</label>
+                <input type="time" value="18:00" placeholder="18:00" name="calendar-register-hour-final">
             </div>   
             <!--  -->
             <div class="calendar-event-operation-sep"></div><!-- SEPARATOR -->
@@ -440,25 +454,9 @@
                     <% }) %>
                     <!-- <option value="not">Outro local</option> -->
                 </select>
+                <!--  -->
             </div>
             <!--  -->
-            <div class="calendar-event-locate-name">
-                <input id="calendar-register-location-name" type="text" placeholder="Insira o nome do local..">
-            </div>
-        </div>
-        <!--  -->
-        <div class="calendar-event-reminder">
-            <div class="calendar-event-reminder-box">
-                <label for="">Lembre-me</label>
-                <select  name="calendar-register-reminder">
-                    <!-- FORMATO EM MINUTOS -->
-                    <option value="60">1 Hora antes</option>
-                    <option value="30">30 minutos antes</option>
-                    <option value="15">15 minutos antes</option>
-                </select>
-            </div>
-            <!--  -->
-
             <% let atualIndex = allLocations[0].sys_unity_id %>
             
             <% for(let i = 0; i < allLocations.length; i++){ %>
@@ -489,15 +487,34 @@
                     <% i-- %>
                 <% } %>
             <% } %>
-
+            <!--  -->
+            <div class="calendar-event-reminder">
+                <div class="calendar-event-reminder-box">
+                    <label for="">Lembre-me</label>
+                    <select  name="calendar-register-reminder">
+                        <!-- FORMATO EM MINUTOS -->
+                        <option value="60">1 Hora antes</option>
+                        <option value="30">30 minutos antes</option>
+                        <option value="15">15 minutos antes</option>
+                    </select>
+                </div>
+                <!--  -->
+    
+            </div>
+            
+            <!--  -->
+            <div class="calendar-event-locate-name">
+                <input id="calendar-register-location-name" type="text" placeholder="Insira o nome do local..">
+            </div>
         </div>
         <!--  -->
         <hr style="margin: 30px 0;">
         <!--  -->
         <div class="calendar-event-persons">
             <div class="calendar-event-persons-filter">
-                <input type="text" placeholder="Equipe para participar" id="insert-person">
-                <button type="button" id="button-add-person">Adicionar</button>
+                <span>Busque pelo nome e selecione</span>
+                <input type="text" placeholder="Inserir participantes para este evento.." id="insert-person">
+                <button hidden type="button" id="button-add-person">Adicionar</button>
             </div>
             <!--  -->
             <div class="calendar-event-persons-list">
@@ -610,6 +627,15 @@
         source: function(request, response) {
             var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
             response(results.slice(0, 5));
+            //console.log(results.slice(0, 5))
+            //console.log(response)
+            //console.log($(".ui-menu-item-wrapper").text())
+        },
+        select: function (e, i) {
+            //console.log(i.item.value)
+            setTimeout(() => {
+                $("#button-add-person").trigger('click')
+            }, 100);
         }
     });
 
@@ -632,6 +658,7 @@
 
             if(idArray.indexOf(parseInt(valIdUser)) != -1){
                 $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                $("#insert-person").val('')
             }else{
 
                 if(isNaN(valIdUser)){
@@ -718,15 +745,15 @@
 
     let monthNow = '<%- monthNow %>'
     if(moment().format("MM/YYYY") != monthNow){
-        $("#calendar-display-month").append("  <p id='cal-sep'>|<p>  <a class='class-loader' style='font-size: 0.9rem' href='/painel/calendario/main/'>Mês atual <i class='ri-external-link-line'></i></a>")
+        $("#calendar-display-month").append("  <p id='cal-sep'>|<p>  <a class='class-loader' style='font-size: 0.9rem; color: var(--color-three)' href='/painel/calendario/main/'>Mês atual <i class='ri-external-link-line'></i></a>")
     }
 
     /* EVENTO DIA INTEIRO */
     $("#calendar-register-all-day").click(function(){
         //$('#calendar-register-hour-initial option[value=06:00]').attr('selected','selected');
 
-        $("#calendar-register-hour-initial").val("06:00").change();
-        $("#calendar-register-hour-final").val("23:30").change();
+        //$("#calendar-register-hour-initial").val("06:00").change();
+        //$("#calendar-register-hour-final").val("23:30").change();
     })
 
     //Marcação da opção
@@ -745,6 +772,12 @@
         $(".calendar-event-reminder-room").css('display','none');
         $("#room-and-unty-"+optionValue).fadeIn().css('display','flex')
         
+    })
+
+    $(".close-options-days-link").click(function(){
+        setTimeout(() => {
+            $("#calendar-display-actions").css('display','none')
+        }, 100);
     })
 
 </script>
