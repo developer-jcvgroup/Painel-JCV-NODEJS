@@ -206,76 +206,76 @@ exports.editSaveUser = async (req,res) => {
         const userAtivo = parseInt(req.body['save-edit-active-'+idUser]);
 
         if(parseInt(userAtivo) == 0){
-            usersScript.alterDataUsers(idUser)
+            usersScript.alterDataUsers(req,res, idUser, userName)
+        }else{
+            //Validando se este usuario possui ou nao um cadastro nas permissões
+            const validatePermSys = await database
+            .select("sys_perm_id")
+            .where({sys_perm_idUser: idUser})
+            .table("jcv_users_permissions")
+            .then( data => {
+                return data;
+            })
+
+            database.update({
+
+                jcv_userNamePrimary: userName,
+                jcv_userNameSecundary: userName,
+                jcv_userCpf: userCPF,
+                jcv_userEmailCorporate: userEmailCorporativo,
+                jcv_userEmailFolks: userEmailPessoal,
+                jcv_userSector: userSetor,
+                jcv_userUnity: userUnidade,
+                jcv_userExtension: userRamal,
+                jcv_userManager: userGestor,
+                jcv_userCassification: userType,
+                jcv_userEnabled: userAtivo,
+                jcv_sysEmail: userSYSemail
+
+            }).table("jcv_users").where({jcv_id: idUser}).then(data => {
+
+
+                if(validatePermSys != ''){
+                    database.update({
+                        sys_blz_perm_use: userSYSbelezaUse,
+                        sys_blz_perm_manager: userSYSbelezaManager,
+                        sys_blz_perm_admin: userSYSbelezaAdmin,
+                        sys_req_perm_use: userSYSrequisitorUse,
+                        //sys_req_perm_manager: userSYSrequisitorManager,
+                        sys_req_perm_admin: userSYSrequisitorAdmin,
+                        sys_cal_perm_use: userSYScalendarUse,
+                        //sys_cal_perm_manager: userSYScalendarManager,
+                        sys_cal_perm_admin: userSYScalendarAdmin,
+                        sys_tra_perm_use: userSYStradeUse,
+                        sys_tra_perm_admin: userSYStradeAdmin
+            
+                    }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
+                        if(data != ''){
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
+                            res.redirect("/painel/system/users");
+                        }
+                    })
+                }else{
+                    database.insert({
+                        sys_perm_idUser: idUser,
+                        sys_blz_perm_use: userSYSbelezaUse,
+                        sys_blz_perm_manager: userSYSbelezaManager,
+                        sys_blz_perm_admin: userSYSbelezaAdmin,
+                        sys_req_perm_use: userSYSrequisitorUse,
+                        //sys_req_perm_manager: userSYSrequisitorManager,
+                        sys_req_perm_admin: userSYSrequisitorAdmin,
+                        sys_cal_perm_use: userSYScalendarUse,
+                        //sys_cal_perm_manager: userSYScalendarManager,
+                        sys_cal_perm_admin: userSYScalendarAdmin
+                    }).table("jcv_users_permissions").then(data => {
+                        if(data != ''){
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
+                            res.redirect("/painel/system/users");
+                        }
+                    })
+                }    
+            })
         }
-
-        //Validando se este usuario possui ou nao um cadastro nas permissões
-        const validatePermSys = await database
-        .select("sys_perm_id")
-        .where({sys_perm_idUser: idUser})
-        .table("jcv_users_permissions")
-        .then( data => {
-            return data;
-        })
-
-        database.update({
-
-            jcv_userNamePrimary: userName,
-            jcv_userNameSecundary: userName,
-            jcv_userCpf: userCPF,
-            jcv_userEmailCorporate: userEmailCorporativo,
-            jcv_userEmailFolks: userEmailPessoal,
-            jcv_userSector: userSetor,
-            jcv_userUnity: userUnidade,
-            jcv_userExtension: userRamal,
-            jcv_userManager: userGestor,
-            jcv_userCassification: userType,
-            jcv_userEnabled: userAtivo,
-            jcv_sysEmail: userSYSemail
-
-        }).table("jcv_users").where({jcv_id: idUser}).then(data => {
-
-
-            if(validatePermSys != ''){
-                database.update({
-                    sys_blz_perm_use: userSYSbelezaUse,
-                    sys_blz_perm_manager: userSYSbelezaManager,
-                    sys_blz_perm_admin: userSYSbelezaAdmin,
-                    sys_req_perm_use: userSYSrequisitorUse,
-                    //sys_req_perm_manager: userSYSrequisitorManager,
-                    sys_req_perm_admin: userSYSrequisitorAdmin,
-                    sys_cal_perm_use: userSYScalendarUse,
-                    //sys_cal_perm_manager: userSYScalendarManager,
-                    sys_cal_perm_admin: userSYScalendarAdmin,
-                    sys_tra_perm_use: userSYStradeUse,
-                    sys_tra_perm_admin: userSYStradeAdmin
-        
-                }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
-                    if(data != ''){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
-                        res.redirect("/painel/system/users");
-                    }
-                })
-            }else{
-                database.insert({
-                    sys_perm_idUser: idUser,
-                    sys_blz_perm_use: userSYSbelezaUse,
-                    sys_blz_perm_manager: userSYSbelezaManager,
-                    sys_blz_perm_admin: userSYSbelezaAdmin,
-                    sys_req_perm_use: userSYSrequisitorUse,
-                    //sys_req_perm_manager: userSYSrequisitorManager,
-                    sys_req_perm_admin: userSYSrequisitorAdmin,
-                    sys_cal_perm_use: userSYScalendarUse,
-                    //sys_cal_perm_manager: userSYScalendarManager,
-                    sys_cal_perm_admin: userSYScalendarAdmin
-                }).table("jcv_users_permissions").then(data => {
-                    if(data != ''){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
-                        res.redirect("/painel/system/users");
-                    }
-                })
-            }    
-        })
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres!");
         res.redirect("/painel/system/users");

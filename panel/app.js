@@ -42,6 +42,8 @@ const controllerCalendar = require("./controllers/calendar/controllerCalendar")
 const controllerSystemGeneral = require("./controllers/system/sysGeneral")
 //Controler TradeMkt
 const controllerTrade = require("./controllers/trade/controllerTrade")
+//Controller Sistema Pesquisas
+const controllerPesquisas = require("./controllers/system/controllerPesquisas")
 
 //Controller Notifications
 const controllerNotifications = require("./controllers/system/controllerNotifications")
@@ -181,6 +183,8 @@ router.post("/system/department/action/save", authenticate, controllerDepartment
 router.get("/system/unidades", authenticate, getPermissions, controllerDepartment.listUnitys)
 router.post("/system/unidades/action/save", authenticate, controllerDepartment.saveUnity)
 router.post("/system/unidades/action/save/edit", authenticate, controllerDepartment.saveEditUnity)
+
+//Sistema: Pesquisas
 
 /***********************************/
 /***********************************/

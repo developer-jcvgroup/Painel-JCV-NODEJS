@@ -1,0 +1,161 @@
+<link rel="stylesheet" href="/panel/css/trade/mainTrade.css">
+
+<section class="trade-main-section">
+    <section class="trade-main-section-page">
+        <div class="trade-main-title-page">
+            <span>Trade Marketing</span>
+            <span>/ Home</span>
+        </div>
+    
+        <!--  -->
+
+        <section class="trade-main-container-body">
+            <section class="trade-main-section-list-forms">
+                <div class="trade-main-forms">
+
+                    <a class="trade-main-forms-link" href="/painel/trademkt/form/response/">
+                        <div class="trade-main-forms-link-info">
+                            <span>Pesquisa de Mercado</span>
+                            <span>XXXXXXXXXXX</span>
+                            <span>Esta pesquisa está <b>pendente!</b>.</span>
+                            <span><b>Expira em: YYYYYYYYYYYY</b></span>
+                        </div>
+                        <div class="trade-main-forms-link-next">
+                            <span><i class="ri-arrow-right-line"></i></span>
+                        </div>
+                    </a>
+                    <hr style="margin: 10px 0">
+                    <div class="trade-main-forms-not-found">
+                        <img class="trade-main-forms-error" src="/panel/trade/error.svg" alt="">
+                        <span>Sem pesquisas para você..</span>
+                    </div>
+                </div>
+            </section>
+
+            <!--  -->
+
+            <section class="trade-main-section-menu">
+                <ul class="trade-main-list-links-main">
+                    <li>
+                        <a class="trade-main-list-link" href="#" id="trade-mkt-form-visits">
+                            <div class="trade-main-list-link-simbol">
+                                <i class="ri-file-list-3-line"></i>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-list-link-text">
+                                <span>Formulário de Visita</span>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-link-icon">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="trade-main-list-link" href="#" id="trade-mkt-sales-days">
+                            <div class="trade-main-list-link-simbol">
+                                <i class="ri-funds-box-line"></i>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-list-link-text">
+                                <span>Vendas Diárias</span>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-link-icon">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="trade-main-list-link" href="#" id="trade-mkt-search-forms">
+                            <div class="trade-main-list-link-simbol">
+                                <i class="ri-search-line"></i>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-list-link-text">
+                                <span>Pesquisa de Mercado</span>
+                            </div>
+                            <!--  -->
+                            <div class="trade-main-link-icon">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </section>
+
+    </section>
+</section>
+<section class="trade-display-actions-pages" id="trade-display-one">
+    <div class="trade-display-actions-pages-box">
+        <div class="trade-display-close">
+            <span>Formulário de Visita</span>
+            <i class="trade-close-action ri-close-line"></i>
+        </div>
+        <div class="trade-display-links-box">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/visit">
+                <i class="ri-add-line"></i>
+                <span>Novo Formulário</span>
+            </a>
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
+                <i class="ri-file-list-2-line"></i>
+                <span>Listar de Formulários</span>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="trade-display-actions-pages" id="trade-display-two">
+    <div class="trade-display-actions-pages-box">
+        <div class="trade-display-close">
+            <span>Vendas Diárias</span>
+            <i class="trade-close-action ri-close-line"></i>
+        </div>
+        <div class="trade-display-links-box">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/salesDay">
+                <i class="ri-add-line"></i>
+                <span>Novo Formulário</span>
+            </a>
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
+                <i class="ri-file-list-2-line"></i>
+                <span>Listar de Formulários</span>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="trade-display-actions-pages" id="trade-display-three">
+    <div class="trade-display-actions-pages-box">
+        <div class="trade-display-close">
+            <span>Pesquisa de Mercado</span>
+            <i class="trade-close-action ri-close-line"></i>
+        </div>
+        <div class="trade-display-links-box">
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/formSearch/new">
+                <i class="ri-add-line"></i>
+                <span>Nova Pesquisa</span>
+            </a>
+            <a class="class-loader trade-display-page-link" href="/painel/trademkt/listTrade">
+                <i class="ri-file-list-2-line"></i>
+                <span>Lista de Pesquisas</span>
+            </a>
+        </div>
+    </div>
+</section>
+<script>
+    $(".trade-close-action").click(function(){
+        $(".trade-display-actions-pages").fadeOut();
+    })
+
+    $("#trade-mkt-form-visits").click(function(){
+        $("#trade-display-one").fadeIn();
+        $("#trade-display-one").css('display','flex');
+    })
+    $("#trade-mkt-sales-days").click(function(){
+        $("#trade-display-two").fadeIn();
+        $("#trade-display-two").css('display','flex');
+    })
+    $("#trade-mkt-search-forms").click(function(){
+        $("#trade-display-three").fadeIn();
+        $("#trade-display-three").css('display','flex');
+    })
+</script>
