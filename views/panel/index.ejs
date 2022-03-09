@@ -115,6 +115,10 @@
                         <li><a class="class-loader" href="/painel/system/users"><i class="ri-braces-line"></i><span>Usuarios & Permissões</span></a></li>
                         <li><a class="class-loader" href="/painel/system/unidades"><i class="ri-building-line"></i><span>Unidades</span></a></li>
                         <li><a class="class-loader" href="/painel/system/departamentos"><i class="ri-door-open-line"></i><span>Departamentos</span></a></li>
+                        <% if(GLOBAL_PERM[0].sys_forms_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/formularios/main"><i class="ri-file-list-3-line"></i><span>Formulários</span></a></li>
+                        <% } %>
+                        <!-- <li><a class="class-loader" href="/painel/notifications/main"><i class="ri-notification-3-line"></i><span>Notificações</span></a></li> -->
                     </ul>
                 </ul>
                 <% } %>

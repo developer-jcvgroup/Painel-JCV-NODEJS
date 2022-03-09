@@ -80,8 +80,8 @@ exports.saveNewUser = async (req,res) => {
             const userName = req.body['save-new-name'];
             const userUnidade = req.body['save-new-unidade'];
             const userGestor = req.body['save-new-gestor'];
-            const userEmailCorporativo = req.body['save-new-email-corp'] == '' ? null : req.body['save-new-email-corp'];
-            const userEmailPessoal = req.body['save-new-email-folks'];
+            const userEmailCorporativo = null;
+            const userEmailPessoal = null;
             const userRamal = req.body['save-new-ramal'];
             const userSetor = req.body['save-new-setor'];
     
@@ -101,8 +101,11 @@ exports.saveNewUser = async (req,res) => {
             const userSYStradeAdmin = req.body['save-new-sys-trade-admin'] == 'on' ? 1 : 0;
     
             const userType = parseInt(req.body['save-new-sys-type-user']);
-            const userSYSemail = parseInt(req.body['save-new-sys-mails']);
+            const userSYSemail = 1;
             const userAtivo = parseInt(req.body['save-new-active']);
+
+            const userFormsAdmin = req.body['save-new-sys-forms-admin'] == 'on' ? 1 : 0;
+            const userNotifyAdmin = req.body['save-new-sys-notify-admin'] == 'on' ? 1 : 0;
     
             database.insert({
     
@@ -134,7 +137,10 @@ exports.saveNewUser = async (req,res) => {
                     //sys_cal_perm_manager: userSYScalendarManager,
                     sys_cal_perm_admin: userSYScalendarAdmin,
                     sys_tra_perm_use: userSYStradeUse,
-                    sys_tra_perm_admin: userSYStradeAdmin
+                    sys_tra_perm_admin: userSYStradeAdmin,
+
+                    sys_forms_perm_admin: userFormsAdmin,
+                    sys_notify_perm_admin: userNotifyAdmin
     
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){
@@ -165,6 +171,7 @@ exports.saveNewUser = async (req,res) => {
 exports.editSaveUser = async (req,res) => {
 
     const idUser = req.body['user-action-save-edit'];
+
 
     let userCPF = parseInt(req.body['save-edit-cpf-'+idUser].split('.').join("").split('-').join(""));
 
@@ -200,9 +207,12 @@ exports.editSaveUser = async (req,res) => {
         const userSYStradeUse = req.body['save-edit-sys-trade-use-'+idUser] == 'on' ? 1 : 0;
         const userSYStradeAdmin = req.body['save-edit-sys-trade-admin-'+idUser] == 'on' ? 1 : 0;
 
+        const userFormsAdmin = req.body['save-edit-sys-forms-use-'+idUser] == 'on' ? 1 : 0;
+        const userNotifyAdmin = req.body['save-edit-sys-notify-use-'+idUser] == 'on' ? 1 : 0;
+
 
         const userType = parseInt(req.body['save-edit-sys-type-user-'+idUser]);
-        const userSYSemail = parseInt(req.body['save-edit-sys-mails-'+idUser]);
+        //const userSYSemail = parseInt(req.body['save-edit-sys-mails-'+idUser]);
         const userAtivo = parseInt(req.body['save-edit-active-'+idUser]);
 
         if(parseInt(userAtivo) == 0){
@@ -230,7 +240,7 @@ exports.editSaveUser = async (req,res) => {
                 jcv_userManager: userGestor,
                 jcv_userCassification: userType,
                 jcv_userEnabled: userAtivo,
-                jcv_sysEmail: userSYSemail
+                //jcv_sysEmail: userSYSemail
 
             }).table("jcv_users").where({jcv_id: idUser}).then(data => {
 
@@ -247,11 +257,14 @@ exports.editSaveUser = async (req,res) => {
                         //sys_cal_perm_manager: userSYScalendarManager,
                         sys_cal_perm_admin: userSYScalendarAdmin,
                         sys_tra_perm_use: userSYStradeUse,
-                        sys_tra_perm_admin: userSYStradeAdmin
+                        sys_tra_perm_admin: userSYStradeAdmin,
+
+                        sys_forms_perm_admin: userFormsAdmin,
+                        sys_notify_perm_admin: userNotifyAdmin
             
                     }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                         if(data != ''){
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
                             res.redirect("/painel/system/users");
                         }
                     })
@@ -269,7 +282,7 @@ exports.editSaveUser = async (req,res) => {
                         sys_cal_perm_admin: userSYScalendarAdmin
                     }).table("jcv_users_permissions").then(data => {
                         if(data != ''){
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi alterado com sucesso");
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
                             res.redirect("/painel/system/users");
                         }
                     })
@@ -287,12 +300,116 @@ exports.resetPassUser = async (req,res) => {
 
     database.update({jcv_userPassword: null}).where({jcv_id: idUser}).table("jcv_users").then( data => { 
         if(data == 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
-            req.session.cookieLogin = undefined;
-            res.redirect("/login");
+
+            if(idUser == GLOBAL_DASH[0]){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                req.session.cookieLogin = undefined;
+                res.redirect("/login");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.redirect("/painel/system/users");
+            }            
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
             res.redirect("/painel/system/users");
         }
     })
+}
+
+exports.resetPassUserSingle = async (req,res) => {
+    const idUser = req.body['user-action-reset-pass-single']
+
+    database.update({jcv_userPassword: null}).where({jcv_id: idUser}).table("jcv_users").then( data => { 
+        if(data == 1){
+
+            if(idUser == GLOBAL_DASH[0]){
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                req.session.cookieLogin = undefined;
+                res.redirect("/login");
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.redirect("/painel/system/users");
+            }            
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            res.redirect("/painel/system/users");
+        }
+    })
+}
+
+exports.downloadDataUsers = async (req,res) => {
+    const idsUsers = req.body['button-data-users'].split(',');
+
+    if(idsUsers != ''){
+        const xl = require('excel4node');
+        const wb = new xl.Workbook();
+        const ws = wb.addWorksheet('Worksheet Name');
+
+        database.raw(`
+        SELECT c1.jcv_userCpf, c1.jcv_userNamePrimary, j1.sys_unity_name, j3.sys_department_name, c2.jcv_userNameSecundary,
+        c1.jcv_userCassification, c1.jcv_userEnabled, j2.sys_blz_perm_use, j2.sys_blz_perm_manager, j2.sys_blz_perm_admin,
+        j2.sys_req_perm_use, j2.sys_req_perm_admin, j2.sys_cal_perm_use, j2.sys_cal_perm_admin, j2.sys_tra_perm_use, j2.sys_tra_perm_admin
+
+        FROM (jcv_users c1, jcv_users c2)
+
+        JOIN jcv_unitys j1 ON c1.jcv_userUnity = j1.sys_unity_id
+        JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
+        JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
+
+        WHERE c1.jcv_userManager = c2.jcv_id AND c1.jcv_id IN (${idsUsers})
+        
+        `).then(data => {
+
+            const headingColumnNames = [
+                "CPF",
+                "Nome",
+                "Unidade",
+                "Setor",
+                "Gestor",
+                "Classificado",
+                "Ativo?",
+                "Beleza: Utilizar",
+                "Beleza: Gestor",
+                "Beleza: Admin",
+                "Requisitor: Utilizar",
+                "Requisitor: Admin",
+                "Calendário: Utilizar",
+                "Calendário: Admin",
+                "Trade MKT: Utilizar",
+                "Trade MKT: Admin",
+            ]
+            
+            let headingColumnIndex = 1; //diz que começará na primeira linha
+            headingColumnNames.forEach(heading => { //passa por todos itens do array
+                // cria uma célula do tipo string para cada título
+                ws.cell(1, headingColumnIndex++).string(heading);
+            });
+            
+            let rowIndex = 2;
+            data[0].forEach( record => {
+                let columnIndex = 1;
+                Object.keys(record).forEach(columnName =>{
+
+                    //Verificando se o dado é numero
+                    //Verificando se o dado é numero
+                    if(typeof(record[columnName]) === 'number'){
+                        ws.cell(rowIndex,columnIndex++)
+                        .number(record [columnName])
+                    }else{
+                        ws.cell(rowIndex,columnIndex++)
+                        .string(record [columnName])
+                    }
+                });
+                rowIndex++;
+            }); 
+
+            const caracteresAleatorios = Math.random().toString(36).substring(5);
+            const nameData = 'EXPORT-USERS-'+caracteresAleatorios;
+
+            wb.write(nameData+'.xlsx', res)
+        })
+    }else{
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione ao meno um usuario");
+        res.redirect("/painel/system/users");
+    }
 }

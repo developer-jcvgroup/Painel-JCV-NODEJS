@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/panel/css/formularios/viewFormulario.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="view-form-response-main-section">
+    <section class="view-form-response-section-page">
+        <div class="view-form-response-display">
+            <div class="view-form-response-title" id="view-form-response-title">
+                <div class="view-form-response-title-one">
+                    <span><b><%= getInfo[0].jcv_formularios_registers_title %></b></span>
+                    <span><b>Expira em: <%= getInfo[0].jcv_formularios_registers_expired %></b></span>
+                </div>
+                <div class="view-form-response-title-two">
+                    <img class="view-form-response-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+            
+            <!--  -->
+        
+            <div id="render-container" class="view-form-set-styles">
+                <!--  -->
+                <!--  -->
+                <!--  -->    
+            </div>
+            
+            <!--  -->
+            <div class="view-form-response-box-actions">
+                <div class="setDataWrap view-form-response-set">
+    
+                    <form id="fb-render" class="view-form-response-list-user" style="width: 100%;" >
+                        <!--  -->
+                        <!--  -->                        
+                    </form>
+                    <form method="post">
+                        <input hidden type="text" value="title form" name="view-form-response-response-title">
+                        <input hidden type="text" id="get-user-data" name="view-form-response-response-text">
+                        <button id="button-send-form" class="view-form-response-set-submit" type="submit" formaction="/painel/formularios/reponse" value="<%= getInfo[0].jcv_formularios_registers_id %>" name="view-form-send-form">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script src="https://kevinchappell.github.io/formBuilder/assets/js/form-render.min.js"></script>
+<script>
+
+    var formRenderOptions = {
+        formData: '<%- getInfo[0].jcv_formularios_registers_jsonForm %>'
+    }
+    var formRenderInstance = $('#render-container').formRender(formRenderOptions);
+
+    $("#button-send-form").click(function () {
+        $("#get-user-data").val(JSON.stringify(formRenderInstance.userData))
+    })
+    
+</script>

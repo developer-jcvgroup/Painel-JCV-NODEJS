@@ -1,0 +1,232 @@
+.notify-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.notify-main-section-page{
+    width: 90%;
+}
+
+/* ************************************** */
+/* TITLE PAGE */
+.notify-main-title-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.notify-main-title-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.notify-main-title-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/* ************************************** */
+/* TRADE MKT BODY PAGE */
+.notify-main-container-body{
+    width: 100%;
+    height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ************************************** */
+/* LISTA DE FORMULARIOS */
+.notify-main-section-list-forms{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+.notify-main-forms{
+    /* padding: 24px; */
+    display: flex;
+    width: 100%;
+    /* height: 100%; */
+    
+    flex-wrap: wrap;
+}
+
+.notify-main-forms-title{
+    margin: 8px 0;
+    display: flex;
+}
+.notify-main-forms-title span{
+    font-size: 0.9rem;
+    color: var(--color-two);
+}
+
+#form-list-fished{
+    display: none;
+}
+.notify-main-forms-link{
+    text-decoration: none;
+    width: 280px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    padding: 8px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+    margin: 24px;
+}
+.notify-main-forms-link-info{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+}
+.notify-main-forms-link-info span:nth-child(1){
+    font-size: 1.2rem;
+    margin: 9px 0;
+    color: var(--color-two);
+}
+.notify-main-forms-link-info span:nth-child(2){ 
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.notify-main-forms-link-info span:nth-child(3){ 
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.notify-main-forms-link-info span:nth-child(4){
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.notify-main-forms-link-info span:nth-child(4) b{
+    display: flex;
+    align-items: center;
+}
+
+.notify-main-forms-link-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 10px;
+}
+.notify-main-forms-link-button button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*  */
+.notify-main-forms-not-found{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.notify-main-forms-not-found img{
+    width: 400px;
+    object-fit: contain;
+}
+.notify-main-forms-not-found span{
+    font-size: 1rem;
+    color: var(--color-two);
+    margin-top: 24px;
+}
+.notify-main-forms-not-found a{
+    font-size: 1rem;
+    color: var(--color-two);
+    margin-top: 24px;
+}
+
+/* ******************************** */
+/* ******************************** */
+/* ******************************** */
+.notify-main-actions{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: auto;
+}
+.notify-display-center{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.notify-actions-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.notify-actions-button a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.notify-actions-button button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 900px) {
+    .notify-main-container-body{
+        flex-direction: column;
+    }
+    .notify-main-section-list-forms{
+        min-width: 100%;
+    }
+    .notify-main-section-menu{
+        margin-top: 24px;
+        width: 100%;
+    }
+    .notify-main-list-links-main{
+        height: 100%;
+    }
+    .notify-main-list-link-simbol{
+        min-width: 20%;
+        padding: 32px 10px;
+    }
+    .notify-main-list-links-main li{
+        min-width: 100%;
+    }
+    .notify-main-list-link-text span{
+        font-size: 1.3rem;
+    }
+}

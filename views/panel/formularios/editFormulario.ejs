@@ -1,0 +1,288 @@
+<link rel="stylesheet" href="/panel/css/formularios/editFormulario.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="edit-form-search-edit-form-main-section">
+    <form class="edit-form-search-edit-form-section-page" method="post">
+        <div class="edit-form-search-link-back">
+            <a class="class-loader" href="/painel/formularios/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
+        <form class="edit-form-search-edit-form-display" method="post">
+            <div class="edit-form-search-edit-form-title" id="edit-form-search-edit-form-title">
+                <div class="edit-form-search-edit-form-title-one">
+                    <span><input type="text" placeholder="Título do formulário" value="<%= infoFormulario[0].jcv_formularios_registers_title %>" name="edit-form-title-set"></span>
+                    <span>Expira em: <input type="date" value="<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[0] %>-<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[1] %>-<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[2] %>" name="edit-form-set-date-expired" id="edit-form-set-date-expired"></span>
+                    <button id="edit-form-open-users" type="button"><i class="ri-user-line"></i><span id="count-users-selects" style="position: absolute; font-size: 0.8rem;">0</span></button>
+                </div>
+                <div class="edit-form-search-edit-form-title-two">
+                    <img class="edit-form-search-edit-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
+                </div>
+            </div>
+            
+            <!--  -->
+        
+            <div id="fb-editor" class="edit-form-set-styles">
+                <!--  -->
+                <!--  -->
+                <!--  -->   
+            </div>
+
+            <div class="edit-form-search-button-finalizar">
+                <input type="text" hidden id="array-users-list" name="array-users-list">
+                <input type="text" hidden name="edit-users-form" value="<%- infoFormulario[0].jcv_formularios_registers_id %>">
+                <button id="getJSON" type="submit" formaction="/painel/formularios/edit" name="button-json-form">Finalizar</button>
+            </div>
+            
+        </form>
+    </form>
+</section>
+<section class="edit-form-new-users-main" id="edit-form-new-users-main">
+    <div class="edit-form-new-users-box">
+        <div class="edit-form-new-users-box-title">
+            <span>Adicionar usuários</span>
+            <i id="edit-form-close-users" class="ri-close-line"></i>
+        </div>
+        <!--  -->
+        <div class="edit-form-new-users-box-search-box">
+            <input type="text" placeholder="Procure por um usuario, groupo, departamento, unidade.." id="input-search-users">
+        </div>
+        <!--  -->
+        <div class="edit-form-new-users-box-cont">
+
+            <table class="edit-form-new-users-box-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="" id="check-all-checkboxs"></th>
+                        <th>Usuario</th>
+                        <th>Departamento</th>
+                        <th>Unidade</th>
+                        <th>Classificado</th>
+                    </tr>
+                </thead>
+                <tbody id="edit-form-new-users-box-table-tbody">
+                    <% let arrayConvert = JSON.parse(infoFormulario[0].jcv_formularios_registers_users) %>
+
+                    <% allUsersSystem.forEach(element => { %>
+                    <tr>
+                        <% if(arrayConvert.indexOf(element.jcv_id) > -1){ %>
+                        <td><input type="checkbox" checked class="check-checkboxs-action" value="<%= element.jcv_id %>" name="checkbox-values-check"></td>
+                        <% }else{ %>
+                        <td><input type="checkbox" class="check-checkboxs-action" value="<%= element.jcv_id %>" name="checkbox-values-check"></td>
+                        <% } %>
+
+                        <td><%= element.jcv_userNamePrimary %></td>
+                        <td><%= element.sys_department_name %></td>
+                        <td><%= element.sys_unity_name %></td>
+
+                        <% if(element.jcv_userCassification == 1){ %>
+                            <td>Master</td>
+                        <% }else if(element.jcv_userCassification == 2){ %>
+                            <td>Gestor</td>
+                        <% }else if(element.jcv_userCassification == 3){ %>
+                            <td>Colaborador Interno</td>
+                        <% }else if(element.jcv_userCassification == 4){ %>
+                            <td>Representantes</td>
+                        <% }else if(element.jcv_userCassification == 5){ %>
+                            <td>Promotoras</td>
+                        <% }else if(element.jcv_userCassification == 6){ %>
+                            <td>Jovem Aprendiz</td>
+                        <% } %>
+
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script>
+    
+    $.fn.searchInputTable = function(tableRows, inputSearchTable){
+        
+        const rows = $(''+tableRows+'');
+        $(inputSearchTable).keyup(function() {
+            
+            if($(this).val() != ''){
+                console.log('fechar')
+                $.fn.closePagination(0)//Fechar a paginação
+            }else{
+                console.log('abrir')
+                $.fn.closePagination(1)//Abrir a paginação
+            }
+
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+            
+            rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+
+                return !~text.indexOf(val);
+            }).hide();
+        });
+
+        
+    }
+
+    //Input Search
+    $.fn.searchInputTable('#edit-form-new-users-box-table-tbody tr', '#input-search-users')
+</script>
+<script>
+
+var options = {
+        dataType: 'json',
+        formData: JSON.parse('<%- infoFormulario[0].jcv_formularios_registers_jsonForm %>'),
+        disableFields: [
+        'button',
+        'file',
+        'date',
+        'text',
+        'hidden'
+        ],
+        disabledActionButtons: ['save','data'],
+        i18n: {
+            override:{
+                'en-US':{
+                    autocomplete: 'Autocompletar',
+                    checkboxGroup: 'Caixa de seleção',
+                    header: 'Titulo Grande',
+                    number: 'Número',
+                    paragraph: 'Paragrafo',
+                    radioGroup: 'Grade de seleção Única',
+                    select: 'Selecione uma opção',
+                    textArea: 'Área de texto',
+                    getStarted: 'Segure e arraste os módulos aqui..',
+                    clear: 'Limpar Formulario',
+                    noFieldsToClear: 'Não existe nenhum modulo no formulário..',
+                    clearAllMessage: 'Deseja realmente limpar o formulário?',
+                    yes: 'Sim',
+                    no: 'Não'
+                }
+            }
+        }
+    };
+    
+    var fbEditor = document.getElementById('fb-editor');
+    var formBuilder = $(fbEditor).formBuilder(options);
+
+    $("#getJSON").click( function() {
+        let d = formBuilder.actions.getData('json');
+        $(this).val(d)
+    })
+
+    //Action close screen
+    $("#edit-form-close-users").click(function(){
+        $("#edit-form-new-users-main").fadeOut()
+    })
+    //Open screen
+    $("#edit-form-open-users").click(function(){
+        $("#edit-form-new-users-main").fadeIn().css('display','flex')
+    })
+
+    //Definindo os usuarios pre inseridos
+    $("#count-users-selects").text('<%- JSON.parse(infoFormulario[0].jcv_formularios_registers_users).length %>')
+    $("#array-users-list").val(JSON.parse('<%- infoFormulario[0].jcv_formularios_registers_users %>'))
+
+    //Checksbox all
+    let checkIndex = 0;
+    $("#check-all-checkboxs").click(function(){
+
+        if(checkIndex == 0){
+            $(".check-checkboxs-action:visible").prop('checked', true)
+
+            let arrayData = $('input[name="checkbox-values-check"]:checked').toArray().map(function(check) { 
+                return parseInt($(check).val()); 
+            });
+
+            $("#array-users-list").val(arrayData)
+            $("#count-users-selects").text(arrayData.length)
+
+            checkIndex=1
+        }else{
+
+            $(".check-checkboxs-action").prop('checked', false)
+           
+            $("#array-users-list").val()
+            $("#count-users-selects").text(0)
+
+            checkIndex=0
+        }
+    })
+
+    //Create array users
+    $('.check-checkboxs-action').click(function(){
+
+        let arrayData = $('input[name="checkbox-values-check"]:checked').toArray().map(function(check) { 
+            return parseInt($(check).val()); 
+        });
+
+        console.log(arrayData)
+
+        $("#array-users-list").val(arrayData)
+        $("#count-users-selects").text(arrayData.length)
+    })
+
+    /* //LISTANDO OS USUARIOS
+    let dataOne = '';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#insert-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    }); */
+    
+    /* idArray = []
+    //ADICIONANDO PESSOAS
+    $("#button-add-person").click(function(){
+
+        //Usuario a ser adicionado
+        const valIdUser = $("#insert-person").val().split(' - ')[0];
+        const valPerson = $("#insert-person").val().split(' - ')[1];
+
+        let validateUser = arrayDataOne.indexOf($("#insert-person").val())
+
+        if(valIdUser == '' || valPerson == '' || validateUser == -1){
+            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+        }else{
+
+            if(idArray.indexOf(valIdUser) != -1){
+                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+            }else{
+                idArray.push(valIdUser)
+                $(".edit-form-search-edit-form-list-user")
+                .append(
+                `<div class="edit-form-search-edit-form-list-users-set" id="person-id-${valIdUser}">
+                    <input readonly type="text" value="${valPerson}">
+                    <input hidden value="${valIdUser}" name="edit-form-search-edit-form-persons"/>
+                    <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
+                </div>`
+                )
+
+                console.log(idArray)
+
+                $("#insert-person").val('')
+            }
+        }
+    })
+
+    function functionRemovePerson(id){
+
+        //Revemendo o usuario no array
+        idArray.splice(idArray.indexOf(parseInt(id)), 1)
+        console.log(idArray)
+
+        //Removendo a div
+        $("#person-id-"+id).remove();
+
+    } */
+    
+</script>

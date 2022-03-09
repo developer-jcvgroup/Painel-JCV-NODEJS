@@ -46,7 +46,7 @@ exports.closeUpdateAll = async (req,res) => {
 exports.listNotificationsUser = async (req,res) => {
 
     const allNot = await database
-    .raw("SELECT * from jcv_notifications WHERE JSON_CONTAINS(jcv_notifications_usersId, '"+GLOBAL_DASH[0]+"', '$')")
+    .raw("SELECT * from jcv_notifications WHERE JSON_CONTAINS(jcv_notifications_usersId, '"+GLOBAL_DASH[0]+"', '$') ORDER BY jcv_notifications_id DESC LIMIT 50")
     .then( data => {return data[0]})
 
     var page = "system/notifications";

@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/panel/css/formularios/mainForm.css">
+
+<section class="formularios-main-section">
+    <section class="formularios-main-section-page">
+        <div class="formularios-main-title-page">
+            <span>Formulários</span>
+            <span>/ Home</span>
+        </div>
+
+        <section class="formularios-main-actions">
+            <div class="formularios-display-center">
+                <div class="formularios-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/formularios/novo"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="formularios-main-container-body">
+            <section class="formularios-main-section-list-forms" id="forms-list-display">
+                <div class="formularios-main-forms">
+
+                    <% if(resultForms.length > 0){ %>
+                        <% resultForms.forEach(element => { %>
+                            <a class="formularios-main-forms-link" href="/painel/formularios/edit/<%= element.jcv_formularios_registers_id %>">
+                                <div class="formularios-main-forms-link-info">
+                                    <span><%= element.jcv_formularios_registers_title %></span>
+                                    <span>Respostas: <b><%= element.jcv_formularios_registers_totalResponse %></b></span>
+                                    <span>Gerado por: <%= element.jcv_userNamePrimary %></span>
+                                    <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_formularios_registers_expired %></b></span>
+                                </div>
+                                <hr style="width: 100%; margin: 7px 0;">
+                                <form method="post" class="formularios-main-forms-link-button">
+                                    <button formaction="/painel/formularios/reponse/downlod" type="submit" name="button-exports-responses-form" value="<%= element.jcv_formularios_registers_id %>" title="Baixar Respostas"><i class="ri-download-line"></i></button>
+                                    <button class="class-loader" formaction="/painel/formularios/disabled" type="submit" name="button-disabled-form" value="<%= element.jcv_formularios_registers_id %>" title="Desabilitar formulario"><i class="ri-delete-bin-2-line"></i></button>
+                                    <button class="class-loader" formaction="/painel/formularios/delete" type="submit" name="button-delete-form" value="<%= element.jcv_formularios_registers_id %>" title="Excluir Formulário"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="class-loader" formaction="/painel/formularios/deleteResponses" type="submit" name="button-delete-responses-form" value="<%= element.jcv_formularios_registers_id %>" title="Excluir Respostas"><i class="ri-close-line"></i></button>
+                                </form>
+                            </a>
+                            <% }) %>
+                    <% }else{ %>
+                        <div class="formularios-main-forms-not-found">
+                            <img class="formularios-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Nenhum formulario encontrado.. <b><a href="/painel/formularios/novo">Criar formulário</a></b></span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="formularios-main-section-list-forms" id="form-list-fished">
+                <div class="formularios-main-forms-title">
+                    <span>Listando os utlimos <b>30 formulários</b> finalizados</span>
+                </div>
+                <div class="formularios-main-forms">
+                    <% fishedForms.forEach(element => { %>
+                    <a class="formularios-main-forms-link"href="/painel/formularios/edit/<%= element.jcv_formularios_registers_id %>">
+                        <div class="formularios-main-forms-link-info">
+                            <span><%= element.jcv_formularios_registers_title %></span>
+                            <span>Respostas: <b><%= element.jcv_formularios_registers_totalResponse %></b></span>
+                            <span>Gerado por: <%= element.jcv_userNamePrimary %></span>
+                            <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_formularios_registers_expired %></b></span>
+                            <span style="color: red;">FINALIZADO</span>
+                        </div>
+                        <hr style="width: 100%; margin: 7px 0;">
+                        <form method="post" class="formularios-main-forms-link-button">
+                            <button formaction="/painel/formularios/reponse/downlod" type="submit" name="button-exports-responses-form" value="<%= element.jcv_formularios_registers_id %>" title="Baixar Respostas"><i class="ri-download-line"></i></button>
+                        </form>
+                    </a>
+                    <% }) %>
+
+                    <div style="display: none;" class="formularios-main-forms-not-found">
+                        <img class="formularios-main-forms-error" src="/panel/trade/error.svg" alt="">
+                        <span>Sem formularios..</span>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+</script>

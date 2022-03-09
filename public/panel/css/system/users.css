@@ -43,18 +43,20 @@
 }
 .sys-section-container-main{
     width: 100%;
-    padding: 12px;
+    padding: 34px 12px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+/*  */
 .sys-box-search{
     width: 50%;
     display: flex;
     align-items: center;
-    margin-top: 32px;
+    margin-right: 1%;
 }
 .sys-box-search input[type=text]{
-    width: 40%;
+    width: 100%;
     padding: 8px;
     color: var(--color-one);
     font-size: 0.8rem;
@@ -62,7 +64,7 @@
     border-bottom: 1px solid var(--color-one);
     outline: 0;
 }
-.sys-box-search button:nth-child(2){
+/* .sys-box-search button:nth-child(2){
     outline: 0;
     border: 0;
     padding: 8px 18px;
@@ -88,189 +90,486 @@
     align-items: center;
     margin-left: 8px;
     border: 1px solid var(--color-one);
-}
-
-/***************************************/
-/***************************************/
-/***************************/
-/* PAGINA table users */
-.sys-users-section-list{
-    width: 100%;
+} */
+/*  */
+.sys-box-buttons{
+    width: fit-content;
     display: flex;
-    flex-direction: column;
-    background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
+    align-items: center;
 }
-
-.sys-users-container-main-list{
-    width: 100%;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-}
-
-.sys-users-container-fix{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-}
-
-/* */
-.sys-users-table-list{
-    border-collapse: collapse;
-      
-}
-.sys-users-table-list thead tr th{
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-    top: 0;
-
-
-    border: none;
-    border-bottom: 1px solid var(--color-five);
-    text-align: left;
-    background: var(--color-one);
-    color: var(--color-four);
-    font-weight: normal;
-    padding: 6px;
-    font-size: 0.9rem;
-}
-
-
-.sys-users-table-list tbody tr td{
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-    top: 0;
-
-
-    border: none;
-    border-top: 1px solid var(--color-five);
-    border-bottom: 1px solid var(--color-five);
-    text-align: left;
-    padding: 6px;
-    padding-right: 10px;
+.sys-box-buttons button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
     color: var(--color-one);
-    font-size: 0.8rem;
+    background: transparent;
     cursor: pointer;
     transition: 0.5s;
 }
-.sys-users-table-list tbody tr:hover{
-    transition: 0.5s;
-    background: var(--color-eight) !important;
+
+/******************************************/
+/******************************************/
+/******************************************/
+/******************************************/
+/******************************************/
+/******************************************/
+/* NOVO MODULO DE EXIBIÇÃO DOS USUARIOS */
+.sys-user-container-all-action{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px 0;
+}
+.sys-user-container-all-action-comp{
+    display: flex;
+    align-items: center;
+    height: 25px;
+}
+.sys-user-container-all-action-comp > span{
+    color: var(--color-two);
+    font-size: 1rem;
+    margin: 0 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 7px;
+}
+.sys-user-container-all-action-comp span i{
+    margin-right: 5px;
+}
+.sys-user-container-list{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
 }
 
-/**************************/
+.sys-user-container-box-user{
+    width: 260px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    background: var(--background-two);
+    padding: 14px;
+    box-shadow: 0 0 4px 0 var(--color-three);
+    margin: 0 10px;
+    margin-bottom: 25px;
+}
 
-.sys-users-table-list tbody tr td input[type=text]{
-    border: 1px solid var(--color-seven);
-    padding: 6px;
+/* TITLE */
+.sys-user-container-box-user-title{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.sys-user-container-box-user-title input{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/* AVATAR */
+.sys-user-container-box-user-avaatar{
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 120px;
+    max-height: 120px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 19px;
+}
+.sys-user-container-box-user-avaatar img{
+    width: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid var(--color-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+
+/* INFO */
+.sys-user-container-box-user-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    white-space: normal;
+    text-align: center;
+}
+.sys-user-container-box-user-info span{
+    display: flex;
+    align-items: center;
     font-size: 0.9rem;
+    color: var(--color-two);
+    padding: 4px 0;
 }
-.sys-input-table-large-one{
-    width: 400px;
+.sys-user-container-box-user-info span:nth-child(2){
+    margin-bottom: 20px;
 }
-.sys-input-table-large-two{
-    width: 250px;
+.sys-user-container-box-user-info i{
+    font-size: 1.2rem;
 }
 
-.sys-users-table-list tbody tr td select{
+/* ACTIONS */
+.sys-user-container-box-user-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sys-user-container-box-user-buttons button{
     outline: 0;
     border: 0;
-    padding: 5px 5px;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.sys-user-container-box-user-buttons button:hover{
+    transition: 0.5s;
+    background: var(--color-one);
+    color: var(--color-three);
+}
+
+/* INFO PLUS */
+.sys-user-container-box-user-plus-info{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-bottom: 15px; */
+    /* background: rgba(0, 255, 213, 0.274); */
+}
+.sys-user-container-box-user-plus-info span{
+    font-size: 0.8rem;
+    color: var(--color-two);
+    padding: 4px 0;
+}
+
+/* ************************* */
+/* ************************* */
+/* ************************* */
+/* BOX DE EDITAR PRODUTO */
+.sys-edit-user-box-main{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.sys-edit-user-box-edit{
+    width: 600px;
+    max-height: 80%;
+    padding: 12px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+}
+.sys-edit-user-box-edit-center{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+}
+
+/*  */
+.sys-edit-user-box-edit-title{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.sys-edit-user-box-edit-title span{
+    font-size: 1.2rem;
+    color: var(--color-two);
+}
+.sys-edit-user-box-edit-title i{
+    margin-top: -30px;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--color-one);
+}
+
+/*  */
+.sys-edit-user-box-edit-row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 13px 0;
+}
+.sys-edit-user-box-edit-row label{
+    font-size: 0.7rem;
+    color: var(--color-two);
+    margin-bottom: 4px;
+}
+.sys-edit-user-box-edit-row input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+}
+.sys-edit-user-box-edit-row select{
+    outline: 0;
+    border: 0;
+    padding: 10px 7px;
     font-size: 0.8rem;
     text-transform: uppercase;
     border: 1px solid var(--color-seven);
     cursor: pointer;
 }
 
-.sys-users-table-list thead th:nth-child(2) {
-    left: 0;
-    z-index: 1;
-}
-.sys-users-table-list tbody td:nth-child(2) {
-    left: 0;
-    z-index: 1;
-    background: var(--background-two);
-}
-
-.sys-users-table-list thead th:nth-last-child(1) {
-    right: 0;
-    z-index: 1;
-}
-.sys-users-table-list tbody td:nth-last-child(1) {
-    right: 0;
-    z-index: 1;
-    background: var(--background-two);
-}
-
-/**************************/
-/**************************/
-/* container two */
-.sys-container-two{
+/*  */
+.sys-edit-user-box-edit-row-permissions{
     width: 100%;
     display: flex;
-    padding: 12px;
-    border-left: 1px solid var(--color-seven);
-    border-right: 1px solid var(--color-seven);
+    flex-direction: column;
 }
-.sys-container-two-row{
+.sys-edit-user-box-edit-row-permissions-box{
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
 }
-
-.sys-container-two-box{
+.sys-edit-user-box-edit-row-permissions-box-icon{
+    width: 45px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 10px;
+    margin-right: 5%;
 }
-
-/***************************/
-/* title */
-.sys-container-two-box label:nth-child(1){
+.sys-edit-user-box-edit-row-permissions-box-icon img{
+    width: 100%;
+    object-fit: contain;
+}
+.sys-edit-user-box-edit-row-permissions-box-icon label{
+    margin-top: 5px;
     font-size: 0.7rem;
-    margin-bottom: 8px;
-    color: var(--color-five);
+    color: var(--color-two);
 }
-
-.sys-check-style{
-    cursor: pointer;
-}
-
-/********************************/
-/********************************/
-.sys-actions-commands{
+/*  */
+/*  */
+.sys-edit-user-title-perm{
     width: 100%;
     display: flex;
-    border-left: 1px solid var(--color-seven);
+    justify-content: center;
+}
+.sys-edit-user-title-perm span{
+    font-size: 1rem;
+    color: var(--color-one);
 }
 
-.sys-actions-commands button{
-    margin: 0 9px;
-    background: transparent;
-    color: var(--color-one);
-    border: 0;
-    outline: 0;
-    font-size: 1.2rem;
+/*  */
+.sys-edit-user-box-edit-row-permissions-cont{
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 25px;
+}
+.sys-edit-user-box-edit-row-permissions-cont label{
+    font-size: 0.8rem;
+    color: var(--color-two);
+}
+.sys-edit-user-box-edit-row-permissions-cont input{
+    margin-top: 5px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
 }
 
-
-
-
-
-::-webkit-scrollbar {
-    width: 5px;
-    height: 12px;
+.sys-edit-user-box-edit-row-actions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 23px;
 }
-::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: var(--color-three);
-    box-shadow: inset 0 0 6px var(--color-three);
-    
+.sys-edit-user-box-edit-row-actions button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
 }
+.sys-edit-user-box-edit-row-actions button:hover{
+    transition: 0.5s;
+    background: var(--color-one);
+    color: var(--color-three);
+}
+
+
+/* ************************* */
+/* ************************* */
+/* ************************* */
+/* BOX DE SALVAR PRODUTO */
+.sys-save-user-box-main{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.sys-save-user-box-save{
+    width: 600px;
+    max-height: 80%;
+    padding: 12px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+}
+.sys-save-user-box-save-center{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+}
+
+/*  */
+.sys-save-user-box-save-title{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.sys-save-user-box-save-title span{
+    font-size: 1.2rem;
+    color: var(--color-two);
+}
+.sys-save-user-box-save-title i{
+    margin-top: -20px;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--color-one);
+}
+
+/*  */
+.sys-save-user-box-save-row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 13px 0;
+}
+.sys-save-user-box-save-row label{
+    font-size: 0.7rem;
+    color: var(--color-two);
+    margin-bottom: 4px;
+}
+.sys-save-user-box-save-row input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+}
+.sys-save-user-box-save-row select{
+    outline: 0;
+    border: 0;
+    padding: 10px 7px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--color-seven);
+    cursor: pointer;
+}
+
+/*  */
+.sys-save-user-box-save-row-permissions{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.sys-save-user-box-save-row-permissions-box{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.sys-save-user-box-save-row-permissions-box-icon{
+    width: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 5%;
+}
+.sys-save-user-box-save-row-permissions-box-icon img{
+    width: 100%;
+    object-fit: contain;
+}
+.sys-save-user-box-save-row-permissions-box-icon label{
+    margin-top: 5px;
+    font-size: 0.7rem;
+    color: var(--color-two);
+}
+
+/*  */
+.sys-save-user-box-save-row-permissions-cont{
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 25px;
+}
+.sys-save-user-box-save-row-permissions-cont label{
+    font-size: 0.8rem;
+    color: var(--color-two);
+}
+.sys-save-user-box-save-row-permissions-cont input{
+    margin-top: 5px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/*  */
+.sys-save-user-title-perm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.sys-save-user-title-perm span{
+    font-size: 1rem;
+    color: var(--color-one);
+}
+
+.sys-save-user-box-save-row-actions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 23px;
+}
+.sys-save-user-box-save-row-actions button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.sys-save-user-box-save-row-actions button:hover{
+    transition: 0.5s;
+    background: var(--color-one);
+    color: var(--color-three);
+}
+
 
 @media only screen and (max-width: 650px){
     .sys-users-container-identify-page{

@@ -103,6 +103,61 @@ io.on('connection', (socket) => {
 
     })
 
+    socket.on("getInfoUserSystem", (data) => {
+
+        database.raw(`
+
+        SELECT c1.*, c2.jcv_userNameSecundary, j1.*, j2.*, j3.*
+        FROM (jcv_users c1, jcv_users c2)
+
+        JOIN jcv_unitys j1 ON c1.jcv_userUnity = j1.sys_unity_id
+        JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
+        JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
+
+        WHERE c1.jcv_id = ${data} AND c1.jcv_userManager = c2.jcv_id ORDER BY c1.jcv_userEnabled DESC
+        
+        `).then( dataQuery => {
+
+
+            //Listando todos os gestores e representantes
+            database.select().whereIn('jcv_userCassification', [1,2,4]).table("jcv_users").then( allManager => {
+                
+                //Listando todas as unidades
+                database.select().where({sys_unity_enabled: 1}).table("jcv_unitys").then( allUnitys => {
+                    
+                    //Listando todos os departamentos
+                    database.select().where({sys_department_enabled: 1}).table("jcv_departments").then( allDepto => {
+                        
+                        socket.emit("sendInfoUserSystem", {dataQuery: dataQuery[0], allDepto: allDepto, allUnitys: allUnitys, allManager: allManager})
+
+                    })
+
+                })
+
+            })
+        })
+
+    })
+
+    socket.on("getInfoNewUserSystem", () => {
+        //Listando todos os gestores e representantes
+        database.select().whereIn('jcv_userCassification', [1,2,4]).table("jcv_users").then( allManager => {
+                
+            //Listando todas as unidades
+            database.select().where({sys_unity_enabled: 1}).table("jcv_unitys").then( allUnitys => {
+                
+                //Listando todos os departamentos
+                database.select().where({sys_department_enabled: 1}).table("jcv_departments").then( allDepto => {
+
+                    socket.emit("sendInfoUserNewSystem", {allDepto: allDepto, allUnitys: allUnitys, allManager: allManager})
+
+                })
+
+            })
+
+        })
+    })
+
 })
 
 

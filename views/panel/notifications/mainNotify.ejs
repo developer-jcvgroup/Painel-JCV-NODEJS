@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="/panel/css/notifications/mainNotify.css">
+
+<section class="notify-main-section">
+    <section class="notify-main-section-page">
+        <div class="notify-main-title-page">
+            <span>Notificações</span>
+            <span>/ Home</span>
+        </div>
+
+        <section class="notify-main-actions">
+            <div class="notify-display-center">
+                <div class="notify-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/formularios/novo"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="notify-main-container-body">
+            <section class="notify-main-section-list-forms" id="forms-list-display">
+                <div class="notify-main-forms">
+
+                    <a class="notify-main-forms-link" href="/painel/formularios/edit/">
+                        <div class="notify-main-forms-link-info">
+                            <span>Título</span>
+                            <span>Views: <b>10</b></span>
+                            <span>Gerado por: Vitor Henrique</span>
+                            <span><b>App: Programa da Beleza</b></span>
+                        </div>
+                        <hr style="width: 100%; margin: 7px 0;">
+                        <form method="post" class="notify-main-forms-link-button">
+                            <button class="class-loader" formaction="/painel/formularios/delete" type="submit" name="button-delete-form" title="Excluir Formulário"><i class="ri-delete-bin-line"></i></button>
+                        </form>
+                    </a>
+                    
+                    <div style="display: none;" class="notify-main-forms-not-found">
+                        <img class="notify-main-forms-error" src="/panel/trade/error.svg" alt="">
+                        <span>Nenhum formulario encontrado.. <b><a href="/painel/formularios/novo">Criar formulário</a></b></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="notify-main-section-list-forms" id="form-list-fished">
+                <div class="notify-main-forms-title">
+                    <span>Listando os utlimos <b>30 formulários</b> finalizados</span>
+                </div>
+                <div class="notify-main-forms">
+                    <a class="notify-main-forms-link" href="/painel/formularios/edit/">
+                        <div class="notify-main-forms-link-info">
+                            <span>Título</span>
+                            <span>Views: <b>10</b></span>
+                            <span>Gerado por: Vitor Henrique</span>
+                            <span><b>App: Programa da Beleza</b></span>
+                        </div>
+                        <hr style="width: 100%; margin: 7px 0;">
+                        <form method="post" class="notify-main-forms-link-button">
+                            <button formaction="/painel/formularios/reponse/downlod" type="submit" name="button-exports-responses-form" title="Baixar Respostas"><i class="ri-download-line"></i></button>
+                            <button class="class-loader" formaction="/painel/formularios/disabled" type="submit" name="button-disabled-form" title="Desabilitar formulario"><i class="ri-delete-bin-2-line"></i></button>
+                            <button class="class-loader" formaction="/painel/formularios/delete" type="submit" name="button-delete-form" title="Excluir Formulário"><i class="ri-delete-bin-line"></i></button>
+                            <button class="class-loader" formaction="/painel/formularios/deleteResponses" type="submit" name="button-delete-responses-form" title="Excluir Respostas"><i class="ri-close-line"></i></button>
+                        </form>
+                    </a>
+                </div>
+            </section>
+
+        </section>
+
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+</script>

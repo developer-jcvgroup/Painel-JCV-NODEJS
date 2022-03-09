@@ -148,7 +148,7 @@ Formulário dinâmico para a inserção do conteudo, somente uma respota POR LOJ
 * [jcv_userUnity] *INT* //Unidade
 * [jcv_userManager] *INT* //Id Gestor
 * [jcv_userImageIcon] *VARCHAR* //Imagem do usuario
-* [jcv_userCassification] *INT* // 1[Master], 2[Gestores], 3[Funcionários-Internos], 4[Representantes], 5[Promotoras] 
+* [jcv_userCassification] *INT* // 1[Master], 2[Gestores], 3[Funcionários-Internos], 4[Representantes], 5[Promotoras], 6 [Jovem-Aprendiz]
 * [jcv_userEnabled] *INT* // 1[Sim] 2[Não]
 * [jcv_sysEmails] *VARCHAR* // 1[Sim] 2[Não], envio de e-mails so sistema {updates, notificações do sistema, recuperação de senhas, etc}
 
@@ -321,6 +321,26 @@ Requisitor de Materiais
 * [jcv_notifications_title] *VARCHAR*
 * [jcv_notifications_message] *VARCHAR*
 * [jcv_notifications_enabled] *INT*
+
+
+# Tabela formulario:
+* [jcv_formularios_registers_id] *PRIMARY KEY* //id
+* [jcv_formularios_registers_title] *VARCHAR* //titulo
+* [jcv_formularios_registers_userCreated] *INT* //id do usuario
+* [jcv_formularios_registers_jsonForm] *TEXT* //Formulario em si
+* [jcv_formularios_registers_totalResponse] *INT* //Formularios respondidos
+* [jcv_formularios_registers_createdDate] *VARCHAR* //Data de criação
+* [jcv_formularios_registers_expired] *VARCHAR* //Data de criação
+* [jcv_formularios_registers_users] *JSON* //Usuarios que vao responder
+* [jcv_formularios_registers_usersResponses] *JSON* //Usuarios que ja responderam
+* [jcv_formularios_registers_enabled] *INT* //Ativo?
+
+# Tabela formulario resposta:
+* [jcv_formularios_responses_id] *PRIMARY KEY* //id
+* [jcv_formularios_responses_idForm] *INT* //Id form
+* [jcv_formularios_responses_userResponse] *INT* //id do usuario
+* [jcv_formularios_responses_jsonForm] *TEXT* //Formulario em si
+* [jcv_formularios_responses_responseDate] *INT* //Formularios respondidos
 
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/

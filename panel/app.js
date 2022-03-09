@@ -44,9 +44,11 @@ const controllerSystemGeneral = require("./controllers/system/sysGeneral")
 const controllerTrade = require("./controllers/trade/controllerTrade")
 //Controller Sistema Pesquisas
 const controllerPesquisas = require("./controllers/system/controllerPesquisas")
+//Controller Formulário
+const controllerFormulario = require("./controllers/formularios/controllerFormulario")
 
 //Controller Notifications
-const controllerNotifications = require("./controllers/system/controllerNotifications")
+const controllerNotifications = require("./controllers/notifications/controllerNotify")
 
 
 
@@ -173,6 +175,9 @@ router.post("/system/action/sys/user/save", authenticate, controllerUsers.saveNe
 router.post("/system/action/sys/user/save-edit", authenticate, controllerUsers.editSaveUser)
 //Resetar a senha do usuario
 router.post("/system/action/sys/user/resetpass", authenticate, controllerUsers.resetPassUser)
+router.post("/system/action/sys/user/resetpasssingle", authenticate, controllerUsers.resetPassUserSingle)
+//Download dos dados
+router.post("/system/action/sys/users/download", authenticate, controllerUsers.downloadDataUsers)
 
 //Departamentos
 router.get("/system/departamentos", authenticate, getPermissions, controllerDepartment.listDepartments)
@@ -277,9 +282,23 @@ router.post("/update/closeAll", authenticate, controllerSystemGeneral.closeUpdat
 //Notificações: Pagina inicial
 router.get("/notifications", authenticate, controllerSystemGeneral.listNotificationsUser)
 
+/* Admin */
+router.get("/notifications/main", authenticate, controllerNotifications.mainNotifications)
+
 /***********************************/
 /***********************************/
-//Logs do sistema: Pagina inicial
-//router.get("/logs", authenticate, controllerSystemGeneral.systemLogs)
+//Formulário de Pesquisa: Sistema
+router.get("/formularios/main", authenticate, getPermissions, controllerFormulario.mainPage)
+router.get("/formularios/novo", authenticate, getPermissions, controllerFormulario.novoFormulario)
+router.get("/formularios/edit/:idForm?", authenticate, getPermissions, controllerFormulario.editFormulario)
+router.get("/formularios/reponse/:idForm?", authenticate, getPermissions, controllerFormulario.responseFormulario)
+
+router.post("/formularios/novo", authenticate, controllerFormulario.saveNewForm)
+router.post("/formularios/edit", authenticate, controllerFormulario.editFormularioSave)
+router.post("/formularios/deleteResponses", authenticate, controllerFormulario.removeResponses)
+router.post("/formularios/delete", authenticate, controllerFormulario.deleteFormulario)
+router.post("/formularios/disabled", authenticate, controllerFormulario.disabledForm)
+router.post("/formularios/reponse", authenticate, controllerFormulario.sendResponse)
+router.post("/formularios/reponse/downlod", authenticate, controllerFormulario.exportResponses)
 
 module.exports = router;

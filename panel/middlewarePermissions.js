@@ -150,6 +150,25 @@ async function getPermissions (req, res, next) {
 
     }
 
+    //FORMULARIOS DE PESQUISA
+    if(urlPage[0] == "formularios"){
+
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD01')
+
+        let pageError = true;
+        //ADMIN GERAL
+        if(resultPermissions[0].sys_forms_perm_admin == 1){
+            return next();
+        }
+
+        //Não foi encontrado
+        if(pageError){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.redirect("/painel");
+        }
+    }
+
     //CONFIGURAÇÃO DO CALENDARIO
     if(urlPage[0] == "calendario"){
 

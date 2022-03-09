@@ -8,7 +8,7 @@
 </script>
 
 <section class="sys-users-container-main">
-    <section class="sys-users-container-page">
+    <div class="sys-users-container-page">
         <div class="sys-users-container-identify-page">
             <span>Usuarios e Permissões</span>
             <span>/ Sistema</span>
@@ -18,552 +18,693 @@
             <div class="sys-section-container-main">
                 <div class="sys-box-search">
                     <input type="text" placeholder="Busque por CPF, nome, email, ramal, unidade.." id="input-search-table">
-                    <button id="input-button-search">Procurar</button>
-                    <button id="input-button-search-clear">Limpar</button>
+                    <!-- <button id="input-button-search">Procurar</button>
+                    <button id="input-button-search-clear">Limpar</button> -->
                 </div>
+                <!--  -->
+                <form method="post" class="sys-box-buttons">
+                    <button class="class-loader" type="button" id="open-new-user"><i class="ri-user-add-line"></i></button>
+                    <button formaction="./action/sys/users/download" name="button-data-users" id="button-data-users" type="submit" ><i class="ri-download-line"></i></button>
+                </form>
             </div>
         </section>
 
-        <form class="sys-users-section-list" method="post">
-            <div class="sys-users-container-main-list">
-                <div class="sys-users-container-fix">
-                    <table class="sys-users-table-list" id="sys-users-table-list">
-                        <thead>
-                            <tr>
-                                <th style="cursor: pointer;" class="order-by-command">CPF</th>
-                                <th>Funcionário</th>
-                                <th>Unidade</th>
-                                <th>Gestor</th>
-                                <th>E-mail 1</th>
-                                <th>E-mail 2</th>
-                                <th>Ramal</th>
-                                <th>Departamento</th>
+        <!--  -->
+        <!--  -->
 
-                                <th>Requisitor</th>
-                                <th>Progama da Beleza</th>
-                                <th>Calendario</th>
-                                <th>Trade Marketing</th>
-
-                                <th>Classificado</th>
-                                <th>Ativo?</th>
-                                <th>Sistema de e-mails</th>
-
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sys-users-table-list-tbody">
-
-
-
-                            <tr>
-                                <td><input placeholder="Insira um CPF (Obrigatorio)" id="insert-cpf" type="text" name="save-new-cpf"></td>
-                                <td><input placeholder="Insira um nome (Obrigatorio)" class="sys-input-table-large-one save-new-name" type="text" name="save-new-name" id="insert-name-func"></td>
-                                <td>
-                                    <select name="save-new-unidade">
-                                        <option value="">* Selecione *</option>
-                                        <% allUnitys.forEach(element => { %>
-                                            <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
-                                        <% }) %>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select name="save-new-gestor">
-                                        <option value="">* Selecione *</option>
-                                        <% allManager.forEach(element => { %>
-                                            <option value="<%= element.jcv_id %>"><%= element.jcv_userNamePrimary %></option>
-                                        <% }) %>
-                                    </select>
-                                </td>
-                                <td><input placeholder="Email primario (Obrigatorio)" class="sys-input-table-large-two" type="text" name="save-new-email-corp"></td>
-                                <td><input placeholder="Email secundario (Opcional)" class="sys-input-table-large-two" type="text" name="save-new-email-folks"></td>
-                                <td><input placeholder="Ramal (Opcional)" type="text" name="save-new-ramal"></td>
-                                <td>
-                                    <select name="save-new-setor" id="">
-                                        <option value="">* Selecione *</option>
-                                        <% allDepto.forEach(element => { %>
-                                            <option value="<%= element.sys_department_id%>"><%= element.sys_department_name %></option>
-                                        <% }) %>
-                                    </select>
-                                </td>
-
-                                <td>
-                                    <div class="sys-container-two">
-                                        <div class="sys-container-two-row">
-                                            <div class="sys-container-two-box">
-                                                <label for="">Utilizar</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-use" id="">
-                                            </div>
-
-                                            <!-- admin -->
-
-                                            <div class="sys-container-two-box">
-                                                <label for=""><b>*Admin*</b></label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-requsitor-admin" id="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="sys-container-two">
-                                        <div class="sys-container-two-row">
-                                            <div class="sys-container-two-box">
-                                                <label for="">Utilizar</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-use" id="">
-                                            </div>
-
-                                            <!-- Gestor -->
-                                            <div class="sys-container-two-box">
-                                                <label for="">Gestor</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-manager" id="">
-                                            </div>
-
-                                            <!-- admin -->
-
-                                            <div class="sys-container-two-box">
-                                                <label for=""><b>*Admin*</b></label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-beleza-admin" id="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="sys-container-two">
-                                        <div class="sys-container-two-row">
-                                            <div class="sys-container-two-box">
-                                                <label for="">Utilizar</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-use" id="">
-                                            </div>
-
-                                            <!-- admin -->
-
-                                            <div class="sys-container-two-box">
-                                                <label for=""><b>*Admin*</b></label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-calendar-admin" id="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="sys-container-two">
-                                        <div class="sys-container-two-row">
-                                            <div class="sys-container-two-box">
-                                                <label for="">Utilizar</label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-trade-use" id="">
-                                            </div>
-
-                                            <!-- admin -->
-
-                                            <div class="sys-container-two-box">
-                                                <label for=""><b>*Admin*</b></label>
-                                                <input class="sys-check-style" type="checkbox" name="save-new-sys-trade-admin" id="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <select name="save-new-sys-type-user" id="">
-                                        <option value="0">* Selecione *</option>
-                                        <option value="1">Master</option>
-                                        <option value="2">Gestor</option>
-                                        <option value="3">Colaborador Interno</option>
-                                        <option value="4">Representantes</option>
-                                        <option value="5">Promotoras</option>
-                                        <option value="6">Jovem Aprendiz</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <div class="sys-container-two">
-                                        <select name="save-new-active" id="">
-                                            <option value="*">* Selecione *</option>
-                                            <option value="1">Sim</option>
-                                            <option value="0">Nao</option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <select name="save-new-sys-mails" id="">
-                                        <option value="">* Selecione *</option>
-                                        <option value="1">Sim</option>
-                                        <option value="0">Não</option>
-                                    </select>
-                                </td>
-
-                                <td>
-                                    <div class="sys-actions-commands">
-                                        <button formaction="./action/sys/user/save" class="class-loader" type="submit"><i class="ri-save-line"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!--  -->
-                            <!--  -->
-
-                            <tr>
-                                <td><br></td>
-                            </tr>
-
-                            <!--  -->
-                            <!--  -->
-                            
-                            <% if(locals.allUsers != ''){ %>
-                                <% allUsers.forEach(element => { %>
-
-                                    <% if(element.jcv_userEnabled == 0){ %>
-                                        <tr style="background: #e01e384b;">
-                                    <% }else{ %>
-                                        <tr>
-                                    <% } %>
-                                    
-                                        <td>
-                                            <input type="text" name="save-edit-cpf-<%= element.jcv_id %>" value="<%= element.jcv_userCpf %>" class="user-insert-cpf">
-                                        </td>
-                                        
-                                        
-                                        <td>
-                                            <input placeholder="Insira um nome" class="sys-input-table-large-one save-new-name update-name-func" value="<%= element.jcv_userNamePrimary %>" type="text" name="save-edit-name-<%= element.jcv_id %>">
-                                            
-                                        </td>
-                                        <td>
-                                            <input hidden type="text" value="<%= element.sys_unity_name %>">
-                                            <select name="save-edit-unidade-<%= element.jcv_id %>">
-                                                <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
-
-                                                <option disabled></option>
-                                                
-                                                <% allUnitys.forEach(element => { %>
-                                                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
-                                                <% }) %>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="save-edit-gestor-<%= element.jcv_id %>">
-
-                                                <option value="<%= element.jcv_userManager %>"><%= element.jcv_userNameSecundary %></option>
-                                                
-                                                <option disabled></option>
-
-                                                <% allManager.forEach(element => { %>
-                                                    <option value="<%= element.jcv_id %>"><%= element.jcv_userNamePrimary %></option>
-                                                <% }) %>
-
-                                            </select>
-                                        </td>
-                                        <td><input placeholder="Email primario (Obrigatorio)" class="sys-input-table-large-two" value="<%= element.jcv_userEmailCorporate %>" type="text" name="save-edit-email-corp-<%= element.jcv_id %>"></td>
-                                        <td><input placeholder="Email secundario (Opcional)" class="sys-input-table-large-two" value="<%= element.jcv_userEmailFolks %>" type="text" name="save-edit-email-folks-<%= element.jcv_id %>"></td>
-                                        <td><input placeholder="Ramal" value="<%= element.jcv_userExtension %>" type="text" name="save-edit-ramal-<%= element.jcv_id %>"></td>
-                                        <td>
-                                            <select name="save-edit-setor-<%= element.jcv_id %>">
-                                                <option value="<%= element.sys_department_id %>"><%= element.sys_department_name %></option>
-
-                                                <option disabled></option>
-                                                
-                                                <% allDepto.forEach(element => { %>
-                                                    <option value="<%= element.sys_department_id %>"><%= element.sys_department_name %></option>
-                                                <% }) %>
-                                            </select>
-                                        </td>
+        <section class="sys-user-container-all-action">
+           <div class="sys-user-container-all-action-comp">
+               <span id="check-all-checkboxs"><i class="ri-checkbox-circle-line"></i><span id="users-selects">Selecionar Todos</span></span>
+           </div>
+        </section>
         
-        
-                                        <td>
-                                            <div class="sys-container-two">
-                                                <div class="sys-container-two-row">
+        <form method="post" class="sys-user-container-list">
+            <% allUsers.forEach(element => { %>
+            <div class="sys-user-container-box-user">
+                <div class="sys-user-container-box-user-title">
+                    <input class="sys-user-select" type="checkbox" name="sys-user-id-input" value="<%= element.jcv_id %>">
+                </div>
+                <!--  -->
+                <div class="sys-user-container-box-user-avaatar">
+                    <% if(element.jcv_userImageIcon != null){ %>
+                        <img src="<%= element.jcv_userImageIcon %>">
+                    <% }else{ %>
+                        <div style="width: 100%; height: 100%; background-color: var(--color-one); border-radius: 50%;"></div>
+                    <% } %>
+                </div>
+                <!--  -->
+                <div class="sys-user-container-box-user-info">
+                    <% if(element.jcv_userEnabled == 0){ %>
+                        <span style="color: #9d0208;"><b><%= element.jcv_userNamePrimary %></b></span>
+                        <span style="display: none;"><b><%= element.jcv_userNamePrimary.toLowerCase() %></b></span>
+                        <span style="color: #9d0208;"><b>DESABILITADO</b></span>
+                    <% }else{ %>
+                        <span><b><%= element.jcv_userNamePrimary %></b></span>
+                        <span style="display: none;"><b><%= element.jcv_userNamePrimary.toLowerCase() %></b></span>
+                        <span><b class="sys-view-user-cpf"><%= element.jcv_userCpf %></b></span>
+                    <% } %>
+                    <span><i class="ri-building-line"></i>⠀<%= element.sys_unity_name %></span>
+                    <span style="display: none;"><%= element.sys_unity_name.toLowerCase() %></span>
+                    <span><i class="ri-door-open-line"></i>⠀<%= element.sys_department_name %></span>
+                    <span style="display: none;"><%= element.sys_department_name.toLowerCase() %></span>
+                </div>
+                <!--  -->
+                <hr style="width: 100%; margin: 15px 0;">
+                <!--  -->
+                <div class="sys-user-container-box-user-plus-info">
 
-                                                    <!-- use -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Utilizar</label>
+                    <% if(element.sys_blz_perm_use == 1){ %>
+                        <span><b>Beleza</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
 
-                                                        <% if(element.sys_req_perm_use == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-use-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-use-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-        
-                                                    <!-- admin -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for=""><b>*Admin*</b></label>
+                    <% if(element.sys_req_perm_use == 1){ %>
+                        <span><b>Requisitor</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
 
-                                                        <% if(element.sys_req_perm_admin == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-admin-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-requsitor-admin-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-        
-                                        <td>
-                                            <div class="sys-container-two">
-                                                <div class="sys-container-two-row">
+                    <% if(element.sys_cal_perm_use == 1){ %>
+                        <span><b>Calendário</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
 
-                                                    <!-- use -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Utilizar</label>
-                                                        
-                                                        <% if(element.sys_blz_perm_use == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-use-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-use-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
+                    <% if(element.sys_tra_perm_use == 1){ %>
+                        <span><b>Trade MKT</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
 
-                                                    <!-- manager -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Gestor</label>
-                                                        
-                                                        <% if(element.sys_blz_perm_manager == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-manager-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-manager-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-        
-                                                    <!-- admin -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for=""><b>*Admin*</b></label>
-                                                        
-                                                        <% if(element.sys_blz_perm_admin == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-admin-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-beleza-admin-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="sys-container-two">
-                                                <div class="sys-container-two-row">
-
-                                                    <!-- use -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Utilizar</label>
-                                                        
-                                                        <% if(element.sys_cal_perm_use == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-use-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-        
-                                                    <!-- admin -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for=""><b>*Admin*</b></label>
-                                                        
-                                                        <% if(element.sys_cal_perm_admin == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-calendar-admin-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="sys-container-two">
-                                                <div class="sys-container-two-row">
-
-                                                    <!-- use -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for="">Utilizar</label>
-                                                        
-                                                        <% if(element.sys_tra_perm_use == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-trade-use-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-trade-use-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-        
-                                                    <!-- admin -->
-                                                    <div class="sys-container-two-box">
-                                                        <label for=""><b>*Admin*</b></label>
-                                                        
-                                                        <% if(element.sys_tra_perm_admin == 1){ %>
-                                                            <input checked class="sys-check-style" type="checkbox" name="save-edit-sys-trade-admin-<%= element.jcv_id %>">
-                                                        <% }else{ %>
-                                                            <input class="sys-check-style" type="checkbox" name="save-edit-sys-trade-admin-<%= element.jcv_id %>">
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-        
-                                        <td>
-
-                                            <!-- <% if(element.jcv_userCassification == 1){ %>
-                                                <input hidden type="text" name="Master">
-                                            <% }else if(element.jcv_userCassification == 2){ %>
-                                                <input hidden type="text" name="Gestor">
-                                            <% }else if(element.jcv_userCassification == 3){ %>
-                                                <input hidden type="text" name="Colaborador Interno">
-                                            <% }else if(element.jcv_userCassification == 4){ %>
-                                                <input hidden type="text" name="Representantes">
-                                            <% }else if(element.jcv_userCassification == 5){ %>
-                                                <input hidden type="text" name="Promotoras">
-                                            <% }else if(element.jcv_userCassification == 6){ %>
-                                                <input hidden type="text" name="Jovem Aprendiz">
-                                            <% } %> -->
-
-                                            <select name="save-edit-sys-type-user-<%= element.jcv_id %>" id="">
-                                                <% if(element.jcv_userCassification == 1){ %>
-                                                    <option value="1">Master</option>
-                                                <% }else if(element.jcv_userCassification == 2){ %>
-                                                    <option value="2">Gestor</option>
-                                                <% }else if(element.jcv_userCassification == 3){ %>
-                                                    <option value="3">Colaborador Interno</option>
-                                                <% }else if(element.jcv_userCassification == 4){ %>
-                                                    <option value="4">Representantes</option>
-                                                <% }else if(element.jcv_userCassification == 5){ %>
-                                                    <option value="5">Promotoras</option>
-                                                <% }else if(element.jcv_userCassification == 6){ %>
-                                                    <option value="6">Jovem Aprendiz</option>
-                                                <% } %>
-                                                <option disabled></option>
-                                                <option value="1">Master</option>
-                                                <option value="2">Gestor</option>
-                                                <option value="3">Colaborador Interno</option>
-                                                <option value="4">Representantes</option>
-                                                <option value="5">Promotoras</option>
-                                                <option value="6">Jovem Aprendiz</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="sys-container-two">
-                                                <select name="save-edit-active-<%= element.jcv_id %>" id="">
-                                                    <% if(element.jcv_userEnabled == 1){ %>
-                                                        <option value="1">Sim</option>
-                                                    <% }else{ %>
-                                                        <option value="0">Nao</option>
-                                                    <% } %>
-
-                                                    <option disabled></option>
-                                                    <option value="1">Sim</option>
-                                                    <option value="0">Nao</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <select name="save-edit-sys-mails-<%= element.jcv_id %>" id="">
-                                                <% if(element.jcv_sysEmail == 1){ %>
-                                                    <option value="1">Sim</option>
-                                                <% }else{ %>
-                                                    <option value="0">Nao</option>
-                                                <% } %>
-
-                                                <option disabled></option>
-                                                <option value="1">Sim</option>
-                                                <option value="0">Não</option>
-                                            </select>
-                                        </td>
-        
-                                        <td>
-                                            <div class="sys-actions-commands">
-                                                <button formaction="./action/sys/user/save-edit" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-save-edit"><i class="ri-save-line"></i></button>
-                                                <button formaction="./action/sys/user/resetpass" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-reset-pass"><i class="ri-lock-unlock-line"></i></button>
-                                                <!-- <button formaction="./action/sys/user/delete" value="<%= element.jcv_id %>" class="class-loader" type="submit" name="user-action-delete-edit"><i class="ri-delete-bin-line"></i></button> -->
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                <% }) %>
-
-                            <% } %>
-
-                        </tbody>
-                    </table>
+                    <% if(element.sys_forms_perm_admin == 1){ %>
+                        <span><b>Sistema</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+                </div>
+                <!--  -->
+                <hr style="width: 100%; margin: 15px 0;">
+                <!--  -->
+                <div class="sys-user-container-box-user-buttons">
+                    <button type="button" class="class-loader sys-open-edit-user" value="<%= element.jcv_id %>" title="Editar Usuario"><i class="ri-user-settings-line"></i></button>
+                    <button type="button" title="Excluir Usuario"><i class="ri-user-unfollow-line"></i></button>
+                    <button title="Resetar senha" formaction="./action/sys/user/resetpasssingle" class="class-loader" type="submit" value="<%= element.jcv_id %>" name="user-action-reset-pass-single"><i class="ri-lock-unlock-line"></i></button>
                 </div>
             </div>
+            <% }) %>
         </form>
-    </section>
+
+
+    </div>
 </section>
+
+
+
+<section class="sys-edit-user-box-main" id="sys-edit-user-box-main">
+    <form class="sys-edit-user-box-edit" id="sys-edit-user-box-edit" method="post">
+        <div class="sys-edit-user-box-edit-center">
+            <div class="sys-edit-user-box-edit-title">
+                <span id="sys-edit-title-user"><b>XXXX</b></span>
+                <i id="sys-close-screen-edit" class="ri-close-line"></i>
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Nome</label>
+                <input type="text" id="sys-edit-name-user">
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">CPF</label>
+                <input type="text" id="sys-edit-cpf-user">
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Unidade</label>
+                <select name="" id="sys-edit-unity-user">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Departamento</label>
+                <select name="" id="sys-edit-department-user">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Gestor</label>
+                <select name="" id="sys-edit-manager-user">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Ramal (Opcional)</label>
+                <input type="text" id="sys-edit-ramal-user">
+            </div>
+
+            <hr style="margin: 21px 0">
+
+            <div class="sys-edit-user-box-edit-row-permissions">
+                <div class="sys-edit-user-title-perm">
+                    <span>Permissões</span>
+                </div>
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/icon-calendar.png" alt="">
+                        <label for="">Calendário</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-edit-user-celendario-use">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-edit-user-calendario-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/icon-requisitor.png" alt="">
+                        <label for="">Requisitor</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-edit-user-requisitor-use">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-edit-user-requisitor-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/icon-progama-da-beleza.png" alt="">
+                        <label for="">Prog. Beleza</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-edit-user-beleza-use">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Gestor</label>
+                        <input type="checkbox" id="sys-edit-user-beleza-manager">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-edit-user-beleza-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/icon-trade.png" alt="">
+                        <label for="">Trade MKT</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-edit-user-trademkt-use">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-edit-user-trademkt-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/logos/jcvLogo.png" alt="">
+                        <label for="">Sistema</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Formulários: <br> Admin</label>
+                        <input type="checkbox" id="sys-edit-user-forms-admin">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Notificações: <br> Admin</label>
+                        <input type="checkbox" id="sys-edit-user-notify-admin">
+                    </div>
+                </div>
+                <!--  -->
+
+            </div>
+            <!--  -->
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Classificado</label>
+                <select name="" id="sys-edit-user-classification">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                    <option value="1">Master</option>
+                    <option value="2">Gestor</option>
+                    <option value="3">Colaborador Interno</option>
+                    <option value="4">Representantes</option>
+                    <option value="5">Promotoras</option>
+                    <option value="6">Jovem Aprendiz</option>
+                    <option disabled></option>
+                    <option disabled></option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="sys-edit-user-box-edit-row">
+                <label for="">Ativo?</label>
+                <select name="" id="sys-edit-user-enabled">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                    <option disabled></option>
+                    <option disabled></option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="sys-edit-user-box-edit-row-actions">
+                <button formaction="./action/sys/user/save-edit" class="class-loader" type="submit" id="button-save-edit-user" title="Salvar Usuario" name="user-action-save-edit"><i class="ri-save-3-line"></i></button>
+                <button formaction="./action/sys/user/resetpass" class="class-loader" type="submit" id="user-action-reset-pass" title="Resetar Senha" name="user-action-reset-pass"><i class="ri-lock-unlock-line"></i></button>
+            </div>
+
+        </div>
+    </form>
+</section>
+
+<section class="sys-save-user-box-main" id="sys-save-user-box-main">
+    <div class="sys-save-user-box-save">
+        <form class="sys-save-user-box-save-center" method="post">
+            <div class="sys-save-user-box-save-title">
+                <i id="close-display-new" class="ri-close-line"></i>
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">Nome</label>
+                <input type="text" name="save-new-name" id="sys-new-user-name">
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">CPF</label>
+                <input type="text" name="save-new-cpf" id="sys-new-user-cpf">
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">Unidade</label>
+                <select name="save-new-unidade" id="sys-new-user-unidade">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">Departamento</label>
+                <select name="save-new-setor" id="sys-new-user-departamento">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">Gestor</label>
+                <select name="save-new-gestor" id="sys-new-user-manager">
+                    <!-- INSERT DINAMIC -->
+                    <!-- INSERT DINAMIC -->
+                </select>
+            </div>
+            <div class="sys-save-user-box-save-row">
+                <label for="">Ramal (Opcional)</label>
+                <input type="text" name="save-new-ramal" id="sys-new-user-ramal">
+            </div>
+
+            <hr style="margin: 21px 0">
+
+            <div class="sys-save-user-box-save-row-permissions">
+                <div class="sys-save-user-title-perm">
+                    <span>Permissões</span>
+                </div>
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/icon-calendar.png" alt="">
+                        <label for="">Calendário</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" name="save-new-sys-calendar-use" id="sys-new-user-calendar-use">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" name="save-new-sys-calendar-admin" id="sys-new-user-calendar-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/icon-requisitor.png" alt="">
+                        <label for="">Requisitor</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-new-user-requisitor-use">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-new-user-calendar-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/icon-progama-da-beleza.png" alt="">
+                        <label for="">Prog. Beleza</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" name="save-new-sys-beleza-use" id="sys-new-user-beleza-use">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Gestor</label>
+                        <input type="checkbox" name="save-new-sys-beleza-manager" id="sys-new-user-beleza-manager">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" name="save-new-sys-beleza-admin" id="sys-new-user-beleza-admin">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/icon-trade.png" alt="">
+                        <label for="">Trade MKT</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" name="save-new-sys-trade-use" id="sys-new-user-trade-use">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" name="save-new-sys-trade-admin" id="sys-new-user-trade-admin">
+                    </div>
+                </div>
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/logos/jcvLogo.png" alt="">
+                        <label for="">Sistema</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Formulários: <br> Admin</label>
+                        <input type="checkbox" name="save-new-sys-forms-admin">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Notificações: <br> Admin</label>
+                        <input type="checkbox" name="save-new-sys-notify-admin">
+                    </div>
+                </div>
+                <!--  -->
+
+            </div>
+            <!--  -->
+            <div class="sys-save-user-box-save-row">
+                <label for="">Classificado</label>
+                <select name="save-new-sys-type-user">
+                    <option value="3">Colaborador Interno</option>
+                    <option value="1">Master</option>
+                    <option value="2">Gestor</option>
+                    <option value="4">Representantes</option>
+                    <option value="5">Promotoras</option>
+                    <option value="6">Jovem Aprendiz</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="sys-save-user-box-save-row">
+                <label for="">Ativo?</label>
+                <select name="save-new-active">
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="sys-save-user-box-save-row-actions">
+                <button formaction="./action/sys/user/save" class="class-loader" type="submit" title="Salvar Usuario"><i class="ri-save-3-line"></i></button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
     $(window).on("load", function (e) {
         $(function(){
-            //Paginação das tabelas
-            $.fn.paginationTableMain('#sys-users-table-list',10,2);
+            $.fn.loadSpin(0)
 
-            //Input mask
-            $('#insert-cpf').mask('000.000.000-00');
-            $(".user-insert-cpf").mask('000.000.000-00');
+            //Iniciando socket
+            const socket = io("https://jcv.net.br")
 
+            //View box: stilo no cpf
+            $(".sys-view-user-cpf").mask('000.000.000-00')
+
+            //Adicionar usuario: Open display
+            $("#open-new-user").click(function(){
+                $.fn.loadSpin(0)
+                $("#sys-save-user-box-main").fadeIn().css('display','flex')
+                $("#sys-new-user-cpf").mask('000.000.000-00')
+
+                socket.emit("getInfoNewUserSystem")
+                socket.on("sendInfoUserNewSystem", (dataNew) => {
+                    //Array: Departamento
+                    console.log(dataNew)
+                    let arrayDepartamentos = dataNew.allDepto
+                    arrayDepartamentos.forEach(element => {
+                        $("#sys-new-user-departamento").append(`<option value="${element.sys_department_id}">${element.sys_department_name}</option>`)
+                    });
+
+                    //Array: Unidade
+                    let arrayUnidade = dataNew.allUnitys
+                    arrayUnidade.forEach(element => {
+                        $("#sys-new-user-unidade").append(`<option value="${element.sys_unity_id}">${element.sys_unity_name}</option>`)
+                    });
+
+                    //Array: Gestor
+                    let arrayManager = dataNew.allManager
+                    arrayManager.forEach(element => {
+                        $("#sys-new-user-manager").append(`<option value="${element.jcv_id}">${element.jcv_userNameSecundary}</option>`)
+                    });
+                })
+            })
+            //Adicionar usuario: Close display
+            $("#close-display-new").click(function(){
+                $("#sys-save-user-box-main").fadeOut()
+            })
+
+            //Editar Usuario: Open Display
+            $(".sys-open-edit-user").click(function(){
+                $.fn.loadSpin(0)
+
+                $("#sys-edit-user-box-main").fadeIn().css('display','flex')
+
+                let valueBtn = $(this).val();
+
+                socket.emit('getInfoUserSystem', parseInt(valueBtn))
+                socket.on("sendInfoUserSystem", userData => {
+                    
+                    const infoUserData = userData.dataQuery[0];
+                    const idSet = infoUserData.jcv_id;
+
+                    //Inserindo os valores
+                    $("#sys-edit-title-user").text(infoUserData.jcv_userNamePrimary)//Box: titulo
+                    $("#sys-edit-name-user").val(infoUserData.jcv_userNamePrimary).attr('name','save-edit-name-'+idSet)//Box: input name
+                    $("#sys-edit-cpf-user").val(infoUserData.jcv_userCpf).mask('000.000.000-00').attr('name','save-edit-cpf-'+idSet);//Box: input cpf
+
+                    $("#sys-edit-unity-user").attr('name','save-edit-unidade-'+idSet).empty();
+                    $("#sys-edit-unity-user").append(`<option value=${infoUserData.sys_unity_id}>${infoUserData.sys_unity_name}</option>`)//Box: Unidade do usuario
+                    
+                    $("#sys-edit-department-user").attr('name','save-edit-setor-'+idSet).empty();
+                    $("#sys-edit-department-user").append(`<option value=${infoUserData.sys_department_id}>${infoUserData.sys_department_name}</option>`)//Box: Departamento do usuario
+                    
+                    $("#sys-edit-manager-user").attr('name','save-edit-gestor-'+idSet).empty()
+                    $("#sys-edit-manager-user").append(`<option value=${infoUserData.jcv_userManager}>${infoUserData.jcv_userNameSecundary}</option>`)//Box: Gestor do usuario
+                    
+                    $("#sys-edit-ramal-user").val(infoUserData.jcv_userExtension).attr('name','save-edit-ramal-'+idSet)//Box: Ramal
+
+                    let dataTypeUsers = {1: 'Master', 2: 'Gestor', 3: 'Colaborador Interno', 4: 'Representantes', 5: 'Promotoras', 6: 'Jovem Aprendiz'}
+                    $("#sys-edit-user-classification").attr('name','save-edit-sys-type-user-'+idSet)
+                    $("#sys-edit-user-classification").find('option:last').remove()
+                    $("#sys-edit-user-classification").append(`<option selected value=${infoUserData.jcv_userCassification}>${  dataTypeUsers[parseInt(infoUserData.jcv_userCassification)]  }</option>`)//Box: Classificação do usuario
+
+                    $("#sys-edit-user-enabled").attr('name','save-edit-active-'+idSet)
+                    $("#sys-edit-user-enabled").find('option:last').remove()
+                    infoUserData.jcv_userEnabled == 1 ? $("#sys-edit-user-enabled").append(`<option selected value='1'>Sim</option>`) : $("#sys-edit-user-enabled").append(`<option selected value='0'>Não</option>`)//Box: Usuario ativo
+                    //infoUserData.jcv_sysEmail == 1 ? $("#sys-edit-user-enabled").append(`<option value='1'>Sim</option>`) : $("#sys-edit-user-enabled").append(`<option value='0'>Não</option>`)//Box: Sistema de Emails
+
+                    //Permissions: Calendario
+                    $("#sys-edit-user-celendario-use").attr('name','save-edit-sys-calendar-use-'+idSet)
+                    $("#sys-edit-user-calendario-admin").attr('name','save-edit-sys-calendar-admin-'+idSet)
+                    infoUserData.sys_cal_perm_use == 1 ? $("#sys-edit-user-celendario-use").prop("checked", true) : $("#sys-edit-user-celendario-use").prop("checked", false)
+                    infoUserData.sys_cal_perm_admin == 1 ? $("#sys-edit-user-calendario-admin").prop("checked", true) : $("#sys-edit-user-calendario-admin").prop("checked", false)
+                    
+                    //Permissions: Requisitor
+                    $("#sys-edit-user-requisitor-use").attr('name','save-edit-sys-requsitor-use-'+idSet)
+                    $("#sys-edit-user-requisitor-admin").attr('name','save-edit-sys-requsitor-admin-'+idSet)
+                    infoUserData.sys_req_perm_use == 1 ? $("#sys-edit-user-requisitor-use").prop("checked", true) : $("#sys-edit-user-requisitor-use").prop("checked", false)
+                    infoUserData.sys_req_perm_admin == 1 ? $("#sys-edit-user-requisitor-admin").prop("checked", true) : $("#sys-edit-user-requisitor-admin").prop("checked", false)
+                
+                    //Permissions: Programa da Beleza
+                    $("#sys-edit-user-beleza-use").attr('name','save-edit-sys-beleza-use-'+idSet)
+                    $("#sys-edit-user-beleza-manager").attr('name','save-edit-sys-beleza-manager-'+idSet)
+                    $("#sys-edit-user-beleza-admin").attr('name','save-edit-sys-beleza-admin-'+idSet)
+                    infoUserData.sys_blz_perm_use == 1 ? $("#sys-edit-user-beleza-use").prop("checked", true) : $("#sys-edit-user-beleza-use").prop("checked", false)
+                    infoUserData.sys_blz_perm_manager == 1 ? $("#sys-edit-user-beleza-manager").prop("checked", true) : $("#sys-edit-user-beleza-manager").prop("checked", false)
+                    infoUserData.sys_blz_perm_admin == 1 ? $("#sys-edit-user-beleza-admin").prop("checked", true) : $("#sys-edit-user-beleza-admin").prop("checked", false)
+                
+                    //Permissions: Trade MKT
+                    $("#sys-edit-user-trademkt-use").attr('name','save-edit-sys-trade-use-'+idSet)
+                    $("#sys-edit-user-trademkt-admin").attr('name','save-edit-sys-trade-admin-'+idSet)
+                    infoUserData.sys_tra_perm_use == 1 ? $("#sys-edit-user-trademkt-use").prop("checked", true) : $("#sys-edit-user-trademkt-use").prop("checked", false)
+                    infoUserData.sys_tra_perm_admin == 1 ? $("#sys-edit-user-trademkt-admin").prop("checked", true) : $("#sys-edit-user-trademkt-admin").prop("checked", false)
+                
+                    //Permissions: Formulários
+                    $("#sys-edit-user-forms-admin").attr('name','save-edit-sys-forms-use-'+idSet)
+                    infoUserData.sys_forms_perm_admin == 1 ? $("#sys-edit-user-forms-admin").prop("checked", true) : $("#sys-edit-user-forms-admin").prop("checked", false)
+
+                    //Permissions: Notificações
+                    $("#sys-edit-user-notify-admin").attr('name','save-edit-sys-notify-use-'+idSet)
+                    infoUserData.sys_notify_perm_admin == 1 ? $("#sys-edit-user-notify-admin").prop("checked", true) : $("#sys-edit-user-notify-admin").prop("checked", false)
+
+                    $("#button-save-edit-user").attr('value', infoUserData.jcv_id)
+                    $("#user-action-reset-pass").attr('value',infoUserData.jcv_id)
+
+                    //Array: Departamento
+                    let arrayDepartamentos = userData.allDepto
+                    $("#sys-edit-department-user").append(`<option disabled></option>`)
+                    arrayDepartamentos.forEach(element => {
+                        $("#sys-edit-department-user").append(`<option value="${element.sys_department_id}">${element.sys_department_name}</option>`)
+                    });
+
+                    //Array: Unidade
+                    let arrayUnidade = userData.allUnitys
+                    $("#sys-edit-unity-user").append(`<option disabled></option>`)
+                    arrayUnidade.forEach(element => {
+                        $("#sys-edit-unity-user").append(`<option value="${element.sys_unity_id}">${element.sys_unity_name}</option>`)
+                    });
+
+                    //Array: Gestor
+                    let arrayManager = userData.allManager
+                    $("#sys-edit-manager-user").append(`<option disabled></option>`)
+                    arrayManager.forEach(element => {
+                        $("#sys-edit-manager-user").append(`<option value="${element.jcv_id}">${element.jcv_userNameSecundary}</option>`)
+                    });
+                })
+
+            })
+
+            //Editar Usuario: Fechar Display
+            $("#sys-close-screen-edit").click(function(){
+                $("#sys-edit-user-box-main").fadeOut()
+            })
+
+            //Filtro de busca
+            $('#input-search-table').keyup(function(){
+ 
+                // Search text
+                var text = $(this).val();
+
+                // Hide all content class element
+                $('.sys-user-container-box-user').hide();
+
+                // Search and show
+                $('.sys-user-container-box-user:contains("'+text+'")').show();
+
+            });
+
+            function getContainerSearch (text){
+                // Search text
+                // Hide all content class element
+                $('.sys-user-container-box-user').hide();
+
+                // Search and show
+                $('.sys-user-container-box-user:contains("'+text+'")').show();
+            }
+
+            //Cookie filter
             if(Cookies.get('SEARCH-INPUT')){
                 $("#input-search-table").val(Cookies.get('SEARCH-INPUT'))   
-                $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
+                getContainerSearch(Cookies.get('SEARCH-INPUT'))
+                //$.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
             }
+
+            let arrayDAtaUsers = $("#button-data-users").val() != '' ? $("#button-data-users").val().split(',').map(convertNumber) : [];
+            //Checkbox select users
+            $(".sys-user-select").click(function(){
+                let valueUser = parseInt($(this).val())
+
+                function convertNumber(number){
+                    return parseInt(number)
+                }
+                
+                $('#check-all-checkboxs').css({'background': 'var(--color-one)', 'border-radius': '4px', 'color': 'var(--color-three)'})
+
+                if(arrayDAtaUsers.indexOf(valueUser) > -1){
+                    let idDataUser = arrayDAtaUsers.indexOf(valueUser)
+                    arrayDAtaUsers.splice(idDataUser, 1)
+
+                    $("#button-data-users").val(arrayDAtaUsers)
+                    //console.log(arrayDAtaUsers)
+
+                    $("#users-selects").css({'color': 'var(--color-three)'}).text(arrayDAtaUsers.length + ' selecionados')
+                }else{
+                    arrayDAtaUsers.push(valueUser);
+                    
+                    $("#button-data-users").val(arrayDAtaUsers)
+
+                }
+                if(arrayDAtaUsers.length > 0){
+                    $("#users-selects").css({'color': 'var(--color-three)'}).text(arrayDAtaUsers.length + ' selecionados')
+                }else{
+                    $("#users-selects").removeAttr('style').css({'color': 'var(--color-two)'}).text('Selecionar Todos')
+                    $("#check-all-checkboxs").removeAttr('style')
+                }
+                
+            })
+
+            function selectAllChecks(){
+                let arrayDataUs = $('input[name="sys-user-id-input"]:checked').toArray().map(function(check) { 
+                    return parseInt($(check).val()); 
+                });
+
+                arrayDataUs.forEach(element => {
+                    if(arrayDAtaUsers.indexOf(element) == -1){
+                        arrayDAtaUsers.push(element)
+                    }
+                })
+                $("#button-data-users").val(arrayDAtaUsers)
+            }
+
+            //Checkboxs
+            let checkIndex = 0;
+            $("#check-all-checkboxs").click(function(){
+
+                if(checkIndex == 0){
+                    $(this).css({'background': 'var(--color-one)', 'border-radius': '4px', 'color': 'var(--color-three)'})
+
+                    $(".sys-user-select:visible").prop('checked', true)
+                    selectAllChecks();
+
+
+                    $("#users-selects").css({'color': 'var(--color-three)'}).text(arrayDAtaUsers.length + ' selecionados')
+                    
+                    
+                    checkIndex=1
+                }else{
+                    $(this).removeAttr('style')
+                    arrayDAtaUsers = []
+                    $("#button-data-users").val('')
+                    $(".sys-user-select").prop('checked', false)
+                    
+                    $("#users-selects").css({'color': 'var(--color-two)'}).text('Selecionar Todos')
+                    
+                    checkIndex=0
+                }
+            })
 
             //Criando um cookie para salvar sempre o que o
             //usuario digitar
             $("#input-search-table").keyup(function(e){
-
                 if($(this).val().length <  1){
                     Cookies.remove('SEARCH-INPUT')    
-                }
-
-                var code = e.key; // recommended to use e.key, it's normalized across devices and languages
-                if(code==="Enter") e.preventDefault();
-
-                if(code === "Enter"){
-
-                    if($(this).val() == ''){
-                        $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
-                    }else{
-                        $.fn.loadSpin(1);
-                        
-                        setTimeout(()=>{
-                            $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
-                        },1000)
-                    } 
-                }
-
-                Cookies.set('SEARCH-INPUT', $(this).val())
-
-            })
-
-            //$("#sys-section-loader").fadeIn();
-            //Filtro dinamico em inputs
-            $("#input-button-search").click(function(){
-                
-
-                if($("#input-search-table").val() == ''){
-                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
                 }else{
-                    $.fn.loadSpin(1);
-                    
-                    setTimeout(()=>{
-                        $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
-                    },1000)
-                }  
+                    Cookies.set('SEARCH-INPUT', $(this).val())
+                }
             })
+            
 
-            $("#input-button-search-clear").click(function(){
-                $.fn.loadSpin(1);
-
-                setTimeout(()=>{
-                    $.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-button-search-clear',0)
-                    $.fn.paginationTableMain('#sys-users-table-list',10,2);
-                    $("#input-search-table").val('')
-                    Cookies.remove('SEARCH-INPUT') 
-                },1000)
-            })
-
-            $(".save-new-name").keyup(function() {
-                var valor = $(this).val().replace(/[^a-zA-Z 0-9]+/g,'');
-                $(this).val(valor);
-            });
-
-            //Sistema de caracteres inteligentes
-            $.fn.inputCaractersValidation("#insert-name-func")
-            $.fn.inputCaractersValidation(".update-name-func")
-
-            //Ordenação da tabela
-            $.fn.orderByTableColumns("#sys-users-table-list-tbody",".order-by-command")
+            /* ***************************************** */
+            /* ***************************************** */
+            /* ***************************************** */
+            /* ***************************************** */
+            /* ***************************************** */
+            /* ***************************************** */
+            
         })
     })
     

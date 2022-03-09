@@ -1,0 +1,293 @@
+.form-search-form-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-search-form-section-page{
+    width: 90%;
+}
+
+/*  */
+.form-search-link-back{display: flex; margin: 20px 0;}
+.form-search-link-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+
+/* FORMULARIO EM SI */
+.form-search-form-display{
+    width: 100%;
+    margin: 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+}
+.form-search-form-title{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+    padding: 14px;
+}
+.form-search-form-title-one{
+    display: flex;
+    align-items: center;
+}
+.form-search-form-title-one input[type=text]{
+    width: max-content;
+    min-width: 450px;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--color-three);
+    color: var(--color-three);
+    background: transparent;
+}
+.form-search-form-title-one input[type=date]{
+    width: fit-content;
+    margin-left: 10px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--color-three);
+    color: var(--color-three);
+    background: transparent;
+    cursor: pointer;
+}
+.form-search-form-title-one button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 15px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-three);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*  */
+.form-search-box-cont-main{
+    width: 95%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+.form-search-info-form{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+.form-search-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+.form-search-box label{
+    font-size: 0.7rem;
+    color: var(--color-two);
+}
+.form-search-box input[type=text]{
+    min-width: 450px;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+.form-search-box input[type=date]{
+    width: fit-content;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.form-search-box button{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    font-size: 1rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*  */
+.form-search-form-title-two{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+}
+.form-search-form-title-img-logo{
+    width: 100%;
+    object-fit: contain;
+}
+
+.form-set-styles{
+    width: 100%;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    padding: 23px;
+}
+.form-set-styles h1{
+    font-size: 1.4rem;
+}
+
+/************************/
+/************************/
+/************************/
+/* SECTION USERS BOX */
+.form-new-users-main{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.form-new-users-box{
+    width: 700px;
+    max-height: 80%;
+    padding: 12px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/*  */
+/*  */
+.form-new-users-box-title{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-new-users-box-title span{
+    font-size: 1rem;
+    color: var(--color-two);
+}
+.form-new-users-box-title i{
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-two);
+}
+.form-new-users-box-cont{
+    width: 100%;
+    display: flex;   
+    overflow: auto;
+}
+
+/*  */
+/*  */
+.form-new-users-box-search-box{
+    width: 100%;
+    display: flex;
+    margin: 18px 0;
+}
+.form-new-users-box-search-box input{
+    width: 100%;
+    padding: 8px;
+    color: var(--color-one);
+    font-size: 0.8rem;
+    border: 0;
+    border-bottom: 1px solid var(--color-one);
+    outline: 0;
+}
+
+/*  */
+/* TABLE */
+.form-new-users-box-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+/*  */
+.form-new-users-box-table input{
+    cursor: pointer;
+}
+.form-new-users-box-table tr th{
+    padding: 10px 6px;
+    color: var(--color-one);
+    font-size: 0.8rem;
+    transition: 0.5s;
+    text-align: left;
+}
+.form-new-users-box-table tr th:nth-child(1){
+    text-align: center;
+}
+
+/*  */
+.form-new-users-box-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 16px 6px;
+    color: var(--color-one);
+    font-size: 0.8rem;
+    transition: 0.5s;
+}
+.form-new-users-box-table tr td:nth-child(1){
+    text-align: center;
+}
+
+.form-search-button-finalizar{
+    display: flex;
+    margin: 20px 0;
+}
+.form-search-button-finalizar button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-two);
+    cursor: pointer;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 900px){
+    .form-search-form-title-one{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 18px 0;
+    }
+    .form-search-form-title-one span{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-search-form-title{
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-search-form-title-one input[type=text]{
+        min-width: 100%;
+    }
+}
