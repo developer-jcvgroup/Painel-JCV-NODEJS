@@ -229,6 +229,9 @@ app.get("/", (req,res)=>{
     if(enabledPanel == 1){
         res.redirect('/maintenance')
     }else{
+        if(req.protocol == 'http'){
+            res.redirect("https://"+req.get('host'))
+        }
         res.render("web/index", {loginContr: loginContr})
     }
 })

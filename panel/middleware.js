@@ -61,9 +61,8 @@ authenticate = async (req, res, next) => {
                 GLOBALclassification
             ];
 
-            //Aqui eu predefino a url das salas no calendario
-            //isto é importante pois não consigo pegar o link cheio usando o express e portanto tenho que definir manualmente
-            global.GLOBAL_LINK_QR = 'https://jcv.net.br/painel/calendario/viewRoom/'
+            //Pegando a url e validando
+            //console.log(req.get('host'))
 
             //-------------------------------------------------------
             //-------------------------------------------------------
