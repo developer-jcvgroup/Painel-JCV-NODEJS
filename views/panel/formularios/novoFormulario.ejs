@@ -96,7 +96,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
-    
+
+    let checkIndex = 0;
     $.fn.searchInputTable = function(tableRows, inputSearchTable){
         
         const rows = $(''+tableRows+'');
@@ -107,6 +108,8 @@
                 $.fn.closePagination(0)//Fechar a paginação
             }else{
                 console.log('abrir')
+                $("#check-all-checkboxs").prop('checked', false)
+                checkIndex = 0
                 $.fn.closePagination(1)//Abrir a paginação
             }
 
@@ -137,7 +140,6 @@
     })
 
     //Checksbox all
-    let checkIndex = 0;
     $("#check-all-checkboxs").click(function(){
 
         if(checkIndex == 0){
