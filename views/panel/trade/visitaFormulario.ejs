@@ -1263,7 +1263,6 @@
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
     //Iniciando socket
-    //const socket = io("http://localhost:8080")
 
     async function showUsersShops (cnpjShop, nameShop){
         await socket.emit("getInfoUserTrade", {cnpjShop: cnpjShop, nameShop})
