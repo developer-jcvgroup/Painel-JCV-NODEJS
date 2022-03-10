@@ -364,7 +364,10 @@
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
 
-    const socket = io("https://jcv.net.br")
+    //Get url start Socketio
+    let urlValidate = '<%- PAINEL_URL %>';
+
+    const socket = io(urlValidate)
 
     /*  */
     /*  */

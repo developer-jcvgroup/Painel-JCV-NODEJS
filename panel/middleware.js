@@ -61,6 +61,14 @@ authenticate = async (req, res, next) => {
                 GLOBALclassification
             ];
 
+            //Pegando a url e validando
+            global.PAINEL_URL;
+            if(req.get('host') == 'localhost:8080'){
+                PAINEL_URL = 'http://localhost:8080';
+            }else{
+                PAINEL_URL = 'https://jcv.net.br'
+            }
+
             //-------------------------------------------------------
             //-------------------------------------------------------
             //Buscando todas as permissões
@@ -80,14 +88,7 @@ authenticate = async (req, res, next) => {
             if(linkspecial != undefined){
                 res.redirect(linkspecial)
             }else{
-
-                //Pegando a url e validando
-                if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
-                    res.redirect('https://jcv.net.br')
-                }else{
-                    next();
-                    res.render("web/index", {loginContr: loginContr})
-                }
+                next();
             }
             
         }else{
