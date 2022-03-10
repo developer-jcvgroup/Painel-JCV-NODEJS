@@ -105,6 +105,7 @@
 
 <script>
     
+    let checkIndex = 0;
     $.fn.searchInputTable = function(tableRows, inputSearchTable){
         
         const rows = $(''+tableRows+'');
@@ -115,6 +116,8 @@
                 $.fn.closePagination(0)//Fechar a paginação
             }else{
                 console.log('abrir')
+                $("#check-all-checkboxs").prop('checked', false)
+                checkIndex = 0
                 $.fn.closePagination(1)//Abrir a paginação
             }
 
@@ -190,7 +193,6 @@ var options = {
     $("#array-users-list").val(JSON.parse('<%- infoFormulario[0].jcv_formularios_registers_users %>'))
 
     //Checksbox all
-    let checkIndex = 0;
     $("#check-all-checkboxs").click(function(){
 
         if(checkIndex == 0){
