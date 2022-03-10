@@ -231,8 +231,9 @@ app.get("/", (req,res)=>{
     }else{
         if(req.protocol == 'http'){
             res.redirect("https://"+req.get('host'))
+        }else{
+            res.render("web/index", {loginContr: loginContr})
         }
-        res.render("web/index", {loginContr: loginContr})
     }
 })
 
