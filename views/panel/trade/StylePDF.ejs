@@ -1207,6 +1207,18 @@
                     </div>
                 </div>
             </div>
+            <!--  -->
+            <hr>
+            <!--  -->
+            <div class="pdf-trade-form-section-question-box">
+                <div class="pdf-trade-form-section-question-title">
+                    <input type="text" readonly value="Observações:">
+                </div>
+                
+                <div class="pdf-trade-form-section-question-cont">
+                    <textarea disabled id="value-observations" cols="30"></textarea>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -1245,31 +1257,42 @@
     let nameQuestionDiv = 'pdf-trade-form-section-questions-checks'
     let countIn = 1;//Contador de input
 
+    //O input codigo 31 é de observação
+    //Inserindo a resposta
+    let verify = 'Sem observação...';
+    arrayDataForm.forEach(element => {
+        if(parseInt(element.split(' - ')[0]) == 31){
+            verify = element.split(' - ')[1]
+        }
+    })
+    $("#value-observations").val(verify)
+
+
     function executeAction (nameInputTag, nameBox, arrayData){
 
         let inputNameSet = nameInputTag.split('XXX')[0]+countIn+nameInputTag.split('XXX')[1]
         
         let inputGet = $("input[name="+inputNameSet+"]");//Pegando o input name cru
-        
+
         //Verifica se o input posui valor
         if(inputGet.val() != undefined){
             inputGet.map(function(valueMap){
                 //valueMap e o valor de cada input com este nome
-            
-            //O codigo da pergunta é de acordo com o nome da pergunta
-            //1 = Pergunta 1
-            let questionNameCode = countIn;//Codigo da pergunta
-            let questionName = $(this).closest('.'+nameBox).children('label').text();//Perguntas em si
-            
-            //Pegando o cogido da pergunta e o nome da pergunta
-            let codeQuestionName = questionName != '' ? questionNameCode+' - '+questionName : 0;
-            
-            //Valida se existe uma realmente existe nas respostas da pergunta      
-            let validationQuestion = arrayData.indexOf(codeQuestionName)
-            if(validationQuestion != -1){
-                //A resposta foi encontrada e é válida
-                $(this).closest('.'+nameBox).children('label').css({'background':'var(--color-one)','color':'white'})
-            }
+
+                //O codigo da pergunta é de acordo com o nome da pergunta
+                //1 = Pergunta 1
+                let questionNameCode = countIn;//Codigo da pergunta
+                let questionName = $(this).closest('.'+nameBox).children('label').text();//Perguntas em si
+
+                //Pegando o cogido da pergunta e o nome da pergunta
+                let codeQuestionName = questionName != '' ? questionNameCode+' - '+questionName : 0;
+
+                //Valida se existe uma realmente existe nas respostas da pergunta      
+                let validationQuestion = arrayData.indexOf(codeQuestionName)
+                if(validationQuestion != -1){
+                    //A resposta foi encontrada e é válida
+                    $(this).closest('.'+nameBox).children('label').css({'background':'var(--color-one)','color':'white'})
+                }
             
             })
             

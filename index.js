@@ -158,6 +158,47 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on("getInfoUserTrade", (data) => {
+
+        database
+        .select()
+        .whereRaw("jcv_trade_shops_cnpj LIKE '%"+data.cnpjShop+"%' OR jcv_trade_shops_name_social LIKE '%"+data.nameShop+"%' ")
+        .table("jcv_trade_shops")
+        .then( data => {
+
+            let dataResultSet = null;
+            if(data[0] != ''){
+
+                let arrayUser = data[0].jcv_trade_shops_users != null ? data[0].jcv_trade_shops_users.split(',') : null
+
+                if(arrayUser != null){
+
+                    database
+                    .select("jcv_userNamePrimary","jcv_userCassification")
+                    .whereIn('jcv_id', arrayUser)
+                    .table("jcv_users")
+                    .then( dataResult => {
+
+                        dataResultSet = dataResult != '' ? dataResult : null
+
+                        socket.emit("getInfoUserTradeAll", dataResultSet)
+
+                    })
+
+                }else{
+                    //Usuario não encontrado
+                    socket.emit("getInfoUserTradeAll", dataResultSet)
+                }
+
+            }else{
+                //Loja não encotrada
+                socket.emit("getInfoUserTradeAll", dataResultSet)
+            }
+
+        })
+
+    })
+
 })
 
 
@@ -199,6 +240,10 @@ app.get('/maintenance', (req,res) => {
     }else{
         res.redirect("/")
     } 
+})
+
+app.get('/style/teste', (req,res) => {
+    res.render("panel/beleza/modelGenerateEtiqueta")
 })
 
 //Require do painel

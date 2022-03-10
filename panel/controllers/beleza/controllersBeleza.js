@@ -738,6 +738,36 @@ async function createTagsOrders(ids,req,res){
         return data
     })
 
+    /* Aqui vai ser o novo estilo de etiquetas do programa da beleza */
+    /* const ArryaNewTags = [];
+
+    let atualIndex = resultData[0].jcv_userNameSecundary;
+    for(let i = 0; i < resultData.length; i++){
+        if(resultData[i].jcv_userNameSecundary == atualIndex){
+
+
+            console.log("é igual: "+resultData[i].jcv_userNameSecundary)
+
+            ArryaNewTags.push([
+                resultData[i].jcv_userNameSecundary,
+                10,
+                '03/2022',
+                'QR CODE GESTOR',
+            ])
+
+            
+        }else{
+
+
+            //console.log("Mudou para: "+resultData[i].jcv_userNameSecundary)
+            atualIndex = resultData[i].jcv_userNameSecundary;
+            i--;
+
+
+        }
+    } */
+
+
     /* let atualIndex = resultData[0].jcv_userNameSecundary;
 
     for(let i = 0; i < resultData.length; i++){

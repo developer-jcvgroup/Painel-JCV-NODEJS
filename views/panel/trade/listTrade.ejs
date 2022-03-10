@@ -203,9 +203,8 @@
                                     <td><b><%= element.jcv_trade_shops_name_fantasy %></b></td>
                                     <td><b><%= element.jcv_trade_visit_date %></b></td>
                                     <td><div class="list-trade-container-actions">
-                                        <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
                                         <button formaction="/painel/trademkt/fv/export-pdf" value="<%= element.jcv_trade_visit_id %>" name="fv-button-pdf-generate"><i class="ri-printer-line"></i></button>
-                                        <button formaction="/painel/trademkt/remove/fv/form" value="<%= element.jcv_trade_visit_id %>" name="fv-button-admin-remove-request" class="class-loader" title="Deletar Pedido"><i class="ri-delete-bin-line"></i></button>
+                                        <button formaction="/painel/trademkt/remove/fv/form" value="<%= element.jcv_trade_visit_id %>" name="fv-button-admin-remove-request" class="class-loader" title="Deletar Formulario"><i class="ri-delete-bin-line"></i></button>
                                     </div></td>
                                 </tr>
                                 <% }) %>
@@ -271,7 +270,6 @@
 
                                     <td>
                                         <div class="list-trade-container-actions">
-                                            <a class="class-loader" href=""><i class="ri-eye-line"></i></a>
                                             <a class="class-loader" href="/painel/trademkt/formSearch/edit/<%= element.jcv_trade_form_create_id %>"><i class="ri-edit-line"></i></a>
                                             <button formaction="/painel/trademkt/action/fp/removeResponses" name="button-admin-remove-responses" value="<%= element.jcv_trade_form_create_id %>" class="class-loader" title="Excluir Respostas"><i class="ri-close-line"></i></button>
                                             <button formaction="/painel/trademkt/action/fp/deleteForm" name="button-admin-remove-form" value="<%= element.jcv_trade_form_create_id %>" class="class-loader" title="Deletar Formulário"><i class="ri-delete-bin-line"></i></button>

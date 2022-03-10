@@ -127,8 +127,9 @@ exports.visitFormNew = async (req,res) => {
 
     const nameShop = req.body['visit-shop']
     const CNPJshop = req.body['visit-shop-cnpj']
+    const dateVisit = req.body['visit-shop-name'];
 
-    const dateForm = moment(req.body['visit-date']).format("DD/MM/YYYY")
+    const dateForm = moment(dateVisit, "YYYY-MM-DD").format('DD/MM/YYYY')
 
     const shopInfo = await database
     .select()

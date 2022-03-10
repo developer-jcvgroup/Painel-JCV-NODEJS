@@ -23,6 +23,10 @@
                     <label for="">LOJA</label>
                     <input required class="visit-form-input-large" type="text" name="visit-shop" id="input-shop-name">
                 </div>
+                <div class="visit-form-info">
+                    <label for="">Data</label>
+                    <input required type="date" name="visit-shop-name" id="date-form-now">
+                </div>
                 <!--  -->
                 <div class="visit-form-title-two">
                     <img class="visit-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">
@@ -32,6 +36,19 @@
             <!--  -->
             <hr>
             <div class="visit-form-section">
+                <div class="visit-form-users-list" id="visit-form-users-list">
+                    <div id="title-users-shops" class="visit-form-users-title">
+                        <!--  -->
+                    </div>
+                    <div class="visit-form-users-box" id="visit-form-users-box">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </div>
+                    <!--  -->
+                    <hr style="margin: 14px 0;">
+                    <!--  -->
+                </div>
                 <div class="visit-form-section-title">
                     <span>Seção 1 - Marketing Mix</span>
                 </div>
@@ -1218,6 +1235,18 @@
                             </div>
                         </div>
                     </div>
+                    <!--  -->
+                    <hr>
+                    <!--  -->
+                    <div class="visit-form-section-question-box">
+                        <div class="visit-form-section-question-title">
+                            <input type="text" readonly name="visit-form-31-step" value="Observações:">
+                        </div>
+                        
+                        <div class="visit-form-section-question-cont">
+                            <textarea name="visit-form-31-step" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1231,7 +1260,55 @@
     </form>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
+    //Iniciando socket
+    //const socket = io("http://localhost:8080")
+
+    async function showUsersShops (cnpjShop, nameShop){
+        await socket.emit("getInfoUserTrade", {cnpjShop: cnpjShop, nameShop})
+
+        let dataRequest;
+        let validate = await socket.on("getInfoUserTradeAll", (data) => {
+            return data != '' ? dataRequest = data : dataRequest = null
+        })
+
+        setTimeout(() => {
+            $.fn.loadSpin(0)//Tela de carregando
+            $("#visit-form-users-list").fadeIn().css({'display': 'flex'})
+            $("#visit-form-users-box").empty()
+
+            if(dataRequest != null){
+                //Exibindo os usuarios
+                $("#title-users-shops").append("<span>Usuarios da loja <b>"+nameShop+"</b><span>")
+                dataRequest.forEach(element => {
+                    //Valida se o usuario é representante
+                    if(element.jcv_userCassification == 4){
+                        $("#visit-form-users-box").append
+                        (
+                        `<div class="visit-form-users-list-box">
+                                <span><b>${element.jcv_userNamePrimary}</b></span>
+                        </div>`
+                        )
+                    }else{
+                        $("#visit-form-users-box").append
+                        (
+                        `<div class="visit-form-users-list-box">
+                                <span>${element.jcv_userNamePrimary}</span>
+                        </div>`
+                        )
+                    }
+                });
+            }else{
+                $("#visit-form-users-box").append
+                (
+                `<span style="font-size: 0.8rem">Nenhum usuario encontrado para a loja <b>${nameShop}</b>.</span>`
+                )
+            }
+        }, 500);
+    }
+
+
     $("#date-form-now").val(moment().format("YYYY-MM-DD"))
 
 
@@ -1275,7 +1352,10 @@
 
                 });
 
+                $.fn.loadSpin(1)//Tela de carregando
+
                 $("#input-shop-name").val(valueSetShop)
+                showUsersShops ($(this).text(), valueSetShop)//Pegando os usuarios das lojas
                 valueSetShop = undefined;//Após a inserção, ele reseta o input
             })
         }
@@ -1289,6 +1369,7 @@
             
             let valueSetShop = 0;
             $('.ui-menu-item-wrapper').click(function () {
+                $.fn.loadSpin(1)//Carregando..
 
                 convertShops.forEach(element => {
 
@@ -1305,12 +1386,14 @@
                 });
 
                 $("#input-shop-cnpj").val(valueSetShop)
+                showUsersShops (valueSetShop, $(this).text())//Pegando os usuarios das lojas
                 valueSetShop = undefined
             })
         }
     })
 
 
+    
     
     /* $("#input-shop-name").autocomplete({
         source: function(request, response) {
