@@ -230,7 +230,10 @@ app.get("/", (req,res)=>{
         res.redirect('/maintenance')
     }else{
         if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
-            res.redirect('https://jcv.net.br')
+            //res.redirect('https://jcv.net.br')
+
+            console.log(req.protocol)
+            res.render("web/index", {loginContr: loginContr})
         }else{
             res.render("web/index", {loginContr: loginContr})
         }
