@@ -61,9 +61,6 @@ authenticate = async (req, res, next) => {
                 GLOBALclassification
             ];
 
-            //Pegando a url e validando
-            //console.log(req.get('host'))
-
             //-------------------------------------------------------
             //-------------------------------------------------------
             //Buscando todas as permissões
@@ -83,7 +80,14 @@ authenticate = async (req, res, next) => {
             if(linkspecial != undefined){
                 res.redirect(linkspecial)
             }else{
-                next();
+
+                //Pegando a url e validando
+                if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
+                    res.redirect('https://jcv.net.br')
+                }else{
+                    next();
+                    res.render("web/index", {loginContr: loginContr})
+                }
             }
             
         }else{

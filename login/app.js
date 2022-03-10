@@ -45,12 +45,16 @@ router.get("/", async (req,res)=>{
 
         })
 
-        res.render("login/index", {
-            frasesIndex: allAuthor[0], 
-            authorIndex: allAuthor[1], 
-            linkspecial: linkspecial,
-            allAccountPass: allAccountPass
-        })
+        if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
+            res.redirect('https://jcv.net.br')
+        }else{
+            res.render("login/index", {
+                frasesIndex: allAuthor[0], 
+                authorIndex: allAuthor[1], 
+                linkspecial: linkspecial,
+                allAccountPass: allAccountPass
+            })
+        }
     }
 })
 

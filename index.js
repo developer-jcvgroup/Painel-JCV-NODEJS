@@ -229,7 +229,11 @@ app.get("/", (req,res)=>{
     if(enabledPanel == 1){
         res.redirect('/maintenance')
     }else{
-        res.render("web/index", {loginContr: loginContr})
+        if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
+            res.redirect('https://jcv.net.br')
+        }else{
+            res.render("web/index", {loginContr: loginContr})
+        }
     }
 })
 
