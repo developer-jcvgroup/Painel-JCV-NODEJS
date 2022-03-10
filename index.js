@@ -232,11 +232,15 @@ app.get("/", (req,res)=>{
         if(req.protocol == 'http' && req.get('host') != 'localhost:8080'){
             //res.redirect('https://jcv.net.br')
 
-            console.log(req.protocol)
-            res.render("web/index", {loginContr: loginContr})
+            console.log(req.protocol+' - '+req.get('host'))
+            
         }else{
-            res.render("web/index", {loginContr: loginContr})
+            
+            console.log(req.protocol+' - '+req.get('host'))
+
         }
+
+        res.render("web/index", {loginContr: loginContr})
     }
 })
 
