@@ -13,6 +13,5 @@
             "type": "image/png"
         }
     ],
-    "background_color": "#000000",
-    "prefer_related_applications": false
+    "background_color": "#000000"
 }
