@@ -70,13 +70,13 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     display: flex;
     align-items: center;
     margin-left: 8px;
 }
-.shop-order-srs-box  button:nth-child(3){
+.shop-order-srs-box button:nth-child(3){
     outline: 0;
     border: 0;
     padding: 8px 18px;
@@ -131,6 +131,7 @@
     border: 1px solid var(--color-one);
     border-radius: 5px;
     cursor: pointer;
+    color: var(--color-one);
     background: transparent;
 }
 .shop-box-actions-checks-button{
@@ -146,7 +147,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -167,7 +168,7 @@
     border: none;
     border-bottom: 1px solid var(--color-five);
     text-align: left;
-    background: var(--color-one);
+    background: var(--color-one-boxs);
     color: var(--color-four);
     font-weight: normal;
     padding: 6px;
@@ -186,7 +187,7 @@
 }
 .shop-list-table tr:hover{
     transition: 0.5s;
-    background: var(--color-seven);
+    background: var(--color-eight);
 }
 
 .shop-list-table tr td input[type=text]{
@@ -200,6 +201,7 @@
     text-align: left;
     border-bottom: 1px solid var(--color-one);
     font-weight: bold;
+    background: transparent;
 }
 
 .shop-list-table tr td select{
@@ -213,7 +215,8 @@
     border: 1px solid var(--color-one);
     border-radius: 5px;
     cursor: pointer;
-    background: var(--background-two);
+    background: transparent;
+    color: var(--color-one);
 }
 
 /**************************/
@@ -252,7 +255,7 @@
 
 
 tr:nth-child(even) {
-    background-color: var(--color-seven);
+    background-color: var(--color-eight);
 }
 
 .shop-list-table tr td:nth-child(6){

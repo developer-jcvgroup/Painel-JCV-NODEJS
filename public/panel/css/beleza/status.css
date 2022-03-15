@@ -103,6 +103,7 @@
     font-size: 1rem;
     padding: 4px;
     border-bottom: 1px solid var(--color-five);
+    color: var(--color-one);
 }
 
 .beleza-view-form-row-action{
@@ -173,16 +174,16 @@
     width: 100;
     display: flex;
     justify-content: center;
-    margin-top: 23px;
+    margin-top: 26px;
 }
 .beleza-cancel-button button{
     outline: 0;
     border: 0;
     padding: 8px 18px;
     border-radius: 4px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     display: flex;
     align-items: center;

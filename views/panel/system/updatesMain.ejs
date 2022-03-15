@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="/panel/css/system/updatesMain.css">
+
+<section class="updates-main-main-section">
+    <section class="updates-main-main-section-page">
+        <div class="updates-main-main-title-page">
+            <span>Updates</span>
+            <span>/ Home</span>
+        </div>
+
+        <section class="updates-main-main-actions">
+            <div class="updates-main-display-center">
+                <div class="updates-main-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/updates/new"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="updates-main-main-container-body">
+            <section class="updates-main-main-section-list-forms" id="forms-list-display">
+                <div class="updates-main-main-forms">
+
+                    <% if(allUpdates != '') { %>
+                        <% allUpdates.forEach(element => { %>
+                            <a class="updates-main-main-forms-link" href="/painel/updates/edit/<%= element.sys_update_idUp %>">
+                                <div class="updates-main-main-forms-link-info">
+                                    <span><%= element.sys_update_nameUpdate %></span>
+                                    <span>Lidos: <b><%= JSON.parse(element.sys_update_usersOkUpdate).length %></b></span>
+                                    <span>App: <b><%= element.sys_update_moduleUp %></b></span>
+                                    <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.sys_update_date %></b></span>
+                                </div>
+                                <hr style="width: 100%; margin: 7px 0;">
+                                <form method="post" class="updates-main-main-forms-link-button">
+                                    <button class="class-loader" formaction="/painel/updates/delete" type="submit" name="button-delete-update" value="<%= element.sys_update_idUp %>" title="Excluir Update"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="class-loader" formaction="/painel/updates/disabled" type="submit" name="button-disabled-update" value="<%= element.sys_update_idUp %>" title="Desabilitar Update"><i class="ri-close-line"></i></button>
+                                </form>
+                            </a>
+                        <% }) %>
+                    <% }else{ %>
+                        <div class="updates-main-main-forms-not-found">
+                            <img class="updates-main-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Nenhum update encontrado.. <b><a href="/painel/updates/new">Novo Update</a></b></span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="updates-main-main-section-list-forms" id="form-list-fished">
+                <div class="updates-main-main-forms-title">
+                    <span>Listando os utlimos <b>30 updates</b> desabilitados</span>
+                </div>
+                <div class="updates-main-main-forms">  
+                <% if(allUpdatesDisabled != '') { %>
+                    <% allUpdatesDisabled.forEach(element => { %>
+                    <a class="updates-main-main-forms-link"href="/painel/updates/edit/<%= element.sys_update_idUp %>">
+                        <div class="updates-main-main-forms-link-info">
+                            <span><%= element.sys_update_nameUpdate %></span>
+                            <span>Lidos: </span>
+                            <span>App: <b><%= element.sys_update_moduleUp %></b></span>
+                            <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.sys_update_date %></b></span>
+                            <span style="color: red;">DESABILITADO</span>
+                        </div>
+                        <hr style="width: 100%; margin: 7px 0;">
+                        <form method="post" class="updates-main-main-forms-link-button">
+                            <button class="class-loader" formaction="/painel/updates/enabled" type="submit" name="button-enabled-update" value="<%= element.sys_update_idUp %>" title="Desabilitar Update"><i class="ri-check-line"></i></button>
+                            <button class="class-loader" formaction="/painel/updates/delete" type="submit" name="button-delete-update" value="<%= element.sys_update_idUp %>" title="Excluir Update"><i class="ri-delete-bin-line"></i></button>
+                        </form>
+                    </a>
+                    <% }) %>
+                <% }else{ %>
+                    <div class="updates-main-main-forms-not-found">
+                        <img class="updates-main-main-forms-error" src="/panel/trade/error.svg" alt="">
+                        <span>Sem formularios..</span>
+                    </div>
+                <% } %>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+</script>

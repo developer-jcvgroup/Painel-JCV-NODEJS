@@ -32,6 +32,7 @@
 }
 .room-setings-title-box span{
     font-size: 0.9rem;
+    color: var(--color-one);
 }
 
 /* */
@@ -86,6 +87,8 @@
     padding: 5px 5px;
     font-size: 0.9rem;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 
 .room-setings-row-form-select{
@@ -103,6 +106,7 @@
     margin-top: 8px;
     color: var(--color-one);
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
 }
 
 .room-setings-row-form-check{
@@ -127,7 +131,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -155,12 +159,14 @@
     color: var(--color-one);
     padding: 6px;
     font-size: 0.9rem;
+    background: var(--color-one-boxs);
 }
 .room-setings-table-salas tr td{
     border: none;
     border-top: 1px solid var(--color-five);
     border-bottom: 1px solid var(--color-five);
     padding: 6px;
+    color: var(--color-one);
 }
 
 .room-setings-table-salas tr th:nth-child(1){
@@ -188,7 +194,7 @@
 }
 
 tr:nth-child(even) {
-    background-color: var(--color-seven);
+    background-color: var(--color-eight);
 }
 
 .room-setings-table-salas tr td select{
@@ -205,6 +211,8 @@ tr:nth-child(even) {
     padding: 4px;
     font-size: 0.8rem;
     border: 1px solid var(--color-five);
+    background: transparent;
+    color: var(--color-one);
     
 }
 .room-setings-table-salas tr td input[type=color]{

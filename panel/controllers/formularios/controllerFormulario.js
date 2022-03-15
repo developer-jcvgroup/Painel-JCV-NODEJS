@@ -85,7 +85,7 @@ exports.saveNewForm = async (req,res) => {
 
                 //console.log(data)
 
-                //Criando a notificação do programa da beleza para os GESTORES
+                //Criando a notificação do formulario
                 database
                 .insert({
                     jcv_notifications_type: 'JCVMOD01',
@@ -207,12 +207,11 @@ exports.responseFormulario = async (req,res) => {
     .then( data => {return data})
 
     const verifyResponse = await database
-    .raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
+    .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '2', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
+    //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
     .then( data => {return data[0]})
 
-    //console.log(verifyResponse)
-
-    if(verifyResponse == ''){
+    if(verifyResponse != ''){
         
         var page = "formularios/viewFormulario";
         res.render("panel/index", {
@@ -222,8 +221,13 @@ exports.responseFormulario = async (req,res) => {
 
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
-        res.redirect("/painel/formularios/main");
+        res.redirect("/painel");
     }
+}
+
+exports.responseFormularioButton= async (req,res) => {
+    console.log(req.body['button-redirect-page'])
+    res.redirect('/painel/formularios/reponse/'+req.body['button-redirect-page'])
 }
 
 exports.sendResponse = async (req,res) => {

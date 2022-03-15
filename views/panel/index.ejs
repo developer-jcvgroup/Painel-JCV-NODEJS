@@ -115,10 +115,11 @@
                         <li><a class="class-loader" href="/painel/system/users"><i class="ri-braces-line"></i><span>Usuarios & Permissões</span></a></li>
                         <li><a class="class-loader" href="/painel/system/unidades"><i class="ri-building-line"></i><span>Unidades</span></a></li>
                         <li><a class="class-loader" href="/painel/system/departamentos"><i class="ri-door-open-line"></i><span>Departamentos</span></a></li>
+                        <li><a class="class-loader" href="/painel/updates/main"><i class="ri-refresh-line"></i><span>Updates</span></a></li>
                         <% if(GLOBAL_PERM[0].sys_forms_perm_admin == 1){ %>
                             <li><a class="class-loader" href="/painel/formularios/main"><i class="ri-file-list-3-line"></i><span>Formulários</span></a></li>
                         <% } %>
-                        <!-- <li><a class="class-loader" href="/painel/notifications/main"><i class="ri-notification-3-line"></i><span>Notificações</span></a></li> -->
+                        <li><a class="class-loader" href="/painel/notifications/main"><i class="ri-notification-3-line"></i><span>Notificações</span></a></li>
                     </ul>
                 </ul>
                 <% } %>
@@ -143,7 +144,7 @@
                     </div>
                     <div class="index-header-logo">
                         <a class="class-loader" href="/painel">
-                            <img class="header-img-logo" src="/logos/jcvLogo.png" alt="">
+                            <img class="header-img-logo" id="header-img-logo" src="/logos/logo-jcv-03.png" >
                         </a>
                     </div>
                 </div>
@@ -190,7 +191,7 @@
                                         <li><a class="notification-message-all" href=""><span>Ver todos os eventos</span> <i class="ri-arrow-right-line"></i></a></li> -->
                                     </ul>
                                     <div id="display-not-notification" style="width: 100%;height: 50px;display: none;justify-content: center;align-items: center;">
-                                        <span style="font-size: 0.8rem" >Você não possui notificações. <a href="/painel/notifications">Exibir notificações</a></span>
+                                        <span style="font-size: 0.8rem; color: var(--color-one);" >Você não possui notificações. <a href="/painel/notifications">Exibir notificações</a></span>
                                     </div>
                                 </div>
                             </li>
@@ -229,8 +230,14 @@
                                     </li>
                                     <li><div class="dropdown-separator"></div><!-- separador --></li>
                                     <li><a class="class-loader" href="/painel/perfil">Conta / Configurações</a></li>
+                                    <li>
+                                        <span>Dark Mode </span>
+                                        <label class="dark-mode-department-button-switch">
+                                            <input id="button-action-dark-mode" type="checkbox">
+                                            <span class="dark-mode-department-button-slider round"></span>
+                                        </label>
+                                    </li>
                                     <li><a class="class-loader" href="/painel/logout"><b>Sair</b></a></li>
-                                    
                                 </ul>
                             </li>
                         </ul>
@@ -269,30 +276,17 @@
                         </div>
                     </div>
 
-                    <% if(GLOBAL_DASH[11].length > 1){ %>
-
-                        <!-- Array ids updates -->
-                        <% let allIds = [] %>
-                        <% GLOBAL_DASH[11].forEach(element => { %>
-                            <% allIds.push(element.sys_update_idUp) %>
-                        <% }) %>
-
-                        <div class="sys-update-close-all-updates">
-                            <button type="submit" value="<%= allIds %>" formaction="/painel/update/closeAll" name="button-update-all">Fechar todas</button>
-                        </div>
-                    <% } %>
-
                     <% GLOBAL_DASH[11].forEach(element => { %>
                         <hr class="sys-update-hr">
                         <div class="sys-update-title-two">
                             <span><%= element.sys_update_nameUpdate %> - <%= element.sys_update_versionUpdate %></span>
                         </div>
                         <div class="sys-update-msg-box">
-                            <span id="sys-update-text" class="sys-update-text">
+                            <div id="sys-update-text" class="sys-update-text">
                     
-                                <%- element.sys_update_textUpdate %>
+                                <%= element.sys_update_textUpdate %>
                             
-                            </span>
+                            </div>
                         </div>
                         <div class="sys-update-button">
                             <input hidden type="text" value="<%= element.sys_update_urlRedirect %>" name="param-url-update-<%= element.sys_update_idUp %>">
@@ -364,6 +358,66 @@
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
 
+    function styleColorSpecial(){
+        //Ajustes nas divs que tem alguma caracteristica em especial
+        //Aqui é ajustes nas cores não interfere nos valores reais das variaveis
+
+        //Index
+        $("#home-section-card-background").css({'background':'var(--background-two)'})
+        $("#menu-action-main").css({'background':'var(--background-one)', 'box-shadow':'0 0 4px 0 transparent'})
+
+        //Perfil
+        $(".profile-container-main-style").css({'background':'var(--background-two)'})
+    }
+
+    let indexColors;
+    if(Cookies.get('root-vars-colors') != undefined){
+        const arryaColorSet = Cookies.get('root-vars-colors')
+        $(':root').css(JSON.parse(arryaColorSet))
+        
+        $("#button-action-dark-mode").prop('checked', true)
+        styleColorSpecial()
+        indexColors = 1;
+    }else{
+        $("#button-action-dark-mode").prop('checked', false)
+        $("#header-img-logo").attr('src', '/logos/jcvLogo.png')//Logo escuro
+        indexColors = 0;
+    }
+
+    
+    $("#button-action-dark-mode").click(function(){
+        if(indexColors == 0){
+
+            const arryaColorSet = {
+                "--background-two": "#2d333b",
+                "--color-one": "#cdd9e5",
+                "--color-one-btn": "#1c2128",
+                "--color-one-boxs": "#1c2128",
+                "--color-two": "#eaf5ff",
+                "--background-one": "#1c2128", 
+                "--color-three": "#545454"
+            }
+
+            $(':root').css(arryaColorSet)
+
+            $("#header-img-logo").attr('src', '/logos/logo-jcv-03.png')//Logo claro
+
+            styleColorSpecial()
+            Cookies.set('root-vars-colors', JSON.stringify(arryaColorSet))
+
+            indexColors = 1;
+        }else{
+            $.fn.loadSpin(1)
+            Cookies.remove('root-vars-colors');
+            window.location.reload();
+            indexColors = 0;
+        }
+    })
+    
+
+</script>
+<script>
+
     //Get url start Socketio
     let urlValidate = '<%- PAINEL_URL %>';
 
@@ -387,6 +441,16 @@
             $("#notification-main").css('display','flex')
             $("#count-notify").text(dataAll.length)
             $("#count-notifications").text(dataAll.length)
+
+            /* if(Cookies.get("VIEW-NOTIFI-POPUP")){
+                console.log('aaa')
+            }else{
+                Cookies.set("VIEW-NOTIFI-POPUP", true)
+            } */
+
+            /* console.log('aaaa')
+            notificationAPIaction('Teste do titulo','Olá aqui é uma notificação do api notifications','https://www.javascripttutorial.net/web-apis/javascript-notification/')
+            Cookies.set("VIEW-NOTIFI-POPUP", true) */
         }
     })
 

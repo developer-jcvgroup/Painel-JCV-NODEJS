@@ -20,6 +20,9 @@
     --color-yellow: #FCBF49;
 
     --heigth-header: 48px;
+
+    /* Dark mode */
+    --color-one-btn: #222224
 }
 
 /* VALORES UNIVERSAIS */
@@ -189,6 +192,8 @@ body, html{
     padding: 8px 10px;
     font-size: 0.9rem;
     border-radius: 4px;
+    background: transparent;
+    color: var(--color-one);
 }
 .index-box-input input[type=password]{
     width: 100%;
@@ -198,6 +203,8 @@ body, html{
     border-radius: 4px;
     letter-spacing: 2.5px;
     transition: 0.5s;
+    background: transparent;
+    color: var(--color-one);
 }
 
 /********************/
@@ -218,7 +225,7 @@ body, html{
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     transition: 0.5s;
 }
@@ -339,6 +346,8 @@ body, html{
     padding: 8px 9px;
     font-size: 0.9rem;
     border-radius: 4px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 .index-form-recover-row-commands{
@@ -356,7 +365,7 @@ body, html{
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     transition: 0.5s;
 }

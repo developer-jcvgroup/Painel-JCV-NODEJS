@@ -117,6 +117,50 @@ async function validationTradeForms(){
     })
 }
 
+
+async function formsSystemVerify(){
+
+    //Pegando todos os formulários ativos
+    database
+    .select()
+    .where({jcv_formularios_registers_enabled: 1})
+    .table("jcv_formularios_registers")
+    .then( data => {
+        if(data != ''){
+            //Possui forms
+
+            data.forEach(element => {
+                
+                //Convertendo a data
+                let validade = moment(element.jcv_formularios_registers_expired, 'DD-MM-YYYY').format('YYYY-MM-DD')
+
+                //Validando se a data é passada
+                if(moment(validade).isBefore(moment().format("YYYY-MM-DD"))){
+                    //console.log('é menor que hoje')
+
+                    //Dando o update
+                    database
+                    .update({
+                        jcv_formularios_registers_enabled: 0
+                    })
+                    .where({
+                        jcv_formularios_registers_id: element.jcv_formularios_registers_id
+                    })
+                    .table("jcv_formularios_registers")
+                    .then( datas => {
+                        //Ok form desabilitado
+                    })
+                }
+
+            });
+
+        }else{
+            //Nada encontrado
+            //console.log('Executando a tarefa FORMS SYSTEM VALIDATE a cada dia - '+moment().format("DD-MM-YYYY HH:mm:ss"))
+        }
+    })
+}
+
 cron.schedule('*/60 * * * * *', () => {
     console.log("Executando a tarefa CALENDAR INITIAL EVENT a cada minuto: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     lembreteCalendar()
@@ -128,6 +172,14 @@ cron.schedule('*/60 * * * * *', () => {
 cron.schedule('0 0 0 * * *', () => {
     console.log("Executando a tarefa VALIDE FORM TRADE a cada dia: "+moment().format("DD-MM-YYYY HH:mm:ss"))
     validationTradeForms()
+}, {
+    scheduled: true,
+    timezone: "America/Sao_Paulo"
+});
+
+cron.schedule("0 0 1 * * *", () => {
+    console.log('Executando a tarefa FORMS SYSTEM VALIDATE as 2:00 A.M. - '+moment().format("DD-MM-YYYY HH:mm:ss"))
+    formsSystemVerify()
 }, {
     scheduled: true,
     timezone: "America/Sao_Paulo"

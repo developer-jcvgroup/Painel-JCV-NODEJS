@@ -1,15 +1,22 @@
+const { raw } = require("express");
 const database = require("./database/database");
 
 async function getUpdates(idUser, moduleOp){
     //Verificando se existe menssagem de novas atualizações
 
+    //Definindo que all pages
+    moduleOp == 'JCVMOD01' ? '"'+moduleOp+'"' : '"'+moduleOp+' ,JCVMOD01'+'"';
+
     const allUpdate = await database
     .raw(`
+        SELECT * from sys_update WHERE sys_update_moduleUp in ('${moduleOp}') AND sys_update_enabled = 1 AND NOT JSON_CONTAINS(sys_update_usersOkUpdate, '${idUser}', '$')
+    `)
+    /* .raw(`
         SELECT *
         FROM sys_update
         WHERE sys_update_usersOkUpdate = null OR NOT CONCAT(',', sys_update_usersOkUpdate, ',')
-        REGEXP CONCAT('[,]', '${idUser}', '[,]') AND sys_update_moduleUp = '${moduleOp}'
-    `)
+        REGEXP CONCAT('[,]', '${idUser}', '[,]') AND sys_update_moduleUp in ('${moduleOp}')
+    `) */
     //.raw("SELECT locate("+idUser+", sys_update_usersOkUpdate) achado,sys_update.* FROM sys_update WHERE NOT locate("+idUser+", sys_update_usersOkUpdate) > 0 AND sys_update_moduleUp = '"+moduleOp+"'")
     .then( data => { return data[0]; })
 

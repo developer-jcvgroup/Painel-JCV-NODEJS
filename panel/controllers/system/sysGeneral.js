@@ -8,37 +8,38 @@ exports.systemLogs = async (req,res) => {
 exports.closeUpdateSingle = async (req,res) => {
     const idUpdate = parseInt(req.body['button-update-single']);
     const moduleApp = req.body['param-url-update-'+idUpdate]
-    const concactNormal = ','+GLOBAL_DASH[0];
-    
-    //Informando que esta atualização ja foi vista pelo usuario
+
+    //Pegando a lista de oks deste update
+    const arrayOkay = await database
+    .select("sys_update_usersOkUpdate")
+    .where({sys_update_idUp: idUpdate})
+    .table("sys_update")
+    .then( data => {return data[0]})
+
+    let arrayUserUpdate = JSON.parse(arrayOkay.sys_update_usersOkUpdate);
+    arrayUserUpdate.push(GLOBAL_DASH[0])
+
     database
-    .raw("UPDATE sys_update SET sys_update_usersOkUpdate = CONCAT(COALESCE(sys_update_usersOkUpdate,''), '"+concactNormal+"') WHERE sys_update_idUp = "+idUpdate+"")
-    .then( data => {
-        if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update lido com sucesso.");
-            res.redirect('/painel'+moduleApp);
-        }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
-            res.redirect('/painel'+moduleApp);
-        }
+    .update({
+        sys_update_usersOkUpdate: JSON.stringify(arrayUserUpdate) 
     })
-}
-
-exports.closeUpdateAll = async (req,res) => {
-
-    const moduleApp = typeof(req.body['param-url-update']) == 'object' ? req.body['param-url-update'][0] : req.body['param-url-update']
-    const idsAll = req.body['button-update-all'];
-    
-    //Informando que TODAS atualização ja foi vista pelo usuario
-    database
-    .raw("UPDATE sys_update SET sys_update_usersOkUpdate = CONCAT(COALESCE(sys_update_usersOkUpdate,''), ',"+GLOBAL_DASH[0]+"') WHERE sys_update_idUp IN ("+idsAll+") ")
+    .where({sys_update_idUp: idUpdate})
+    .table("sys_update")
     .then( data => {
         if(data != ''){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update lido com sucesso.");
-            res.redirect('/painel');
+            if(moduleApp != ''){
+                res.redirect(moduleApp);
+            }else{
+                res.redirect('/painel')
+            }
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
-            res.redirect('/painel');
+            if(moduleApp != ''){
+                res.redirect(moduleApp);
+            }else{
+                res.redirect('/painel')
+            }
         }
     })
 }

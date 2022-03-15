@@ -99,7 +99,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -122,7 +122,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -144,12 +144,14 @@
     font-size: 1.2rem;
     cursor: pointer;
     margin-right: 5px;
+    color: var(--color-one);
 }
 #open-search-product-two{
     position: absolute;
     font-size: 1.2rem;
     cursor: pointer;
     margin-right: 5px;
+    color: var(--color-one);
 }
 
 .beleza-new-form-row-large input{
@@ -159,7 +161,9 @@
     border: 0;
     padding: 5px 5px;
     font-size: 1rem;
+    color: var(--color-one);
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
 }
 
 .beleza-new-cont-off{

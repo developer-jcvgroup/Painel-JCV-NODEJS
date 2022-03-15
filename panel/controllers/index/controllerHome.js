@@ -117,6 +117,56 @@ getCalendarEvents = async () => {
     return count;
 }
 
+
+getInfoGrapicsBeleza = async () => {
+
+    let dataReference = moment().format("MM-YYYY");
+
+    const productTwo = await database
+    .raw("SELECT sys_blz_tratmentTwo, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY COUNT(sys_blz_tratmentTwo) DESC LIMIT 3")
+    .then(data => {
+        return data[0];
+    })
+
+    const productOne = await database
+    .raw("SELECT sys_blz_tratmentOne, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY COUNT(sys_blz_tratmentOne) DESC LIMIT 3")
+    .then(data => {
+        return data[0];
+    })
+
+    let arrayConvert = {};
+    productOne.forEach(element => {
+        arrayConvert[element.sys_blz_tratmentOne.split(' - ')[1]] = element.Qtd
+    });
+    productTwo.forEach(element => {
+        arrayConvert[element.sys_blz_tratmentTwo.split(' - ')[1]] = element.Qtd
+    });
+
+    arrayConvert['dateBeleza'] = dataReference
+    return JSON.stringify(arrayConvert)
+
+}
+
+getInfoGrapicsCalendar = async () => {
+
+    let dataReference = moment().subtract(1, 'M').format("MM/YYYY");
+
+    const registersCalendar = await database
+    .raw("SELECT sys_calendar_roomName,sys_calendar_roomColor, COUNT(sys_calendar_eventRoom) AS Qtd FROM jcv_jcvpanel.jcv_calendar_registers INNER JOIN jcv_calendar_rooms ON jcv_calendar_rooms.sys_calendar_roomId = jcv_calendar_registers.sys_calendar_eventRoom WHERE sys_calendar_eventMonth = '"+dataReference+"' GROUP BY sys_calendar_eventRoom HAVING COUNT(sys_calendar_eventRoom) > 0 ORDER BY COUNT(sys_calendar_eventRoom) DESC LIMIT 6")
+    .then(data => {
+        return data[0];
+    })
+
+    let arrayConvert = {};
+    registersCalendar.forEach(element => {
+        arrayConvert[element.sys_calendar_roomName] = [element.sys_calendar_roomColor, element.Qtd]
+    });
+
+    arrayConvert['dateCalendar'] = dataReference
+    return JSON.stringify(arrayConvert)
+
+}
+
 exports.homeInfo = async (req,res)=> {
 
     //Verificando se tem pedidos
@@ -129,7 +179,12 @@ exports.homeInfo = async (req,res)=> {
 
     //Pegadando os 3 primeiros eventos
     const CALENDARcount = await getCalendarEvents();
-    
+
+    //Gráficos Beleza
+    const arrayConvert = await getInfoGrapicsBeleza();
+
+    //Gráficos Calendário
+    const arrayCalendar = await getInfoGrapicsCalendar();
     var page = "home";
     res.render("panel/index", {
         page: page, 
@@ -137,7 +192,9 @@ exports.homeInfo = async (req,res)=> {
         system_blz_status: BLZstatusOrder, 
         REQUISITORstatus: REQUISITORstatus,
         CALENDARcount: CALENDARcount,
-        TRADEMKTcount: TRADEMKTcount
+        TRADEMKTcount: TRADEMKTcount,
+        arrayConvert: arrayConvert,
+        arrayCalendar: arrayCalendar
     })
 
     

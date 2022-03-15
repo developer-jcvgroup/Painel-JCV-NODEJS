@@ -331,7 +331,7 @@ exports.saveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento criado!';
-                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay} | ${eventHourInitial} - ${eventHourFinal}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
                             
                         }
@@ -406,7 +406,7 @@ exports.deleteEvent = async(req,res) => {
             })
 
             const textOne = 'Evento Excluido!';
-            const textTwo = `Olá, um evento foi excluido onde você era um dos participantes.</b><br> Excluido por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${data[0].sys_calendar_eventDate}</b> <br> Evento: <b>${data[0].sys_calendar_eventName}</b>. <br><br> Para maiores inforamções entre em contato com o responsável pelo evento`;
+            const textTwo = `Olá, um evento foi excluido onde você era um dos participantes.</b><br> Excluido por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${data[0].sys_calendar_eventDate}</b> <br> Evento: <b>${data[0].sys_calendar_eventName}</b>. <br><br> Para maiores informações entre em contato com o responsável pelo evento`;
             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Excluido', 'Evento Excluido', 'Calendario', '', textOne, textTwo);
         }
 
@@ -707,7 +707,7 @@ exports.editSaveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento editado!';
-                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores inforamções acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                             
                         }

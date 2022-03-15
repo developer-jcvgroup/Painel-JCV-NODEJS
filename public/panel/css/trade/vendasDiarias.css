@@ -31,7 +31,7 @@
 }
 .sales-day-form-title-one{
     font-size: 1rem;
-    color: var(--color-three);
+    color: var(--color-four);
 }
 /*  */
 .sales-day-form-info{
@@ -40,7 +40,7 @@
 }
 .sales-day-form-info label{
     font-size: 1rem;
-    color: var(--color-three);
+    color: var(--color-four);
     font-weight: bold;
 }
 .sales-day-form-info select{
@@ -49,10 +49,9 @@
     background: transparent;
     border: 1px solid var(--color-three);
     border-radius: 4px;
-    color: var(--color-three);
+    color: var(--color-four);
     margin: 0 21px;
     font-weight: bold;
-    background: var(--color-two);
 }
 /*  */
 .sales-day-form-info input[type=date]{
@@ -62,7 +61,7 @@
     background: transparent;
     padding: 5px;
     cursor: pointer;
-    color: var(--color-three);
+    color: var(--color-four);
     border: 1px solid var(--color-three);
     border-radius: 4px;
 }
@@ -145,6 +144,8 @@ hr{
     font-size: 0.9rem;
     border: 1px solid var(--color-one);
     border-radius: 4px;
+    background: transparent;
+    color: var(--color-two);
 }
 .sales-day-form-section-text input[type=text]{
     min-width: 450px;
@@ -155,6 +156,8 @@ hr{
     font-size: 0.9rem;
     border: 1px solid var(--color-one);
     border-radius: 4px;
+    color: var(--color-two);
+    background: transparent;
 }
 /*  */
 .sales-day-form-section-question-cont{
@@ -168,6 +171,7 @@ hr{
     color: var(--color-one);
     cursor: pointer;
     margin-right: 15px;
+    background: transparent;
 }
 
 .sales-day-form-section-questions-checks-text{
@@ -186,6 +190,8 @@ hr{
     font-size: 0.9rem;
     border: 1px solid var(--color-one);
     border-radius: 4px;
+    color: var(--color-two);
+    background: transparent;
 }
 
 
@@ -203,7 +209,7 @@ hr{
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-two);
+    background: var(--color-one-btn);
     cursor: pointer;
     margin: 0 24px;
 }

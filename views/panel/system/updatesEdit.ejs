@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/panel/css/system/updatesNew.css">
+
+<section class="update-new-center">
+    <div class="link-container-back">
+        <a href="/painel/updates/main"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="update-new-title">
+        <span>Editar Update <b>#<%= infoUpdate[0].sys_update_idUp %></b></span>
+        <span>/ Sistema</span>
+    </section>
+    <!--  -->
+    <section class="update-new-body">
+        <form method="post" class="update-new-body-form">
+            <div class="update-new-title">
+                <input type="text" name="update-name" value="<%= infoUpdate[0].sys_update_nameUpdate %>" placeholder="Titulo do update">
+            </div>
+            <!--  -->
+            <div class="update-new-box">
+                <label for="">Ultima versão: <%= allUpdates[0].sys_update_versionUpdate %></label>
+                <input type="text" name="update-version" value="<%= infoUpdate[0].sys_update_versionUpdate %>" placeholder="Escolha a versão">
+            </div>
+            <!--  -->
+            <div class="update-new-box">
+                <label for="">Url do update?</label>
+                <input type="text" name="update-url" value="<%= infoUpdate[0].sys_update_urlRedirect %>" placeholder="Caso queira redirecionar insira uma url ex.: 'https://jcv.net.br'">
+            </div>
+            <!--  -->
+            <div class="update-new-box">
+                <label for="">Aplicativo</label>
+                <select name="update-app" id="">
+                    <option value="<%= infoUpdate[0].sys_update_moduleUp %>"><%= infoUpdate[0].sys_update_moduleUp %></option>
+                    <option disabled></option>
+                    <option value="JCVMOD01">JCVMOD01 - All Pages</option>
+                    <option value="JCVMOD02">JCVMOD02 - Programa da Beleza</option>
+                    <option value="JCVMOD03">JCVMOD03 - Requisitor de Materiais</option>
+                    <option value="JCVMOD04">JCVMOD04 - Calendario</option>
+                    <option value="JCVMOD05">JCVMOD05 - Trade MKT</option>
+                    <option value="JCVMOD06">JCVMOD06 - Config. Sistema Geral</option>
+                    <option value="JCVMOD07">JCVMOD07 - Perfil Usuario</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="update-new-box">
+                <label for="">Ativo?</label>
+                <select name="update-enabled" id="">
+                    <% if(infoUpdate[0].sys_update_enabled == 1){ %>
+                        <option value="1">Sim</option>
+                    <% }else{ %>
+                        <option value="0">Não</option>
+                    <% } %>
+                    <option disabled></option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+           
+            <!--  -->
+            <section class="update-new-actions">
+                <button formaction="/painel/updates/edit" name="update-id" value="<%= infoUpdate[0].sys_update_idUp %>" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+            <section class="update-new-tiny-body">
+                <label for="">Descreva</label>
+                <textarea name="textarea-update-get" cols="30" rows="50"></textarea>
+            </section>
+        </form>
+    </section>
+</section>
+<script src="https://cdn.tiny.cloud/1/kbtfse4d099mia6suz4m60564omf15433cwb4nzddf81s2cm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    
+    tinymce.init({
+        selector: 'textarea',
+        setup: function (editor) {
+            editor.on('init', function (e) {
+                editor.setContent(`<%- infoUpdate[0].sys_update_textUpdate %>`);
+            });
+        },
+        plugins: 'image a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+        toolbar: 'link image a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+        toolbar_mode: 'floating',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        language: 'pt_BR',
+        // enable title field in the Image dialog
+        image_title: true, 
+        // enable automatic uploads of images represented by blob or data URIs
+        automatic_uploads: true,
+        // add custom filepicker only to Image dialog
+        file_picker_types: 'image',
+        file_picker_callback: function(cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+            
+            reader.onload = function () {
+                var id = 'blobid' + (new Date()).getTime();
+                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(',')[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+
+                // call the callback and populate the Title field with the file name
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+            };
+            
+            input.click();
+        }
+    });
+    
+</script>

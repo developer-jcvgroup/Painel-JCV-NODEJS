@@ -33,10 +33,12 @@
                                 </div>
                                 <hr style="width: 100%; margin: 7px 0;">
                                 <form method="post" class="formularios-main-forms-link-button">
+                                    
                                     <button formaction="/painel/formularios/reponse/downlod" type="submit" name="button-exports-responses-form" value="<%= element.jcv_formularios_registers_id %>" title="Baixar Respostas"><i class="ri-download-line"></i></button>
                                     <button class="class-loader" formaction="/painel/formularios/disabled" type="submit" name="button-disabled-form" value="<%= element.jcv_formularios_registers_id %>" title="Desabilitar formulario"><i class="ri-delete-bin-2-line"></i></button>
                                     <button class="class-loader" formaction="/painel/formularios/delete" type="submit" name="button-delete-form" value="<%= element.jcv_formularios_registers_id %>" title="Excluir Formulário"><i class="ri-delete-bin-line"></i></button>
                                     <button class="class-loader" formaction="/painel/formularios/deleteResponses" type="submit" name="button-delete-responses-form" value="<%= element.jcv_formularios_registers_id %>" title="Excluir Respostas"><i class="ri-close-line"></i></button>
+                                    <button class="class-loader" formaction="/painel/formularios/reponseButton" value="<%= element.jcv_formularios_registers_id %>" name="button-redirect-page" class="click-button-view"><i class="ri-link"></i></button>
                                 </form>
                             </a>
                             <% }) %>

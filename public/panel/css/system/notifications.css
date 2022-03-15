@@ -102,7 +102,7 @@
     border-radius: 4px;
     font-size: 0.7rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 

@@ -57,12 +57,18 @@
     padding: 5px 5px;
     font-size: 0.9rem;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 
 /* */
 .list-order-title-box{
     display: flex;
     justify-content: space-between;
+}
+.list-order-title-box span{
+    font-size: 0.8rem;
+    color: var(--color-one);
 }
 .list-order-label span{
     font-size: 0.7rem;
@@ -158,6 +164,8 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 .list-order-container-box-single-select select{
     width: 150px;
@@ -168,6 +176,8 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 
 /* LINKS */
@@ -197,7 +207,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -236,8 +246,8 @@
     border-bottom: 1px solid var(--color-five);
     text-align: left;
     font-weight: normal;
-    background: var(--color-one);
-    color: var(--color-four);
+    background: var(--color-one-boxs);
+    color: var(--color-one);
     padding: 6px;
     font-size: 0.9rem;
 }

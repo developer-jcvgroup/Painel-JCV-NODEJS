@@ -1,6 +1,6 @@
 
 <section class="section-home-main-center">
-    <section class="home-section-card-background">
+    <section class="home-section-card-background" id="home-section-card-background">
         <!--  -->
     </section>
 
@@ -27,8 +27,8 @@
                                     <div class="sys-icon-def">
                                         <img class="sys-icon-size" src="/icons/icon-calendar.png" alt="">
                                     </div>
-                                    <span>Calendario</span>
-                                    <span>Você possui⠀<b><%= CALENDARcount %></b>⠀participação em eventos <i class="ri-external-link-line"></i></span>
+                                    <span>⠀</span>
+                                    <span><b><%= CALENDARcount %></b>⠀participação(ões) <i class="ri-external-link-line"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -50,8 +50,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
                                         </div>
-                                        <span>Você possui requisições</span>
-                                        <span>Clique e veja mais <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Você possui requisições <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -62,8 +62,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
                                         </div>
-                                        <span>Faça sua requisição</span>
-                                        <span>Clique aqui <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Faça sua requisição <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -86,8 +86,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Solicitação concluída</span>
-                                        <span>Clique e veja <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Solicitação concluída <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -98,8 +98,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Solicitação pendente</span>
-                                        <span>Clique e faça já <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Solicitação pendente <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -110,8 +110,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Solicitação cancelada</span>
-                                        <span>Clique para refazer <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Solicitação cancelada <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -122,8 +122,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Solicitação separada</span>
-                                        <span>Clique para rever <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Solicitação separada <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -134,8 +134,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Pedido de cancelamento</span>
-                                        <span>Clique para ver <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Pedido de cancelamento <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -146,8 +146,8 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
                                         </div>
-                                        <span>Solicitação Pendente</span>
-                                        <span>Clique para refazer <i class="ri-external-link-line"></i></span>
+                                        <span>⠀</span>
+                                        <span>Solicitação Pendente <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                                         <div class="sys-icon-def">
                                             <img class="sys-icon-size" src="/icons/icon-trade.png" alt="">
                                         </div>
-                                        <span>Trade Mkt</span>
+                                        <span>⠀</span>
                                         <span><b><%= TRADEMKTcount %></b>⠀formulário para responder <i class="ri-external-link-line"></i></span>
                                     </a>
                                 </div>
@@ -178,24 +178,128 @@
                     </div>
                 <% } %>
 
-            <!-- <div class="home-logs-system">
-                <div class="home-logs-main">
-                    <div class="home-logs-title"><span><a href="/painel/logs">Logs</a></span></div>
-                    <div class="home-logs-list">
-                        <a href=""><i class="ri-cursor-line"></i><span><b>Vitor Henrique </b>criou um novo pedido. 11/10/2021 - 15h</span></a>
-                        <a href=""><i class="ri-check-line"></i><span><b>Vitor Henrique </b>Finalizou um pedido. 11/10/2021 - 15h</span></a>
-                        <a href=""><i class="ri-error-warning-line"></i><span><b>12 Dias </b>para criar um pedido. 11/10/2021 - 15h</span></a>
-
-
-                        <a href=""><i class="ri-cursor-line"></i><span><b>Vitor Henrique </b>criou um novo pedido</span></a>
-                        <a href=""><i class="ri-check-line"></i><span><b>Vitor Henrique </b>Finalizou um pedido</span></a>
-                        <a href=""><i class="ri-error-warning-line"></i><span><b>12 Dias </b>para criar um pedido</span></a>
+                <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1){ %>
+                <div class="home-logs-system" style="width: <%= GLOBAL_PERM[0].sys_cal_perm_admin == 1 ? '48%' : '100%' %>;">
+                    <div class="home-logs-main">
+                        <div class="home-logs-title"><span>Programa da Beleza</div>
+                        <div class="home-logs-list-chars">
+                            <canvas id="grapichs-main-display-beleza" width="100%" height="100%"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div> -->
+                <% } %>
+
+                <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
+                <div class="home-logs-system">
+                    <div class="home-logs-main">
+                        <div class="home-logs-title"><span>Calendário</span></div>
+                        <div class="home-logs-list-chars">
+                            <canvas id="grapichs-main-display-calendar" width="100%" height="100%"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+            </div>
         </section>
 
         <!-- -->
 
     </section>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script>
+
+    let arrayConvert = JSON.parse('<%- arrayConvert %>')
+    let monthReference = arrayConvert['dateBeleza'].split('-')[0]+'/'+arrayConvert['dateBeleza'].split('-')[1]
+    delete arrayConvert['dateBeleza']
+
+    const ctx = document.getElementById('grapichs-main-display-beleza').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(arrayConvert),
+            datasets: [{
+                label: ' Mais pedido',
+                data: Object.values(arrayConvert),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+                plugins: {
+                title: {
+                    display: true,
+                    text: 'Produtos mais solicitados '+monthReference
+                }
+            }
+        }
+    });
+
+    let arrayConvertBox = JSON.parse('<%- arrayCalendar %>')
+    let monthReferenceBox = arrayConvertBox['dateCalendar']
+    delete arrayConvertBox['dateCalendar']
+
+    let objValues = Object.values(arrayConvertBox).map(convertSetVal);
+    function convertSetVal(value){
+        return value[1]
+    }
+
+    let objRooms = Object.keys(arrayConvertBox).map(convertSetRooms);
+    function convertSetRooms(value){
+        return value
+    }
+
+    let colorsValues = Object.values(arrayConvertBox).map(convertSetColos);
+    function convertSetColos(value){
+        return value[0]
+    }
+    
+    const boxctx = document.getElementById('grapichs-main-display-calendar').getContext('2d');
+    const myChartBox = new Chart(boxctx, {
+        type: 'bar',
+        data: {
+            labels: objRooms,
+            datasets: [{
+                label: ' Sala mais utilizada',
+                data: objValues,
+                backgroundColor: 'transparent',
+                borderColor: colorsValues,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+                plugins: {
+                title: {
+                    display: true,
+                    text: 'Sala mais utilizada '+monthReferenceBox
+                }
+            }
+        }
+    });
+</script>

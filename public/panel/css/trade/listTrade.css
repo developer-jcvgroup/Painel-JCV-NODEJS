@@ -71,6 +71,8 @@
     padding: 5px 5px;
     font-size: 0.9rem;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 
 /* INPUT ACTIONS ALL */
@@ -98,6 +100,7 @@
     border-bottom: 1px solid var(--color-one);
     cursor: pointer;
     background: transparent;
+    color: var(--color-one);
 }
 .all-order-action-all{
     display: flex;
@@ -110,7 +113,7 @@
     border-radius: 4px;
     font-size: 0.7rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -182,6 +185,8 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 .list-trade-container-box-single-select select{
     width: 150px;
@@ -192,6 +197,7 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-one);
+    color: var(--color-one);
     cursor: pointer;
     background: transparent;
 }
@@ -223,7 +229,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -259,7 +265,7 @@
     border-bottom: 1px solid var(--color-five);
     text-align: left;
     font-weight: normal;
-    background: var(--color-one);
+    background: var(--color-one-boxs);
     color: var(--color-four);
     padding: 6px;
     font-size: 0.9rem;

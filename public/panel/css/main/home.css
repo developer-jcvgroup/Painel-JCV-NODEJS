@@ -124,12 +124,14 @@
 }
 /* ONE */
 .main-suspended-info{
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .main-suspended-group-info{
     text-decoration: none;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,7 +148,7 @@
 }
 .main-suspended-group-info span:nth-child(3){
     margin-top: 5px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
 }
@@ -160,7 +162,7 @@
     margin: 8px 0;
 }
 .sys-icon-size{
-    width: 60%;
+    width: 40%;
     height: 100%;
     height: fit-content;
     object-fit: cover;
@@ -220,8 +222,8 @@
 /*********************************/
 /* LOG DO SISTEMA */
 .home-logs-system{
-    width: 100%;
-    margin-top: 28px;
+    width: 48%;
+    margin: 28px 0;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -229,7 +231,7 @@
     box-shadow: 0 0 4px 0 var(--color-three);
 }
 .home-logs-main{
-    max-height: 200px;
+    /* max-height: 200px; */
     display: flex;
     flex-direction: column;
     white-space: nowrap;
@@ -246,27 +248,18 @@
     color: var(--color-one);
 }
 
-.home-logs-list{
+.home-logs-list-chars{
     width: 100%;
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
 }
-
-.home-logs-list a{
-    text-decoration: none;
-    font-size: 0.9rem;
-    color: var(--color-one);
-    margin: 15px 0;
-    display: flex;
-    align-items: center;
+/*  */
+#grapichs-main-display-beleza{
+    max-height: 700px;
 }
-.home-logs-list a i{
-    font-size: 1rem;
-    margin-right: 18px;
-}
-.home-logs-list a i{
-    font-size: 1rem;
-    margin-right: 18px;
+#grapichs-main-display-calendar{
+    max-height: 700px;
 }
 
 /*********************************/

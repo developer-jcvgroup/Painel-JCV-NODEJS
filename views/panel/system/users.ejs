@@ -438,8 +438,10 @@
         $(function(){
             $.fn.loadSpin(0)
 
-            //Iniciando socket
-            const socket = io("https://jcv.net.br")
+            //Get url start Socketio
+            let urlValidate = '<%- PAINEL_URL %>';
+
+            const socket = io(urlValidate)
 
             //View box: stilo no cpf
             $(".sys-view-user-cpf").mask('000.000.000-00')

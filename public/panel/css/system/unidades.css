@@ -50,7 +50,6 @@
 .sys-box-search{
     width: 50%;
     margin-top: 32px;
-    background: cornflowerblue;
 }
 .sys-box-search input[type=text]{
     width: 100%;
@@ -60,6 +59,7 @@
     border: 0;
     border-bottom: 1px solid var(--color-one);
     outline: 0;
+    background: transparent;
 }
 
 /***************************************/
@@ -97,7 +97,7 @@
     border: none;
     border-bottom: 1px solid var(--color-five);
     text-align: left;
-    background: var(--color-one);
+    background: var(--color-one-boxs);
     color: var(--color-four);
     font-weight: normal;
     padding: 6px;
@@ -131,6 +131,8 @@
     border: 1px solid var(--color-seven);
     padding: 6px;
     font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
 }
 .sys-input-table-large-one{
     width: 100%;
@@ -147,6 +149,8 @@
     text-transform: uppercase;
     border: 1px solid var(--color-seven);
     cursor: pointer;
+    color: var(--color-one);
+    background: transparent;
 }
 
 /********************************/

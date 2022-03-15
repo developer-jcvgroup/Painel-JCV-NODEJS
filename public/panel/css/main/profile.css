@@ -95,8 +95,10 @@
 .profile-container-input input{
     outline: 0;
     border: 0;
-    padding: 6px 6px;
+    padding: 8px 6px;
     font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
     border-bottom: 1px solid var(--color-one);
 }
 
@@ -294,10 +296,12 @@
 }
 .avataars-main-box span{
     font-size: 1rem;
+    color: var(--color-one);
 }
 .avataars-main-box i{
     font-size: 2rem;
     cursor: pointer;
+    color: var(--color-one);
 }
 
 .avataars-main-style{
@@ -355,7 +359,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     display: flex;
     align-items: center;

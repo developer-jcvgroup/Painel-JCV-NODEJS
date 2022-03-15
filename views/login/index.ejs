@@ -195,5 +195,13 @@
     //Array com CPFs sem senha
     let arrayPassNull = '<%- allAccountPass %>'.split(',')//.map( Number );
 
+    if(Cookies.get('root-vars-colors') != undefined){
+        const arryaColorSet = Cookies.get('root-vars-colors')
+        $(':root').css(JSON.parse(arryaColorSet))
+        
+        //$("#image-1").attr('src','/logos/jcvLogo.png')
+        $("#image-1").attr('src', '/logos/logo-jcv-03.png')//Logo claro
+    }
+
 </script>
 </html>

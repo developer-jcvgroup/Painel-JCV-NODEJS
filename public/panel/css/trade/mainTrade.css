@@ -237,6 +237,7 @@
 .trade-main-forms-not-found span{
     font-size: 0.8rem;
     margin-top: 14px;
+    color: var(--color-one);
 }
 .trade-main-forms-error{
     width: 85%;

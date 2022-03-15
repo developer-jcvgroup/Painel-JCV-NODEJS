@@ -1,0 +1,194 @@
+<link rel="stylesheet" href="/panel/css/notifications/newNotify.css">
+
+<section class="newNotify-new-center">
+    <div class="link-container-back">
+        <a href="/painel/notifications/main"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="newNotify-new-title">
+        <span>Nova Notificação</span>
+        <span>/ Sistema</span>
+    </section>
+    <!--  -->
+    <section class="newNotify-new-body">
+        <form method="post" class="newNotify-new-body-form">
+            <div class="newNotify-new-title">
+                <input type="text" name="newNotify-title" placeholder="Titulo da notificação">
+            </div>
+            <!--  -->
+            <div class="newNotify-new-box">
+                <label for="">Ativo?</label>
+                <select name="newNotify-enabled" id="">
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="newNotify-new-box">
+                <label for="">Link</label>
+                <input type="text" name="newNotify-link" placeholder="Caso queira redirecionar insira a URL completa ex.: 'https://jcv.net.br/'">
+            </div>
+            <!--  -->
+            <div class="newNotify-new-box">
+                <label for="">App</label>
+                <select name="newNotify-type" id="">
+                    <option value="JCVMOD01">JCVMOD01 - All Pages</option>
+                    <option value="JCVMOD02">JCVMOD02 - Programa da Beleza</option>
+                    <option value="JCVMOD03">JCVMOD03 - Requisitor de Materiais</option>
+                    <option value="JCVMOD04">JCVMOD04 - Calendario</option>
+                    <option value="JCVMOD05">JCVMOD05 - Trade MKT</option>
+                    <option value="JCVMOD06">JCVMOD06 - Config. Sistema Geral</option>
+                    <option value="JCVMOD07">JCVMOD07 - Perfil Usuario</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="newNotify-new-box">
+                <i id="open-menu-users-select" class="ri-user-line"></i>
+                <span id="count-users-selects" style="color: var(--color-one); position: absolute; margin-left: 23px; margin-top: -10px;"><b>0</b></span>
+            </div>
+            <!--  -->
+            <section class="newNotify-new-actions">
+                <input type="text" hidden id="array-users-list" name="array-users-list">
+                <button formaction="/painel/notifications/new" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+            <section class="newNotify-new-tiny-body">
+                <label for="">Descreva</label>
+                <textarea name="textarea-newNotify-get" cols="30" rows="10"></textarea>
+            </section>
+        </form>
+    </section>
+</section>
+<section class="newNotify-users-main" id="newNotify-users-main">
+    <div class="newNotify-users-box">
+        <div class="newNotify-users-box-title">
+            <span>Adicionar usuários</span>
+            <i id="newNotify-close-users" class="ri-close-line"></i>
+        </div>
+        <!--  -->
+        <div class="newNotify-users-box-search-box">
+            <input type="text" placeholder="Procure por um usuario, groupo, departamento, unidade.." id="input-search-users">
+        </div>
+        <!--  -->
+        <div class="newNotify-users-box-cont">
+
+            <table class="newNotify-users-box-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="" id="check-all-checkboxs"></th>
+                        <th>Usuario</th>
+                        <th>Departamento</th>
+                        <th>Unidade</th>
+                        <th>Classificado</th>
+                    </tr>
+                </thead>
+                <tbody id="newNotify-users-box-table-tbody">
+                    <% allUsersSystem.forEach(element => { %>
+                    <tr>
+                        <td><input type="checkbox" class="check-checkboxs-action" value="<%= element.jcv_id %>" name="checkbox-values-check"></td>
+                        <td><%= element.jcv_userNamePrimary %></td>
+                        <td><%= element.sys_department_name %></td>
+                        <td><%= element.sys_unity_name %></td>
+                        
+                        <% if(element.jcv_userCassification == 1){ %>
+                            <td>Master</td>
+                        <% }else if(element.jcv_userCassification == 2){ %>
+                            <td>Gestor</td>
+                        <% }else if(element.jcv_userCassification == 3){ %>
+                            <td>Colaborador Interno</td>
+                        <% }else if(element.jcv_userCassification == 4){ %>
+                            <td>Representantes</td>
+                        <% }else if(element.jcv_userCassification == 5){ %>
+                            <td>Promotoras</td>
+                        <% }else if(element.jcv_userCassification == 6){ %>
+                            <td>Jovem Aprendiz</td>
+                        <% } %>
+
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</section>
+<script>
+
+    let checkIndex = 0;
+    $.fn.searchInputTable = function(tableRows, inputSearchTable){
+        
+        const rows = $(''+tableRows+'');
+        $(inputSearchTable).keyup(function() {
+            
+            if($(this).val() != ''){
+                console.log('fechar')
+                $.fn.closePagination(0)//Fechar a paginação
+            }else{
+                console.log('abrir')
+                $("#check-all-checkboxs").prop('checked', false)
+                checkIndex = 0
+                $.fn.closePagination(1)//Abrir a paginação
+            }
+
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+            
+            rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+
+                return !~text.indexOf(val);
+            }).hide();
+        });
+
+        
+    }
+
+    //Input Search
+    $.fn.searchInputTable('#newNotify-users-box-table-tbody tr', '#input-search-users')
+</script>
+<script>
+
+    //Action close screen
+    $("#newNotify-close-users").click(function(){
+        $("#newNotify-users-main").fadeOut()
+    })
+    //Open screen
+    $("#open-menu-users-select").click(function(){
+        $("#newNotify-users-main").fadeIn().css('display','flex')
+    })
+
+    //Checksbox all
+    $("#check-all-checkboxs").click(function(){
+
+        if(checkIndex == 0){
+            $(".check-checkboxs-action:visible").prop('checked', true)
+
+            let arrayData = $('input[name="checkbox-values-check"]:checked').toArray().map(function(check) { 
+                return parseInt($(check).val()); 
+            });
+
+            $("#array-users-list").val(arrayData)
+            $("#count-users-selects").text(arrayData.length)
+
+            checkIndex=1
+        }else{
+
+            $(".check-checkboxs-action").prop('checked', false)
+           
+            $("#array-users-list").val()
+            $("#count-users-selects").text(0)
+
+            checkIndex=0
+        }
+    })
+
+    //Create array users
+    $('.check-checkboxs-action').click(function(){
+
+        let arrayData = $('input[name="checkbox-values-check"]:checked').toArray().map(function(check) { 
+            return parseInt($(check).val()); 
+        });
+
+        $("#array-users-list").val(arrayData)
+        $("#count-users-selects").text(arrayData.length)
+    })
+</script>

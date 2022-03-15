@@ -1,24 +1,24 @@
-.formularios-main-section{
+.updates-main-main-section{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.formularios-main-section-page{
+.updates-main-main-section-page{
     width: 90%;
 }
 
 /* ************************************** */
 /* TITLE PAGE */
-.formularios-main-title-page{
+.updates-main-main-title-page{
     width: 100%;
     margin: 2% 0;
 }
-.formularios-main-title-page span:nth-child(1){
+.updates-main-main-title-page span:nth-child(1){
     font-size: 1.2rem;
     color: var(--color-one);
 }
-.formularios-main-title-page span:nth-child(2){
+.updates-main-main-title-page span:nth-child(2){
     margin-left: 4px;
     font-size: 0.7rem;
     color: var(--color-one);
@@ -26,7 +26,7 @@
 
 /* ************************************** */
 /* TRADE MKT BODY PAGE */
-.formularios-main-container-body{
+.updates-main-main-container-body{
     width: 100%;
     height: calc(100vh - 180px);
     display: flex;
@@ -37,14 +37,14 @@
 
 /* ************************************** */
 /* LISTA DE FORMULARIOS */
-.formularios-main-section-list-forms{
+.updates-main-main-section-list-forms{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: auto;
 }
-.formularios-main-forms{
+.updates-main-main-forms{
     /* padding: 24px; */
     display: flex;
     width: 100%;
@@ -53,11 +53,11 @@
     flex-wrap: wrap;
 }
 
-.formularios-main-forms-title{
+.updates-main-main-forms-title{
     margin: 8px 0;
     display: flex;
 }
-.formularios-main-forms-title span{
+.updates-main-main-forms-title span{
     font-size: 0.9rem;
     color: var(--color-two);
 }
@@ -65,7 +65,7 @@
 #form-list-fished{
     display: none;
 }
-.formularios-main-forms-link{
+.updates-main-main-forms-link{
     text-decoration: none;
     width: 280px;
     min-height: 300px;
@@ -79,7 +79,7 @@
     border-radius: 4px;
     margin: 24px;
 }
-.formularios-main-forms-link-info{
+.updates-main-main-forms-link-info{
     width: 100%;
     height: 100%;
     display: flex;
@@ -88,39 +88,38 @@
     justify-content: center;
     white-space: normal;
 }
-.formularios-main-forms-link-info span:nth-child(1){
+.updates-main-main-forms-link-info span:nth-child(1){
     font-size: 1.2rem;
     margin: 9px 0;
     color: var(--color-two);
 }
-.formularios-main-forms-link-info span:nth-child(2){ 
+.updates-main-main-forms-link-info span:nth-child(2){ 
     font-size: 0.8rem;
     margin: 5px 0;
     color: var(--color-two);
 }
-.formularios-main-forms-link-info span:nth-child(3){ 
+.updates-main-main-forms-link-info span:nth-child(3){ 
     font-size: 0.8rem;
     margin: 5px 0;
     color: var(--color-two);
 }
-.formularios-main-forms-link-info span:nth-child(4){
+.updates-main-main-forms-link-info span:nth-child(4){
     font-size: 0.8rem;
     margin: 5px 0;
     color: var(--color-two);
 }
-.formularios-main-forms-link-info span:nth-child(4) b{
+.updates-main-main-forms-link-info span:nth-child(4) b{
     display: flex;
     align-items: center;
 }
 
-.formularios-main-forms-link-button{
+.updates-main-main-forms-link-button{
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     margin: 0 10px;
 }
-.formularios-main-forms-link-button button{
+.updates-main-main-forms-link-button button{
     outline: 0;
     border: 0;
     padding: 3px 8px;
@@ -132,36 +131,24 @@
     cursor: pointer;
     transition: 0.5s;
 }
-.formularios-main-forms-link-button a{
-    text-decoration: none;
-    outline: 0;
-    border: 0;
-    padding: 3px 8px;
-    margin: 0 7px;
-    border-radius: 4px;
-    font-size: 1.5rem;
-    color: var(--color-one);
-    background: transparent;
-    cursor: pointer;
-    transition: 0.5s;
-}
+
 /*  */
-.formularios-main-forms-not-found{
+.updates-main-main-forms-not-found{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.formularios-main-forms-not-found img{
+.updates-main-main-forms-not-found img{
     width: 400px;
     object-fit: contain;
 }
-.formularios-main-forms-not-found span{
+.updates-main-main-forms-not-found span{
     font-size: 1rem;
     color: var(--color-two);
     margin-top: 24px;
 }
-.formularios-main-forms-not-found a{
+.updates-main-main-forms-not-found a{
     font-size: 1rem;
     color: var(--color-two);
     margin-top: 24px;
@@ -170,25 +157,25 @@
 /* ******************************** */
 /* ******************************** */
 /* ******************************** */
-.formularios-main-actions{
+.updates-main-main-actions{
     width: 100%;
     display: flex;
     flex-direction: column;
     border-radius: 4px;
     overflow: auto;
 }
-.formularios-display-center{
+.updates-main-display-center{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
-.formularios-actions-button{
+.updates-main-actions-button{
     width: 100%;
     display: flex;
     align-items: center;
 }
-.formularios-actions-button a{
+.updates-main-actions-button a{
     text-decoration: none;
     outline: 0;
     border: 0;
@@ -201,7 +188,7 @@
     cursor: pointer;
     transition: 0.5s;
 }
-.formularios-actions-button button{
+.updates-main-actions-button button{
     outline: 0;
     border: 0;
     padding: 3px 8px;
@@ -219,27 +206,27 @@
 /************************/
 /* RESPONSIVE */
 @media only screen and (max-width: 900px) {
-    .formularios-main-container-body{
+    .updates-main-main-container-body{
         flex-direction: column;
     }
-    .formularios-main-section-list-forms{
+    .updates-main-main-section-list-forms{
         min-width: 100%;
     }
-    .formularios-main-section-menu{
+    .updates-main-main-section-menu{
         margin-top: 24px;
         width: 100%;
     }
-    .formularios-main-list-links-main{
+    .updates-main-main-list-links-main{
         height: 100%;
     }
-    .formularios-main-list-link-simbol{
+    .updates-main-main-list-link-simbol{
         min-width: 20%;
         padding: 32px 10px;
     }
-    .formularios-main-list-links-main li{
+    .updates-main-main-list-links-main li{
         min-width: 100%;
     }
-    .formularios-main-list-link-text span{
+    .updates-main-main-list-link-text span{
         font-size: 1.3rem;
     }
 }

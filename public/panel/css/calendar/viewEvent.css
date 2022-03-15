@@ -76,7 +76,7 @@
     margin-top: 8px;
     width: max-content;
     color: var(--color-one);
-    padding: 4px 7px;
+    padding: 5px 10px;
     font-size: 0.8rem;
     border: 1px solid var(--color-seven);
     border-radius: 14px;
@@ -94,7 +94,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -161,6 +161,9 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
+    color: var(--color-one);
+    border: 1px solid var(--color-one);
 }
 
 /* MAIN */
@@ -182,6 +185,8 @@
     border-bottom: 1px solid var(--color-two);
     font-size: 1.2rem;
     padding: 7px 10px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 /*  */
@@ -202,6 +207,8 @@
     border-radius: 4px;
     outline: 0;
     padding: 8px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 /*  */
@@ -233,6 +240,8 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--color-one);
 }
 
 .event-edit-event-operation-final{
@@ -256,6 +265,8 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--color-one);
 }
 
 .event-edit-event-operation-sep{
@@ -302,6 +313,7 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 .event-edit-event-locate-name{
     display: flex;
@@ -332,12 +344,14 @@
 .event-edit-event-reminder-box label{
     font-size: 0.7rem;
     margin-bottom: 4px;
+    color: var(--color-one);
 }
 .event-edit-event-reminder-box select{
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 
 
@@ -350,12 +364,14 @@
 .event-edit-event-reminder-room label{
     font-size: 0.7rem;
     margin-bottom: 4px;
+    color: var(--color-one);
 }
 .event-edit-event-reminder-room select{
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 
 /*  */
@@ -382,6 +398,8 @@
     font-size: 0.9rem;
     padding: 12px 10px;
     border-radius: 4px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 .event-edit-event-persons-list{
@@ -408,6 +426,7 @@
     padding: 6px 7px;
     font-size: 0.9rem;
     color: var(--color-one);
+    background: transparent;
 }
 .event-edit-event-person-box button{
     border: none;
@@ -433,7 +452,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     margin: 0 15px;
     border: 1px solid var(--color-one);

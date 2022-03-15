@@ -170,7 +170,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background: var(--color-one);
+    background: var(--color-one-boxs);
     padding: 12px 23px;
     border-radius: 4px 4px 0 0;
 }
@@ -188,7 +188,7 @@
     font-size: 2rem;
     font-weight: lighter;
    /*  color: var(--color-one); */
-    color: var(--color-three);
+    color: var(--color-four);
     padding: 6px;
     display: flex;
     align-items: center;
@@ -206,7 +206,7 @@
     font-size: 1.5rem;
     text-decoration: none;
     /* color: var(--color-two); */
-    color: var(--color-three);
+    color: var(--color-four);
 }
 
 .calendar-new-event{
@@ -215,9 +215,12 @@
     font-size: 1.1rem;
     cursor: pointer;
 }
+.calendar-new-event a{
+    text-decoration: none;
+}
 .calendar-new-event i{
     /* color: var(--color-two); */
-    color: var(--color-three);
+    color: var(--color-four);
     font-size: 1.7rem;
     margin: 0 18px;
 }
@@ -241,7 +244,7 @@
     list-style: none;
     display: flex;
     align-items: center;
-    background-color: var(--color-one);
+    background-color: var(--color-one-boxs);
     /* border-radius: 4px; */
 }
 .calendar-week-days li{
@@ -298,7 +301,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    color: var(--color-two);
+    color: var(--color-one);
 }
 .calendar-day-box-day span{
     font-size: 1rem;
@@ -423,6 +426,7 @@
 .calendar-display-new span{
     margin-top: 10px;
     font-size: 0.8rem;
+    color: var(--color-one);
 }
 
 /*  */
@@ -442,6 +446,7 @@
 .calendar-display-list span{
     margin-top: 7px;
     font-size: 0.8rem;
+    color: var(--color-one);
 }
 
 /* **************************** */
@@ -510,6 +515,8 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--color-one);
 }
 
 /* MAIN */
@@ -531,6 +538,8 @@
     border-bottom: 1px solid var(--color-two);
     font-size: 1.2rem;
     padding: 7px 10px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 /*  */
@@ -551,6 +560,8 @@
     border-radius: 4px;
     outline: 0;
     padding: 8px;
+    background: transparent;
+    color: var(--color-two);
 }
 
 /*  */
@@ -582,7 +593,9 @@
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
+    border: 1px solid var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 
 .calendar-event-operation-final{
@@ -605,7 +618,9 @@
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
+    border: 1px solid var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 
 .calendar-event-operation-sep{
@@ -652,6 +667,7 @@
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 .calendar-event-locate-name{
     display: flex;
@@ -682,13 +698,14 @@
 .calendar-event-reminder-box label{
     font-size: 0.7rem;
     margin-bottom: 4px;
+    color: var(--color-one);
 }
 .calendar-event-reminder-box select{
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
-}
+    background: transparent;}
 
 
 .calendar-event-reminder-room{
@@ -700,12 +717,14 @@
 .calendar-event-reminder-room label{
     font-size: 0.7rem;
     margin-bottom: 4px;
+    color: var(--color-one);
 }
 .calendar-event-reminder-room select{
     font-size: 0.8rem;
     padding: 7px 10px;
     color: var(--color-one);
     cursor: pointer;
+    background: transparent;
 }
 
 /*  */
@@ -733,6 +752,8 @@
     font-size: 0.9rem;
     padding: 12px 10px;
     border-radius: 4px;
+    background: transparent;
+    color: var(--color-one);
 }
 
 .calendar-event-persons-list{
@@ -759,6 +780,7 @@
     padding: 6px 7px;
     font-size: 0.9rem;
     color: var(--color-one);
+    background: transparent;
 }
 .calendar-event-person-box button{
     border: none;
@@ -784,10 +806,9 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     margin: 0 15px;
-    border: 1px solid var(--color-one);
 }
 .calendar-event-actions button[type=button]{
     outline: 0;

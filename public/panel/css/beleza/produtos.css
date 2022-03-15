@@ -60,6 +60,8 @@
     padding: 5px 5px;
     font-size: 0.9rem;
     border-bottom: 1px solid var(--color-one);
+    background: transparent;
+    color: var(--color-one);
 }
 
 
@@ -104,6 +106,7 @@
     border-radius: 5px;
     cursor: pointer;
     background: transparent;
+    color: var(--color-one);
 }
 .produtos-box-actions-checks-button{
     display: flex;
@@ -118,7 +121,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
 }
 
@@ -139,7 +142,7 @@
     border: none;
     border-bottom: 1px solid var(--color-five);
     text-align: left;
-    background: var(--color-one);
+    background: var(--color-one-boxs);
     color: var(--color-four);
     font-weight: normal;
     padding: 6px;
@@ -158,7 +161,7 @@
 }
 .produtos-list-table tr:hover{
     transition: 0.5s;
-    background: var(--color-seven);
+    background: var(--color-eight);
 }
 
 .produtos-list-table tr td input[type=text]{
@@ -186,6 +189,7 @@
     border-radius: 5px;
     cursor: pointer;
     background: var(--background-two);
+    color: var(--color-one);
 }
 
 /**************************/
@@ -218,7 +222,7 @@
 }
 
 tr:nth-child(even) {
-    background-color: var(--color-seven);
+    background-color: var(--color-eight);
 }
 
 .produtos-list-table tr td:nth-child(6){

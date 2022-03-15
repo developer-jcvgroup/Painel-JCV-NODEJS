@@ -24,14 +24,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--color-two);
+    background: var(--color-two-boxs);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 4px;
     padding: 14px;
+    overflow: auto;
 }
-.visit-form-title-one{
+.visit-form-title-one span{
     font-size: 1rem;
-    color: var(--color-three);
+    color: var(--color-four);
 }
 /*  */
 .visit-form-info{
@@ -40,28 +41,28 @@
 }
 .visit-form-info label{
     font-size: 1rem;
-    color: var(--color-three);
+    color: var(--color-four);
 }
 
 .visit-form-input-single{
     min-width: min-content;
     padding: 5px;
     background: transparent;
-    border: 1px solid var(--color-three);
+    border: 1px solid var(--color-four);
     border-radius: 4px;
-    color: var(--color-three);
+    color: var(--color-four);
     margin: 0 21px;
-    background: var(--color-two);
+    background: transparent;
 }
 .visit-form-input-large{
     min-width: 400px;
     padding: 5px;
     background: transparent;
-    border: 1px solid var(--color-three);
+    border: 1px solid var(--color-four);
     border-radius: 4px;
-    color: var(--color-three);
+    color: var(--color-four);
     margin: 0 21px;
-    background: var(--color-two);
+    background: transparent;
 }
 .visit-form-info select{
     padding: 5px;
@@ -79,8 +80,8 @@
     background: transparent;
     padding: 5px;
     cursor: pointer;
-    color: var(--color-three);
-    border: 1px solid var(--color-three);
+    color: var(--color-four);
+    border: 1px solid var(--color-four);
     border-radius: 4px;
 }
 
@@ -186,6 +187,7 @@
     border: none;
     outline: 0;
     width: -webkit-fill-available;
+    background: transparent;
 }
 .visit-form-section-question-cont{
     display: flex;
@@ -201,6 +203,8 @@
     border-radius: 2px;
     padding: 8px;
     outline: 0;
+    background: transparent;
+    color: var(--color-two);
 }
 
 .visit-form-section-questions-checks{
@@ -239,7 +243,7 @@
     border-radius: 4px;
     font-size: 0.8rem;
     color: var(--color-four);
-    background: var(--color-one);
+    background: var(--color-one-btn);
     cursor: pointer;
     margin: 0 24px;
 }
@@ -279,7 +283,9 @@
         height: 100%;
     }
     .visit-form-info{
+        width: 100%;
         justify-content: center;
+        flex-direction: column;
         margin: 23px 0;
     }
     .visit-form-info input[type=date]{
@@ -290,5 +296,8 @@
     }
     .visit-form-section-question-box{
         flex-direction: column !important;
+    }
+    .visit-form-input-large{
+        min-width: 100%;
     }
 }

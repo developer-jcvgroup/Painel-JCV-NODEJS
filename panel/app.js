@@ -46,9 +46,10 @@ const controllerTrade = require("./controllers/trade/controllerTrade")
 const controllerPesquisas = require("./controllers/system/controllerPesquisas")
 //Controller Formulário
 const controllerFormulario = require("./controllers/formularios/controllerFormulario")
-
 //Controller Notifications
 const controllerNotifications = require("./controllers/notifications/controllerNotify")
+//Controller Updates
+const controllerUpdates = require("./controllers/updates/controllerUpdate")
 
 
 
@@ -264,18 +265,19 @@ router.get("/chat", authenticate,(req,res)=>{
 /***********************************/
 /***********************************/
 //Updates: Pagina inicial
-router.get("/updates", authenticate,(req,res)=>{
+router.get("/updates/main", authenticate, controllerUpdates.updatesMain)
+router.get("/updates/new", authenticate, controllerUpdates.updatesNew)
+router.get("/updates/edit/:id?", authenticate, controllerUpdates.updateEdit)
 
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Em desenvolvimento...");
-    res.redirect("/painel")
+router.post("/updates/new", authenticate, controllerUpdates.updatesNewSave)
 
-    /* var page = "system/updates";
-    res.render("panel/index", {page: page}) */
-})
+router.post("/updates/disabled", authenticate, controllerUpdates.updatesDisabled)
+router.post("/updates/enabled", authenticate, controllerUpdates.updatesEnabled)
+router.post("/updates/delete", authenticate, controllerUpdates.updatesDelete)
+router.post("/updates/edit", authenticate, controllerUpdates.updateEditSave)
 
 //Updates: Sistema de exibição do update
 router.post("/update/closeUp", authenticate, controllerSystemGeneral.closeUpdateSingle)
-router.post("/update/closeAll", authenticate, controllerSystemGeneral.closeUpdateAll)
 
 /***********************************/
 /***********************************/
@@ -284,6 +286,12 @@ router.get("/notifications", authenticate, controllerSystemGeneral.listNotificat
 
 /* Admin */
 router.get("/notifications/main", authenticate, controllerNotifications.mainNotifications)
+router.get("/notifications/new", authenticate, controllerNotifications.newNotifications)
+router.get("/notifications/edit/:id?", authenticate, controllerNotifications.editNotifications)
+
+router.post("/notifications/new", authenticate, controllerNotifications.saveNotifications)
+router.post("/notifications/edit", authenticate, controllerNotifications.saveEditNotifications)
+router.post("/notifications/delete", authenticate, controllerNotifications.deleteNotifications)
 
 /***********************************/
 /***********************************/
@@ -291,7 +299,9 @@ router.get("/notifications/main", authenticate, controllerNotifications.mainNoti
 router.get("/formularios/main", authenticate, getPermissions, controllerFormulario.mainPage)
 router.get("/formularios/novo", authenticate, getPermissions, controllerFormulario.novoFormulario)
 router.get("/formularios/edit/:idForm?", authenticate, getPermissions, controllerFormulario.editFormulario)
-router.get("/formularios/reponse/:idForm?", authenticate, getPermissions, controllerFormulario.responseFormulario)
+router.get("/formularios/reponse/:idForm?", authenticate, controllerFormulario.responseFormulario)
+
+router.post("/formularios/reponseButton", authenticate, getPermissions, controllerFormulario.responseFormularioButton)
 
 router.post("/formularios/novo", authenticate, controllerFormulario.saveNewForm)
 router.post("/formularios/edit", authenticate, controllerFormulario.editFormularioSave)
