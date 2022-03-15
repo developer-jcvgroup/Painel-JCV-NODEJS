@@ -1216,7 +1216,13 @@
                 </div>
                 
                 <div class="pdf-trade-form-section-question-cont">
-                    <textarea disabled id="value-observations" cols="30"></textarea>
+                    <div class="pdf-trade-form-section-question-cont-observation" id="value-observations">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1224,6 +1230,7 @@
 </section>
 <script src="/js/jquery-3.5.1.min.js"></script>
 <script>
+
     let arrayForm = JSON.parse('<%- getInfoFormVisit[0].jcv_trade_visit_repsonses %>');
     //console.log(Object.values(arrayForm))
 
@@ -1265,7 +1272,7 @@
             verify = element.split(' - ')[1]
         }
     })
-    $("#value-observations").val(verify)
+    $("#value-observations").append(verify)
 
 
     function executeAction (nameInputTag, nameBox, arrayData){

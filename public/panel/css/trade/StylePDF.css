@@ -107,9 +107,8 @@
     align-items: center;
     margin-top: 12px;
 }
-.pdf-trade-form-section-question-cont textarea{
+.pdf-trade-form-section-question-cont-observation{
     width: 100%;
-    resize: none;
     border: 1px solid var(--color-three);
     border-radius: 2px;
     padding: 8px;

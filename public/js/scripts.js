@@ -180,6 +180,17 @@ $(function(){
         $("#toggle-user").toggleClass('rotate-90')
     })
 
+
+    //Menu click body
+    $('#section-body-main').click(function(){
+        if($("#menu-action-main").is(':visible')){
+
+            var classeSetarMenu = "ri-menu-line";
+            $("#menu-action").removeClass().addClass(classeSetarMenu);
+
+            $("#menu-action-main").animate({width: "toggle"},200);
+        }
+    })
     //Menu
     $("#menu-action").click(function(){
         var classeSetada = $("#menu-action").attr('class');

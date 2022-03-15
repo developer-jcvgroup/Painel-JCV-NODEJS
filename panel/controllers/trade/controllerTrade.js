@@ -731,6 +731,7 @@ exports.listTradeSearch = async (req,res) => {
         .table("jcv_trade_sales_form")
         .join("jcv_users","jcv_trade_sales_form.jcv_trade_sales_form_userId","jcv_users.jcv_id")
         .join("jcv_trade_shops","jcv_trade_sales_form.jcv_trade_sales_form_shopId","jcv_trade_shops.jcv_trade_shops_id")
+        .orderBy("jcv_trade_sales_form_id","DESC")
         .then( data => {
 
             if(data != ''){
@@ -802,6 +803,7 @@ exports.listTradeSearch = async (req,res) => {
         .select()
         .whereRaw("jcv_trade_form_create_created_date "+PSdate+" AND jcv_trade_form_create_titleForm "+PStitle)
         .table("jcv_trade_form_create")
+        .orderBy("jcv_trade_form_create_id","DESC")
         .then( data => {
 
             if(data != ''){

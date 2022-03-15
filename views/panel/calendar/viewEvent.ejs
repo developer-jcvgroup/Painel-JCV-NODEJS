@@ -47,7 +47,12 @@
                                 <span>Somente o criador é participante</span>
                             <% }else{ %>
                                 <% allDataPersons.forEach(element => { %>
-                                    <span><b><%= element.jcv_userNamePrimary %></b></span>
+                                    <span>
+                                        <div class="event-box-img-user">
+                                            <img src="<%= element.jcv_userImageIcon %>" alt="">
+                                        </div>
+                                        <b><%= element.jcv_userNamePrimary %></b>
+                                    </span>
                                 <% }) %>
                             <% } %>
                         </div>

@@ -511,7 +511,7 @@ exports.viewEvent = async (req,res) => {
         }else{
             //Pegando os particiapentes do evento
             personsEvent = await database
-            .select("jcv_userNamePrimary")
+            .select("jcv_userNamePrimary","jcv_userImageIcon")
             .whereRaw("jcv_id in("+getEvent[0].sys_calendar_eventPersons+")")
             .table("jcv_users")
             .then( data => {

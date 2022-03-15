@@ -319,10 +319,12 @@
     display: flex;
     flex-direction: column;
     overflow: auto;   
+    
 }
 .claendar-list-events li{
     margin: 2px 0;
     padding-bottom: 5px;
+    transition: 0.5s;
 }
 .claendar-list-events li a{
     text-decoration: none;
@@ -344,6 +346,7 @@
     white-space: normal;
     margin-top: 7px;
     overflow: hidden;
+    transition: 0.5s;
 }
 .calendar-info-floating span:nth-child(1){
     font-size: 1rem;

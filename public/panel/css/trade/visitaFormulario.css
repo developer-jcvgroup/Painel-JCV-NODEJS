@@ -190,15 +190,19 @@
     background: transparent;
 }
 .visit-form-section-question-cont{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin-top: 12px;
 }
 /*  */
-.visit-form-section-question-cont textarea{
+.visit-form-section-question-cont-box{
     width: 100%;
+}
+.visit-form-section-question-cont-box textarea{
     resize: none;
+    width: 100%;
     border: 1px solid var(--color-three);
     border-radius: 2px;
     padding: 8px;

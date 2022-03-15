@@ -92,6 +92,7 @@
     font-size: 1.2rem;
     margin: 9px 0;
     color: var(--color-two);
+    text-align: center;
 }
 .updates-main-main-forms-link-info span:nth-child(2){ 
     font-size: 0.8rem;
