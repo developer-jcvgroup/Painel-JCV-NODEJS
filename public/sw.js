@@ -1,4 +1,4 @@
-var cacheName = 'JCV-Group-Sistema';//<- Cache
+var cacheName = 'JCV GROUP';//<- Cache
 var filesToCache = [
     './',
     './index.html',
