@@ -1005,6 +1005,8 @@ END:VEVENT
 END:VCALENDAR
 `;
         
+            console.log(dataSet);
+            
             fs.writeFile('public/arquives/icalendar/'+getInfo[0].sys_calendar_nameIcs, dataSet, function (err) {
                 if (err) throw err;
                 console.log('It\'s saved!');
