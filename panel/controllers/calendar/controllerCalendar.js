@@ -12,6 +12,7 @@ function generateDate(){
     return moment().format('LT')+" "+moment().format('L')
 }
 
+
 exports.viewCalendarMonth = async (req,res) => {
 
     //Validando se tem o numero do mes na url, caso não
@@ -412,7 +413,6 @@ exports.deleteEvent = async(req,res) => {
             const textTwo = `Olá, um evento foi excluido onde você era um dos participantes.</b><br> Excluido por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${data[0].sys_calendar_eventDate}</b> <br> Evento: <b>${data[0].sys_calendar_eventName}</b>. <br><br> Para maiores informações entre em contato com o responsável pelo evento`;
             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Excluido', 'Evento Excluido', 'Calendario', '', textOne, textTwo);
         }
-
     })
 
     database
