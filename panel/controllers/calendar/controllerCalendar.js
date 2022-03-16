@@ -739,7 +739,7 @@ exports.editSaveNewEvent = async (req,res) => {
                             jcv_notifications_usersId: JSON.stringify(convertArrPer),
                             jcv_notifications_users_view: '[]',
                             jcv_notifications_title: 'Calendário',
-                            jcv_notifications_message: 'O evento <b>'+eventName+'</b> foi criado e conta com sua participação',
+                            jcv_notifications_message: 'O evento <b>'+eventName+'</b> foi editado clique e veja as mudanças',
                             jcv_notifications_link: '/painel/calendario/main',
                             jcv_notifications_created: generateDate(),
                             jcv_notifications_enabled: 1
