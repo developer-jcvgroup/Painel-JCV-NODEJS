@@ -184,8 +184,24 @@ exports.editFormularioSave = async (req,res) => {
         .table("jcv_formularios_registers")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> editado com sucesso!");
-                res.redirect("/painel/formularios/main");
+
+                //Adicionando este evento ao painel de notificações
+                database
+                .insert({
+                    jcv_notifications_type: 'JCVMOD01',
+                    jcv_notifications_usersId: idsUsers,
+                    jcv_notifications_users_view: '[]',
+                    jcv_notifications_title: titleForm,
+                    jcv_notifications_message: 'O formulário <b>'+titleForm+'</b> foi editado, data de prazo de expiração: '+expiredForm,
+                    jcv_notifications_link: '/painel/formularios/reponse/'+idForm,
+                    jcv_notifications_created: generateDate(),
+                    jcv_notifications_enabled: 1
+                })
+                .table("jcv_notifications")
+                .then( data => {
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> editado com sucesso!");
+                    res.redirect("/painel/formularios/main");
+                })
             }else{
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar o <b>"+titleForm+"</b>");
                 res.redirect("/painel/formularios/edit/"+idForm);

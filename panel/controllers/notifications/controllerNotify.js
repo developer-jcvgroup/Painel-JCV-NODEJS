@@ -108,7 +108,6 @@ exports.saveNotifications = async (req,res) => {
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você precisa inserir mais informações");
         res.redirect("/painel/notifications/new");
     }
-    
 }
 
 exports.saveEditNotifications = async (req,res) => {

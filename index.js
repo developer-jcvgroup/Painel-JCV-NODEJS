@@ -198,7 +198,6 @@ io.on('connection', (socket) => {
         })
 
     })
-
 })
 
 
@@ -211,7 +210,7 @@ global.enabledPanel = 0;
 app.use(session({
     secret: "qualu77asadasfdas!@#", 
     name: "JCV-GROUP", 
-    resave: true, 
+    resave: true,
     saveUninitialized: true,
     cookie: {maxAge: 8000000}
 }));
