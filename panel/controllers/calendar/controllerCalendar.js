@@ -337,7 +337,7 @@ exports.saveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento criado!';
-                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay} | ${eventHourInitial} - ${eventHourFinal}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para baixar</a> <br><br> Para maiores informações acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay} | ${eventHourInitial} - ${eventHourFinal}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para adicionar</a> <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
                             
                         }
@@ -722,7 +722,7 @@ exports.editSaveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento editado!';
-                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br>  Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para baixar</a> <br><br> Para maiores informações acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br>  Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para adicionar</a> <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                             
                         }
