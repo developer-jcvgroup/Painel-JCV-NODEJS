@@ -419,9 +419,7 @@
 <script>
 
     //Get url start Socketio
-    let urlValidate = '<%- PAINEL_URL %>';
-
-    const socket = io('https://jcv.net.br', {transports: ['polling']})
+    const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
 
     /*  */
     /*  */
