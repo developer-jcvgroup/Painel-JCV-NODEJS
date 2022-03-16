@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
         
         //Pegando as notificações
         database
-        .raw("SELECT * from jcv_notifications WHERE JSON_CONTAINS(jcv_notifications_usersId, '"+data+"', '$') AND NOT JSON_CONTAINS(jcv_notifications_users_view, '"+data+"', '$')")
+        .raw("SELECT * from jcv_notifications WHERE JSON_CONTAINS(jcv_notifications_usersId, '"+data+"', '$') AND NOT JSON_CONTAINS(jcv_notifications_users_view, '"+data+"', '$') ORDER BY jcv_notifications_id DESC")
         //.select()
         //.where({jcv_notifications_usersId: data, jcv_notifications_users_view: null})
         //.table("jcv_notifications")

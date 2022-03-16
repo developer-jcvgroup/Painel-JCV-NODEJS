@@ -32,7 +32,7 @@
                         <!--  -->                        
                     </form>
                     <form method="post">
-                        <input hidden type="text" value="title form" name="view-form-response-response-title">
+                        <input hidden type="text" value="<%= getInfo[0].jcv_formularios_registers_title %>" name="view-form-response-response-title">
                         <input hidden type="text" id="get-user-data" name="view-form-response-response-text">
                         <button id="button-send-form" class="view-form-response-set-submit" type="submit" formaction="/painel/formularios/reponse" value="<%= getInfo[0].jcv_formularios_registers_id %>" name="view-form-send-form">Enviar</button>
                     </form>
