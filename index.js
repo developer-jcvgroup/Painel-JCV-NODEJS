@@ -249,7 +249,6 @@ app.get('/style/teste', (req,res) => {
 
 //Require do painel
 const jcvPanel = require("./panel/app");
-const { Socket } = require("socket.io");
 app.use("/painel", jcvPanel);
 
 http.listen(8080, () =>{

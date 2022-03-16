@@ -12,11 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function notificationAPIaction(titleApi, messageApi, link) {
+        let messageSend = messageApi.replace(/<[^>]*>?/gm, '')
+
         if (Notification.permission !== 'granted')
             Notification.requestPermission();
         else {
         var notification = new Notification(titleApi, {
-            body: [messageApi],
+            body: [messageSend],
             icon: 'https://jcv.net.br/logos/pwa-192.png',
             vibrate: true,
             

@@ -133,6 +133,9 @@ router.post("/calendario/main/register/edit", authenticate, controllerCalendar.e
 //Remover evento
 router.post("/calendario/main/delete/event", authenticate, controllerCalendar.deleteEvent)
 
+//Link de Download do evento:
+router.get("/calendario/download/:eventFile", controllerCalendar.eventDownload)
+
 //Calendario: Criar nova sala
 router.post("/calendario/room/register/new", authenticate, controllerCalendar.registerNewRoom)
 router.post("/calendario/room/register/edit", authenticate, controllerCalendar.editNewRoom)

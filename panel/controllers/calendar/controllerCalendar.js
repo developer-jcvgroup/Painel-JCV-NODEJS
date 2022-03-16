@@ -1,6 +1,8 @@
 const database = require("../../database/database");
 const moment = require("moment");
 moment.tz.setDefault('America/Sao_Paulo');
+const fs = require('fs')
+const uuid = require('uuid')
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
@@ -286,6 +288,8 @@ exports.saveNewEvent = async (req,res) => {
                 }
             }else{
 
+                let nameArquiveCalendar = 'JCV-EVENT-'+uuid.v1()+'.ics';
+
                 //Inserindo no banco
                 database
                 .insert({
@@ -300,6 +304,7 @@ exports.saveNewEvent = async (req,res) => {
                     sys_calendar_eventReminder: eventReminder,
                     sys_calendar_eventRoom: eventRoom,
                     sys_calendar_eventPersons: arrNewPerson,
+                    sys_calendar_nameIcs: nameArquiveCalendar,
                     sys_calendar_eventCreateDate: generateDate()
                 }).table("jcv_calendar_registers").then(date => {
                     if(date != ''){
@@ -331,7 +336,7 @@ exports.saveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento criado!';
-                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay} | ${eventHourInitial} - ${eventHourFinal}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores informações acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay} | ${eventHourInitial} - ${eventHourFinal}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para baixar</a> <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
                             
                         }
@@ -377,8 +382,6 @@ exports.deleteEvent = async(req,res) => {
         return data
     })
 
-
-
     //Mandando o email referente ao evento
     database
     .select()
@@ -419,7 +422,7 @@ exports.deleteEvent = async(req,res) => {
     .then( data => {
         if(data != ''){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
-            res.redirect("/painel/calendario/main");
+            res.redirect("/painel/calendario/main/"+infoEvent[0].sys_calendar_eventMonth);
         }
     })
 }
@@ -575,7 +578,8 @@ exports.editSaveNewEvent = async (req,res) => {
     //Mes que vai ser redirecionado se der sucesso ou erro
     const monthCalendarRedirect = eventDaySet[1]+'/'+eventDaySet[0];
 
-    if(moment().format(eventDay) < moment().format("DD-MM-YYYY")){
+    //console.log(eventDay)
+    if(moment(eventDaySet).isBefore(moment().format("YYYY-MM-DD"))){
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a data do evento! Data inferiror ao dia atual.");
         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
     }else{
@@ -667,6 +671,17 @@ exports.editSaveNewEvent = async (req,res) => {
                     res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                 }
             }else{
+
+                //pegando informações do evento
+                const getInfoEventNow = await database
+                .select("sys_calendar_nameIcs")
+                .where({sys_calendar_eventId: idEvent})
+                .table("jcv_calendar_registers")
+                .then( data => {return data})
+
+                let nameArquiveCalendar = getInfoEventNow[0].sys_calendar_nameIcs;
+
+
                 //Inserindo no banco
                 database
                 .update({
@@ -707,13 +722,33 @@ exports.editSaveNewEvent = async (req,res) => {
                             })
 
                             const textOne = 'Evento editado!';
-                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br> Para maiores informações acesse o calendario jcv`;
+                            const textTwo = `Olá, um evento foi editado onde você é um dos participantes!.</b><br> Editado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDay}</b> <br> Evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomName}</b>. <br> Local: <b>${getLocateName}</b>. <br><br>  Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para baixar</a> <br><br> Para maiores informações acesse o calendario jcv`;
                             emailSystemExe.sendMailExe(newArrayEamils, 'Evento Editado', 'Evento Editado', 'Calendario', '', textOne, textTwo);
                             
                         }
-                        
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> editado com sucesso!");
-                        res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+
+                        let convertArrPer = arrNewPerson.split(',').map(convertString)
+                        function convertString(value){
+                            return parseInt(value)
+                        }
+
+                        //Adicionando este evento ao painel de notificações
+                        database
+                        .insert({
+                            jcv_notifications_type: 'JCVMOD04',
+                            jcv_notifications_usersId: JSON.stringify(convertArrPer),
+                            jcv_notifications_users_view: '[]',
+                            jcv_notifications_title: 'Calendário',
+                            jcv_notifications_message: 'O evento <b>'+eventName+'</b> foi criado e conta com sua participação',
+                            jcv_notifications_link: '/painel/calendario/main',
+                            jcv_notifications_created: generateDate(),
+                            jcv_notifications_enabled: 1
+                        })
+                        .table("jcv_notifications")
+                        .then( data => {
+                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> editado com sucesso!");
+                            res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
+                        })
                     }
                 })
             }   
@@ -929,4 +964,59 @@ exports.viewEventDay = async (req,res) => {
         res.cookie('SYS-NOTIFICATION-EXE1', error.error);
         res.redirect(error.urllink)
     }
+}
+
+exports.eventDownload = async (req,res) => {
+    const linkEvent = req.params.eventFile;
+
+    //Pegando o evento
+    const getInfo = await database
+    .select()
+    .where({sys_calendar_nameIcs: linkEvent})
+    .table("jcv_calendar_registers")
+    .join("jcv_unitys","jcv_unitys.sys_unity_id","jcv_calendar_registers.sys_calendar_eventLocation")
+    .join("jcv_calendar_rooms","jcv_calendar_rooms.sys_calendar_roomId","jcv_calendar_registers.sys_calendar_eventRoom")
+    .then( data => {return data})
+
+    if(getInfo != ''){
+
+        //Convertendo as horas e datas
+        let convertDateIcs = moment(getInfo[0].sys_calendar_eventDate, 'DD/MM/YYYY').format("YYYY-MM-DD");
+        //console.log(convertDateIcs)
+
+        let initialIcs = moment(convertDateIcs+' '+getInfo[0].sys_calendar_eventHours.split(' - ')[0]).format().replace(/-/gi,'').replace(/:/gi,'')
+        let FinalIcs = moment(convertDateIcs+' '+getInfo[0].sys_calendar_eventHours.split(' - ')[1]).format().replace(/-/gi,'').replace(/:/gi,'')
+        
+        //console.log(initialIcs)
+        //console.log(FinalIcs)
+
+        let dataSet = 
+`
+BEGIN:VCALENDAR
+VERSION:1.0
+BEGIN:VEVENT
+DTSTART:${initialIcs}
+DTEND:${FinalIcs}
+LOCATION:${getInfo[0].sys_unity_name +' | '+getInfo[0].sys_calendar_roomName}
+DESCRIPTION:${getInfo[0].sys_calendar_eventDescription}
+SUMMARY:${getInfo[0].sys_calendar_eventName}
+PRIORITY:3
+END:VEVENT
+END:VCALENDAR
+`;
+        
+            fs.writeFile('public/arquives/icalendar/'+getInfo[0].sys_calendar_nameIcs, dataSet, function (err) {
+                if (err) throw err;
+                console.log('It\'s saved!');
+            });
+            
+            setTimeout(() => {
+                res.download('public/arquives/icalendar/'+getInfo[0].sys_calendar_nameIcs)
+            }, 500);
+    }else{
+        res.redirect('/')
+    }
+
+
+
 }
