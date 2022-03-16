@@ -292,6 +292,7 @@ router.get("/notifications/edit/:id?", authenticate, controllerNotifications.edi
 router.post("/notifications/new", authenticate, controllerNotifications.saveNotifications)
 router.post("/notifications/edit", authenticate, controllerNotifications.saveEditNotifications)
 router.post("/notifications/delete", authenticate, controllerNotifications.deleteNotifications)
+router.post("/notifications/reset", authenticate, controllerNotifications.resetViews)
 
 /***********************************/
 /***********************************/

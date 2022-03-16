@@ -432,20 +432,61 @@
     }, 1500);
 
     //window.notificationApi = 0;
-
     socket.on("reponseNotificationsAllCount", (dataAll) => {
         //console.log(dataAll)
         //console.log(dataAll.length)
+
+        let idUserGet = parseInt('<%- GLOBAL_DASH[0] %>');
 
         if(dataAll.length >= 1){
             $("#notification-main").css('display','flex')
             $("#count-notify").text(dataAll.length)
             $("#count-notifications").text(dataAll.length)
+            
+            //Validando se esta notificação é valida
+            let getValues = Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet) != undefined ? JSON.parse(Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet)) : [];//Validando se este cookie existe
 
-            /* if(Cookies.get("VIEW-NOTIFI-POPUP")){
-                console.log('aaa')
+            //Passando por cada notificação
+            dataAll.forEach(element => {
+                
+                //Validando se o valor deste cookie tem o id da notificação
+                if(getValues == []){
+                    //Este cookie nao tem valor
+                    Cookies.set("VIEW-NOTIFI-POPUP-"+idUserGet, '[]', { expires: 2 })
+                }else{
+                    //Ele tem valor
+                    //Validando se esta notificação já foi lida
+                    if(getValues.indexOf(element.jcv_notifications_id) > -1){
+                        //Notificação já lida
+                        //console.log('este valor ja esta: '+getValues)
+                    }else{
+                        //Notificação não lida
+                        //console.log('este valor não esta')
+                        //Adicionando esta notificação como já lida
+                        let newValuesArray = getValues
+                        newValuesArray.push(element.jcv_notifications_id)//Adicionando o id da notificação
+                        Cookies.set("VIEW-NOTIFI-POPUP-"+idUserGet, JSON.stringify(newValuesArray), { expires: 2 })
+                        //Notificação
+                        notificationAPIaction(element.jcv_notifications_title,element.jcv_notifications_message,element.jcv_notifications_link)
+                        //console.log('notification ja adicionado')
+                    }
+                    //console.log(Cookies.get("VIEW-NOTIFI-POPUP"))
+                }
+            });
+
+            //console.log(Cookies.get("VIEW-NOTIFI-POPUP"))
+            //Cookies.remove("VIEW-NOTIFI-POPUP")
+            //Cookies.remove(("VIEW-NOTIFI-POPUP"))
+            /* if(Cookies.get("VIEW-NOTIFI-POPUP") != ''){
+                //Cookies
+                
+                dataAll.forEach(element => {
+                    //Exibindo as notificações
+                    console.log(element.jcv_notifications_id)
+                });
+                Cookies.remove(("VIEW-NOTIFI-POPUP"))
             }else{
-                Cookies.set("VIEW-NOTIFI-POPUP", true)
+                //Cookies.set("VIEW-NOTIFI-POPUP", true)
             } */
 
             /* console.log('aaaa')

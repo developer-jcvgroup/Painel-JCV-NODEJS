@@ -32,6 +32,7 @@
                         </div>
                         <hr style="width: 100%; margin: 7px 0;">
                         <form method="post" class="notify-main-forms-link-button">
+                            <button class="class-loader" formaction="/painel/notifications/reset" type="submit" name="button-reset-notify" value="<%= element.jcv_notifications_id %>" title="Resetar views"><i class="ri-restart-line"></i></button>
                             <button class="class-loader" formaction="/painel/notifications/delete" type="submit" name="button-delete-notify" value="<%= element.jcv_notifications_id %>" title="Excluir Notificação"><i class="ri-delete-bin-line"></i></button>
                         </form>
                     </a>

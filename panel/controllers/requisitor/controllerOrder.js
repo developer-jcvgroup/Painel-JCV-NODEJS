@@ -1421,11 +1421,11 @@ exports.myRequestRemove = async (req,res) => {
 
 
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
-        res.redirect("/painel/requisitor/minhasRequisicoes");
+        res.redirect("/painel/requisitor/MinhasRequisicoes");
 
     }else{
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
-        res.redirect("/painel/requisitor/minhasRequisicoes");
+        res.redirect("/painel/requisitor/MinhasRequisicoes");
     }
 }
 

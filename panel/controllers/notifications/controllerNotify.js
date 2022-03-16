@@ -172,3 +172,23 @@ exports.deleteNotifications = async (req,res) => {
         }
     })
 }
+
+exports.resetViews = async (req,res) =>{
+    const idNot = req.body['button-reset-notify']
+
+    database
+    .update({
+        jcv_notifications_users_view: '[]'
+    })
+    .where({jcv_notifications_id: idNot})
+    .table("jcv_notifications")
+    .then( data => {
+        if(data != ''){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação resetada com sucesso!");
+            res.redirect("/painel/notifications/main");
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");
+            res.redirect("/painel/notifications/main");
+        }
+    })
+}
