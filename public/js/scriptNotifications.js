@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else {
         var notification = new Notification(titleApi, {
             body: [messageApi],
-            icon: 'http://localhost:8080/logos/pwa-192.png',
+            icon: 'https://jcv.net.br/logos/pwa-192.png',
             vibrate: true,
             
         });
