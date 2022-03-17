@@ -809,7 +809,117 @@ main{
 
 }
 
+.sys-install-app-main{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    max-height: 1000px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    background-color: rgba(128, 128, 128, 0.342);
+}
+.sys-install-app-box{
+    width: 550px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 4px;
+    background: var(--bg-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.sys-install-app-box-center{
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.sys-install-app-title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sys-install-app-title span:nth-child(1){
+    font-size: 1.3rem;
+    color: var(--color-one);
+}
+.sys-install-app-title span:nth-child(2){
+    font-size: 0.9rem;
+    margin-top: 19px;
+    color: var(--color-one);
+    text-align: center;
+}
 
+.sys-install-app-body{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 38px 0;
+}
+.sys-install-app-body img{
+    width: 80%;
+    object-fit: contain;
+}
+
+.sys-install-app-actions{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.sys-install-app-actions button:nth-child(1){
+    width: fit-content;
+    height: fit-content;
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    transition: 0.5s;
+}
+.sys-install-app-actions button:nth-child(2){
+    width: fit-content;
+    height: fit-content;
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    text-decoration: underline;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*  */
+.sys-install-app-alert{
+    width: 400px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 4px;
+    background: var(--bg-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.sys-install-app-alert i{
+    font-size: 2.7rem;
+    color: var(--color-one);
+}
+.sys-install-app-alert span{
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+}
 
 @media only screen and (max-width: 450px) {
 
@@ -883,4 +993,16 @@ main{
 
     }
 
+    .sys-install-app-box{
+        width: 98%;
+        height: 80%;
+    }
+    .sys-install-app-body img{
+        width: 100%;
+    }
+
+    /*  */
+    .sys-install-app-alert{
+        width: 95%;
+    }
 }
