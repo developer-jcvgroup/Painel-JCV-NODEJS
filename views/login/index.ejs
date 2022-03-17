@@ -35,6 +35,11 @@
     <script src="/js/scripts-login.js"></script>
     <title>Log in | JCV Group</title>
 </head>
+<script>
+    //Limpa os caches gerados pelo pwa
+    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+    self.caches.delete('JCV-GROUP');//Nome do cache
+</script>
 <body>
 <section class="index-section-index-page">
     <section class="index-section-main">

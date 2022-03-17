@@ -1,14 +1,15 @@
 var cacheName = 'JCV-GROUP';//<- Cache
 var filesToCache = [
-    './',
-    './index.js',
-    './index.html',
-    './manifest.json'
+    '/',
+    '/index.js',
+    '/index.html',
+    '/manifest.json'
 ];
 self.addEventListener('install', function(e) {
   e.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      return cache.addAll(filesToCache);
+      //console.log(cacheName)
+      //return cache.addAll(filesToCache);
     })
   );
 });

@@ -30,6 +30,11 @@
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
     <title>JCV Group | Aplicativos do grupo</title>
 </head>
+<script>
+    //Limpa os caches gerados pelo pwa
+    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+    self.caches.delete('JCV-GROUP');//Nome do cache
+</script>
 <body>
 <section class="section-main-body">
     <section class="section-image-page-body">
@@ -339,10 +344,6 @@
 <script src="/js/jquery-3.5.1.min.js"></script>
 <script>
     $(function(){
-        
-        //Limpa os caches gerados pelo pwa
-        self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
-        self.caches.delete('JCV-GROUP');//Nome do cache
     
         $('.popup-close').click(function(){
             $('#section-main-sobre-nos').fadeOut();
