@@ -1,6 +1,7 @@
-var cacheName = 'JCV GROUP';//<- Cache
+var cacheName = 'JCV-GROUP';//<- Cache
 var filesToCache = [
     './',
+    './index.js',
     './index.html',
     './manifest.json'
 ];
