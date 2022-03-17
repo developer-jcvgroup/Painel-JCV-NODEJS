@@ -246,7 +246,7 @@ header{
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: var(--color-two);
+    background: var(--color-red);
     display: none;
     justify-content: center;
     align-items: center;

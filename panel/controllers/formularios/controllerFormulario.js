@@ -228,15 +228,18 @@ exports.responseFormulario = async (req,res) => {
     .then( data => {return data[0]})
 
     if(verifyResponse != ''){
-        
-        var page = "formularios/viewFormulario";
-        res.render("panel/index", {
-            page: page, 
-            getInfo: getInfo
-        })
-
+        if(getInfo != ''){
+            var page = "formularios/viewFormulario";
+            res.render("panel/index", {
+                page: page, 
+                getInfo: getInfo
+            })
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+            res.redirect("/painel");
+        }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
         res.redirect("/painel");
     }
 }

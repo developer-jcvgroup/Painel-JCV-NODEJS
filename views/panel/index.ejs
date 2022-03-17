@@ -178,7 +178,7 @@
                             <!-- <li><a title="Logs do sistema" class="class-loader" href="/painel/logs"><i class="ri-alert-line"></i></a></li> -->
                             <li class="notification-container">
                                 <a title="Notificações" id="click-open-notifications" href="#">
-                                    <i class="ri-notification-3-line"></i>
+                                    <i class="ri-notification-3-line" id="icon-color-notify"></i>
                                     <div class="notification-main" id="notification-main"><span id="count-notifications">0</span></div>
                                 </a>
 
@@ -463,6 +463,7 @@
             $("#notification-main").css('display','flex')
             $("#count-notify").text(dataAll.length)
             $("#count-notifications").text(dataAll.length)
+            $("#icon-color-notify").css({'color': 'var(--color-red)'})
             
             //Validando se esta notificação é valida
             let getValues = Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet) != undefined ? JSON.parse(Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet)) : [];//Validando se este cookie existe
@@ -519,6 +520,8 @@
     $("#click-open-notifications").click(function(){
         $("#display-not-notification").css('display','flex')
         $("#notification-container-box").toggle()
+
+        $("#icon-color-notify").css({'color': 'var(--color-one)'})
 
         $("#notification-ul-list").empty()
         socket.emit("getNotificationsAll","<%= GLOBAL_DASH[0] %>")

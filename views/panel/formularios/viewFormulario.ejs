@@ -31,10 +31,10 @@
                         <!--  -->
                         <!--  -->                        
                     </form>
-                    <form method="post">
+                    <form method="post" id="form-view-send">
                         <input hidden type="text" value="<%= getInfo[0].jcv_formularios_registers_title %>" name="view-form-response-response-title">
                         <input hidden type="text" id="get-user-data" name="view-form-response-response-text">
-                        <button id="button-send-form" class="view-form-response-set-submit" type="submit" formaction="/painel/formularios/reponse" value="<%= getInfo[0].jcv_formularios_registers_id %>" name="view-form-send-form">Enviar</button>
+                        <button formaction="/painel/formularios/reponse" id="button-send-form" class="view-form-response-set-submit" type="submit" value="<%= getInfo[0].jcv_formularios_registers_id %>" name="view-form-send-form">Enviar</button>
                     </form>
                 </div>
             </div>
@@ -52,7 +52,10 @@
     var formRenderInstance = $('#render-container').formRender(formRenderOptions);
 
     $("#button-send-form").click(function () {
-        $("#get-user-data").val(JSON.stringify(formRenderInstance.userData))
+
+        $("#get-user-data").val(JSON.stringify($(formRenderInstance).formRender("userData")))
+
+        $('#form-view-send').delay(1000).submit();
     })
     
 </script>
