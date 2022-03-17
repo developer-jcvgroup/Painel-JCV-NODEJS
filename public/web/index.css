@@ -995,7 +995,7 @@ main{
 
     .sys-install-app-box{
         width: 98%;
-        height: 80%;
+        min-height: 80%;
     }
     .sys-install-app-body img{
         width: 100%;
