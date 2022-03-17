@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="manifest" href="/manifest.json">
+
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="JCV Group">
+    <meta name="apple-mobile-web-app-title" content="JCV Group">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="./index.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script src="/serviceWork.js"></script>
+    <script src="/sw.js"></script>
+
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="/panel/css/main/index.css">
     <link rel="stylesheet" href="/panel/css/main/home.css">
@@ -22,6 +42,10 @@
     if(window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href)
     }
+
+    //Limpa os caches gerados pelo pwa
+    self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
+    self.caches.delete('JCV-GROUP');//Nome do cache
 </script>
 <body>
 <section class="sys-section-loader" id="sys-section-loader">

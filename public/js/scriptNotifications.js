@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var notification = new Notification(titleApi, {
             body: [messageSend],
             icon: 'https://jcv.net.br/logos/pwa-192.png',
-            vibrate: true,
+            vibrate: [100, 50, 100],
             
         });
         notification.onclick = function() {
