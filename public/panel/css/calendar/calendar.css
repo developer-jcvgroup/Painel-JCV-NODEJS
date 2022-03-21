@@ -338,7 +338,7 @@
     width: fit-content;
     height: fit-content;
     max-width: 350px;
-    display: flex;
+    display: none;
     flex-direction: column;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-five);
