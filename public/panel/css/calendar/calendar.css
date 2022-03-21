@@ -337,8 +337,8 @@
     position: absolute;
     width: fit-content;
     height: fit-content;
-    max-width: 250px;
-    display: none;
+    max-width: 350px;
+    display: flex;
     flex-direction: column;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-five);
@@ -348,6 +348,46 @@
     overflow: hidden;
     transition: 0.5s;
 }
+/* BOXS USERS */
+.calendar-info-floating-users{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin-top: 22px;
+}
+.calendar-info-floating-boxs{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-two);
+    border: 2px solid var(--color-three);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    cursor: pointer;
+}
+.calendar-info-floating-boxs img{
+    width: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.calendar-info-floating-boxs:nth-child(2){
+    /* background: turquoise; */
+    margin-left: -20px;
+}
+.calendar-info-floating-boxs:nth-child(3){
+    /* background: rgb(91, 224, 64); */
+    margin-left: -20px;
+}
+.calendar-info-floating-boxs:nth-child(4){
+    /* background: rgb(64, 67, 224); */
+    margin-left: -20px;
+    font-size: 1rem;
+    color: var(--color-one);
+    border: 2px solid var(--color-two);
+}
+
 .calendar-info-floating span:nth-child(1){
     font-size: 1rem;
     color: var(--color-one);
@@ -364,6 +404,7 @@
 }
 
 .claendar-list-events li:hover .calendar-info-floating{
+    transition: 0.5s;
     display: flex;
 }
 

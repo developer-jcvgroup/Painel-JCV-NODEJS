@@ -89,13 +89,26 @@ exports.viewCalendarMonth = async (req,res) => {
 
         //Listando os usuario que tem PERMISSAO PARA ACESSO AO CALENDARIO
         const allUsers = await database
-        .select("jcv_users.jcv_userNamePrimary","jcv_users.jcv_id")
+        .select("jcv_users.jcv_userNamePrimary","jcv_users.jcv_id","jcv_users.jcv_userImageIcon")
         .join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
         .where({sys_cal_perm_use: 1, jcv_userEnabled: 1})
         .table("jcv_users")
         .then(date => {
             return date;
         })
+
+        //Criando um array com id do Usuario, nome e icone
+        let arrayUserSetCal = {}
+        allUsers.forEach(element => {
+            if(element.jcv_userImageIcon == null){
+                arrayUserSetCal[element.jcv_id] = [element.jcv_userNamePrimary, '']
+            }else{
+                arrayUserSetCal[element.jcv_id] = [element.jcv_userNamePrimary, element.jcv_userImageIcon]
+            }
+            
+        });
+
+        //console.log(arrayUserSetCal)
 
         //Criando um array
         let newArrUsers = []
@@ -139,6 +152,7 @@ exports.viewCalendarMonth = async (req,res) => {
             NumberDayWeek: NumberDayWeek,
             dayNow: dayNow,
             allUsers: newArrUsers,
+            allUsersSystem: arrayUserSetCal,
             allEventsMonth: allEventsMonth,
             allLocations: allLocations,
             allEventsPublic: allEventsPublic,
@@ -1005,7 +1019,7 @@ END:VEVENT
 END:VCALENDAR
 `;
         
-            console.log(dataSet);
+            //console.log(dataSet);
             
             fs.writeFile('public/arquives/icalendar/'+getInfo[0].sys_calendar_nameIcs, dataSet, function (err) {
                 if (err) throw err;

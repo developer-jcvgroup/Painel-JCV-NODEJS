@@ -382,4 +382,8 @@
     .avataars-main-style{
         width: 100%;
     }
+    .avataars-section{
+        height: auto;
+        max-height: none;
+    }
 }

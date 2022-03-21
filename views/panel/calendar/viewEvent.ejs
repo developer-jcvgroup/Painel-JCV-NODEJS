@@ -5,7 +5,7 @@
 <section class="event-main-section">
     <section class="event-section-viewer-event">
         <div class="event-event-edit-box">
-            <div class="event-back-event-edit"><a class="class-loader" href="/painel/calendario/main"><i class="ri-arrow-left-line"></i></a></div>
+            <div class="event-back-event-edit"><a class="class-loader" href="/painel/calendario/main/<%= allDataEvent[0].sys_calendar_eventMonth %>"><i class="ri-arrow-left-line"></i></a></div>
             <div class="event-title-day"><span><%= allDataEvent[0].sys_calendar_eventName %></span><span> | <%= allDataEvent[0].sys_calendar_eventDate %></span></div>
             <div class="event-event-edit-cont-main">
                 <div class="event-row-container">
@@ -78,8 +78,9 @@
                             <% if(dateEv >= dateHj){ %>
 
                                 <form class="event-action-command" method="post">
-                                    <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event">Excluir Evento</button>
-                                    <button id="view-open-edit-event-edit" type="button">Editar Evento</button>
+                                    <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event"><i class="ri-delete-bin-line"></i>⠀Excluir Evento</button>
+                                    <button id="view-open-edit-event-edit" type="button"><i class="ri-pencil-line"></i>⠀Editar Evento</button>
+                                    <a href="http://localhost:8080/painel/calendario/download/<%= allDataEvent[0].sys_calendar_nameIcs %>"><i class="ri-download-2-line"></i>⠀Baixar evento</a>
                                 </form>
 
 
@@ -100,6 +101,7 @@
                         </div>
                     <% } %>
                 </div>
+                <!--  -->
             </div>
         </div>
     </section>

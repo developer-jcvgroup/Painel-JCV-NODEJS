@@ -214,7 +214,7 @@
                                         <li><a class="notification-message-all" href=""><span>Ver todos os eventos</span> <i class="ri-arrow-right-line"></i></a></li> -->
                                     </ul>
                                     <div id="display-not-notification" style="width: 100%;height: 50px;display: none;justify-content: center;align-items: center;">
-                                        <span style="font-size: 0.8rem; color: var(--color-one);" >Você não possui notificações. <a href="/painel/notifications">Exibir notificações</a></span>
+                                        <span style="font-size: 0.8rem; color: var(--color-one);" >Você não possui notificações. <a class="class-loader" href="/painel/notifications">Exibir notificações</a></span>
                                     </div>
                                 </div>
                             </li>
@@ -242,7 +242,7 @@
                                 </div>
                             </li>
                             <li class="li-info-user-drop" id="li-info-user-drop">
-                                <ul class="navbar-info-user-drop">
+                                <ul class="navbar-info-user-drop" id="navbar-info-user-drop">
                                     <li><i class="ri-mail-line"></i><span><%= GLOBAL_DASH[5] %></span></li>
                                     <li>
                                         <% if(GLOBAL_DASH[6] != '') { %>
@@ -388,6 +388,7 @@
         //Index
         $("#home-section-card-background").css({'background':'var(--background-two)'})
         $("#menu-action-main").css({'background':'var(--background-one)', 'box-shadow':'0 0 4px 0 transparent'})
+        $(".title-page-info").css({'box-shadow': '0px 50px 100px 100px var(--color-one-boxs)'})
 
         //Perfil
         $(".profile-container-main-style").css({'background':'var(--background-two)'})
@@ -461,7 +462,8 @@
 
         if(dataAll.length >= 1){
             $("#notification-main").css('display','flex')
-            $("#count-notify").text(dataAll.length)
+            $("#count-notify").text(dataAll.length).css({'font-weight': 'bold'})
+            $("#title-box-notf").css({'background':'var(--color-red)'})
             $("#count-notifications").text(dataAll.length)
             $("#icon-color-notify").css({'color': 'var(--color-red)'})
             

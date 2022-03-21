@@ -10,7 +10,7 @@
                 <div class="beleza-view-title-box"><span>Programa da Beleza</span></div>
                 <div class="beleza-view-info">
                     <% if(requestUser[0].sys_blz_requestStatus == 2){ %>
-                        <span style="color: #10772a;">Solicitação concluída!</span>
+                        <span style="color: #10772a;">Solicitação concluída <i class="ri-check-double-line"></i></span>
                         <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
                     <% }else if(requestUser[0].sys_blz_requestStatus == 4){ %>
                         <span style="color: #10772a;">Solicitação separada!</span>
@@ -35,7 +35,7 @@
                         </div>
                         <% if(requestUser[0].sys_blz_requestStatus == 2 ){ %>
                         <div class="beleza-view-form-row-action">
-                            <span id="click-open-cancel" class="beleza-view-link-normal">Cancelar Solicitação</span>
+                            <span id="click-open-cancel" class="beleza-view-link-normal">Refazer Solicitação</span>
                         </div>
                         <% } %>
                     </form>
@@ -51,12 +51,11 @@
                 <i id="click-close-cancel" class="ri-close-line"></i>
             </div>
             <div class="beleza-cancel-msg">
-                <span>Caso queira refazer a sua solicitação você pode pedir o cancelamento ao administrador, lembrando que isso passará por uma análise
-                    antes do cancelamento. Clique no botão abaixo e aguarde até que seu pedido seja cancelado.
+                <span>Lembre-se, você só pode cancelar apenas DUAS vezes, ou seja, você pode refazer sua solicitação apenas DUAS vezes por mês
                 </span>
             </div>
             <form class="beleza-cancel-button" action="./request/cancel" method="post">
-                <button class="class-loader" type="submit" value="<%= idRequest %>" name="buttonIDorder">Solicitar cancelamento</button>
+                <button class="class-loader" type="submit" value="<%= idRequest %>" name="buttonIDorder">Refazer solicitação</button>
             </form>
         </section>
     </section>

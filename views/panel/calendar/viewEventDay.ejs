@@ -2,7 +2,7 @@
 <section class="view-room-main-section">
     <section class="view-room-section-viewer-view-room">
         <div class="view-room-calendar-box">
-            <div class="view-room-back-calendar"><a href="/painel/calendario/main/"><i class="ri-arrow-left-line"></i></a></div>
+            <div class="view-room-back-calendar"><a href="/painel/calendario/main/<%= dayComp.split('/')[1] %>/<%= dayComp.split('/')[2] %>"><i class="ri-arrow-left-line"></i></a></div>
             <div class="view-room-title-day"><span><%= dayComp %></span><span>Total de <b><%= roomInfo.length %></b> eventos registrados</span></div>
             <div class="view-room-calendar-cont-main">
                 <div class="view-room-row-container">

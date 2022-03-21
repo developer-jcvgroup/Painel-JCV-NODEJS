@@ -167,6 +167,18 @@ getInfoGrapicsCalendar = async () => {
 
 }
 
+//Pegando todos os usuarios somente nome e imagem
+getInfoUserMain = async () => {
+    const dataGet = database
+    .raw("SELECT jcv_userNamePrimary,jcv_userImageIcon FROM jcv_users WHERE jcv_userEnabled = 1 ORDER BY rand() LIMIT 54")
+    //.select("jcv_userNamePrimary","jcv_userImageIcon")
+    //.where({jcv_userEnabled: 1})
+    //.table("jcv_users")
+    //.limit(54)
+    .then( data => {return data[0]})
+    return dataGet
+}
+
 exports.homeInfo = async (req,res)=> {
 
     //Verificando se tem pedidos
@@ -185,6 +197,10 @@ exports.homeInfo = async (req,res)=> {
 
     //Gráficos Calendário
     const arrayCalendar = await getInfoGrapicsCalendar();
+
+    //Al users
+    const allUserSystem = await getInfoUserMain();
+
     var page = "home";
     res.render("panel/index", {
         page: page, 
@@ -194,7 +210,8 @@ exports.homeInfo = async (req,res)=> {
         CALENDARcount: CALENDARcount,
         TRADEMKTcount: TRADEMKTcount,
         arrayConvert: arrayConvert,
-        arrayCalendar: arrayCalendar
+        arrayCalendar: arrayCalendar,
+        allUserSystem: allUserSystem
     })
 
     

@@ -236,7 +236,6 @@
                                                         
                                                         <% let arrayPersons = allEventsMonth[jj].sys_calendar_eventPersons.split(',') %>
 
-
                                                         <!-- Validando se é o mes atual -->
                                                         <% if(monthAgo == 1){ %>
                                                             <!-- Mes atual -->
@@ -266,6 +265,23 @@
                                                                                 <span>Sem descrição..</span>
                                                                             <% } %>
                                                                             <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
+                                                                            <div class="calendar-info-floating-users">
+                                                                                <% if(arrayPersons.length == 1){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length == 2){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length == 3){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length > 3){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
+                                                                                <% } %>
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
@@ -286,6 +302,23 @@
                                                                                 <span>Sem descrição..</span>
                                                                             <% } %>
                                                                             <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
+                                                                            <div class="calendar-info-floating-users">
+                                                                                <% if(arrayPersons.length == 1){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length == 2){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length == 3){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                                <% }else if(arrayPersons.length > 3){ %>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                                    <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
+                                                                                <% } %>
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 <% }else{ %>
@@ -321,6 +354,23 @@
                                                                             <span>Sem descrição..</span>
                                                                         <% } %>
                                                                         <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;">Omega</span></span>
+                                                                        <div class="calendar-info-floating-users">
+                                                                            <% if(arrayPersons.length == 1){ %>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                            <% }else if(arrayPersons.length == 2){ %>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                            <% }else if(arrayPersons.length == 3){ %>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                            <% }else if(arrayPersons.length > 3){ %>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                                <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
+                                                                            <% } %>
+                                                                        </div>
                                                                     </div>
                                                                 </li>
                                                             <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
@@ -341,6 +391,23 @@
                                                                         <span>Sem descrição..</span>
                                                                     <% } %>
                                                                     <span><b><%= arrayPersons.length %> pessoa(s)</b></span>
+                                                                    <div class="calendar-info-floating-users">
+                                                                        <% if(arrayPersons.length == 1){ %>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                        <% }else if(arrayPersons.length == 2){ %>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                        <% }else if(arrayPersons.length == 3){ %>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                        <% }else if(arrayPersons.length > 3){ %>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[0]][0] %>"><img src="<%= allUsersSystem[arrayPersons[0]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[1]][0] %>"><img src="<%= allUsersSystem[arrayPersons[1]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
+                                                                            <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
+                                                                        <% } %>
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                             <% }else{ %>

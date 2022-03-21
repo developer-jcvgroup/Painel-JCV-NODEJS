@@ -1,9 +1,13 @@
 const database = require("../../database/database");
 const getPermissions = require("../../middlewarePermissions");
+const uuid = require('uuid')
 
 const moment = require("moment");
 const { count } = require("console");
 moment.tz.setDefault('America/Sao_Paulo');
+
+//Sistema de emails
+const emailSystemExe = require('../system/emailSystem');
 
 //Mes de referencia
 function getMonthReferece(){
@@ -61,6 +65,7 @@ exports.finalizarSolicitacao = async (req,res) => {
     //Pegando os dois produtos do form
     let productOne = req.body.inputProductOne;
     let productTwo = req.body.inputProductTwo;
+    const confirmSend = req.body['input-send-confirm'] == 'on' ? 1 : 0
 
     //Validando os produtos
     await database.select().where({sys_blz_productEnabled: 1}).whereIn('sys_blz_productName', [productOne,productTwo]).table("jcv_blz_products").orderBy("sys_blz_productType").then(data => {
@@ -74,11 +79,14 @@ exports.finalizarSolicitacao = async (req,res) => {
             //Validando se já existe pedido feito
             database
             .select("sys_blz_id")
-            .where({sys_blz_userId: GLOBAL_DASH[0], sys_blz_requestReference: getMonthReferece()})
+            .whereRaw(`sys_blz_userId = ${GLOBAL_DASH[0]} AND sys_blz_requestReference = ${getMonthReferece()} AND NOT sys_blz_requestStatus = 2`)
             .table("jcv_blz_orders")
             .then( dataValid => {
 
                 if(dataValid == ''){
+                    //Não existe pedido
+
+                    const codeRequest = uuid.v1();//UUID unico
                     //Registrando o pedido
                     database.insert({
                         sys_blz_userId: GLOBAL_DASH[0],
@@ -89,8 +97,24 @@ exports.finalizarSolicitacao = async (req,res) => {
                         sys_blz_tratmentTwo: insertProductTwo,
                         sys_blz_requestReference: getMonthReferece(),//Mes atual
                         sys_blz_requestCreate: generateDate(),//Data Atual
-                        sys_blz_requestStatus: 2
+                        sys_blz_requestStatus: 2,
+                        sys_blz_requestCode: codeRequest
                     }).table("jcv_blz_orders").then(data => {
+
+                        //Enviando confirmação no email caso foi solicitado
+                        if(confirmSend == 1){
+                            ////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////////////
+                            //Mandando email para o USUARIO
+                            database.select("jcv_userEmailCorporate").where({jcv_id: GLOBAL_DASH[0], jcv_sysEmail: 1}).table("jcv_users").then( data => {
+                                if(data != ''){
+                                    //Sistema de email: USUARIO
+                                    const textOne = 'Registro Programa da Beleza';
+                                    const textTwo = `Registro: <b>${codeRequest}</b>. <br><br> Emitido: <b>${generateDate()}</b> . <br><br> Shampoo: <b>${insertProductOne}</b> <br><br> Tratamento: <b>${insertProductTwo}</b><br><br> Status: <b style='color: #10772a'>Solicitado</b>.`;
+                                    emailSystemExe.sendMailExe(data[0].jcv_userEmailCorporate, 'Programa da Beleza', 'Registro Programa da Beleza', 'Programa da Beleza', GLOBAL_DASH[1], textOne, textTwo);
+                                }
+                            })
+                        }
 
                         let nameUserComp = GLOBAL_DASH[1].split(' ')
                         let countParts = nameUserComp.length -1;
@@ -173,11 +197,33 @@ exports.listOrder = async (req,res,next) => {
 
 exports.cancelOrder = async (req,res) => {
     let idOrder = req.body.buttonIDorder;
-    
-    database.update({sys_blz_requestStatus: 5}).where({sys_blz_id: idOrder}).table("jcv_blz_orders").then(data => {
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.");
-        res.redirect("/painel/beleza/status");
+
+    //Cancela o pedido diretamente
+
+    //Validando se o usuario atingiu a cota de pedidos cancelador que é 2 vezes
+    const validateCancel = await database
+    .select()
+    .where({sys_blz_userId: GLOBAL_DASH[0], sys_blz_requestStatus: 3, sys_blz_requestReference: getMonthReferece()})
+    .table("jcv_blz_orders")
+    .then( data => {
+        if(data != ''){
+            return data.length
+        }else{
+            return 0
+        }
     })
+
+    if(validateCancel >= 2){
+        //Já atingiu a cota
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você não pode mais cancelar sua solicitação sua cota foi excedida.");
+        res.redirect("/painel/beleza/status");
+    }else{
+        //Cancelando o pedido
+        database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: idOrder}).table("jcv_blz_orders").then(data => {
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!");
+            res.redirect("/painel/beleza/status");
+        })
+    }
 }
 
 exports.listRequests = async (req,res) => {
@@ -207,7 +253,7 @@ exports.listRequests = async (req,res) => {
 
 exports.searchRequests = async (req,res) => {
     let referenceDate = req.body.blzReferenceMonth;
-    let blzStatus = req.body['sys-filter-input-selects-Status'] != undefined ? req.body['sys-filter-input-selects-Status'] == 1 ?  1 : 'in ('+req.body['sys-filter-input-selects-Status']+')' : "LIKE '%%'";
+    let blzStatus = req.body['sys-filter-input-selects-Status'] != undefined ? req.body['sys-filter-input-selects-Status'] == 1 ?  1 : 'in ('+req.body['sys-filter-input-selects-Status']+')' : "= 2";
 
     let listUnitys = req.body['sys-filter-input-selects-Unidade'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Unidade']+')' : "LIKE '%%'";
     let listGestores = req.body['sys-filter-input-selects-Gestor'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Gestor']+')' : "LIKE '%%'";

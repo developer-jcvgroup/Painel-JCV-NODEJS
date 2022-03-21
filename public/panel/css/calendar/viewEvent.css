@@ -40,6 +40,7 @@
 /*****************/
 .event-event-edit-cont-main{
     margin-top: 28px;
+    display: flex;
 }
 .event-back-event-edit{
     margin: 16px 0;
@@ -116,6 +117,17 @@
     background: var(--color-one-btn);
     cursor: pointer;
 }
+.event-action-command a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one-btn);
+    cursor: pointer;
+}
 
 /* **************************** */
 /* **************************** */
@@ -125,9 +137,10 @@
     position: absolute;
     width: 100%;
     height: calc(100% - 47px);
-    max-width: 2000px;
-    max-height: 1000px;
+    /* max-width: 2000px; */
+    /* max-height: 1000px; */
     display: none;
+    left: 0;
     justify-content: center;
     align-items: center;
     background: rgba(128, 128, 128, 0.308);
