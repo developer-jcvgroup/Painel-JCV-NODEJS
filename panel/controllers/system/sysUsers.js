@@ -384,6 +384,15 @@ exports.downloadDataUsers = async (req,res) => {
                 // cria uma célula do tipo string para cada título
                 ws.cell(1, headingColumnIndex++).string(heading);
             });
+
+            let arrayClasification = {
+                "1": "Master",
+                "2": "Gestor",
+                "3": "Colaborador Interno",
+                "4": "Representantes",
+                "5": "Promotoras",
+                "6": "Jovem Aprendiz"
+            }
             
             let rowIndex = 2;
             data[0].forEach( record => {
@@ -392,13 +401,21 @@ exports.downloadDataUsers = async (req,res) => {
 
                     //Verificando se o dado é numero
                     //Verificando se o dado é numero
-                    if(typeof(record[columnName]) === 'number'){
-                        ws.cell(rowIndex,columnIndex++)
-                        .number(record [columnName])
-                    }else{
+                    if(columnName == 'jcv_userCpf'){
                         ws.cell(rowIndex,columnIndex++)
                         .string(record [columnName])
+                    }else if(columnName == 'jcv_userCassification'){
+
+                        ws.cell(rowIndex,columnIndex++)
+                        .string(arrayClasification[record [columnName]])
+
+                    }else{
+                        let valueSetNow = typeof(record [columnName]) === 'number' ? record [columnName] == 1 ? 'Sim' : 'Não' : record [columnName]
+                         
+                        ws.cell(rowIndex,columnIndex++)
+                        .string(valueSetNow)
                     }
+                    
                 });
                 rowIndex++;
             }); 

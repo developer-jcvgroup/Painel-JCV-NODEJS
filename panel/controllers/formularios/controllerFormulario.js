@@ -192,7 +192,7 @@ exports.editFormularioSave = async (req,res) => {
                     jcv_notifications_usersId: idsUsers,
                     jcv_notifications_users_view: '[]',
                     jcv_notifications_title: titleForm,
-                    jcv_notifications_message: 'O formulário <b>'+titleForm+'</b> foi editado, data de prazo de expiração: '+expiredForm,
+                    jcv_notifications_message: 'O formulário <b>'+titleForm+'</b> foi editado, prazo máximo: '+expiredForm,
                     jcv_notifications_link: '/painel/formularios/reponse/'+idForm,
                     jcv_notifications_created: generateDate(),
                     jcv_notifications_enabled: 1

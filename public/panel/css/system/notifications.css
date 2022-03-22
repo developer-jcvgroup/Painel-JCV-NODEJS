@@ -10,11 +10,8 @@
 .notifications-section-viewer-event{
     width: 90%;
     margin-top: 28px;
-    padding: 18px;
     display: flex;
     flex-direction: column;
-    background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
     white-space: normal;
 }
 
@@ -31,81 +28,65 @@
 
 .notifications-title-page{
     width: 100%;
-    
     display: flex;
-    margin: 23px 0;
+    margin: 19px 0;
+    padding: 18px;
 }
 .notifications-title-page span{
     font-size: 1.2rem;
     color: var(--color-one);
 }
 
-.notifications-calendar-box{
+/* ************************ */
+/* ************************ */
+/* ************************ */
+/* MAIN BOX */
+.notifications-main-list{
     width: 100%;
-    
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.notifications-main-box{
+    width: 250px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    white-space: nowrap;
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    padding: 24px;
+    text-decoration: none;
+    margin: 18px;
+    border-radius: 4px;
 }
-.notifications-title-day{
+.notifications-main-box-img{
     width: 100%;
+    height: 70px;
     display: flex;
-    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 24px;
 }
-.notifications-title-day span:nth-child(1){
-    font-size: 1.2rem;
-    color: var(--color-two);
+.notifications-main-box-img img{
+    width: 100%;
+    object-fit: contain;
 }
-.notifications-title-day span:nth-child(2){
-    font-size: 0.9rem;
-    margin-left: 15px;
-    color: var(--color-five);
-}
-
-/*****************/
-.notifications-calendar-cont-main{
-    margin-top: 28px;
-}
-
-.notifications-row-container{
+.notifications-main-box-message{
     width: 100%;
     display: flex;
     flex-direction: column;
     white-space: normal;
+    text-align: center;
 }
-
-.notifications-box-main{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 23px;
-}
-
-.notifications-box-main label{
+.notifications-main-box-message span:nth-child(1){
     font-size: 0.8rem;
-    color: var(--color-five);
-}
-.notifications-box-main span{
-    font-size: 0.8rem;
-    margin-top: 8px;
     color: var(--color-two);
 }
-
-.notifications-action-command{
-    margin-bottom: 20px;
+.notifications-main-box-message span:nth-child(2){
+    color: var(--color-two);
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-decoration: underline;
 }
-.notifications-action-command a{
-    text-decoration: none;
-    outline: 0;
-    border: 0;
-    padding: 8px 18px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    color: var(--color-four);
-    background: var(--color-one-btn);
-    cursor: pointer;
-}
-
 
 /************************/
 /************************/

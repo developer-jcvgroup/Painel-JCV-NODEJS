@@ -9,24 +9,28 @@
         </div>
 
         <div class="notifications-title-page"><span>Notificações</span></div>
-        
-        <% allNot.forEach(element =>{ %>
-        <div class="notifications-calendar-box">
-            <div class="notifications-title-day"><span><%= element.jcv_notifications_title %></span><span><%= element.jcv_notifications_created %></span></div>
-            <div class="notifications-calendar-cont-main">
-                <div class="notifications-row-container">
-                    <div class="notifications-box-main">
-                        <label>Descrição</label>
-                        <span><%- element.jcv_notifications_message %></span>
-                    </div>
 
-                    <div class="notifications-action-command">
-                        <a href="<%= element.jcv_notifications_link %>">Acessar a página</a>
+        <div class="notifications-main-list">
+            <% let arrayIcons = {JCVMOD02: 'icon-progama-da-beleza.png', JCVMOD03: 'icon-requisitor.png', JCVMOD04: 'icon-calendar.png', JCVMOD05: 'icon-trade.png' } %>
+            
+            <% allNot.forEach(element =>{ %>
+
+                <% if(JSON.parse(element.jcv_notifications_users_view).indexOf(GLOBAL_DASH[0]) == -1 ){ %>
+                    <a style="border: 1px solid var(--color-green); box-shadow: 0 0 4px 0 var(--color-green)" href="<%= element.jcv_notifications_link %>" class="notifications-main-box">
+                <% }else{ %>
+                    <a href="<%= element.jcv_notifications_link %>" class="notifications-main-box">
+                <% } %>
+            
+                    <div class="notifications-main-box-img">
+                        <img src="<%= arrayIcons[element.jcv_notifications_type] == undefined ? 'https://jcv.net.br/logos/pwa-192.png' : 'https://jcv.net.br/icons/'+arrayIcons[element.jcv_notifications_type] %>" alt="">
                     </div>
-                </div>
-            </div>
+                    <!--  -->
+                    <div class="notifications-main-box-message">
+                        <span><%- element.jcv_notifications_message %></span>
+                        <span>Clique aqui</span>
+                    </div>
+                </a>
+            <% }) %>
         </div>
-        <hr>
-        <% }) %>
     </section>
 </section>
