@@ -2,6 +2,8 @@ const database = require("../../database/database");
 const moment = require("moment");
 moment.tz.setDefault('America/Sao_Paulo');
 
+const {htmlToText} = require('html-to-text')
+
 //Data atual
 function generateDate(){
     moment.locale('pt-br');
@@ -333,7 +335,6 @@ exports.visitFormModule = async (req,res) => {
             ws.cell(1, headingColumnIndex++).string(heading);
         });
 
-
         //Quando começa a inserir os itens na planilha
         let rowIndex = 2;
         dataFV.forEach( record => {
@@ -348,8 +349,13 @@ exports.visitFormModule = async (req,res) => {
                     arraySet.forEach(elementTwo => {
 
                         if(Object.values(elementTwo).join() != ''){
+
+                            const getValues = htmlToText(Object.values(elementTwo).join(), {
+                                wordwrap: false
+                            });
+
                             ws.cell(rowIndex,columnIndex++)
-                            .string(Object.values(elementTwo).join())
+                            .string(getValues)
                         }else{
                             ws.cell(rowIndex,columnIndex++)
                             .string('Sem dados..')
