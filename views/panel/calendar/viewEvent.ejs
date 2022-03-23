@@ -38,7 +38,6 @@
                     </div>
 
                     <% let getPersonsStatus = allDataEvent[0].sys_calendar_eventPersons.split(',') %>
-                    <% if(allDataEvent[0].sys_calendar_eventPublic == 1 || allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0] || getPersonsStatus.indexOf(''+GLOBAL_DASH[0]) > -1 ){ %>
 
                     <div class="event-box-main">
                         <label>Pessoas</label>
@@ -58,6 +57,7 @@
                         </div>
                     </div>
 
+                    <% if(allDataEvent[0].sys_calendar_eventPublic == 1 || allDataEvent[0].sys_calendar_eventUserId == GLOBAL_DASH[0] || getPersonsStatus.indexOf(''+GLOBAL_DASH[0]) > -1 ){ %>
                     <div class="event-box-main">
                         <label>Evento:</label>
 

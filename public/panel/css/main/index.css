@@ -10,6 +10,7 @@
     --color-seven: #d2d5d8;
     --color-eight: #d2d5d89d;
     --color-nine: #d2d5d83f;
+    --color-ten: #d2d5d81a;
     --background-one: #F5F5F5;
     --background-two: white;
     --background-three: #F5F5F5;
@@ -269,7 +270,7 @@ header{
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 4px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .notification-ul-list{
@@ -640,7 +641,80 @@ header{
     color: var(--color-one);
 }
 
+/***********************************/
+/***********************************/
+/* SECTION DE ALERT FORMULARIO */
+.sys-form-notification-main{
+    width: fit-content;
+    position: fixed;
+    top: 15%;
+    right: 5%;
+    display: flex;
+    z-index: 2;
+}
+.sys-form-notification-box{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 5px;
+    padding: 20px 16px;
+    background: var(--color-two);
+    animation: pulse 2s infinite;
+    color: var(--color-three);
+}
+.sys-form-notification-box span:nth-child(1){
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.sys-form-notification-box span{
+    font-size: 0.9rem;
+}
 
+.sys-form-notification-box a{
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--color-three);
+    display: flex;
+    align-items: center;
+}
+.sys-form-notification-box a i{
+    font-size: 0.7rem;
+}
+
+#pulse:hover {
+animation: none;
+}
+
+@-webkit-keyframes pulse {
+0% {
+    -webkit-box-shadow: 0 0 0 0 var(--color-two);
+}
+70% {
+    -webkit-box-shadow: 0 0 0 10px transparent;
+}
+100% {
+    -webkit-box-shadow: 0 0 0 0 transparent;
+}
+}
+@keyframes pulse {
+0% {
+    -moz-box-shadow: 0 0 0 0 var(--color-two);
+    box-shadow: 0 0 0 0 var(--color-two);
+}
+70% {
+    -moz-box-shadow: 0 0 0 10px transparent;
+    box-shadow: 0 0 0 30px transparent;
+}
+100% {
+    -moz-box-shadow: 0 0 0 0 transparent;
+    box-shadow: 0 0 0 0 transparent;
+}
+}
+
+/******************************/
+/******************************/
+/* SECTION DE REDEFINIÇÃO DE SENHA */
 /*  */
 /*  */
 .sys-define-pass-main{
@@ -888,5 +962,16 @@ input:checked + .system-mode-department-button-slider:before {
     }
     .sys-define-box{
         width: 95%;
+    }
+
+    /*  */
+    .sys-form-notification-main{
+        left: 0;
+        top: var(--heigth-header);
+        right: 0;
+        width: 100%;
+    }
+    .sys-form-notification-box{
+        width: 100%;
     }
 }

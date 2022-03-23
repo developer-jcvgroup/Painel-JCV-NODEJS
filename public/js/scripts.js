@@ -190,6 +190,11 @@ $(function(){
 
             $("#menu-action-main").animate({width: "toggle"},200);
         }
+
+        //Box notifications
+        if($("#notification-container-box").is(':visible')){
+            $("#notification-container-box").fadeOut()
+        }
     })
     //Menu
     $("#menu-action").click(function(){

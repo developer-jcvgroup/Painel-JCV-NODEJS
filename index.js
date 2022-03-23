@@ -206,6 +206,21 @@ io.on('connection', (socket) => {
         })
 
     })
+
+    socket.on("getFormsSystemStatus", (data) => {
+
+        //Pegando todos os formularios em aberto
+        database
+        .raw("SELECT jcv_formularios_registers_title,jcv_userNamePrimary,jcv_formularios_registers_expired,jcv_formularios_registers_id from jcv_formularios_registers JOIN jcv_users ON jcv_users.jcv_id = jcv_formularios_registers.jcv_formularios_registers_userCreated WHERE JSON_CONTAINS(jcv_formularios_registers_users, '"+data+"', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+data+"', '$') AND jcv_formularios_registers_enabled = 1 ORDER BY jcv_formularios_registers_id DESC LIMIT 1")
+        //.select()
+        //.where({jcv_notifications_usersId: data, jcv_notifications_users_view: null})
+        //.table("jcv_notifications")
+        .then( dataAll => {
+
+            socket.emit("reponseFormsStatus", dataAll[0])
+        
+        })
+    })
 })
 
 

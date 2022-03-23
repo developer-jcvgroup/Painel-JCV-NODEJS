@@ -386,6 +386,16 @@
     })
 </script>
 <% } %>
+
+<!--  -->
+
+<section class="sys-form-notification-main" id="sys-form-notification-main">
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+</section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 <script>
@@ -461,6 +471,38 @@
     setInterval(() => {
         socket.emit("getNotificationsAllCount","<%= GLOBAL_DASH[0] %>")    
     }, 1500);
+
+    //Pegando os formularios pendentes para responder
+    
+
+    setInterval(() => {
+        socket.emit("getFormsSystemStatus", "<%= GLOBAL_DASH[0] %>")
+
+        socket.on("reponseFormsStatus", (data) => {
+            
+            //Verificando se possui dados
+            if(data != '' && data.length == 1 ){
+
+                //Pegando a url atual
+                let ulrActual = window.location.pathname.split('/')[2] == 'formularios' && window.location.pathname.split('/')[3] == 'reponse' ? true : false
+                
+                if(!$("#sys-form-notification-box").is(':visible') && ulrActual == false){
+                    //Exibir o display
+                    $("#sys-form-notification-main").append(`
+                    
+                    <div class="sys-form-notification-box" id="sys-form-notification-box">
+                        <span>Formulário Pendente!</span>
+                        <span>Formulário: <b>${data[0].jcv_formularios_registers_title}</b> está pendente! Responda-o o quanto antes!</span><br>
+                        <span>Criado por: <b>${data[0].jcv_userNamePrimary}</b></span>
+                        <span>Expira em: <b>${data[0].jcv_formularios_registers_expired}</b></span>
+                        <a href="/painel/formularios/reponse/${data[0].jcv_formularios_registers_id}">Clique aqui para responder⠀<i class="ri-arrow-right-line"></i></a>
+                    </div>
+                    
+                    `)
+                }
+            }
+        })
+    }, 1000);
 
     //window.notificationApi = 0;
     socket.on("reponseNotificationsAllCount", (dataAll) => {

@@ -223,7 +223,7 @@ exports.responseFormulario = async (req,res) => {
     .then( data => {return data})
 
     const verifyResponse = await database
-    .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '2', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
+    .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '${GLOBAL_DASH[0]}', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
     //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
     .then( data => {return data[0]})
 

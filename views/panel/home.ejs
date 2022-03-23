@@ -61,7 +61,7 @@
                                         <img class="sys-icon-size" src="/icons/icon-calendar.png" alt="">
                                     </div>
                                     <span>⠀</span>
-                                    <span><b><%= CALENDARcount %></b>⠀participação(ões) <i class="ri-external-link-line"></i></span>
+                                    <span><b><%= CALENDARcount %></b>⠀participação(ões) no mês atual <i class="ri-external-link-line"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                 <% } %>
             </div>
             <div class="home-display-grapics-main">
-                <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1){ %>
+                <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1 || GLOBAL_PERM[0].sys_blz_perm_admin == 1){ %>
                     <div class="home-grapics-system">
                         <div class="home-grapics-main">
                             <div class="home-grapics-title"><span>Programa da Beleza</div>

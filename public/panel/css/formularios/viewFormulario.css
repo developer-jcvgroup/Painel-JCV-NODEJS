@@ -154,7 +154,7 @@
     color: var(--color-four);
     background: var(--color-two);
     cursor: pointer;
-    margin: 0 24px;
+    margin: 24px;
 }
 
 .view-form-set-styles{
