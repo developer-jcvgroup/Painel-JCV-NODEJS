@@ -123,28 +123,53 @@ getInfoGrapicsBeleza = async () => {
     let dataReference = moment().format("MM-YYYY");
 
     const productTwo = await database
-    .raw("SELECT sys_blz_tratmentTwo, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY COUNT(sys_blz_tratmentTwo) DESC LIMIT 3")
+    .raw("SELECT sys_blz_tratmentTwo, COUNT(sys_blz_tratmentTwo) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentTwo HAVING COUNT(sys_blz_tratmentTwo) > 0 ORDER BY COUNT(sys_blz_tratmentTwo) DESC LIMIT 4")
     .then(data => {
         return data[0];
     })
 
     const productOne = await database
-    .raw("SELECT sys_blz_tratmentOne, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY COUNT(sys_blz_tratmentOne) DESC LIMIT 3")
+    .raw("SELECT sys_blz_tratmentOne, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders WHERE sys_blz_requestReference = '"+dataReference+"' GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY COUNT(sys_blz_tratmentOne) DESC LIMIT 4")
+    .then(data => {
+        return data[0];
+    })
+
+    let arrayConvertOne = {};
+    let arrayConvertTwo = {};
+    let objCompDados = {}
+
+    productOne.forEach(element => {
+        arrayConvertOne[element.sys_blz_tratmentOne.split(' - ')[1]] = element.Qtd
+    });
+    productTwo.forEach(element => {
+        arrayConvertTwo[element.sys_blz_tratmentTwo.split(' - ')[1]] = element.Qtd
+    });
+
+    arrayConvertOne['dateBeleza'] = dataReference
+    arrayConvertTwo['dateBeleza'] = dataReference
+
+    objCompDados['arrayConvertTwo'] = arrayConvertTwo;
+    objCompDados['arrayConvertOne'] = arrayConvertOne;
+
+    //console.log(objCompDados)
+
+    return JSON.stringify(objCompDados)
+
+}
+
+getRequisitorInfo = async () => {
+    const getInfoReq = await database
+    .raw("SELECT sys_req_userName, COUNT(sys_req_userName) AS Qtd FROM jcv_jcvpanel.jcv_req_orders GROUP BY sys_req_userName HAVING COUNT(sys_req_userName) > 0 ORDER BY COUNT(sys_req_userName) DESC LIMIT 6")
     .then(data => {
         return data[0];
     })
 
     let arrayConvert = {};
-    productOne.forEach(element => {
-        arrayConvert[element.sys_blz_tratmentOne.split(' - ')[1]] = element.Qtd
-    });
-    productTwo.forEach(element => {
-        arrayConvert[element.sys_blz_tratmentTwo.split(' - ')[1]] = element.Qtd
+    getInfoReq.forEach(element => {
+        arrayConvert[element.sys_req_userName] = element.Qtd
     });
 
-    arrayConvert['dateBeleza'] = dataReference
     return JSON.stringify(arrayConvert)
-
 }
 
 getInfoGrapicsCalendar = async () => {
@@ -198,6 +223,9 @@ exports.homeInfo = async (req,res)=> {
     //Gráficos Calendário
     const arrayCalendar = await getInfoGrapicsCalendar();
 
+    //Pegando dados requsitor
+    const arrayRequsitor = await getRequisitorInfo();
+    //console.log(arrayRequsitor)
     //Al users
     const allUserSystem = await getInfoUserMain();
 
@@ -211,7 +239,8 @@ exports.homeInfo = async (req,res)=> {
         TRADEMKTcount: TRADEMKTcount,
         arrayConvert: arrayConvert,
         arrayCalendar: arrayCalendar,
-        allUserSystem: allUserSystem
+        allUserSystem: allUserSystem,
+        arrayRequsitor: arrayRequsitor
     })
 
     

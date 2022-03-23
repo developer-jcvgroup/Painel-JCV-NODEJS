@@ -29,11 +29,17 @@
 .notifications-title-page{
     width: 100%;
     display: flex;
+    flex-direction: column;
     margin: 19px 0;
     padding: 18px;
 }
-.notifications-title-page span{
+.notifications-title-page span:nth-child(1){
     font-size: 1.2rem;
+    color: var(--color-one);
+}
+.notifications-title-page span:nth-child(2){
+    font-size: 0.8rem;
+    margin-top: 14px;
     color: var(--color-one);
 }
 

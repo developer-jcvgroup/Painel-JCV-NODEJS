@@ -63,7 +63,7 @@ body, html{
     overflow-y: auto;
     background: linear-gradient(188deg, rgba(34,34,36,1) 0%, rgba(44,47,51,1) 88%, rgba(52,58,64,1) 100%);
     box-shadow: 0 0 4px 0 var(--color-one);
-    z-index: 99;
+    z-index: 10;
 }
 
 /**********************/

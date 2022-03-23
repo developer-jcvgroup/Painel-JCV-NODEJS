@@ -210,27 +210,49 @@
                         </div>
                     </div>
                 <% } %>
-
+            </div>
+            <div class="home-display-grapics-main">
                 <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1){ %>
-                <div class="home-logs-system" style="width: <%= GLOBAL_PERM[0].sys_cal_perm_admin == 1 ? '48%' : '100%' %>;">
-                    <div class="home-logs-main">
-                        <div class="home-logs-title"><span>Programa da Beleza</div>
-                        <div class="home-logs-list-chars">
-                            <canvas id="grapichs-main-display-beleza" width="100%" height="100%"></canvas>
+                    <div class="home-grapics-system">
+                        <div class="home-grapics-main">
+                            <div class="home-grapics-title"><span>Programa da Beleza</div>
+                            <div class="home-grapics-list-chars">
+                                <div class="home-grapics-canvas">
+                                    <canvas id="grapichs-main-display-beleza-one"></canvas>
+                                </div>
+                                <div>⠀⠀⠀⠀⠀⠀</div>
+                                <div class="home-grapics-canvas">
+                                    <canvas id="grapichs-main-display-beleza-two"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <% } %>
+    
+                <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
+                    <div class="home-grapics-system">
+                        <div class="home-grapics-main">
+                            <div class="home-grapics-title"><span>Calendario</div>
+                            <div class="home-grapics-list-chars">
+                                <div class="home-grapics-canvas">
+                                    <canvas id="grapichs-main-display-calendar"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <% } %>
 
-                <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
-                <div class="home-logs-system">
-                    <div class="home-logs-main">
-                        <div class="home-logs-title"><span>Calendário</span></div>
-                        <div class="home-logs-list-chars">
-                            <canvas id="grapichs-main-display-calendar" width="100%" height="100%"></canvas>
+                <% if(GLOBAL_PERM[0].sys_req_perm_admin == 1){ %>
+                    <div class="home-grapics-system">
+                        <div class="home-grapics-main">
+                            <div class="home-grapics-title"><span>Requisitor</div>
+                            <div class="home-grapics-list-chars">
+                                <div class="home-grapics-canvas">
+                                    <canvas id="grapichs-main-display-requisitor"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <% } %>
             </div>
         </section>
@@ -243,98 +265,239 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <script>
 
-    let arrayConvert = JSON.parse('<%- arrayConvert %>')
-    let monthReference = arrayConvert['dateBeleza'].split('-')[0]+'/'+arrayConvert['dateBeleza'].split('-')[1]
-    delete arrayConvert['dateBeleza']
+    let arrayConvertGroup = JSON.parse('<%- arrayConvert %>')
+    let delayed;
 
-    const ctx = document.getElementById('grapichs-main-display-beleza').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(arrayConvert),
-            datasets: [{
-                label: ' Mais pedido',
-                data: Object.values(arrayConvert),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+    //Beleza: primeiro grafico
+    let arrayConvertOne = arrayConvertGroup.arrayConvertOne
+
+    let monthReference = arrayConvertOne['dateBeleza'].split('-')[0]+'/'+arrayConvertOne['dateBeleza'].split('-')[1]
+    delete arrayConvertOne['dateBeleza']
+
+    if($("#grapichs-main-display-beleza-one").is(':visible')){
+        const ctx = document.getElementById('grapichs-main-display-beleza-one').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(arrayConvertOne),
+                datasets: [{
+                    label: ' Mais solicitado',
+                    data: Object.values(arrayConvertOne),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                }]
             },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                    x: {
+                        ticks: {
+                            display: false,
+                        },
+                    },
+                },
                 plugins: {
-                title: {
-                    display: true,
-                    text: 'Produtos mais solicitados '+monthReference
-                }
+                    title: {
+                        display: true,
+                        text: 'Shampoo mais solicitado ref.: '+monthReference
+                    }
+                },
+            },
+        });
+    }
+
+    if($("#grapichs-main-display-beleza-two").is(':visible')){
+        //Beleza: segundo grafico
+        let arrayConvertTwo = arrayConvertGroup.arrayConvertTwo
+        delete arrayConvertTwo['dateBeleza']
+
+        //let monthReference = arrayConvertOne['dateBeleza'].split('-')[0]+'/'+arrayConvertOne['dateBeleza'].split('-')[1]
+        //delete arrayConvertOne['dateBeleza']
+        const ctxTwo = document.getElementById('grapichs-main-display-beleza-two').getContext('2d');
+        const myChartTwo = new Chart(ctxTwo, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(arrayConvertTwo),
+                datasets: [{
+                    label: ' Mais Solicitados',
+                    data: Object.values(arrayConvertTwo),
+                    backgroundColor: [
+                        
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                    x: {
+                        ticks: {
+                            display: false,
+                        },
+                    },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Tratamento mais solicitado ref.: '+monthReference
+                    }
+                },
+                
             }
+        });
+    }
+
+    if($("#grapichs-main-display-requisitor").is(':visible')){
+        const arrayRequsitor = JSON.parse('<%- arrayRequsitor %>')
+        //console.log(arrayRequsitor)
+
+        const ctxThree = document.getElementById('grapichs-main-display-requisitor').getContext('2d');
+        const myChartctxThree = new Chart(ctxThree, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(arrayRequsitor),
+                datasets: [{
+                    label: ' Mais solicitados',
+                    data: Object.values(arrayRequsitor),
+                    backgroundColor: [
+                        'rgba(69, 123, 157, 0.2)',
+                        'rgba(17, 138, 178, 0.2)',
+                        'rgba(181, 131, 141, 0.2)',
+                        'rgba(239, 35, 60, 0.2)',
+                        'rgba(251, 86, 7, 0.2)',
+                        'rgba(155, 99, 132, 0.2)',
+                        
+                    ],
+                    borderColor: [
+                        
+                        'rgba(69, 123, 157, 1)',
+                        'rgba(17, 138, 178, 1)',
+                        'rgba(181, 131, 141, 1)',
+                        'rgba(239, 35, 60, 1)',
+                        'rgba(251, 86, 7, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                    x: {
+                        ticks: {
+                            display: false,
+                        },
+                    },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Usuarios com mais solicitações ao todo '
+                    }
+                },
+                
+            }
+        });
+    }
+
+    if($("#grapichs-main-display-calendar").is(':visible')){
+        //Calendario
+        let arrayConvertBox = JSON.parse('<%- arrayCalendar %>')
+        let monthReferenceBox = arrayConvertBox['dateCalendar']
+        delete arrayConvertBox['dateCalendar']
+
+        let objValues = Object.values(arrayConvertBox).map(convertSetVal);
+        function convertSetVal(value){
+            return value[1]
         }
-    });
 
-    let arrayConvertBox = JSON.parse('<%- arrayCalendar %>')
-    let monthReferenceBox = arrayConvertBox['dateCalendar']
-    delete arrayConvertBox['dateCalendar']
+        let objRooms = Object.keys(arrayConvertBox).map(convertSetRooms);
+        function convertSetRooms(value){
+            return value
+        }
 
-    let objValues = Object.values(arrayConvertBox).map(convertSetVal);
-    function convertSetVal(value){
-        return value[1]
+        let colorsValues = Object.values(arrayConvertBox).map(convertSetColos);
+        function convertSetColos(value){
+            return value[0]
+        }
+        
+        const boxctx = document.getElementById('grapichs-main-display-calendar').getContext('2d');
+        const myChartBox = new Chart(boxctx, {
+            type: 'bar',
+            data: {
+                labels: objRooms,
+                datasets: [{
+                    label: ' Mais utilizada',
+                    data: objValues,
+                    backgroundColor: 'transparent',
+                    borderColor: colorsValues,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                    x: {
+                        ticks: {
+                            display: false,
+                        },
+                    },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sala mais utilizada '+monthReferenceBox
+                    }
+                },
+                
+            }
+        });
     }
 
-    let objRooms = Object.keys(arrayConvertBox).map(convertSetRooms);
-    function convertSetRooms(value){
-        return value
-    }
-
-    let colorsValues = Object.values(arrayConvertBox).map(convertSetColos);
-    function convertSetColos(value){
-        return value[0]
-    }
     
-    const boxctx = document.getElementById('grapichs-main-display-calendar').getContext('2d');
-    const myChartBox = new Chart(boxctx, {
-        type: 'bar',
-        data: {
-            labels: objRooms,
-            datasets: [{
-                label: ' Sala mais utilizada',
-                data: objValues,
-                backgroundColor: 'transparent',
-                borderColor: colorsValues,
-                borderWidth: 1,
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-                plugins: {
-                title: {
-                    display: true,
-                    text: 'Sala mais utilizada '+monthReferenceBox
-                }
-            }
-        }
-    });
 </script>
 <script>
     /* $('.home-section-card-cont-users').marquee({

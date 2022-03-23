@@ -152,6 +152,15 @@
     flex-wrap: wrap;
 }
 
+/* GRAPICS */
+.home-display-grapics-main{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
 /* BLOCKS */
 .suspended-blocks-container{
     width: 310px;
@@ -160,6 +169,7 @@
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 3px;
+    margin: 9px;
 }
 .suspended-container-center{
     width: 100%;
@@ -317,17 +327,28 @@
 }
 
 /*********************************/
-/* LOG DO SISTEMA */
-.home-logs-system{
-    width: 48%;
-    margin: 28px 0;
+/*********************************/
+/* GRAFICOS */
+.home-grapics-system{
+    margin-top: 28px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
 }
-.home-logs-main{
+
+.home-grapics-system:nth-child(1){
+    width: 100%;
+}
+.home-grapics-system:nth-child(2){
+    width: 48%;
+}
+.home-grapics-system:nth-child(3){
+    width: 48%;
+}
+
+.home-grapics-main{
     /* max-height: 200px; */
     display: flex;
     flex-direction: column;
@@ -336,27 +357,31 @@
     overflow: hidden;
     overflow-x: auto;
 }
-.home-logs-title{
+.home-grapics-list-chars{
     width: 100%;
     display: flex;
-}
-.home-logs-title span, a{
-    font-size: 0.8rem;
-    color: var(--color-one);
+    justify-content: space-between;
 }
 
-.home-logs-list-chars{
+.home-grapics-canvas{
     width: 100%;
-    margin-top: 24px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-/*  */
-#grapichs-main-display-beleza{
-    max-height: 700px;
+
+.home-grapics-list-chars canvas{
+    width: 100% !important;
+    
 }
-#grapichs-main-display-calendar{
-    max-height: 700px;
+
+.home-grapics-title{
+    width: 100%;
+    display: flex;
+}
+.home-grapics-title span, a{
+    font-size: 0.8rem;
+    color: var(--color-one);
 }
 
 /*********************************/
@@ -388,12 +413,17 @@
     .suspended-blocks-container-enjoy{
         width: 100%;
     }
-    .home-logs-system{
-        width: 100% !important;
-    }
 
     /*  */
     .section-box-suspended{
         margin-top: -140px;
+    }
+
+    /* GRAPICS */
+    .home-grapics-list-chars{
+        flex-direction: column;
+    }
+    .home-grapics-system{
+        width: 100% !important;
     }
 }
