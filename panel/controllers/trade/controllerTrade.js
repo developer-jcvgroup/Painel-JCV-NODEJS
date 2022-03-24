@@ -485,7 +485,7 @@ exports.salesDayRegister = async (req,res) => {
             .table("jcv_trade_sales_form")
             .then( data => {
                 if(data[0] > 0){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Registro da venda diaria da loja foi realizado com sucesso.");
+                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Venda diaria <b>#"+shopSelect+"</b> realizado com sucesso.");
                     res.redirect("/painel/trademkt/main");
                 }
             })

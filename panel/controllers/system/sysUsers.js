@@ -426,7 +426,7 @@ exports.downloadDataUsers = async (req,res) => {
             wb.write(nameData+'.xlsx', res)
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione ao meno um usuario");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione ao menos um usuario");
         res.redirect("/painel/system/users");
     }
 }
