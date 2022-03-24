@@ -654,14 +654,15 @@ header{
 }
 .sys-form-notification-box{
     width: 350px;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 5px;
     padding: 20px 16px;
-    background: var(--color-two);
+    background: #db9c23;
     animation: pulse 2s infinite;
-    color: var(--color-three);
+    color: black;
 }
 .sys-form-notification-box span:nth-child(1){
     font-size: 1.2rem;
@@ -674,7 +675,7 @@ header{
 .sys-form-notification-box a{
     margin-top: 20px;
     font-size: 0.9rem;
-    color: var(--color-three);
+    color: black;
     display: flex;
     align-items: center;
 }
@@ -688,7 +689,7 @@ animation: none;
 
 @-webkit-keyframes pulse {
 0% {
-    -webkit-box-shadow: 0 0 0 0 var(--color-two);
+    -webkit-box-shadow: 0 0 0 0 #db9c23;
 }
 70% {
     -webkit-box-shadow: 0 0 0 10px transparent;
@@ -699,8 +700,8 @@ animation: none;
 }
 @keyframes pulse {
 0% {
-    -moz-box-shadow: 0 0 0 0 var(--color-two);
-    box-shadow: 0 0 0 0 var(--color-two);
+    -moz-box-shadow: 0 0 0 0 #db9c23;
+    box-shadow: 0 0 0 0 #db9c23;
 }
 70% {
     -moz-box-shadow: 0 0 0 10px transparent;
@@ -726,6 +727,7 @@ animation: none;
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.527);
+    z-index: 5;
 }
 .sys-define-box{
     width: 350px;

@@ -142,8 +142,23 @@
     border-radius: 14px;
     margin-right: 5px;
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
 }
 
+/*  */
+.view-box-img-user{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid var(--color-one);
+}
+.view-box-img-user img{
+    border-radius: 50%;
+}
+/*  */
 
 
 

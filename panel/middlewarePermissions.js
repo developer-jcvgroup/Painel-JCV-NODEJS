@@ -5,11 +5,11 @@ async function getUpdates(idUser, moduleOp){
     //Verificando se existe menssagem de novas atualizações
 
     //Definindo que all pages
-    moduleOp == 'JCVMOD01' ? '"'+moduleOp+'"' : '"'+moduleOp+' ,JCVMOD01'+'"';
+    let moduleOpSet = moduleOp == 'JCVMOD01' ? `'${moduleOp}'` : `'${moduleOp}','JCVMOD01'`;
 
     const allUpdate = await database
     .raw(`
-        SELECT * from sys_update WHERE sys_update_moduleUp in ('${moduleOp}') AND sys_update_enabled = 1 AND NOT JSON_CONTAINS(sys_update_usersOkUpdate, '${idUser}', '$')
+        SELECT * from sys_update WHERE sys_update_moduleUp in (${moduleOpSet}) AND sys_update_enabled = 1 AND NOT JSON_CONTAINS(sys_update_usersOkUpdate, '${idUser}', '$')
     `)
     /* .raw(`
         SELECT *

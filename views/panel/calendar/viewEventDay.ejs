@@ -35,25 +35,24 @@
                             <div class="view-room-container-desc">
                                 <span>Participantes:</span>
                                 <div class="view-room-box-user">
-
-                                    <% if(element.sys_calendar_eventPublic == 0) { %>
-                                        <span><b>Evento Privado</b></span>
+                                    <% if(element.sys_calendar_eventPersons == ''){ %>
+                                        <span>Somente o criador é participante</span>
                                     <% }else{ %>
-                                        <% if (typeof(element.sys_calendar_eventPersons) == 'string'){ %>
-                                        
-                                            <% let arrayFinal = element.sys_calendar_eventPersons.split(',') %>
 
-                                            <% arrayFinal.forEach(element => { %>
-                                                
-                                                <% let validation = userAll.map(function(e) { return e.jcv_id; }).indexOf(parseInt(element));%>
-                                                <% if(validation > -1) { %>
-                                                    <span><%= userAll[validation].jcv_userNamePrimary %></span>
-                                                <% } %>
+                                        <% let arrayUsersGet = element.sys_calendar_eventPersons.split(',') %>
 
-                                            <% }) %>
-                                        <% }else{ %>
-                                            <span>Nenhum Participante</span>
-                                        <% } %>
+                                        <% userAll.forEach(elementTo => { %>
+                                            
+                                            <% if(arrayUsersGet.indexOf(''+elementTo.jcv_id) > -1){ %>
+                                                <span>
+                                                    <div class="view-box-img-user">
+                                                        <img src="<%= elementTo.jcv_userImageIcon %>" alt="">
+                                                    </div>
+                                                    <b style="margin-left: 5px;"><%= elementTo.jcv_userNamePrimary %></b>
+                                                </span>
+                                            <% } %>
+
+                                        <% }) %>
                                     <% } %>
                                 </div>
                             </div>

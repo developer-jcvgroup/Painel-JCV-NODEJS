@@ -954,7 +954,7 @@ exports.viewEventDay = async (req,res) => {
             if(roomInfo != ''){
                 //Buscando todos os usuario
                 const userAll = await database
-                .select("jcv_id","jcv_userNamePrimary")
+                .select("jcv_id","jcv_userNamePrimary","jcv_userImageIcon")
                 .where({jcv_userEnabled: 1})
                 .table("jcv_users")
                 .then( data => {
