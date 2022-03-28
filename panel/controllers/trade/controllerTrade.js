@@ -1779,7 +1779,7 @@ exports.removeFPresponses = async (req,res) => {
 
             //Zerando as respostas
             database
-            .update({jcv_trade_form_create_total_reponse: 0})
+            .update({jcv_trade_form_create_total_reponse: 0, jcv_trade_form_create_usersListResponse: null})
             .where({jcv_trade_form_create_id: backUpIdForm})
             .table("jcv_trade_form_create")
             .then( data => {
