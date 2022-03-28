@@ -291,6 +291,26 @@ header{
     margin: 0 12px;
 }
 
+/* INFO USER */
+.header-def-info-user{
+    width: 100%;
+    padding: 7px 9px;
+    border: 2px solid var(--color-one);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-def-info-user img{
+    width: 40px;
+    object-fit: contain;
+}
+.header-def-info-user a{
+    font-size: 0.8rem;
+    color: var(--color-two);
+    margin-left: 5px;
+}
+
 .header-container-logo-jcv{
 
     width: 200px;

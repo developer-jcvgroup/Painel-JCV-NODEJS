@@ -24,11 +24,18 @@
 
                     <% if(resultForms.length > 0){ %>
                         <% resultForms.forEach(element => { %>
-                            <a class="formularios-main-forms-link" href="/painel/formularios/edit/<%= element.jcv_formularios_registers_id %>">
+                            <a class="class-loader formularios-main-forms-link" href="/painel/formularios/edit/<%= element.jcv_formularios_registers_id %>">
                                 <div class="formularios-main-forms-link-info">
                                     <span><%= element.jcv_formularios_registers_title %></span>
                                     <span>Respostas: <b><%= element.jcv_formularios_registers_totalResponse %></b></span>
                                     <span>Gerado por: <%= element.jcv_userNamePrimary %></span>
+
+                                    <% if(element.jcv_formularios_registers_res_unique == 1){ %>
+                                        <span><b>Resposta única</b></span>
+                                    <% }else{ %>
+                                        <span><b>Multiplas respostas</b></span>
+                                    <% } %>
+                    
                                     <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_formularios_registers_expired %></b></span>
                                 </div>
                                 <hr style="width: 100%; margin: 7px 0;">

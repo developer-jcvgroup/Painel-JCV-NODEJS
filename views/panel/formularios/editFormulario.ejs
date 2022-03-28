@@ -15,6 +15,16 @@
                     <span><input type="text" placeholder="Título do formulário" value="<%= infoFormulario[0].jcv_formularios_registers_title %>" name="edit-form-title-set"></span>
                     <span><input type="date" value="<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[2] %>-<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[1] %>-<%= infoFormulario[0].jcv_formularios_registers_expired.split('-')[0] %>" name="edit-form-set-date-expired" id="edit-form-set-date-expired"></span>
                     <button id="edit-form-open-users" type="button"><i class="ri-user-line"></i><span id="count-users-selects" style="position: absolute; font-size: 0.8rem;">0</span></button>
+                    <label class="edit-search-option-action" for="">Resposta única
+                        <label class="edit-form-button-switch">
+                            <% if(infoFormulario[0].jcv_formularios_registers_res_unique == 1){ %>
+                                <input type="checkbox" name="edit-form-unique-response" checked>
+                            <% }else{ %>
+                                <input type="checkbox" name="edit-form-unique-response">
+                            <% } %>
+                            <span class="edit-form-button-slider round"></span>
+                        </label>
+                    </label>
                 </div>
                 <div class="edit-form-search-edit-form-title-two">
                     <img class="edit-form-search-edit-form-title-img-logo" src="/logos/logo-jcv-03.png" alt="">

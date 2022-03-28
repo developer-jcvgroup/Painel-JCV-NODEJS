@@ -221,6 +221,14 @@ io.on('connection', (socket) => {
         
         })
     })
+
+    socket.on("getInfoShopEdit", (data) => {
+        database
+        .select()
+        .where({jcv_trade_shops_id: data})
+        .table("jcv_trade_shops")
+        .then( data => { socket.emit("getInfoShopEditResult", data) })
+    })
 })
 
 

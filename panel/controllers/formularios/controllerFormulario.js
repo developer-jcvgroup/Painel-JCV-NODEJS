@@ -58,6 +58,8 @@ exports.saveNewForm = async (req,res) => {
     let expiredForm = req.body['form-set-date-expired']
     const formJson = req.body['button-json-form']
 
+    const formUniqueResponse = req.body['new-form-unique-response'] == 'on' ? 1 : 0;
+
     if(idsUsers != '' && titleForm != '' && expiredForm != '' && formJson!= ''){
         idsUsers = JSON.stringify(req.body['array-users-list'].split(',').map(convertNumber))
 
@@ -77,7 +79,8 @@ exports.saveNewForm = async (req,res) => {
             jcv_formularios_registers_expired: expiredForm,
             jcv_formularios_registers_users: idsUsers,
             jcv_formularios_registers_enabled: 1,
-            jcv_formularios_registers_usersResponses: '[]'
+            jcv_formularios_registers_usersResponses: '[]',
+            jcv_formularios_registers_res_unique: formUniqueResponse
         })
         .table("jcv_formularios_registers")
         .then( data => {
@@ -155,6 +158,8 @@ exports.editFormularioSave = async (req,res) => {
     let expiredForm = req.body['edit-form-set-date-expired']
     const formJson = req.body['button-json-form']
 
+    const uniqueResponse = req.body['edit-form-unique-response'] == 'on' ? 1 : 0;
+
     //console.log(idsUsers)
     //console.log(titleForm)
     //console.log(expiredForm)
@@ -179,6 +184,7 @@ exports.editFormularioSave = async (req,res) => {
             jcv_formularios_registers_expired: expiredForm,
             jcv_formularios_registers_users: idsUsers,
             //jcv_formularios_registers_enabled: 1
+            jcv_formularios_registers_res_unique: uniqueResponse
         })
         .where({jcv_formularios_registers_id: idForm})
         .table("jcv_formularios_registers")
@@ -222,12 +228,19 @@ exports.responseFormulario = async (req,res) => {
     .table("jcv_formularios_registers")
     .then( data => {return data})
 
+    let verifyUniqueResponse;
+    if(getInfo[0].jcv_formularios_registers_res_unique == 1){
+        verifyUniqueResponse = true;
+    }else{
+        verifyUniqueResponse = false;
+    }
+
     const verifyResponse = await database
     .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '${GLOBAL_DASH[0]}', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
     //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
     .then( data => {return data[0]})
 
-    if(verifyResponse != ''){
+    if(verifyResponse != '' || verifyUniqueResponse == true){
         if(getInfo != ''){
             var page = "formularios/viewFormulario";
             res.render("panel/index", {

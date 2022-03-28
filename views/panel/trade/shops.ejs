@@ -19,9 +19,11 @@
 
                 <div class="shop-order-srs-search">
                     <div class="shop-order-srs-box">
-                        <input type="text" placeholder="Busque por ID, nome do item.." id="input-search-table">
-                        <button type="button" id="input-button-search">Buscar</button>
-                        <button type="button" id="input-button-search-clear">Limpar</button>
+                        <input type="text" placeholder="Busque por ID, nome fantasia, nome social, região.." id="input-search-table">
+                    </div>
+                    <div id="open-new-shop" class="shop-order-srs-new">
+                        <i class="ri-add-line"></i>
+                        <label for="">Novo cadastro</label>
                     </div>
                     <div class="container-actions-checks-shop">
                         <div class="shop-box-actions-checks">
@@ -35,174 +37,329 @@
                             </select>
                         </div>
                         <div class="shop-box-actions-checks-button">
-                            <button class="class-loader" formaction="/painel/trademkt/shops/action/execute">Executar</button>
+                            <button id="shop-list-ids" name="shop-list-ids" formaction="/painel/trademkt/shops/action/execute">Executar</button>
                         </div>
                     </div>
                 </div>
-
-
-                
-                <div class="shop-container-table" >
-                    <table class="shop-list-table" id="shop-list-table">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
-                                <th>CNPJ</th>
-                                <th>Razão Social</th>
-                                <th>Nome Fantasia</th>
-                                <th>Região</th>
-                                <th>Cadastrados</th>
-                                <th>Ativo</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="shop-list-table-tbody">
-
-                            <tr>
-                                <td>    </td>
-                                <td><input type="text" name="shop-name-cnpj" placeholder="Insira CNPJ.."></td>
-                                <td><input type="text" name="shop-name-social" placeholder="Insira RAZÃO SOCIAL.."></td>
-                                <td><input type="text" name="shop-name-fantasia" placeholder="Insira o NOME FANTASIA DA LOJA.."></td>
-                                <td>
-                                    <select name="shop-name-region">
-                                        <option value="" disabled></option>
-                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
-                                        <option value="Região Nordeste">Região Nordeste</option>
-                                        <option value="Região Norte">Região Norte</option>
-                                        <option selected value="Região Sudeste">Região Sudeste</option>
-                                        <option value="Região Sul">Região Sul</option>
-                                    </select>
-                                </td>
-                                <td> </td>
-                                <td>
-                                    <label class="shop-button-switch">
-                                        <input type="checkbox" name="shop-enabled" checked>
-                                        <span class="shop-button-slider round"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <div class="shop-container-actions-table">
-                                        <button formaction="/painel/trademkt/shops/register/shop/new"><i class="ri-save-line"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
-
-                            <% allShops.forEach(element => { %>
-                            <tr class="request-row-check-mark">
-                                <td><input class="checkbox-select-single" type="checkbox" name="shop-edit-id" value="<%= element.jcv_trade_shops_id %>"></td>
-                                <td><input type="text" name="shop-cnpj-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_cnpj %>" placeholder="Insira CNPJ.."></td>
-                                <td><input type="text" name="shop-name-social-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name_social %>" placeholder="Insira RAZÃO SOCIAL.."></td>
-                                <td><input type="text" name="shop-name-fantasy-edit-<%= element.jcv_trade_shops_id %>" value="<%= element.jcv_trade_shops_name_fantasy %>" placeholder="Insira RAZÃO FANTASIA.."></td>
-                                <td>
-                                    <select name="shop-name-region-edit-<%= element.jcv_trade_shops_id %>">
-                                        <option value="<%= element.jcv_trade_shops_region %>"><%= element.jcv_trade_shops_region %></option>
-                                        <option value="" disabled></option>
-                                        <option value="Região Centro-Oeste">Região Centro-Oeste</option>
-                                        <option value="Região Nordeste">Região Nordeste</option>
-                                        <option value="Região Norte">Região Norte</option>
-                                        <option value="Região Sudeste">Região Sudeste</option>
-                                        <option value="Região Sul">Região Sul</option>
-                                    </select>
-                                </td>
-                                
-                                <td>
-                                    <b><%= element.jcv_trade_shops_users == '' || element.jcv_trade_shops_users == null ? 0 : element.jcv_trade_shops_users.split(',').length %></b>
-                                </td>
-                                
-                                <td>
-                                    <% if(element.jcv_trade_shops_enabled == 1){ %>
-                                    <label class="shop-button-switch">
-                                        <input type="checkbox" name="shop-enabled-edit-<%= element.jcv_trade_shops_id %>" checked>
-                                        <span class="shop-button-slider round"></span>
-                                    </label>
-                                    <% }else{ %>
-                                        <label class="shop-button-switch">
-                                            <input type="checkbox" name="shop-enabled-edit-<%= element.jcv_trade_shops_id %>">
-                                            <span class="shop-button-slider round"></span>
-                                        </label>
-                                    <% } %>
-                                </td>
-                                <td>
-                                    <div class="shop-container-actions-table">
-                                        <button formaction="/painel/trademkt/shops/register/shop/edit" value="<%= element.jcv_trade_shops_id %>" name="action-save-edit-shop" class="class-loader"><i class="ri-save-line"></i></button>
-                                        <a class="class-loader" href="/painel/trademkt/shops/config/<%= element.jcv_trade_shops_id %>"><i class="ri-user-add-fill"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <% }) %>
-
-                        </tbody>
-                    </table>
-                </div>
             </section>
         </form>
+
+        <!--  -->
+        <!--  -->
+
+        <section class="shop-main-list-content">
+
+            <% allShops.forEach(element => { %>
+            <div class="shop-box-single" value-div="<%= element.jcv_trade_shops_id %>">
+                <div class="shop-box-single-header">
+                    <input class="shop-input-check" type="checkbox" id="<%= element.jcv_trade_shops_id %>" name="shop-edit-id" value="<%= element.jcv_trade_shops_id %>">
+                </div>
+                <!--  -->
+                <div class="shop-box-icon">
+                    <i class="ri-store-2-line"></i>
+                </div>
+                <!--  -->
+                <div class="shop-box-single-info">
+                    <span><%= element.jcv_trade_shops_name_social %></span>
+                    <span style="display: none;"><%= element.jcv_trade_shops_name_social.toLowerCase() %></span>
+                    
+                    <br/>
+                    <span><%= element.jcv_trade_shops_name_fantasy %></span>
+                    <span style="display: none;"><%= element.jcv_trade_shops_name_fantasy.toLowerCase() %></span>
+
+                    <% if(element.jcv_trade_shops_cnpj == '' || element.jcv_trade_shops_cnpj == null){ %>
+                        <span><b>Sem dados..</b></span>
+                    <% }else{ %>
+                        <span><b><%= element.jcv_trade_shops_cnpj %></b></span>
+                    <% } %>
+                    
+                    <br/>
+                    <span><%= element.jcv_trade_shops_region %></span>
+
+                    <% if(element.jcv_trade_shops_enabled == 1){ %>
+                        <% if(element.jcv_trade_shops_users > 1){ %>
+                            <span><b><%= element.jcv_trade_shops_users.split(',').length %></b> usuarios</span>
+                        <% }else{ %>
+                            <span><b>Nenhum usuario..</b></span>
+                        <% } %>
+                    <% }else{ %>
+                        <span style="color: var(--color-red);"><b>DESABILITADO</b></span>
+                    <% } %>
+                    
+                </div>
+                <!--  -->
+                <hr style="width: 100%; margin: 12px 0;"/>
+                <!--  -->
+                <div class="shop-box-single-actions">
+                    <button value="<%= element.jcv_trade_shops_id %>" type="button" class="class-loader shop-open-edit-user"><i class="ri-pencil-line"></i></button>
+                    <a class="class-loader" href="/painel/trademkt/shops/config/<%= element.jcv_trade_shops_id %>"><i class="ri-user-add-line"></i></a>
+                </div>
+            </div>
+            <% }) %>
+
+        </section>
+
     </section>
+</section>
+
+<!--  -->
+<!--  -->
+
+<section class="shop-edit-main" id="shop-edit-main">
+    <div class="shop-edit-box-center">
+        <form method="post" class="shop-edit-box-main">
+            <!--  -->
+            <div class="shop-edit-box-main-title">
+                <span id="name-shop">XX</span>
+                <span><i id="close-edit-shop" class="ri-close-line"></i></span>
+            </div>
+            <!--  -->
+            <div class="shop-edit-box-main-options">
+                <div class="shop-edit-box-main-options">
+                    <label for="">CNPJ / CPF</label>
+                    <input type="text" id="shop-edit-cnpj-cpf">
+                </div>
+                <div class="shop-edit-box-main-options">
+                    <label for="">Nome SOCIAL</label>
+                    <input type="text" id="shop-social-name">
+                </div>
+                <div class="shop-edit-box-main-options">
+                    <label for="">Nome FANTASIA</label>
+                    <input type="text" id="shop-fantasy-name">
+                </div>
+                <div class="shop-edit-box-main-options">
+                    <label for="">Região</label>
+                    <select id="shop-edit-region">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </select>
+                </div>
+                <div class="shop-edit-box-main-options">
+                    <label for="">Ativo?</label>
+                    <select id="shop-edit-enabled">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </select>
+                </div>
+            </div>
+            <!--  -->
+            <div class="shop-edit-box-buttons">
+                <button class="class-loader" id="shop-button-send-data" formaction="/painel/trademkt/shops/register/shop/edit" name="action-save-edit-shop" type="submit"><i class="ri-save-3-line"></i></button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!--  -->
+<!--  -->
+<!--  -->
+
+<section class="shop-new-main" id="shop-new-main">
+    <div class="shop-new-box-center">
+        <form method="post" class="shop-new-box-main">
+            <!--  -->
+            <div class="shop-new-box-main-title">
+                <span id="name-shop">Cadastrar nova loja</span>
+                <span><i id="close-new-shop" class="ri-close-line"></i></span>
+            </div>
+            <!--  -->
+            <div class="shop-new-box-main-options">
+                <div class="shop-new-box-main-options">
+                    <label for="">CNPJ / CPF</label>
+                    <input type="text" name="shop-name-cnpj">
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label for="">Nome SOCIAL</label>
+                    <input type="text" name="shop-name-social">
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label for="">Nome FANTASIA</label>
+                    <input type="text" name="shop-name-fantasia">
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label for="">Região</label>
+                    <select name="shop-name-region">
+                        <option value="" disabled></option>
+                        <option value="Brasil - Região Centro-Oeste">Brasil - Região Centro-Oeste</option>
+                        <option value="Brasil - Região Nordeste">Brasil - Região Nordeste</option>
+                        <option value="Brasil - Região Norte">Brasil - Região Norte</option>
+                        <option value="Brasil - Região Sudeste">Brasil - Região Sudeste</option>
+                        <option value="Brasil - Região Sul">Brasil - Região Sul</option>
+                        <option disabled></option>
+                        <option value="São Paulo - Região Norte">São Paulo - Região Norte</option>
+                        <option value="São Paulo - Região Sul">São Paulo - Região Sul</option>
+                        <option value="São Paulo - Região Leste">São Paulo - Região Leste</option>
+                        <option value="São Paulo - Região Oeste">São Paulo - Região Oeste</option>
+                        <option value="São Paulo - Região Central">São Paulo - Região Central</option>
+                    </select>
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label for="">Ativo?</label>
+                    <select name="shop-enabled">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+            </div>
+            <!--  -->
+            <div class="shop-new-box-buttons">
+                <button class="class-loader" id="shop-button-send-data" formaction="/painel/trademkt/shops/register/shop/new" type="submit"><i class="ri-save-3-line"></i></button>
+            </div>
+        </form>
+    </div>
 </section>
 <script>
     $(window).on("load", function (e) {
 
         $(function(){
-            //Paginação das tabelas
-            $.fn.paginationTableMain('#shop-list-table',40,2);
+            $.fn.loadSpin(0)
+            ///Get url start Socketio
+            let urlValidate = '<%- PAINEL_URL %>';
+            const socket = io(urlValidate)
 
-            $("#input-button-search").click(function(){
-                
+            //Fechar a loja
+            $("#close-edit-shop").click(function (){
+                $("#shop-edit-main").fadeOut()
+            })
 
-                if($("#input-search-table").val() == ''){
-                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
-                }else{
-                    $.fn.loadSpin(1);
+            //Fechar a loja
+            $("#close-new-shop").click(function (){
+                $("#shop-new-main").fadeOut()
+            })
+
+            //Arnazendo
+            let optionsRegion = 
+            `<option value="" disabled></option>
+            <option value="Brasil - Região Centro-Oeste">Brasil - Região Centro-Oeste</option>
+            <option value="Brasil - Região Nordeste">Brasil - Região Nordeste</option>
+            <option value="Brasil - Região Norte">Brasil - Região Norte</option>
+            <option value="Brasil - Região Sudeste">Brasil - Região Sudeste</option>
+            <option value="Brasil - Região Sul">Brasil - Região Sul</option>
+            <option disabled></option>
+            <option value="São Paulo - Região Norte">São Paulo - Região Norte</option>
+            <option value="São Paulo - Região Sul">São Paulo - Região Sul</option>
+            <option value="São Paulo - Região Leste">São Paulo - Região Leste</option>
+            <option value="São Paulo - Região Oeste">São Paulo - Região Oeste</option>
+            <option value="São Paulo - Região Central">São Paulo - Região Central</option>
+            `
+
+            //Ação de editar a loja
+            $(".shop-open-edit-user").click(function (){
+                const idShop = parseInt($(this).val());
+
+                $.fn.loadSpin(0)
+
+                $("#shop-edit-main").fadeIn().css({'display':'flex'})
+
+                //Pegando os dados
+                socket.emit("getInfoShopEdit", idShop)
+                socket.on("getInfoShopEditResult", (dataShop) => {
+
+                    //Title
+                    $("#name-shop").text(dataShop[0].jcv_trade_shops_name_social)
+
+                    //Disabled checkbox
+                    $("#"+dataShop[0].jcv_trade_shops_id).prop('checked', false)
+
+                    //Limpando todos os campos
                     
-                    setTimeout(()=>{
-                        $.fn.searchInputTableInputs('#shop-list-table-tbody','#input-search-table',0)
-                    },1000)
-                }  
+                    //Inserindo os dados e nome dos campos
+                    $("#shop-edit-cnpj-cpf").val(dataShop[0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0].jcv_trade_shops_id)
+                    $("#shop-social-name").val(dataShop[0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0].jcv_trade_shops_id)
+                    $("#shop-fantasy-name").val(dataShop[0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0].jcv_trade_shops_id)
+                    
+                    $("#shop-edit-region").empty().append(optionsRegion)
+                    $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0].jcv_trade_shops_region}'>${dataShop[0].jcv_trade_shops_region}</option>`)
+
+                    $("#shop-edit-enabled").empty().append(`<option value='1'>Sim</option><option value='0'>Não</option><option disabled></option>`)
+                    if(dataShop[0].jcv_trade_shops_enabled == 1){
+                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='1'>Sim</option>`)
+                    }else{
+                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='0'>Não</option>`)
+                    }
+
+                    $("#shop-button-send-data").val(dataShop[0].jcv_trade_shops_id)
+                })
             })
 
-            $("#input-button-search-clear").click(function(){
-                $.fn.loadSpin(1);
+            let arrayIds = []
+            $(".shop-box-single").click(function(){
+                let idDiv = $(this).attr('value-div');
 
-                //$("#input-search-table").val('')
-                setTimeout(()=>{
-                    $.fn.searchInputTableInputs('#shop-list-table-tbody','#input-button-search-clear',0)
-                    $.fn.paginationTableMain('#shop-list-table',40,2);
-                    $("#input-search-table").val('')
-                    //Cookies.remove('SEARCH-INPUT') 
-                },1000)
-            })
-            
+                if($("#"+idDiv).is(':checked') == true){
 
-            
+                    //Removendo
+                    let removeIndex = arrayIds.indexOf(idDiv)
+                    arrayIds.splice(removeIndex, 1)
 
-            //Checknox all
-            $("#checkbox-select-all").click(function(){
-                var checkSet = $(this).is(':checked');
-                var inputsCheckedmodel = $('.checkbox-select-single');
+                    $("#shop-list-ids").val(JSON.stringify(arrayIds))
 
-                if(checkSet == true){
-                    inputsCheckedmodel.prop('checked', true);
+                    $("#"+idDiv).prop('checked', false)
                 }else{
-                    inputsCheckedmodel.prop('checked', false);
+
+                    if(arrayIds.indexOf(idDiv) == -1){
+                        arrayIds.push(idDiv)
+                    }
+
+                    $("#shop-list-ids").val(JSON.stringify(arrayIds))
+
+                    $("#"+idDiv).prop('checked', true)
                 }
             })
-            $(".checkbox-select-single").click(function(){
-                $("#checkbox-select-all").prop("checked", false)
+
+
+            //Filtro de busca
+            $('#input-search-table').keyup(function(){
+ 
+                // Search text
+                var text = $(this).val();
+
+                // Hide all content class element
+                $('.shop-box-single').hide();
+
+                // Search and show
+                $('.shop-box-single:contains("'+text+'")').show();
+
+            });
+
+            //Criando um cookie para salvar sempre o que o
+            //usuario digitar
+            $("#input-search-table").keyup(function(e){
+                if($(this).val().length <  1){
+                    Cookies.remove('SEARCH-INPUT-TRADE-SHOPS')    
+                }else{
+                    Cookies.set('SEARCH-INPUT-TRADE-SHOPS', $(this).val())
+                }
             })
 
-            //Filtro dinamico em inputs
-            //$.fn.searchInputTableInputs('#shop-list-table','#product-search-rows',1)
+            function getContainerSearch (text){
+                // Search text
+                // Hide all content class element
+                $('.shop-box-single').hide();
+
+                // Search and show
+                $('.shop-box-single:contains("'+text+'")').show();
+            }
+
+            //Cookie filter
+            if(Cookies.get('SEARCH-INPUT-TRADE-SHOPS')){
+                $("#input-search-table").val(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))   
+                $("#input-search-table").select()
+                getContainerSearch(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))
+                //$.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
+            }
+
+
+            /*  */
+            /*  */
+            /*  */
+            /*  */
+            $("#open-new-shop").click(function(){
+                $("#shop-new-main").fadeIn().css({'display':'flex'})
+            })
 
         })
     })

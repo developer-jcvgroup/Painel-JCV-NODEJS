@@ -84,8 +84,11 @@
             <% if(loginContr == ''){ %>
                 <a href="/login"><span>Logar</span></a>
             <% }else{ %>
-                <a href="/painel"><span>Painel</span></a>
-                <span>Olá <%= loginContr[1].split(' ')[0] %> <%= loginContr[1].split(' ')[1] %></span>
+                <div class="header-def-info-user">
+                    <img src="<%= loginContr[7] %>" alt="">
+                    <a href="/painel"><span>Olá <%= loginContr[1].split(' ')[0] %> <%= loginContr[1].split(' ')[1] %></span></a>
+                    ⠀<i class="ri-external-link-line"></i>
+                </div>
             <% } %>
         </div>
         <main>

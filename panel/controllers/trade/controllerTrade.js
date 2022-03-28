@@ -1263,7 +1263,7 @@ exports.shopsRegisterNew = async (req,res) => {
     const nameShopSocial = req.body['shop-name-social']
     const nameShopFantasy = req.body['shop-name-fantasia']
     const regionShop = req.body['shop-name-region']
-    const enabledShop = req.body['shop-enabled'] == 'on' ? 1 : 0;
+    const enabledShop = req.body['shop-enabled'] == 1 ? 1 : 0;
 
     if(nameShopSocial != '' && cnpjRegisterNow != ''){
         database
@@ -1282,7 +1282,7 @@ exports.shopsRegisterNew = async (req,res) => {
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa todas as informações!.");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
         res.redirect("/painel/trademkt/shops");
     }
 
@@ -1295,7 +1295,7 @@ exports.shopsRegisterEdit = async (req,res) => {
     const nameShopSocial = req.body['shop-name-social-edit-'+id]
     const nameShopFantasy = req.body['shop-name-fantasy-edit-'+id]
     const regionShop = req.body['shop-name-region-edit-'+id]
-    const enabledShop = req.body['shop-enabled-edit-'+id] == 'on' ? 1 : 0;
+    const enabledShop = req.body['shop-enabled-edit-'+id] == 1 ? 1 : 0;
 
     if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != ''){
         database
@@ -1317,14 +1317,15 @@ exports.shopsRegisterEdit = async (req,res) => {
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa todas as informações!.");
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
         res.redirect("/painel/trademkt/shops");
     }
 
 }
 
 exports.shopsRegisterActions = async (req,res) => {
-    const allIds = typeof(req.body['shop-edit-id']) == 'object' ? req.body['shop-edit-id'] : [req.body['shop-edit-id']];
+    const allIds = JSON.parse(req.body['shop-list-ids']);
+    //console.log(allIds)
 
     const opType = req.body['action-shops-select']
 
@@ -1351,7 +1352,7 @@ async function actionShops(req,res,allIds) {
     const ws = wb.addWorksheet('Worksheet Name');
 
     const allShops = await database
-    .select()
+    .select("jcv_trade_shops_id","jcv_trade_shops_name_social","jcv_trade_shops_region","jcv_trade_shops_enabled")
     .whereIn("jcv_trade_shops_id", allIds)
     .table("jcv_trade_shops")
     .then(data => {
@@ -1450,7 +1451,7 @@ exports.configShops = async (req,res) => {
 
     //Pegando o nome da loja
     const shopData = await database
-    .select("jcv_trade_shops_id","jcv_trade_shops_name_fantasy")
+    .select("jcv_trade_shops_id","jcv_trade_shops_name_social")
     .where({jcv_trade_shops_id: idForm})
     .table("jcv_trade_shops")
     .then( data => {

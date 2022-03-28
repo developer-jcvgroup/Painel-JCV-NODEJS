@@ -34,7 +34,7 @@
                     <form method="post">
                         <input hidden type="text" value="<%= getForm[0].jcv_trade_form_create_titleForm %>" name="form-response-response-title">
                         <input hidden type="text" id="get-user-data" name="form-response-response-text">
-                        <button id="button-send-form" class="form-response-set-submit" type="submit" formaction="/painel/trademkt/formSearch/responseForm" value="<%= getForm[0].jcv_trade_form_create_id %>" name="form-send-form">Salvar / Enviar</button>
+                        <button id="button-send-form" class="class-loader form-response-set-submit" type="submit" formaction="/painel/trademkt/formSearch/responseForm" value="<%= getForm[0].jcv_trade_form_create_id %>" name="form-send-form">Salvar / Enviar</button>
                     </form>
                 </div>
             </div>
@@ -53,7 +53,8 @@
 
     
     $("#button-send-form").click(function () {
-        $("#get-user-data").val(JSON.stringify(formRenderInstance.userData))
+        
+        $("#get-user-data").val(JSON.stringify($(formRenderInstance).formRender("userData")))
     })
     
 </script>
