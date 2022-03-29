@@ -13,12 +13,12 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
     const nodemailer = require('nodemailer');
 
     const transporter = nodemailer.createTransport({
-        host: "smtp.vitorstudio.com.br",
+        host: "jcv.net.br",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: "nao-responda=vitorstudio.com.br",
-            pass: "!@#naoresponda123"
+            user: "nao-responda@jcv.net.br",
+            pass: "!@#naorespondajcv"
         },
         tls: { rejectUnauthorized: false },
         connectionTimeout: 5 * 60 * 1000, // 5 min
@@ -34,7 +34,7 @@ exports.sendMailExe = async (sysEmails, subTitleEmail, titleBodyMail, sysApp, sy
     });
 
     const mainOptions = {
-        from: 'Sistema | JCV GROUP nao-responda@vitorstudio.com.br',
+        from: 'Sistema | JCV GROUP nao-responda@jcv.net.br',
         to: sysEmails,
         subject: subTitleEmail,
         html: data
