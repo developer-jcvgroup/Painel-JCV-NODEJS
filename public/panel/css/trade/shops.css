@@ -110,6 +110,30 @@
     cursor: pointer;
 }
 
+/* MAPS */
+.shop-order-srs-map{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.shop-order-srs-map a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.shop-order-srs-map i{
+    font-size: 1.5rem; 
+    color: var(--color-one);
+    margin-right: 7px;
+    cursor: pointer;
+}
+.shop-order-srs-map label{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    cursor: pointer;
+}
+
 /* container list */
 .shop-container-list-all{
     width: 100%;
@@ -129,6 +153,7 @@
     display: flex;
     justify-content: right;
     align-items: flex-end;
+    margin-left: 30px;
 }
 
 .shop-box-actions-checks{
@@ -435,13 +460,18 @@ input:checked + .shop-button-slider:before {
 .shop-box-single-header{
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 12px;
 }
 .shop-box-single-header input{
     width: 15px;
     height: 15px;
     cursor: pointer;
+}
+.shop-box-single-header a{
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--color-one);
 }
 
 /*  */

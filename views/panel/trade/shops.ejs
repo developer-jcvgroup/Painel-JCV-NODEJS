@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="/panel/css/trade/shops.css">
 
 <script src="/js/jquery-paginate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
 <script>
     let divLoader = document.getElementById('sys-section-loader')
     
@@ -20,6 +22,12 @@
                 <div class="shop-order-srs-search">
                     <div class="shop-order-srs-box">
                         <input type="text" placeholder="Busque por ID, nome fantasia, nome social, região.." id="input-search-table">
+                    </div>
+                    <div class="shop-order-srs-map">
+                        <a class="class-loader" href="/painel/trademkt/shops/maps">
+                            <i class="ri-road-map-line"></i>
+                            <label for="">Mapa</label>
+                        </a>
                     </div>
                     <div id="open-new-shop" class="shop-order-srs-new">
                         <i class="ri-add-line"></i>
@@ -53,6 +61,9 @@
             <div class="shop-box-single" value-div="<%= element.jcv_trade_shops_id %>">
                 <div class="shop-box-single-header">
                     <input class="shop-input-check" type="checkbox" id="<%= element.jcv_trade_shops_id %>" name="shop-edit-id" value="<%= element.jcv_trade_shops_id %>">
+                    <% if(element.jcv_trade_shops_latLong != null){ %>
+                        <a class="class-loader" href="/painel/trademkt/shops/maps" title="Visualizar no mapa"><i class="ri-road-map-line"></i></a>
+                    <% } %>
                 </div>
                 <!--  -->
                 <div class="shop-box-icon">
@@ -136,6 +147,19 @@
                         <!--  -->
                     </select>
                 </div>
+                <hr style="width: 100%;">
+                <div class="shop-new-box-main-options">
+                    <label for="">CEP</label>
+                    <input type="text" placeholder="CEP da loja" id="shop-cep-shop">
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label for="">N°</label>
+                    <input type="text" placeholder="numero da loja" id="shop-number-shop">
+                </div>
+                <div class="shop-new-box-main-options">
+                    <label id="shop-id-result-road">O endereço vai aparecer aqui..</label>
+                </div>
+                <hr style="width: 100%;">
                 <div class="shop-edit-box-main-options">
                     <label for="">Ativo?</label>
                     <select id="shop-edit-enabled">
@@ -211,6 +235,8 @@
         </form>
     </div>
 </section>
+
+
 <script>
     $(window).on("load", function (e) {
 
@@ -246,13 +272,47 @@
             <option value="São Paulo - Região Central">São Paulo - Região Central</option>
             `
 
+            $("#shop-cep-shop").mask('00000000');
+
+            $.fn.verifyCep = () => {
+                if($("#shop-cep-shop").val() > ''){
+                    let cepGet = $("#shop-cep-shop").val().replace(/-/g, '');
+                    let numberGet = $("#shop-number-shop").val();
+
+                    if(cepGet.length >= 8){
+                        $.getJSON("https://viacep.com.br/ws/"+ cepGet +"/json/", function(dados) {
+                    
+                            if (!("erro" in dados)){
+                                //alert(cepGet)
+                                //Tem dados no CEP
+                                
+
+                                //console.log(dados.logradouro)
+                                $("#shop-id-result-road").empty().append(`<b style='color: var(--color-one); font-size: 0.9rem'><i class="ri-road-map-line"></i> Endereço: ${dados.logradouro} - ${numberGet}</b>`)
+
+                                
+                            }else{
+                                $("#shop-id-result-road").empty().append(`<b style='color: red; font-size: 0.9rem'>Sem dados</b>`)
+                            }
+                        
+                        });
+                    }else{
+                        $("#shop-id-result-road").empty()
+                    }
+                }else{
+                    $("#shop-id-result-road").empty()
+                }
+            }
+
             //Ação de editar a loja
             $(".shop-open-edit-user").click(function (){
                 const idShop = parseInt($(this).val());
 
+
                 $.fn.loadSpin(0)
 
                 $("#shop-edit-main").fadeIn().css({'display':'flex'})
+
 
                 //Pegando os dados
                 socket.emit("getInfoShopEdit", idShop)
@@ -265,11 +325,14 @@
                     $("#"+dataShop[0].jcv_trade_shops_id).prop('checked', false)
 
                     //Limpando todos os campos
-                    
+                
                     //Inserindo os dados e nome dos campos
                     $("#shop-edit-cnpj-cpf").val(dataShop[0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0].jcv_trade_shops_id)
                     $("#shop-social-name").val(dataShop[0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0].jcv_trade_shops_id)
                     $("#shop-fantasy-name").val(dataShop[0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0].jcv_trade_shops_id)
+
+                    $("#shop-cep-shop").val(dataShop[0].jcv_trade_shops_cep).attr('name','shop-cep-edit-'+dataShop[0].jcv_trade_shops_id)
+                    $("#shop-number-shop").val(dataShop[0].jcv_trade_shops_number).attr('name','shop-number-edit-'+dataShop[0].jcv_trade_shops_id)
                     
                     $("#shop-edit-region").empty().append(optionsRegion)
                     $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0].jcv_trade_shops_region}'>${dataShop[0].jcv_trade_shops_region}</option>`)
@@ -282,7 +345,17 @@
                     }
 
                     $("#shop-button-send-data").val(dataShop[0].jcv_trade_shops_id)
+
+                    $.fn.verifyCep()//Verificando cep
                 })
+            })
+
+            //Buscando o endereço dinamicamente
+            $("#shop-number-shop").keyup((e) => {
+                $.fn.verifyCep()    
+            })
+            $("#shop-cep-shop").keyup((e) => {
+                $.fn.verifyCep()    
             })
 
             let arrayIds = []
@@ -312,8 +385,7 @@
 
 
             //Filtro de busca
-            $('#input-search-table').keyup(function(){
- 
+            $('#input-search-table').keyup(function(){            
                 // Search text
                 var text = $(this).val();
 

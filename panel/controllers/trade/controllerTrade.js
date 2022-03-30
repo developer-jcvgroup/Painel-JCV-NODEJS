@@ -1,6 +1,7 @@
 const database = require("../../database/database");
 const moment = require("moment");
 moment.tz.setDefault('America/Sao_Paulo');
+const axios = require('axios');
 
 const {htmlToText} = require('html-to-text')
 
@@ -1289,6 +1290,8 @@ exports.shopsRegisterNew = async (req,res) => {
 }
 
 exports.shopsRegisterEdit = async (req,res) => {
+    
+
     const id = req.body['action-save-edit-shop'];
 
     const cpnjShop = req.body['shop-cnpj-edit-'+id]
@@ -1297,6 +1300,34 @@ exports.shopsRegisterEdit = async (req,res) => {
     const regionShop = req.body['shop-name-region-edit-'+id]
     const enabledShop = req.body['shop-enabled-edit-'+id] == 1 ? 1 : 0;
 
+    const cepShop = req.body['shop-cep-edit-'+id] == '' ? null : req.body['shop-cep-edit-'+id]
+    const numberShop = req.body['shop-number-edit-'+id] == '' ? null :req.body['shop-number-edit-'+id]
+
+    //Pegando a lat long das lojas com base no cep
+    var latLong = null;
+    if(cepShop != ''){
+        await axios.get('https://cep.awesomeapi.com.br/json/'+cepShop)
+        .then(function (response) {
+            // handle success
+            let dataConsult = response.data;
+
+            if(dataConsult != ''){
+                latLong = dataConsult.lng+', '+dataConsult.lat
+
+            }
+
+            //console.log(dataConsult.location.coordinates.longitude+', '+dataConsult.location.coordinates.latitude)
+        })
+        .catch(function (error) {
+            // handle error
+            //console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+    }
+
+
     if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != ''){
         database
         .update({
@@ -1304,7 +1335,11 @@ exports.shopsRegisterEdit = async (req,res) => {
             jcv_trade_shops_name_fantasy: nameShopFantasy,
             jcv_trade_shops_name_social: nameShopSocial,
             jcv_trade_shops_region: regionShop,
-            jcv_trade_shops_enabled: enabledShop
+            jcv_trade_shops_enabled: enabledShop,
+
+            jcv_trade_shops_cep: cepShop,
+            jcv_trade_shops_number: numberShop,
+            jcv_trade_shops_latLong: latLong
         })
         .where({jcv_trade_shops_id: id})
         .table("jcv_trade_shops")
@@ -1641,7 +1676,7 @@ exports.editNewProduct = async (req,res) => {
     const productBrand = req.body['product-brand-edit-'+idProd]
     const productLine = req.body['product-line-edit-'+idProd]
     const productName = req.body['product-name-edit-'+idProd]
-    const productEnabled = req.body['product-enabled-edit-'+idProd] == 'on' ? 1 : 0
+    const productEnabled = req.body['product-enabled-edit-'+idProd] == 'on' ? 1 : 0;
 
     if(productSku != '' || productBrand != '' || productLine != '' || productName != ''){
         database
@@ -1795,4 +1830,50 @@ exports.removeFPresponses = async (req,res) => {
         }
     })
 
+}
+
+exports.mapViewShops = async (req,res) => {
+
+    //Pegando todas as lojas que possuem endereço
+    const getAllShops = await database
+    .select()
+    .whereRaw("jcv_trade_shops_enabled = 1 AND jcv_trade_shops_latLong IS NOT NULL")
+    .table("jcv_trade_shops")
+    .limit(5)
+    .then( data => {return data})
+
+    //Convertendo no array de lojas
+    let valueGeoMapArray = []
+    getAllShops.forEach(element => {
+
+        let coordGet = []
+        if(element.jcv_trade_shops_latLong != ''){
+            coordGet = [element.jcv_trade_shops_latLong.split(', ')[0], element.jcv_trade_shops_latLong.split(', ')[1]]
+        }
+        
+        let amountUsersSom = element.jcv_trade_shops_users == null ? 0 : element.jcv_trade_shops_users.split(',').length
+
+        valueGeoMapArray.push({
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': coordGet 
+            },
+            'properties': {
+                'title': element.jcv_trade_shops_name_fantasy,
+                'description': 'Loja: '+element.jcv_trade_shops_name_social+' <br><br> CPF/ CNPJ: '+element.jcv_trade_shops_cnpj+' <br><br> Usuarios totais: <b>'+amountUsersSom+'</b>'
+            }
+        })
+    });
+
+    let valueGeoMap = {
+        'type': 'FeatureCollection',
+        'features': valueGeoMapArray
+    }
+    
+    var page = "trade/mapViewShops";
+    res.render("panel/index", {
+        page: page,
+        valueGeoMap: JSON.stringify(valueGeoMap)
+    })
 }

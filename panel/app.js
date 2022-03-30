@@ -229,6 +229,8 @@ router.post('/trademkt/shops/register/shop/new', authenticate, controllerTrade.s
 router.post('/trademkt/shops/register/shop/edit', authenticate, controllerTrade.shopsRegisterEdit)
 router.post('/trademkt/shops/action/execute', authenticate, controllerTrade.shopsRegisterActions)
 router.get('/trademkt/shops/config/:id?', authenticate, getPermissions, controllerTrade.configShops)
+//Mapa
+router.get('/trademkt/shops/maps', authenticate, getPermissions, controllerTrade.mapViewShops)
 //
 router.post('/trademkt/shops/set/users', authenticate, controllerTrade.saveSetUsers)
 
