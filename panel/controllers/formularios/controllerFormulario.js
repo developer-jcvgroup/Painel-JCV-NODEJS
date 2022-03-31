@@ -239,8 +239,8 @@ exports.responseFormulario = async (req,res) => {
     .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '${GLOBAL_DASH[0]}', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
     //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
     .then( data => {return data[0]})
-
-    if(verifyResponse != '' || verifyUniqueResponse == true){
+    if(verifyResponse != ''){
+        //Resposta encontrada
         if(getInfo != ''){
             var page = "formularios/viewFormulario";
             res.render("panel/index", {
@@ -252,8 +252,18 @@ exports.responseFormulario = async (req,res) => {
             res.redirect("/painel");
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
-        res.redirect("/painel");
+        if(verifyUniqueResponse == false){
+            //Resposta unica é falsa: pode enviar o tanto de resposta que quiser
+            
+            var page = "formularios/viewFormulario";
+            res.render("panel/index", {
+                page: page, 
+                getInfo: getInfo
+            })
+        }else{
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
+            res.redirect("/painel");
+        }
     }
 }
 

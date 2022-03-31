@@ -160,8 +160,20 @@
 .view-form-set-styles{
     width: 100%;
     padding: 23px;
+    display: flex;
+    flex-wrap: wrap;
+    white-space: normal;
 }
 .view-form-set-styles h1{
     font-size: 1.4rem;
     padding: 16px 0;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 900px) {
+    .view-form-response-title-one{
+        flex-direction: column;
+    }
 }
