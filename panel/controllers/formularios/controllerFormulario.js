@@ -224,47 +224,52 @@ exports.responseFormulario = async (req,res) => {
 
     const getInfo = await database
     .select()
-    .where({jcv_formularios_registers_id: idForm})
+    .where({jcv_formularios_registers_id: idForm, jcv_formularios_registers_enabled: 1})
     .table("jcv_formularios_registers")
     .then( data => {return data})
 
-    let verifyUniqueResponse;
-    if(getInfo[0].jcv_formularios_registers_res_unique == 1){
-        verifyUniqueResponse = true;
-    }else{
-        verifyUniqueResponse = false;
-    }
-
-    const verifyResponse = await database
-    .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '${GLOBAL_DASH[0]}', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
-    //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
-    .then( data => {return data[0]})
-    if(verifyResponse != ''){
-        //Resposta encontrada
-        if(getInfo != ''){
-            var page = "formularios/viewFormulario";
-            res.render("panel/index", {
-                page: page, 
-                getInfo: getInfo
-            })
+    if(getInfo != ''){
+        let verifyUniqueResponse;
+        if(getInfo[0].jcv_formularios_registers_res_unique == 1){
+            verifyUniqueResponse = true;
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
-            res.redirect("/painel");
+            verifyUniqueResponse = false;
+        }
+    
+        const verifyResponse = await database
+        .raw(`SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_users, '${GLOBAL_DASH[0]}', '$') AND NOT JSON_CONTAINS(jcv_formularios_registers_usersResponses, '${GLOBAL_DASH[0]}', '$') AND jcv_formularios_registers_id = ${idForm}`)
+        //.raw("SELECT * from jcv_formularios_registers WHERE JSON_CONTAINS(jcv_formularios_registers_usersResponses, '"+GLOBAL_DASH[0]+"', '$') AND jcv_formularios_registers_id = "+idForm)
+        .then( data => {return data[0]})
+        if(verifyResponse != ''){
+            //Resposta encontrada
+            if(getInfo != ''){
+                var page = "formularios/viewFormulario";
+                res.render("panel/index", {
+                    page: page, 
+                    getInfo: getInfo
+                })
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+                res.redirect("/painel");
+            }
+        }else{
+            if(verifyUniqueResponse == false){
+                //Resposta unica é falsa: pode enviar o tanto de resposta que quiser
+                
+                var page = "formularios/viewFormulario";
+                res.render("panel/index", {
+                    page: page, 
+                    getInfo: getInfo
+                })
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
+                res.redirect("/painel");
+            }
         }
     }else{
-        if(verifyUniqueResponse == false){
-            //Resposta unica é falsa: pode enviar o tanto de resposta que quiser
-            
-            var page = "formularios/viewFormulario";
-            res.render("panel/index", {
-                page: page, 
-                getInfo: getInfo
-            })
-        }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
-            res.redirect("/painel");
-        }
-    }
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+        res.redirect("/painel");
+    }    
 }
 
 exports.responseFormularioButton= async (req,res) => {
