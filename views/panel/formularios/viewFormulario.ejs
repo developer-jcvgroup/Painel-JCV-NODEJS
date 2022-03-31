@@ -46,9 +46,13 @@
 <script src="https://kevinchappell.github.io/formBuilder/assets/js/form-render.min.js"></script>
 <script>
 
+    let dataGetArray = JSON.stringify('<%- getInfo[0].jcv_formularios_registers_jsonForm %>')
+    
     var formRenderOptions = {
-        formData: '<%- getInfo[0].jcv_formularios_registers_jsonForm %>'
+        formData: JSON.parse(dataGetArray)
     }
+
+    console.log(formRenderOptions)
     var formRenderInstance = $('#render-container').formRender(formRenderOptions);
 
     $("#button-send-form").click(function () {

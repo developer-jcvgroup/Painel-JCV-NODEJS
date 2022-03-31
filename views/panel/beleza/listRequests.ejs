@@ -190,15 +190,15 @@
                             <% resultSearchData.forEach(element => { %>
 
                                 <% if(element.sys_blz_requestStatus == 5){ %>
-                                    <tr style="background-color: #ffe97f;" class="request-row-check-mark">
+                                    <tr style="background-color: #ffe97f;" class="request-row-check-mark check-row-tr" id="<%= element.sys_blz_id %>">
                                 <% }else if(element.sys_blz_requestStatus == 3){ %>
-                                    <tr style="background-color: #d90427a2;" class="request-row-check-mark">
+                                    <tr style="background-color: #d90427a2;" class="request-row-check-mark check-row-tr" id="<%= element.sys_blz_id %>">
                                 <% }else{ %>
-                                    <tr class="request-row-check-mark">
+                                    <tr class="request-row-check-mark check-row-tr" id="<%= element.sys_blz_id %>">
                                 <% } %>
 
                                 
-                                    <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_id'] %>" name="requestOrderId"></td>
+                                    <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_id'] %>" id="check-option-<%= element.sys_blz_id %>" name="requestOrderId"></td>
                                     <td><b><%= element['sys_blz_userName'] %></b></td>
                                     <td><%= element['sys_unity_name'] %></td>
                                     <td><b><%= element['jcv_userNameSecundary'] %></b></td>
@@ -277,11 +277,18 @@ $(function(){
     })
 
 
+    //Check select tr
+    $(".check-row-tr").click(function(){
+        let optionValue = $(this).attr('id')
 
-
-
-
-
+        if($("#check-option-"+optionValue).is(':checked') == true){
+            $("#check-option-"+optionValue).prop('checked', false)
+        }else{
+            $("#check-option-"+optionValue).prop('checked', true)
+        }
+        
+        //alert(optionValue)
+    })
 
     //Checknox all
     $("#checkbox-select-all").click(function(){
