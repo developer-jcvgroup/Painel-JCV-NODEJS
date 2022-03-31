@@ -975,5 +975,6 @@ input:checked + .system-mode-department-button-slider:before {
     }
     .sys-form-notification-box{
         width: 100%;
+        max-width: 100%;
     }
 }
