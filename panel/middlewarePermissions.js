@@ -9,7 +9,7 @@ async function getUpdates(idUser, moduleOp){
 
     const allUpdate = await database
     .raw(`
-        SELECT * from sys_update WHERE sys_update_moduleUp in (${moduleOpSet}) AND sys_update_enabled = 1 AND NOT JSON_CONTAINS(sys_update_usersOkUpdate, '${idUser}', '$')
+        SELECT * from sys_update WHERE sys_update_moduleUp in (${moduleOpSet}) AND sys_update_enabled = 1 AND NOT JSON_CONTAINS(sys_update_usersOkUpdate, '${idUser}', '$') LIMIT 1
     `)
     /* .raw(`
         SELECT *
