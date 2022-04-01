@@ -50,6 +50,8 @@ const controllerFormulario = require("./controllers/formularios/controllerFormul
 const controllerNotifications = require("./controllers/notifications/controllerNotify")
 //Controller Updates
 const controllerUpdates = require("./controllers/updates/controllerUpdate")
+//Controllers Reports
+const controllerReport = require("./controllers/system/controllerReport")
 
 
 
@@ -193,7 +195,8 @@ router.get("/system/unidades", authenticate, getPermissions, controllerDepartmen
 router.post("/system/unidades/action/save", authenticate, controllerDepartment.saveUnity)
 router.post("/system/unidades/action/save/edit", authenticate, controllerDepartment.saveEditUnity)
 
-//Sistema: Pesquisas
+//Sistema: Reports
+router.post("/system/report/action", authenticate, controllerReport.saveNewReport)
 
 /***********************************/
 /***********************************/
@@ -246,8 +249,6 @@ router.post('/trademkt/products/action/execute', authenticate, controllerTrade.a
 
 /***********************************/
 /***********************************/
-//Pagina: Perfil
-router.get("/perfil", authenticate, controllerProfile.getInfoUser);
 //Alterando a senha
 router.post("/perfil/pass/redefine", authenticate, controllerProfile.sysNewpassword);
 //Update dos dados

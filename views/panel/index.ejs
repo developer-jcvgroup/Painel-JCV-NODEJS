@@ -183,8 +183,8 @@
                 <div class="index-cont-rigth">
                     <ul class="header-nav-ul">
                         <ul class="header-links-nav">
-                            <!-- <li><a title="updates" class="class-loader" href="/painel/updates"><i class="ri-refresh-line"></i></a></li> -->
-                            <!-- <li><a title="Logs do sistema" class="class-loader" href="/painel/logs"><i class="ri-alert-line"></i></a></li> -->
+                            <li><a href="#" id="sys-report-open-screen"><i class="ri-alarm-warning-line"></i></a></li>
+                            <li><a title="Webmail" target="_blank" href="https://webmail7.ultramail.com.br/"><i class="ri-mail-send-line"></i></a></li>
                             <li class="notification-container">
                                 <a title="Notificações" id="click-open-notifications" href="#">
                                     <i class="ri-notification-3-line" id="icon-color-notify"></i>
@@ -252,24 +252,25 @@
                             </li>
                             <li class="li-info-user-drop" id="li-info-user-drop">
                                 <ul class="navbar-info-user-drop" id="navbar-info-user-drop">
-                                    <li><i class="ri-mail-line"></i><span><%= GLOBAL_DASH[5] %></span></li>
+                                    <li><i class="ri-mail-line">⠀</i><span><%= GLOBAL_DASH[5] %></span></li>
                                     <li>
                                         <% if(GLOBAL_DASH[6] != '') { %>
-                                            <i class="ri-account-box-line"></i> #<span><%= GLOBAL_DASH[6] %></span>
+                                            <i class="ri-account-box-line"></i>⠀#<span><%= GLOBAL_DASH[6] %></span>
                                         <% }else{ %>
-                                            <i class="ri-account-box-line"></i> Sem ramal :(
+                                            <i class="ri-account-box-line"></i>⠀Sem ramal :(
                                         <% } %>
                                     </li>
+                                    <li><i class="ri-building-line"></i>⠀<span><%= GLOBAL_DASH[13] %></span></li>
                                     <li><div class="dropdown-separator"></div><!-- separador --></li>
-                                    <li><a class="class-loader" href="/painel/perfil">Conta / Configurações</a></li>
+                                    <li><span id="sys-partial-open-profile"><i class="ri-user-settings-line"></i>⠀Perfil / Configurações</span></li>
                                     <li>
-                                        <span>Dark Mode </span>
+                                        <span><i class="ri-contrast-2-fill"></i>⠀Dark Mode </span>
                                         <label class="dark-mode-department-button-switch">
                                             <input id="button-action-dark-mode" type="checkbox">
                                             <span class="dark-mode-department-button-slider round"></span>
                                         </label>
                                     </li>
-                                    <li><a class="class-loader" href="/painel/logout"><b>Sair</b></a></li>
+                                    <li><a class="class-loader" href="/painel/logout"><b><i class="ri-logout-box-r-line"></i>⠀Sair</b></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -396,8 +397,18 @@
     <!--  -->
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+<script>
+    //Get url start Socketio
+    const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
+</script>
+
+<!-- PARTIALS INFO USER -->
+<%- include('../partials/system/profileUser') %>
+<!-- PARTIALS REPORT BUGS -->
+<%- include('../partials/system/reportError') %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
 
     function styleColorSpecial(){
@@ -431,6 +442,8 @@
     $("#button-action-dark-mode").click(function(){
         if(indexColors == 0){
 
+            $.fn.loadSpin(1);
+
             const arryaColorSet = {
                 "--background-two": "#2d333b",
                 "--color-one": "#cdd9e5",
@@ -449,6 +462,10 @@
             Cookies.set('root-vars-colors', JSON.stringify(arryaColorSet))
 
             indexColors = 1;
+
+            setTimeout(() => {
+                $.fn.loadSpin(0)
+            }, 1000);
         }else{
             $.fn.loadSpin(1)
             Cookies.remove('root-vars-colors');
@@ -461,9 +478,6 @@
 </script>
 <script>
 
-    //Get url start Socketio
-    const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
-
     /*  */
     /*  */
     /*  */
@@ -474,7 +488,7 @@
 
     //Pegando os formularios pendentes para responder
     
-
+    Cookies.remove('DISABLED-TEMPORARY-FORM')
     setInterval(() => {
         socket.emit("getFormsSystemStatus", "<%= GLOBAL_DASH[0] %>")
 
@@ -486,23 +500,30 @@
                 //Pegando a url atual
                 let ulrActual = window.location.pathname.split('/')[2] == 'formularios' && window.location.pathname.split('/')[3] == 'reponse' ? true : false
                 
-                if(!$("#sys-form-notification-box").is(':visible') && ulrActual == false){
+                if(!$("#sys-form-notification-box").is(':visible') && ulrActual == false && Cookies.get('DISABLED-TEMPORARY-FORM') == undefined){
                     //Exibir o display
                     $("#sys-form-notification-main").append(`
                     
                     <div class="sys-form-notification-box" id="sys-form-notification-box">
-                        <span>Formulário Pendente!</span>
+                        <div class="sys-form-notification-box-title">
+                            <span>Formulário Pendente!</span>
+                            <i onclick="closeWindowsForms()" class="ri-close-line"></i>
+                        </div>
                         <span>Formulário: <b>${data[0].jcv_formularios_registers_title}</b> está pendente! Responda-o o quanto antes!</span><br>
                         <span>Criado por: <b>${data[0].jcv_userNamePrimary}</b></span>
                         <span>Expira em: <b>${data[0].jcv_formularios_registers_expired}</b></span>
                         <a class="class-loader" href="/painel/formularios/reponse/${data[0].jcv_formularios_registers_id}">Clique aqui para responder⠀<i class="ri-arrow-right-line"></i></a>
                     </div>
-                    
                     `)
                 }
             }
         })
     }, 1000);
+
+    function closeWindowsForms (){
+        Cookies.set('DISABLED-TEMPORARY-FORM', true)
+        $("#sys-form-notification-box").remove()
+    }
 
     //window.notificationApi = 0;
     socket.on("reponseNotificationsAllCount", (dataAll) => {

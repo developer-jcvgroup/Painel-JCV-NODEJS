@@ -176,7 +176,13 @@ $(function(){
 
     //Drop info user
     $("#dropdown-action").click(function(){
-        $("#li-info-user-drop").toggle();
+
+        if($("#li-info-user-drop").is(':visible')){
+            $("#li-info-user-drop").fadeOut()
+        }else{
+            $("#li-info-user-drop").fadeIn().css({'display':'flex'})
+        }
+        //$("#li-info-user-drop").toggle();
         $("#toggle-user").toggleClass('rotate-90')
     })
 

@@ -106,6 +106,7 @@ exports.saveNewUser = async (req,res) => {
 
             const userFormsAdmin = req.body['save-new-sys-forms-admin'] == 'on' ? 1 : 0;
             const userNotifyAdmin = req.body['save-new-sys-notify-admin'] == 'on' ? 1 : 0;
+            const userReportAdmin = req.body['save-new-sys-report-admin'] == 'on' ? 1 : 0;
     
             database.insert({
     
@@ -140,7 +141,9 @@ exports.saveNewUser = async (req,res) => {
                     sys_tra_perm_admin: userSYStradeAdmin,
 
                     sys_forms_perm_admin: userFormsAdmin,
-                    sys_notify_perm_admin: userNotifyAdmin
+                    sys_notify_perm_admin: userNotifyAdmin,
+
+                    sys_reports_perm_admin: userReportAdmin
     
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){
@@ -209,6 +212,7 @@ exports.editSaveUser = async (req,res) => {
 
         const userFormsAdmin = req.body['save-edit-sys-forms-use-'+idUser] == 'on' ? 1 : 0;
         const userNotifyAdmin = req.body['save-edit-sys-notify-use-'+idUser] == 'on' ? 1 : 0;
+        const userReportAdmin = req.body['save-edit-sys-report-use-'+idUser] == 'on' ? 1 : 0;
 
 
         const userType = parseInt(req.body['save-edit-sys-type-user-'+idUser]);
@@ -260,7 +264,9 @@ exports.editSaveUser = async (req,res) => {
                         sys_tra_perm_admin: userSYStradeAdmin,
 
                         sys_forms_perm_admin: userFormsAdmin,
-                        sys_notify_perm_admin: userNotifyAdmin
+                        sys_notify_perm_admin: userNotifyAdmin,
+
+                        sys_reports_perm_admin: userReportAdmin
             
                     }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                         if(data != ''){
@@ -279,7 +285,15 @@ exports.editSaveUser = async (req,res) => {
                         sys_req_perm_admin: userSYSrequisitorAdmin,
                         sys_cal_perm_use: userSYScalendarUse,
                         //sys_cal_perm_manager: userSYScalendarManager,
-                        sys_cal_perm_admin: userSYScalendarAdmin
+                        sys_cal_perm_admin: userSYScalendarAdmin,
+                        
+                        sys_tra_perm_use: userSYStradeUse,
+                        sys_tra_perm_admin: userSYStradeAdmin,
+
+                        sys_forms_perm_admin: userFormsAdmin,
+                        sys_notify_perm_admin: userNotifyAdmin,
+
+                        sys_reports_perm_admin: userReportAdmin
                     }).table("jcv_users_permissions").then(data => {
                         if(data != ''){
                             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");

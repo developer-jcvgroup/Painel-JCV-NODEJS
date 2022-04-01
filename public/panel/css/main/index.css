@@ -227,7 +227,7 @@ header{
 }
 
 .header-links-nav > li{
-    margin-left: 22px;
+    margin: 0 14px;
 }
 .header-links-nav > li > a{
     text-decoration: none;
@@ -331,7 +331,7 @@ header{
     height: 25px;
     background: var(--color-one);
     border-radius: 10px;
-    margin: 0 24px;
+    margin: 0 20px;
 }
 
 .header-nav-dropdown{
@@ -407,18 +407,27 @@ header{
 .navbar-info-user-drop li{
     font-size: 0.8rem;
     color: var(--color-two);
-    padding: 10px 0;
+    padding: 13px 0;
     display: flex;
     align-items: center;
 }
 .navbar-info-user-drop li i{
-    font-size: 0.8rem;
-    margin-right: 8px;
+    font-size: 0.9rem;
     text-align: center;
 }
 .navbar-info-user-drop li a{
     text-decoration: none;
     color:  var(--color-two);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.navbar-info-user-drop li span{
+    text-decoration: none;
+    color:  var(--color-two);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-separator{
@@ -664,10 +673,6 @@ header{
     animation: pulse 2s infinite;
     color: black;
 }
-.sys-form-notification-box span:nth-child(1){
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
 .sys-form-notification-box span{
     font-size: 0.9rem;
 }
@@ -681,6 +686,21 @@ header{
 }
 .sys-form-notification-box a i{
     font-size: 0.7rem;
+}
+
+.sys-form-notification-box-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.sys-form-notification-box-title span{
+    font-size: 1.2rem;
+}
+.sys-form-notification-box-title i{
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 #pulse:hover {

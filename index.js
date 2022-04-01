@@ -229,6 +229,21 @@ io.on('connection', (socket) => {
         .table("jcv_trade_shops")
         .then( data => { socket.emit("getInfoShopEditResult", data) })
     })
+
+    socket.on("getInfoUserProfile", (dataGet) => {
+        let arrayData = false;
+        database.select().where({jcv_id: dataGet}).table("jcv_users").then(data => {
+
+            var userName = data[0]["jcv_userNamePrimary"].split(' ')[0] + " " + data[0]["jcv_userNamePrimary"].split(' ')[1];
+            data.push(userName);
+    
+            arrayData = data;
+            socket.emit('getInfoUserProfileResult', arrayData)
+    
+        }).catch(err => {
+            socket.emit('getInfoUserProfileResult', arrayData)
+        })
+    })
 })
 
 
@@ -279,6 +294,7 @@ app.get('/style/teste', (req,res) => {
 
 //Require do painel
 const jcvPanel = require("./panel/app");
+const { Socket } = require("socket.io");
 app.use("/painel", jcvPanel);
 
 http.listen(8080, () =>{

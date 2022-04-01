@@ -33,10 +33,10 @@ exports.sysNewpassword = async (req,res) => {
         await database.update({jcv_userPassword: passwordHash}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data => {
 
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Senha definida com sucesso!");
-            res.redirect("/painel/perfil");
+            res.redirect("/painel");
         }).catch(err => {
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao salvar sua senha.");
-            res.redirect("/painel/perfil");
+            res.redirect("/painel");
         })
         
     }
@@ -59,11 +59,11 @@ exports.updateDataUser = async (req,res) =>{
   await database.update({jcv_userNamePrimary: userName, jcv_userNameSecundary: userName, jcv_userEmailCorporate: userEmailCorp, jcv_userEmailFolks: userEmailPer, jcv_userExtension: userRamal, jcv_sysEmail: userApps, jcv_userCpf: userCpf}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
       res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Seus dados foram atualizados com sucesso!");
-      res.redirect("/painel/perfil");
+      res.redirect("/painel");
     }
   }).catch(err => {
     res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao atualizar seus dados!");
-    res.redirect("/painel/perfil");
+    res.redirect("/painel");
   })
   
 }
@@ -76,15 +76,15 @@ exports.updateImageUser = async (req,res) => {
   await database.update({jcv_userImageIcon: urlAvataars}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
       res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Avataars atualizada com sucesso!");
-      res.redirect("/painel/perfil");
+      res.redirect("/painel");
     }
   }).catch(err => {
     res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars: erro ao atualizar seus dados!");
-    res.redirect("/painel/perfil");
+    res.redirect("/painel");
   })
   }else{
     res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Avataars: não foi idenficado nenhuma modificação.");
-    res.redirect("/painel/perfil");
+    res.redirect("/painel");
   }
 
 }

@@ -235,6 +235,10 @@
                         <label style="text-align: center;" for="">Notificações: <br> Admin</label>
                         <input type="checkbox" id="sys-edit-user-notify-admin">
                     </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Reports: <br> Admin</label>
+                        <input type="checkbox" id="sys-edit-user-report-admin">
+                    </div>
                 </div>
                 <!--  -->
 
@@ -399,6 +403,10 @@
                         <label style="text-align: center;" for="">Notificações: <br> Admin</label>
                         <input type="checkbox" name="save-new-sys-notify-admin">
                     </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label style="text-align: center;" for="">Reports: <br> Admin</label>
+                        <input type="checkbox" name="save-new-sys-report-admin">
+                    </div>
                 </div>
                 <!--  -->
 
@@ -552,6 +560,10 @@
                     //Permissions: Notificações
                     $("#sys-edit-user-notify-admin").attr('name','save-edit-sys-notify-use-'+idSet)
                     infoUserData.sys_notify_perm_admin == 1 ? $("#sys-edit-user-notify-admin").prop("checked", true) : $("#sys-edit-user-notify-admin").prop("checked", false)
+
+                    //Permissions: Reports
+                    $("#sys-edit-user-report-admin").attr('name','save-edit-sys-report-use-'+idSet)
+                    infoUserData.sys_reports_perm_admin == 1 ? $("#sys-edit-user-report-admin").prop("checked", true) : $("#sys-edit-user-report-admin").prop("checked", false)
 
                     $("#button-save-edit-user").attr('value', infoUserData.jcv_id)
                     $("#user-action-reset-pass").attr('value',infoUserData.jcv_id)

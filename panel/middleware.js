@@ -37,6 +37,11 @@ authenticate = async (req, res, next) => {
                 return data[0].sys_department_name;
             })
 
+            //Pegando a unidade do usuario
+            const unityUser = await database.select("sys_unity_name").where({sys_unity_id: GLOBALunidade}).table("jcv_unitys").then( data => {
+                return data[0].sys_unity_name;
+            })
+
             let allUpdate = []
 
             //Pegando so nome e sobrenome
@@ -58,7 +63,8 @@ authenticate = async (req, res, next) => {
                 GLOBALfisrtUserName,
                 sectorUser,
                 allUpdate,
-                GLOBALclassification
+                GLOBALclassification,
+                unityUser
             ];
 
             //Pegando a url e validando

@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/panel/css/partials/reportError.css">
+
+<section class="sys-partial-report-main" id="sys-partial-report-main">
+    <form method="post" class="sys-partials-report-box">
+        <div class="sys-partial-report-title">
+            <span>Reportar Bugs</span>
+            <i id="sys-partial-report-close" class="ri-close-line"></i>
+        </div>
+        <br>
+        <span>Este é um modulo de comunicação direta para o reporte de bugs, problemas ou sugestões. <b>Insira abaixo com detalhes</b> o assunto e em seguida clique <b>Enviar Report</b></span>
+        <br>
+        <textarea name="sys-report-text" id="" cols="30" rows="5"></textarea>
+        <br>
+        <button class="class-loader" formaction="/painel/system/report/action">Enviar Report</button>
+    </form>
+</section>
+
+<script>
+    $("#sys-report-open-screen").click(function(){
+        $("#sys-partial-report-main").fadeIn().css({'display':'flex'})
+    })
+    $("#sys-partial-report-close").click(function(){
+        $("#sys-partial-report-main").fadeOut()
+    })
+</script>

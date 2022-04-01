@@ -1,40 +1,45 @@
-.profile-section-main{
+.sys-partial-profile{
+    position: absolute;
+    top: 0;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    display: none;
+    justify-content: center;
     align-items: center;
+    background: rgba(128, 128, 128, 0.308);
+    z-index: 2;
 }
 
-
-/* MAIN */
-.profile-section-center-main{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* BG MAIN */
-.profile-container-main-style{
-    width: 100%;
-    height: 270px;
-    background: linear-gradient(126deg, rgba(34,34,36,1) 0%, rgba(44,47,51,1) 88%, rgba(52,58,64,1) 100%);
-}
-
-/* PROFILE */
-.profile-container-info-user{
-    width: 50%;
-    margin-top: -140px;
+.sys-partial-profile-container-info-user{
+    width: 550px;
+    height: 95vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 4px;
+    overflow: auto;
+    padding: 8px;
+}
+
+/* CLSOE */
+.sys-partial-profile-close{
+    width: 95%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.sys-partial-profile-close i{
+    display: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    cursor: pointer;
 }
 
 /* IMG USER */
-.profile-container-image-user{
+.sys-partial-profile-container-image-user{
     width: 250px;
     height: 250px;
     display: flex;
@@ -44,20 +49,19 @@
     border-radius: 50%;
     box-shadow: 0 0 4px 0 var(--color-three);
 }
-.profile-img-user{
+.sys-partial-profile-img-user{
     display: flex;
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: var(--color-one);
 }
 
 /* edit */
-.profile-container-edit{
+.sys-partial-profile-container-edit{
     margin-top: -45px;
     display: flex;
 }
-.profile-container-edit label{
+.sys-partial-profile-container-edit label{
     font-size: 2rem;
     cursor: pointer;
     color: var(--color-five);
@@ -66,33 +70,33 @@
 
 /*****************************/
 /* INFO USER */
-.profile-container-info-user-set{
+.sys-partial-profile-container-info-user-set{
     width: 100%;
     margin-bottom: 28px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.profile-row-form{
+.sys-partial-profile-row-form{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 24px;
 }
-.profile-container-input{
+.sys-partial-profile-container-input{
     width: 310px;
     margin-bottom: 36px;
     display: flex;
     flex-direction: column;
 }
 
-.profile-container-input label{
+.sys-partial-profile-container-input label{
     font-size: 0.7rem;
     color: var(--color-one);
 }
 
-.profile-container-input input{
+.sys-partial-profile-container-input input{
     outline: 0;
     border: 0;
     padding: 8px 6px;
@@ -102,28 +106,28 @@
     border-bottom: 1px solid var(--color-one);
 }
 
-.profile-container-input-checkbox{
+.sys-partial-profile-container-input-checkbox{
     display: flex;
     align-items: center;
     margin-bottom: 26px;
 }
-.profile-container-input-checkbox input[type=checkbox]{
+.sys-partial-profile-container-input-checkbox input[type=checkbox]{
     width: 15px;
     height: 15px;
     cursor: pointer;
 }
-.profile-container-input-checkbox label{
+.sys-partial-profile-container-input-checkbox label{
     font-size: 0.7rem;
     margin-left: 13px;
     color: var(--color-one);
 }
-.profile-container-pass-renew{
+.sys-partial-profile-container-pass-renew{
     display: flex;
     align-items: center;
     text-align: center;
     margin-bottom: 26px;
 }
-.profile-container-pass-renew span{
+.sys-partial-profile-container-pass-renew span{
     text-decoration: underline;
     font-size: 0.8rem;
     cursor: pointer;
@@ -131,12 +135,12 @@
 }
 
 
-.profile-container-buttons{
+.sys-partial-profile-container-buttons{
     display: flex;
     justify-content: center;
 }
 
-.profile-container-buttons button{
+.sys-partial-profile-container-buttons button{
     outline: 0;
     border: 0;
     padding: 8px 18px;
@@ -151,7 +155,7 @@
 
 /**************************/
 /* DEFINIR SENHA */
-.profile-recover-password{
+.sys-partial-profile-recover-password{
     position: absolute;
     top: 0;
     width: 100%;
@@ -164,7 +168,7 @@
     z-index: 3;
     background: rgba(128, 128, 128, 0.226);
 }
-.profile-recover-container-main{
+.sys-partial-profile-recover-container-main{
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -174,7 +178,7 @@
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
 }
-.profile-recover-center{
+.sys-partial-profile-recover-center{
     width: 100%;
     height: 100%;
     display: flex;
@@ -182,46 +186,46 @@
     z-index: 2;
 }
 
-.profile-recover-header{
+.sys-partial-profile-recover-header{
     width: 100%;
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.profile-recover-header span:nth-child(1){
+.sys-partial-profile-recover-header span:nth-child(1){
     font-size: 1rem;
     color: var(--color-one);
 }
-.profile-recover-header span:nth-child(2){
+.sys-partial-profile-recover-header span:nth-child(2){
     font-size: 1.5rem;
     color: var(--color-one);
     cursor: pointer;
 }
 
 /***************************/
-.profile-recover-body{
+.sys-partial-profile-recover-body{
     width: 100%;
     margin: 17px 0;
     display: flex;
 }
-.profile-form-recover{
+.sys-partial-profile-form-recover{
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.profile-form-recover-row{
+.sys-partial-profile-form-recover-row{
     width: 100%;
     margin-bottom: 23px;
     display: flex;
 }
 
-.profile-form-recover-row span{
+.sys-partial-profile-form-recover-row span{
     color: var(--color-two);
     font-size: 0.8rem;
 }
-.profile-form-recover-row input[type=password]{
+.sys-partial-profile-form-recover-row input[type=password]{
     width: 100%;
     border: 0.9px solid var(--color-two);
     padding: 8px 9px;
@@ -229,14 +233,14 @@
     border-radius: 4px;
 }
 
-.profile-form-recover-row-commands{
+.sys-partial-profile-form-recover-row-commands{
     width: 100%;
     margin-top: 23px;
     height: 25px;
     display: flex;
     justify-content: center;
 }
-.profile-form-recover-row-commands button{
+.sys-partial-profile-form-recover-row-commands button{
     height: fit-content;
     outline: 0;
     border: 0;
@@ -248,7 +252,7 @@
     cursor: pointer;
     transition: 0.5s;
 }
-.profile-form-recover-row-commands button:hover{
+.sys-partial-profile-form-recover-row-commands button:hover{
     transition: 0.5s;
     background: transparent;
     color: var(--color-one);
@@ -273,7 +277,7 @@
     background: rgba(128, 128, 128, 0.226);
 }
 .avataars-main{
-    width: 700px;
+    width: 550px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -306,7 +310,7 @@
 }
 
 .avataars-main-style{
-    width: 50%;
+    width: 70%;
     max-height: 350px;
     display: flex;
     flex-direction: column;
@@ -366,21 +370,22 @@
     align-items: center;
     margin-left: 8px;
 }
+
 /*********************************/
 /* RESPONSIVE */
 @media only screen and (max-width: 750px) {
-    .profile-container-info-user-set{
+    .sys-partial-profile-container-info-user-set{
         padding: 12px;
     }
-    .profile-container-info-user{
+    .sys-partial-profile-container-info-user{
         width: 90%;
     }
-    .profile-container-input{
+    .sys-partial-profile-container-input{
         width: 100%;
     }
 
     /*  */
-    .avataars-main-style{
+    .sys-partial-profile-main-style{
         width: 100%;
     }
     .avataars-section{

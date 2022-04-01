@@ -40,11 +40,11 @@ async function getPermissions (req, res, next) {
     .table("jcv_users")
     .then(data => {return data})
 
+    global.PROFILE_FINALYT = false;
     if(getDataUser[0].jcv_userEmailCorporate == null || getDataUser[0].jcv_userEmailCorporate == ''){
-
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| <b>Antes de utilizar os apps. Você precisa cadastrar um email!</b>");
-        res.redirect("/painel/perfil")
-    }else{
+        PROFILE_FINALYT = true;//O usuario precisa terminar seu cadastro
+    }
 
     //Pegando e tranformando em array a URL
     const urlPage = req.path.split('/');urlPage.shift();
@@ -269,8 +269,6 @@ async function getPermissions (req, res, next) {
     }
 
     next();
-    
-    }
 
 }
 
