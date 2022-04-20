@@ -30,7 +30,7 @@ Setor
     * SYS-03: Error;
 
 # Solictações {Programa da beleza}
-- status: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{separado}, 5{pedido de cancelamento};
+- status: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{separado}, 5{pedido de cancelamento}, 6{Pedido coletado pelo gestor}, 7{Pedido recebido pelo usuario};
 # Commandos para o PROGRAMA DA BELEZA
 - CMD01{Setar como pedido pendente}
 - CMD02{Setar como pedido separado}
@@ -341,6 +341,12 @@ Requisitor de Materiais
 * [jcv_formularios_responses_userResponse] *INT* //id do usuario
 * [jcv_formularios_responses_jsonForm] *TEXT* //Formulario em si
 * [jcv_formularios_responses_responseDate] *INT* //Formularios respondidos
+
+# Tabela termos e aceite *sempre criar um registro novo após mudanças*
+* [jcv_sys_term_id] *PRIMARY KEY* //id
+* [jcv_sys_term_termText] *TEXT*
+* [jcv_sys_term_term_lastUpdate] *VARCHAR* //data
+* [jcv_sys_term_userId_update] *INT* // id do ultimo usuario do update
 
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/

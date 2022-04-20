@@ -288,6 +288,21 @@ app.get('/maintenance', (req,res) => {
     } 
 })
 
+app.get('/terms', async (req,res) => {
+
+    const getInfo = await database
+    .select("jcv_sys_term.*","jcv_userNamePrimary")
+    .orderBy("jcv_sys_term_id","DESC")
+    .table("jcv_sys_term")
+    .join("jcv_users","jcv_users.jcv_id","jcv_sys_term.jcv_sys_term_userId_update")
+    .limit(1)
+    .then( data => {
+        return data
+    })
+
+    res.render("web/termsAccept", {getInfo: getInfo})
+})
+
 app.get('/style/teste', (req,res) => {
     res.render("panel/beleza/modelGenerateEtiqueta")
 })

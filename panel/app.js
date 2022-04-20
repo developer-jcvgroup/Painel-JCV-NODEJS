@@ -52,6 +52,8 @@ const controllerNotifications = require("./controllers/notifications/controllerN
 const controllerUpdates = require("./controllers/updates/controllerUpdate")
 //Controllers Reports
 const controllerReport = require("./controllers/system/controllerReport")
+//Controllers Terms
+const controllerTerms = require("./controllers/system/controllerTerms")
 
 
 
@@ -317,5 +319,11 @@ router.post("/formularios/delete", authenticate, controllerFormulario.deleteForm
 router.post("/formularios/disabled", authenticate, controllerFormulario.disabledForm)
 router.post("/formularios/reponse", authenticate, controllerFormulario.sendResponse)
 router.post("/formularios/reponse/downlod", authenticate, controllerFormulario.exportResponses)
+
+/***********************************/
+/***********************************/
+//Termos: Sistema
+router.get("/terms", authenticate, controllerTerms.moduleTerms)
+router.post("/terms/save", authenticate, controllerTerms.termsSave)
 
 module.exports = router;
