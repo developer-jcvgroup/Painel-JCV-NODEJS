@@ -35,6 +35,18 @@
     <script src="/js/scripts-login.js"></script>
     <title>Log in | JCV Group</title>
 </head>
+<!--  -->
+<!--  -->
+<% if(PAINEL_URL_LOGIN == 1){ %>
+    <!-- localhost -->
+<% }else{ %>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+          document.getElementById("form-login-varification").submit();
+        }
+    </script>
+<% } %>
 <script>
     //Limpa os caches gerados pelo pwa
     self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
@@ -57,7 +69,7 @@
 
         <section class="index-section-login">
             <div class="index-login-container">
-                <form class="index-form-login" action="/login/logar" id="form-logi-varification" method="post">
+                <form class="index-form-login" action="/login/logar" id="form-login-varification" method="post">
                     <div class="index-login-logo">
                         <a href="/">
                             <img id="image-1" class="index-logo" src="/logos/jcvLogo.png" alt="">
@@ -82,7 +94,7 @@
 
                         <div class="index-row-commands">
                             <input hidden name="input-link-special" type="text" value="<%= linkspecial %>">
-                            <button class="class-loader" class="g-recaptcha" data-sitekey="6LfOKqMfAAAAADhQdS-6kNvXTdfLwXtyshw0N_Rz" data-callback='onSubmit' data-action='submit' type="submit">logar</button>
+                            <button class="class-loader g-recaptcha" data-sitekey="6LfOKqMfAAAAADhQdS-6kNvXTdfLwXtyshw0N_Rz" data-callback='onSubmit' data-action='submit' type="submit">logar</button>
                         </div>
                         <div class="index-help-pass">
                             <span id="index-recovery-open">Esqueci minha senha</span>
@@ -145,15 +157,6 @@
     </div>
 </section>
 </body>
-
-<!--  -->
-<!--  -->
-<script src="https://www.google.com/recaptcha/api.js"></script>
-<script>
-    function onSubmit(token) {
-      document.getElementById("form-logi-varification").submit();
-    }
-  </script>
 <script>
     //Limpa os caches gerados pelo pwa
     self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })

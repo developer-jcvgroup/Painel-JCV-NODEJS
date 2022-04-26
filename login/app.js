@@ -45,11 +45,19 @@ router.get("/", async (req,res)=>{
 
         })
 
+        let PAINEL_URL_LOGIN;
+        if(req.get('host') == 'localhost:8080'){
+            PAINEL_URL_LOGIN = 1;
+        }else{
+            PAINEL_URL_LOGIN = 0;
+        }
+
         res.render("login/index", {
             frasesIndex: allAuthor[0], 
             authorIndex: allAuthor[1], 
             linkspecial: linkspecial,
-            allAccountPass: allAccountPass
+            allAccountPass: allAccountPass,
+            PAINEL_URL_LOGIN: PAINEL_URL_LOGIN
         })
     }
 })
