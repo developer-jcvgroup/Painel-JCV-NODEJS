@@ -1,7 +1,2 @@
 cd /home/jcv/app/
 git pull origin main
-
-Depois acesso o painel e reinicia a aplicação
-
-
-Caso precise alterar usuarios fazer pelo phpmyadmin

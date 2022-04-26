@@ -17,3 +17,7 @@ modulo onde o usuario solicita o cadastro na tela de login:
 O usuario vai poder SOLICITAR o cadastro no jcv mediante a aprovação do admin.
 
 Login com acesso via dois fatores
+
+**********
+
+sistema de solicitação de criação de novos funcionarios
