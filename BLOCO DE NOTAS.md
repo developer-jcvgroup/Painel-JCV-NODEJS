@@ -16,5 +16,4 @@ criar encurtador de url do jcvgroup.
 modulo onde o usuario solicita o cadastro na tela de login:
 O usuario vai poder SOLICITAR o cadastro no jcv mediante a aprovação do admin.
 
-****************
-termos de aceite criar pagina personalizada
+Login com acesso via dois fatores

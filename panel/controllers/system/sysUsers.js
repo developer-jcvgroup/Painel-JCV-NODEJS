@@ -196,7 +196,7 @@ exports.editSaveUser = async (req,res) => {
         const userSetor = req.body['save-edit-setor-'+idUser];
 
         const userSYSrequisitorUse = req.body['save-edit-sys-requsitor-use-'+idUser] == 'on' ? 1 : 0;
-        const userSYSrequisitorManager = req.body['save-edit-sys-requsitor-manager-'+idUser] == 'on' ? 1 : 0;
+        //const userSYSrequisitorManager = req.body['save-edit-sys-requsitor-manager-'+idUser] == 'on' ? 1 : 0;
         const userSYSrequisitorAdmin = req.body['save-edit-sys-requsitor-admin-'+idUser] == 'on' ? 1 : 0;
 
         const userSYSbelezaUse = req.body['save-edit-sys-beleza-use-'+idUser] == 'on' ? 1 : 0;
@@ -204,7 +204,7 @@ exports.editSaveUser = async (req,res) => {
         const userSYSbelezaAdmin = req.body['save-edit-sys-beleza-admin-'+idUser] == 'on' ? 1 : 0;
 
         const userSYScalendarUse = req.body['save-edit-sys-calendar-use-'+idUser] == 'on' ? 1 : 0;
-        const userSYScalendarManager = req.body['save-edit-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
+        //const userSYScalendarManager = req.body['save-edit-sys-calendar-manager-'+idUser] == 'on' ? 1 : 0;
         const userSYScalendarAdmin = req.body['save-edit-sys-calendar-admin-'+idUser] == 'on' ? 1 : 0;
 
         const userSYStradeUse = req.body['save-edit-sys-trade-use-'+idUser] == 'on' ? 1 : 0;
@@ -220,7 +220,7 @@ exports.editSaveUser = async (req,res) => {
         const userAtivo = parseInt(req.body['save-edit-active-'+idUser]);
 
         if(parseInt(userAtivo) == 0){
-            usersScript.alterDataUsers(req,res, idUser, userName)
+            usersScript.alterDataUsers(req,res, idUser, userName, userAtivo)
         }else{
             //Validando se este usuario possui ou nao um cadastro nas permissões
             const validatePermSys = await database
@@ -255,10 +255,8 @@ exports.editSaveUser = async (req,res) => {
                         sys_blz_perm_manager: userSYSbelezaManager,
                         sys_blz_perm_admin: userSYSbelezaAdmin,
                         sys_req_perm_use: userSYSrequisitorUse,
-                        //sys_req_perm_manager: userSYSrequisitorManager,
                         sys_req_perm_admin: userSYSrequisitorAdmin,
                         sys_cal_perm_use: userSYScalendarUse,
-                        //sys_cal_perm_manager: userSYScalendarManager,
                         sys_cal_perm_admin: userSYScalendarAdmin,
                         sys_tra_perm_use: userSYStradeUse,
                         sys_tra_perm_admin: userSYStradeAdmin,

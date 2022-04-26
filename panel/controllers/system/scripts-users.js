@@ -4,8 +4,7 @@ moment.tz.setDefault('America/Sao_Paulo');
 
 
 //Esta função executa algo sempre que um usuario foi colocando como desabilitado
-exports.alterDataUsers = (req, res, idUser, userName) => {
-
+exports.alterDataUsers = (req, res, idUser, userName, userAtivo) => {
 
     //Excluindo todos as solicitações com estatus SOLICITADO no programa da beleza
     database
@@ -29,13 +28,14 @@ exports.alterDataUsers = (req, res, idUser, userName) => {
         //console.log('ok: '+data)
     })
     
-    //Removendo CPF e EMAIL do registro, por conta LGPD
+    //Removendo CPF e EMAIL do registro, por conta LGPD e desabilitando o usuario
     database
     .update({
         jcv_userCpf: null,
         jcv_userEmailCorporate: null,
         jcv_userEmailFolks: null,
         jcv_userCpf: null,
+        jcv_userEnabled: userAtivo
     })
     .where({jcv_id: idUser})
     .table("jcv_users")
