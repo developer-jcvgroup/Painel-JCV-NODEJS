@@ -233,6 +233,13 @@ Requisitor de Materiais
 * [sys_blz_productBrand] *INT* //Marca
 * [sys_blz_productUpdate] *INT* //Ultima atualização
 
+# Tabela Programa da Beleza: Compilador de solicitações
+* [sys_blz_compilate_id] *PRIMARY KEY* //id
+* [sys_blz_compilate_id_manager] *INT* //Id do gestor
+* [sys_blz_compilate_ids_requests] *JSON* // Lista em JSON de todos as requisições que este gestor é responsável
+* [sys_blz_compilate_generate_date] *DATE* // Data da criação deste compilado
+* [sys_blz_compilate_active] *INT* // Este compilado esta válido?
+
 # ------------------------------------------
 # Tabela calendario:
 * [sys_calendar_eventId] *PRIMARY KEY* //id

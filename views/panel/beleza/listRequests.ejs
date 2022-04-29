@@ -15,9 +15,10 @@
                         <div class="requests-container-row-form">
                             <div class="request-form-box">
                                 <label for="">Referência</label>
-                                <select name="blzReferenceMonth" id="">
+                                <select id="date-select-filter">
+                                    <option selected></option>
                                     <option value="<%= monthReference %>">Ref. Atual (<%= monthReference %>)</option>
-                                    <option value="" disabled> </option>
+                                    <option disabled> </option>
                                     <option value="01-<%= yearNow %>">Janeiro</option>
                                     <option value="02-<%= yearNow %>">Fevereiro</option>
                                     <option value="03-<%= yearNow %>">Março</option>
@@ -259,8 +260,8 @@ $(function(){
     $.fn.paginationTableMain('#request-list-table',25,0);
 
     //Adicionando um filtro: Unidades
-    $("select#unidade-select-filter").change(function(){
-        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+    /* $("select#unidade-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select (ex.: unidades,), 5° Codigo unico para este filtro
         $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','unidade-select-filter','Unidade');
     })
 
@@ -276,6 +277,10 @@ $(function(){
         $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','Status');
     })
 
+    //Validando se existe filtro: //1° elemento pai que receber os boxs, 2° os filtros que eu vou buscar
+    $.fn.searchFiltersCookies("sys-filter-display-main","sys-filter-component-boxs", ['Unidade','Gestor','Status']) */
+    
+   
 
     //Check select tr
     $(".check-row-tr").click(function(){
@@ -330,4 +335,35 @@ function buttonFilterGestor(idButton){
         $("#button-filter-gestor-"+idButton).remove();
     })
 }
+</script>
+
+<script src="/js/panel/script-filters.js"></script>
+<script>
+    $(function(){
+        //Adicionando um filtro: Unidades
+        $("select#unidade-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','unidade-select-filter','sys-filter-name-unidade','Unidade', 'JCVMOD02');
+        })
+
+        //Adicionando um filtro: Gestor
+        $("select#gestor-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','gestor-select-filter','sys-filter-name-gestor','Gestor', 'JCVMOD02');
+        })
+
+        //Adicionando um filtro: Status
+        $("select#status-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','sys-filter-name-status','Status', 'JCVMOD02');
+        })
+
+        //Adicionando um filtro: Data
+        $("select#date-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','date-select-filter','sys-filter-name-date','Data', 'JCVMOD02');
+        })
+
+        $.fn.searchFiltersDinamics('JCVMOD02','sys-filter-display-main','sys-filter-component-boxs');//Buscando todos os filtros deste app {1° App, 2° Display main (1°), 2° Display content (2°)}
+    })
 </script>

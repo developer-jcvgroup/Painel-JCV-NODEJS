@@ -1,4 +1,3 @@
-
 $(function(){
 
     //evita todos os form post do sistema
@@ -413,11 +412,50 @@ $(function(){
 
     };
 
+/* 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //Filtros dinamicos para consultas
     //Adicionando um novo filtro
     let arrayListFilter = [];//Array que contabiliza os filtros adicionados
+
+    //Buscar se existe filtros existes de acordo com a pagina que o usuario esta
+    $.fn.searchFiltersCookies = function (displayMain, contentBox, nameSelect){
+
+        //alert(Cookies.get('COOKIE-FILTER-MODULE-'+nameSelect))
+
+        let dataHTMLfilters;
+        //passando por cada name select inserido
+        nameSelect.forEach(element => {
+            
+            if(Cookies.get('COOKIE-FILTER-MODULE-'+element) != undefined){
+                //console.log('tem dados')
+                dataHTMLfilters = Cookies.get('COOKIE-FILTER-MODULE-'+element)
+
+                //console.log('COOKIE-FILTER-MODULE-'+nameSelect)
+
+                $("#"+displayMain+"").fadeIn();
+                $("#"+contentBox+"").append(dataHTMLfilters)
+
+                
+
+            }else{
+                dataHTMLfilters = ''
+            }
+        });
+
+
+        //console.log($("#"+contentBox+"").children().length)
+
+        $("#"+contentBox+"").children().each(function(){
+            arrayListFilter.push($(this).attr('sys-get-filter'))
+            //console.log($(this).attr('sys-get-filter'))
+        })
+
+        //alert(arrayListFilter)
+
+        //return dataHTMLfilters;
+    }
+    
+    //Filtros dinamicos para consultas
     $.fn.clickADDInputDinamic = function(displayMain, classBox, selectId, nameSelect){
 
         const componentOne = $("#"+displayMain+"");//Display principal
@@ -435,7 +473,7 @@ $(function(){
         if(valCompOne != "" && textCompOne != ""){
             valCompOne = parseInt(valCompOne);//Tranformando a string em int
 
-            let validadeFilter = componentFour+"-"+valCompOne;
+            let validadeFilter = componentFour+"-"+valCompOne;//Nome mais valor do option
 
             if(arrayListFilter.indexOf(validadeFilter) == -1){
                 //Verificando se o display principal esta visivel
@@ -447,8 +485,28 @@ $(function(){
                 }
 
                 arrayListFilter.push(componentFour+"-"+valCompOne);//Adicionando o option a uma lista de filtros adicionados
-                componentTwo.append('<div class="sys-filter-box-main" id="box-id-'+validadeFilter+'"><input type="hidden" readonly value="'+valCompOne+'" name="sys-filter-input-selects-'+componentFour+'"><span><b>'+componentFour+'</b> - '+textCompOne+'</span><button type="button" value="'+valCompOne+'" class="sys-filter-button-remove" onclick="$(this).clickREMOVEInputDinamic('+'`'+componentFour+'`'+','+valCompOne+')">x</button> </div>')
+                let componetHTML = '<div class="sys-filter-box-main" sys-get-filter="'+validadeFilter+'" filter-name="'+componentFour+'" id="box-id-'+validadeFilter+'"><input type="hidden" readonly value="'+valCompOne+'" name="sys-filter-input-selects-'+componentFour+'"><span><b>'+componentFour+'</b> - '+textCompOne+'</span><button type="button" value="'+valCompOne+'" class="sys-filter-button-remove" onclick="$(this).clickREMOVEInputDinamic('+'`'+componentFour+'`'+','+valCompOne+','+'`'+classBox+'`'+')">x</button> </div>';
+                componentTwo.append(componetHTML)
                 //Filtro aplicado com sucesso!
+
+                /* *************************************************** 
+                /* *************************************************** 
+                //Agora vamos criar um cookie para sempre este filtro aparecer mesmo com o reload da página!
+                //Validando se o COOKIE deste SELECT tem algo
+                if(Cookies.get('COOKIE-FILTER-MODULE-'+nameSelect) != undefined){
+                    //Este cookie tem algo
+
+                    let valueCookieGet = Cookies.get('COOKIE-FILTER-MODULE-'+nameSelect);
+                    
+                    //Definindo o cookie novamente
+                    Cookies.set('COOKIE-FILTER-MODULE-'+nameSelect, valueCookieGet+componetHTML)
+                }else{
+                    //Este cookie não exite
+                    Cookies.set('COOKIE-FILTER-MODULE-'+nameSelect, componetHTML)
+                }
+                /* *************************************************** 
+                /* *************************************************** 
+
             }else{
                 //Filtro já adicionado
                 $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
@@ -460,7 +518,7 @@ $(function(){
     }
 
     //Removendo um filtro
-    $.fn.clickREMOVEInputDinamic = function(nameSelect,valCompOne){
+    $.fn.clickREMOVEInputDinamic = function(nameSelect,valCompOne,boxMainFilters){
 
         const validadeFilterRemove = nameSelect+'-'+valCompOne;
         
@@ -469,7 +527,42 @@ $(function(){
         arrayListFilter.splice(arrayListFilter.indexOf(validadeFilterRemove), 1);
 
         tagComponent.remove();
+
+        
+        //Removendo o filtro do cookie e redefinindo os valores
+
+        //console.log($("#"+boxMainFilters+"").find('[sys-get-filter="'+nameSelect+'"]').attr('sys-get-filter'))
+
+        //console.log($("#"+boxMainFilters+"").filter('#box-id-'+nameSelect).html())
+
+        $("#"+boxMainFilters+"").each(function(){
+
+            console.log($(this).children().attr('id'))
+
+            if($(this).attr('filter-name') == nameSelect){
+                Cookies.set('COOKIE-FILTER-MODULE-'+nameSelect, )
+            } 
+
+            
+        })
+
+       
+
+        if(Cookies.get('COOKIE-FILTER-MODULE-'+nameSelect) != undefined){
+            //Este cookie tem algo
+
+            let valueCookieGet = Cookies.get('COOKIE-FILTER-MODULE-'+nameSelect);
+            
+            //Definindo o cookie novamente
+            Cookies.set('COOKIE-FILTER-MODULE-'+nameSelect, valueCookieGet+componetHTML)
+        }else{
+            //Este cookie não exite
+            Cookies.set('COOKIE-FILTER-MODULE-'+nameSelect, componetHTML)
+        } 
+
     }
+
+    */
 
     //Restringir caracteres
     $.fn.inputValidateCaracters = function(input){

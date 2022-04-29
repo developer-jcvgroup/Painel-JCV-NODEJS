@@ -282,56 +282,61 @@ exports.sendResponse = async (req,res) => {
     const responseForm = req.body['view-form-response-response-text']
     const titleForm = req.body['view-form-response-response-title']
 
-    await database
-    .insert({
-        jcv_formularios_responses_idForm: idForm,
-        jcv_formularios_responses_userResponse: GLOBAL_DASH[0],
-        jcv_formularios_responses_jsonForm: responseForm,
-        jcv_formularios_responses_responseDate: generateDate()
-    })
-    .table("jcv_formularios_responses")
-    .then( data => {
-        if(data != ''){
+    if(responseForm != ''){
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira alguma resposta!");
+        res.redirect("/painel/formularios/reponse/"+idForm);
+    }else{
+        await database
+        .insert({
+            jcv_formularios_responses_idForm: idForm,
+            jcv_formularios_responses_userResponse: GLOBAL_DASH[0],
+            jcv_formularios_responses_jsonForm: responseForm,
+            jcv_formularios_responses_responseDate: generateDate()
+        })
+        .table("jcv_formularios_responses")
+        .then( data => {
+            if(data != ''){
 
-            //Pegando o formulario e adicionado o usuario
-            database.select().where({jcv_formularios_registers_id: idForm}).table("jcv_formularios_registers").then( getForm => {
-                //console.log(getForm)
+                //Pegando o formulario e adicionado o usuario
+                database.select().where({jcv_formularios_registers_id: idForm}).table("jcv_formularios_registers").then( getForm => {
+                    //console.log(getForm)
 
-                let arrayNew = [];
-                if(getForm[0].jcv_formularios_registers_usersResponses != '[]'){
-                    let convertArray = JSON.parse(getForm[0].jcv_formularios_registers_usersResponses).map(convertNumber)
+                    let arrayNew = [];
+                    if(getForm[0].jcv_formularios_registers_usersResponses != '[]'){
+                        let convertArray = JSON.parse(getForm[0].jcv_formularios_registers_usersResponses).map(convertNumber)
 
-                    function convertNumber(value){
-                        return parseInt(value)
+                        function convertNumber(value){
+                            return parseInt(value)
+                        }
+
+                        convertArray.push(GLOBAL_DASH[0])
+
+                        arrayNew = convertArray
+                    }else{
+                        arrayNew.push(GLOBAL_DASH[0])
                     }
 
-                    convertArray.push(GLOBAL_DASH[0])
-
-                    arrayNew = convertArray
-                }else{
-                    arrayNew.push(GLOBAL_DASH[0])
-                }
-
-                let responsesCount = getForm[0].jcv_formularios_registers_totalResponse + 1;
-                //Adicionando o usuario
-                database
-                .update({
-                    jcv_formularios_registers_usersResponses: JSON.stringify(arrayNew),
-                    jcv_formularios_registers_totalResponse: responsesCount
+                    let responsesCount = getForm[0].jcv_formularios_registers_totalResponse + 1;
+                    //Adicionando o usuario
+                    database
+                    .update({
+                        jcv_formularios_registers_usersResponses: JSON.stringify(arrayNew),
+                        jcv_formularios_registers_totalResponse: responsesCount
+                    })
+                    .where({jcv_formularios_registers_id: idForm})
+                    .table("jcv_formularios_registers")
+                    .then( data => {
+                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> respondido com sucesso!");
+                        res.redirect("/painel");
+                    })
                 })
-                .where({jcv_formularios_registers_id: idForm})
-                .table("jcv_formularios_registers")
-                .then( data => {
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> respondido com sucesso!");
-                    res.redirect("/painel");
-                })
-            })
 
-        }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao responder o formulário <b>"+titleForm+"</b>");
-            res.redirect("/painel/formularios/main");
-        }
-    })
+            }else{
+                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao responder o formulário <b>"+titleForm+"</b>");
+                res.redirect("/painel/formularios/main");
+            }
+        })
+    }
 }
 
 exports.removeResponses = async (req,res) => {

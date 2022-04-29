@@ -1,5 +1,5 @@
-o usuario consegue enviar form vazio no form sistema
-arrumar solicitações duplicadas
+******************************************************************************************************
+******************************************************************************************************
 
 modulo para acompanhamento da solicitação do programa da beleza:
 
@@ -8,16 +8,30 @@ Tela de acompanhamento da solicitação
 2° o gestor ao entregar a solicitação ele tem que escanear novamente para confirmar a entregar
 
 criar tela para o gestor ler os qr code
-criar tela para o usuario saber o que já solicitou no passado e poder acompanhar os status
+criar tela para o usuario saber o que já solicitou no passado e poder acompanhar os status.
+
+******************************************************************************************************
+******************************************************************************************************
 
 criar encurtador de url do jcvgroup.
 
-****************
+******************************************************************************************************
+******************************************************************************************************
+
 modulo onde o usuario solicita o cadastro na tela de login:
 O usuario vai poder SOLICITAR o cadastro no jcv mediante a aprovação do admin.
 
-Login com acesso via dois fatores
+******************************************************************************************************
+******************************************************************************************************
 
-**********
+Login com acesso via dois fatores.
 
-sistema de solicitação de criação de novos funcionarios
+******************************************************************************************************
+******************************************************************************************************
+
+Sistema de solicitação de criação de novos funcionarios
+
+******************************************************************************************************
+******************************************************************************************************
+
+Sistema de termos de resposabilidades onde o criador coleta as assinaturas

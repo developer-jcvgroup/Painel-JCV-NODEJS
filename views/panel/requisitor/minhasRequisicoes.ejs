@@ -132,6 +132,8 @@
         <% } %>
     </section>
 </section>
+
+<script src="/js/panel/script-filters.js"></script>
 <script>
     $(function(){
         //Input Search
@@ -142,8 +144,10 @@
 
         //Adicionando um filtro: Status
         $("#req-status-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
-            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','status');
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','req-sys-filter-name-status','Status', 'JCVMOD03-1');
         })
+
+        $.fn.searchFiltersDinamics('JCVMOD03-1','sys-filter-display-main','sys-filter-component-boxs');//Buscando todos os filtros deste app {1° App, 2° Display main (1°), 2° Display content (2°)}
     })
 </script>

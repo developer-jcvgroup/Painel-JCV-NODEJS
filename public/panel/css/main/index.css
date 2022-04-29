@@ -593,12 +593,23 @@ header{
     margin-right: 7px;
     display: flex;
     align-items: center;
-    border: 1.5px solid var(--color-one);
+    border: 1.5px solid var(--color-three);
+    border-left: 4px solid var(--color-two);
     border-radius: 4px;
-    padding: 3px;
-    
+    padding: 12px;
+    transition: 0.5s;
 }
-.sys-filter-box-main span{
+.sys-filter-box-main:hover{
+    transition: 0.5s;
+    background: var(--background-three);
+    cursor: pointer;
+}
+
+
+
+/*  */
+/*  */
+.sys-filter-box-main div{
     background: transparent;
     color: var(--color-one);
     font-size: 0.9rem;
@@ -606,15 +617,25 @@ header{
     outline: 0;
     cursor: default;
     padding-right: 5px;
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
 }
+.sys-filter-box-main div b{
+    font-size: 0.7rem;
+    margin-bottom: 5px;
+}
+
+/*  */
 .sys-filter-box-main button{
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     color: var(--color-one);
     border: 0;
     outline: 0;
     cursor: pointer;
     background: transparent;
+    padding: 9px;
 }
 
 /********************************/

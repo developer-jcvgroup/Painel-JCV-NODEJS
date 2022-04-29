@@ -664,10 +664,10 @@ exports.actionSearchOrder = async (req,res) => {
     //ira retornar 'LIKE '%%' para que na query ele seje ignorado
     let idSearch = req.body['all-id-search'] != "" ? '= '+req.body['all-id-search'] : "LIKE '%%'";
 
-    let actionStatus = req.body['sys-filter-input-selects-status'] != undefined ? req.body['sys-filter-input-selects-status'] : "";
-    let actionUsers = req.body['sys-filter-input-selects-users'] != undefined ? req.body['sys-filter-input-selects-users'] : "";
+    let actionStatus = req.body['req-sys-filter-name-status'] != undefined ? req.body['req-sys-filter-name-status'] : "";
+    let actionUsers = req.body['req-sys-filter-name-usuarios'] != undefined ? req.body['req-sys-filter-name-usuarios'] : "";
     let actionSector = req.body['sys-filter-input-selects-sector'] != undefined ? req.body['sys-filter-input-selects-sector'] : "";
-    let actionUnitys = req.body['sys-filter-input-selects-unitys'] != undefined ? req.body['sys-filter-input-selects-unitys'] : ""; 
+    let actionUnitys = req.body['req-sys-filter-name-unidade'] != undefined ? req.body['req-sys-filter-name-unidade'] : ""; 
 
     //Caso o inputs esteje vazio, ele retornara 99999
     let actionAmountList = req.body['all-order-by-amount'] != 'all' ? req.body['all-order-by-amount'] : '99999';
@@ -779,7 +779,7 @@ exports.searchMyRequest = async (req,res) => {
     //Validanddo e pegando os valores dos inputs dinamicos, caso o input não tenha nada ele
     //ira retornar 'LIKE '%%' para que na query ele seje ignorado
     const idSearch = req.body['search-id-order'] != undefined ? 'in ('+req.body['search-id-order']+')' : "LIKE '%%'";
-    const statusOrder = req.body['sys-filter-input-selects-status'] != undefined ? 'in ('+req.body['sys-filter-input-selects-status']+')' : "LIKE '%%'";
+    const statusOrder = req.body['req-sys-filter-name-unidade'] != undefined ? 'in ('+req.body['req-sys-filter-name-unidade']+')' : "LIKE '%%'";
     const orderLimit = req.body['search-status-limit'] != undefined ? req.body['search-status-limit'] : '999';
 
     //Fazendo a busca e retornando

@@ -176,33 +176,31 @@
         <% } %>
     </section>
 </section>
+
+<script src="/js/panel/script-filters.js"></script>
 <script>
     $(function(){
 
 
         //Adicionando um filtro: Unidades
         $("select#req-unidade-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
-            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-unidade-select-filter','unitys');
-        })
-
-        //Adicionando um filtro: Setor
-        $("select#req-gestor-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
-            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-gestor-select-filter','sector');
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','req-unidade-select-filter','req-sys-filter-name-unidade','Unidade', 'JCVMOD03');
         })
 
         //Adicionando um filtro: Usuarios
-        $("#req-usuarios-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
-            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-usuarios-select-filter','users');
+        $("select#req-usuarios-select-filter").change(function(){
+           //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','req-usuarios-select-filter','req-sys-filter-name-usuarios','Usuario', 'JCVMOD03');
         })
 
         //Adicionando um filtro: Status
-        $("#req-status-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
-            $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','status');
+        $("select#req-status-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','req-status-select-filter','req-sys-filter-name-status','Status', 'JCVMOD03');
         })
+
+        $.fn.searchFiltersDinamics('JCVMOD03','sys-filter-display-main','sys-filter-component-boxs');//Buscando todos os filtros deste app {1° App, 2° Display main (1°), 2° Display content (2°)}
 
 
         //Checknox all
@@ -232,4 +230,27 @@
 
 
     })
+</script>
+
+
+<script>
+    /* $(function(){
+        //Adicionando um filtro: Unidades
+        $("select#unidade-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','unidade-select-filter','sys-filter-name-unidade','Unidade', 'JCVMOD02');
+        })
+
+        //Adicionando um filtro: Gestor
+        $("select#gestor-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','gestor-select-filter','sys-filter-name-gestor','Gestor', 'JCVMOD02');
+        })
+
+        //Adicionando um filtro: Status
+        $("select#status-select-filter").change(function(){
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','sys-filter-name-status','Status', 'JCVMOD02');
+        })
+    }) */
 </script>

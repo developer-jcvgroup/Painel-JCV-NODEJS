@@ -252,23 +252,34 @@ exports.listRequests = async (req,res) => {
 }
 
 exports.searchRequests = async (req,res) => {
-    let referenceDate = req.body.blzReferenceMonth;
-    let blzStatus = req.body['sys-filter-input-selects-Status'] != undefined ? req.body['sys-filter-input-selects-Status'] == 1 ?  1 : 'in ('+req.body['sys-filter-input-selects-Status']+')' : "= 2";
 
-    let listUnitys = req.body['sys-filter-input-selects-Unidade'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Unidade']+')' : "LIKE '%%'";
-    let listGestores = req.body['sys-filter-input-selects-Gestor'] != undefined ? 'in ('+req.body['sys-filter-input-selects-Gestor']+')' : "LIKE '%%'";
+    function convertStringNow(){
+        let convertedString = req.body['sys-filter-name-date'].map(function(value){
+            return "'"+value+"'"
+        })
+        
+        return convertedString
+    }
+    
+
+    let referenceDate = typeof(req.body['sys-filter-name-date']) == 'object' ? 'in ('+convertStringNow()+')' : req.body['sys-filter-name-date'] == undefined ? '= "'+getMonthReferece()+'"' : '= "'+req.body['sys-filter-name-date']+'"';
+
+    let blzStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 1 ?  1 : 'in ('+req.body['sys-filter-name-status']+')' : "= 2";
+
+    let listUnitys = req.body['sys-filter-name-unidade'] != undefined ? 'in ('+req.body['sys-filter-name-unidade']+')' : "LIKE '%%'";
+    let listGestores = req.body['sys-filter-name-gestor'] != undefined ? 'in ('+req.body['sys-filter-name-gestor']+')' : "LIKE '%%'";
 
     if(blzStatus == 1){        
         database
         .raw(`
             SELECT * FROM jcv_users e JOIN jcv_users_permissions ON jcv_id = sys_perm_idUser JOIN jcv_unitys ON e.jcv_userUnity = sys_unity_id  
             WHERE e.jcv_userUnity ${listUnitys} AND e.jcv_userManager ${listGestores} AND NOT EXISTS 
-            (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference = '${referenceDate}')
+            (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference '${referenceDate}')
         `)
         //.join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
         .then( data => {
 
-            if(data != ""){
+            if(data[0].length > 0){
                 req.flash('resultSearchDataPend', data[0])
                 req.flash('resultReferenceDate',referenceDate)
                 res.redirect("/painel/beleza/solicitacoes");
@@ -285,7 +296,7 @@ exports.searchRequests = async (req,res) => {
         .table("jcv_blz_orders")
         .join('jcv_unitys', 'jcv_blz_orders.sys_blz_userUnity', '=', 'jcv_unitys.sys_unity_id')
         .join('jcv_users', 'jcv_blz_orders.sys_blz_userManager', '=', 'jcv_users.jcv_id')
-        .whereRaw("jcv_blz_orders.sys_blz_requestReference LIKE '%"+referenceDate+"%' AND jcv_blz_orders.sys_blz_requestStatus "+blzStatus+" AND jcv_blz_orders.sys_blz_userManager "+listGestores+" AND jcv_unitys.sys_unity_id "+listUnitys+" ORDER BY jcv_blz_orders.sys_blz_id DESC")
+        .whereRaw("jcv_blz_orders.sys_blz_requestStatus "+blzStatus+" AND jcv_blz_orders.sys_blz_userManager "+listGestores+" AND jcv_unitys.sys_unity_id "+listUnitys+" AND jcv_blz_orders.sys_blz_requestReference "+referenceDate+" ORDER BY jcv_blz_orders.sys_blz_id DESC")
         .then(data => {
             
             if(data != ""){
@@ -956,7 +967,8 @@ async function alterarStatus(ids, status,req,res) {
         return data;
     })
 
-    if(status == "CMD02"){    
+    if(status == "CMD02"){   
+        
         let ordersUpdated = 0;
         let ordersNoUpdated = 0;
         resultSearch.forEach(element => {
