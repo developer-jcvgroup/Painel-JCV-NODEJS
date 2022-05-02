@@ -151,6 +151,19 @@
     padding: 20px;
 }
 
+
+/*  */
+.sys-user-boxs-actions-actives{
+    padding: 7px 4px;
+    font-size: 0.9rem;
+    color: var(--color-two);
+    border: 2px solid var(--color-one);
+    cursor: pointer;
+    border-radius: 5px;
+}
+/*  */
+
+
 .sys-user-container-box-user{
     width: 260px;
     min-height: 500px;

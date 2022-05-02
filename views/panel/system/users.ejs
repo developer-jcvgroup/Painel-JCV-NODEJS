@@ -36,10 +36,14 @@
            <div class="sys-user-container-all-action-comp">
                <span id="check-all-checkboxs"><i class="ri-checkbox-circle-line"></i><span id="users-selects">Selecionar Todos</span></span>
            </div>
+
+           <div><span style="font-size: 1rem; color: var(--color-one);" id="sys-view-list-count">⠀ ⠀</span></div>
+
+           <div class="sys-user-boxs-actions-actives" id="open-inatives" title="Clique para ver os inativos"><span id="view-dinamic-text">Ver os inativos</span></div>
         </section>
         
-        <form method="post" class="sys-user-container-list">
-            <% allUsers.forEach(element => { %>
+        <form method="post" class="sys-user-container-list" id="users-enableds">
+            <% allUsers.forEach(element => { %>                
             <div class="sys-user-container-box-user">
                 <div class="sys-user-container-box-user-title">
                     <input class="sys-user-select" type="checkbox" name="sys-user-id-input" value="<%= element.jcv_id %>">
@@ -74,7 +78,77 @@
                 <div class="sys-user-container-box-user-plus-info">
 
                     <% if(element.sys_blz_perm_use == 1){ %>
-                        <span><b>Beleza</b> <i class="ri-check-double-fill"></i></span>
+                        <span><b>Programa da Beleza</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+
+                    <% if(element.sys_req_perm_use == 1){ %>
+                        <span><b>Requisitor</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+
+                    <% if(element.sys_cal_perm_use == 1){ %>
+                        <span><b>Calendário</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+
+                    <% if(element.sys_tra_perm_use == 1){ %>
+                        <span><b>Trade MKT</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+
+                    <% if(element.sys_forms_perm_admin == 1){ %>
+                        <span><b>Sistema</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
+                </div>
+                <!--  -->
+                <hr style="width: 100%; margin: 15px 0;">
+                <!--  -->
+                <div class="sys-user-container-box-user-buttons">
+                    <button type="button" class="class-loader sys-open-edit-user" value="<%= element.jcv_id %>" title="Editar Usuario"><i class="ri-user-settings-line"></i></button>
+                    <button type="button" title="Excluir Usuario"><i class="ri-user-unfollow-line"></i></button>
+                    <button title="Resetar senha" formaction="./action/sys/user/resetpasssingle" class="class-loader" type="submit" value="<%= element.jcv_id %>" name="user-action-reset-pass-single"><i class="ri-lock-unlock-line"></i></button>
+                </div>
+            </div>
+            <% }) %>
+        </form>
+
+
+
+
+        <form style="display: none;" method="post" class="sys-user-container-list" id="users-disabled">
+            <% allUsersDisabled.forEach(element => { %>                
+            <div class="sys-user-container-box-user">
+                <div class="sys-user-container-box-user-title">
+                    <input class="sys-user-select" type="checkbox" name="sys-user-id-input" value="<%= element.jcv_id %>">
+                </div>
+                <!--  -->
+                <div class="sys-user-container-box-user-avaatar">
+                    <% if(element.jcv_userImageIcon != null){ %>
+                        <img src="<%= element.jcv_userImageIcon %>">
+                    <% }else{ %>
+                        <div style="width: 100%; height: 100%; background-color: var(--color-one); border-radius: 50%;"></div>
+                    <% } %>
+                </div>
+                <!--  -->
+                <div class="sys-user-container-box-user-info">
+                    <% if(element.jcv_userEnabled == 0){ %>
+                        <span style="color: #9d0208;"><b><%= element.jcv_userNamePrimary %></b></span>
+                        <span style="display: none;"><b><%= element.jcv_userNamePrimary.toLowerCase() %></b></span>
+                        <span style="color: #9d0208;"><b>DESABILITADO</b></span>
+                    <% }else{ %>
+                        <span><b><%= element.jcv_userNamePrimary %></b></span>
+                        <span style="display: none;"><b><%= element.jcv_userNamePrimary.toLowerCase() %></b></span>
+                        <span><b class="sys-view-user-cpf"><%= element.jcv_userCpf %></b></span>
+                    <% } %>
+                    <span><i class="ri-building-line"></i>⠀<%= element.sys_unity_name %></span>
+                    <span style="display: none;"><%= element.sys_unity_name.toLowerCase() %></span>
+                    <span><i class="ri-door-open-line"></i>⠀<%= element.sys_department_name %></span>
+                    <span style="display: none;"><%= element.sys_department_name.toLowerCase() %></span>
+                </div>
+                <!--  -->
+                <hr style="width: 100%; margin: 15px 0;">
+                <!--  -->
+                <div class="sys-user-container-box-user-plus-info">
+
+                    <% if(element.sys_blz_perm_use == 1){ %>
+                        <span><b>Programa da Beleza</b> <i class="ri-check-double-fill"></i></span>
                     <% } %>
 
                     <% if(element.sys_req_perm_use == 1){ %>
@@ -716,6 +790,38 @@
             /* ***************************************** */
             /* ***************************************** */
             /* ***************************************** */
+
+
+            $("#sys-view-list-count").text("|⠀"+$(".sys-user-container-box-user:visible").length+" listados⠀|⠀");
+
+            $("#open-inatives").click(function(){
+                
+                
+                $.fn.loadSpin(1)
+                if($("#users-disabled").is(':visible')){
+                    $("#view-dinamic-text").text("Ver os inativos")
+                    $(this).css({'background': 'transparent', 'color':'var(--color-two)'}).attr('title','Clique para ver os inativos')
+
+                    $("#users-disabled").fadeOut()
+                    $("#users-enableds").fadeIn()
+
+                    setTimeout(() => {
+                        $("#sys-view-list-count").text("|⠀"+$(".sys-user-container-box-user:visible").length+" listados⠀|⠀");
+                    }, 500);
+                    $.fn.loadSpin(0)
+                }else{
+                    $("#view-dinamic-text").text("Ver os ativos")
+                    $(this).css({'background': 'var(--color-one)', 'color':'var(--color-three)'}).attr('title','Clique para ver os ativos')
+
+                    $("#users-enableds").fadeOut()
+                    $("#users-disabled").fadeIn()
+
+                    setTimeout(() => {
+                        $("#sys-view-list-count").text("|⠀"+$(".sys-user-container-box-user:visible").length+" listados⠀|⠀");
+                    }, 500);
+                    $.fn.loadSpin(0)
+                }
+            })
             
         })
     })

@@ -205,7 +205,7 @@ getInfoUserMain = async () => {
 }
 
 exports.homeInfo = async (req,res)=> {
-    
+
     //Verificando se tem pedidos
     const BLZstatusOrder = await getBLZstatus();
     const REQUISITORstatus = await getREQUISITORstatus();

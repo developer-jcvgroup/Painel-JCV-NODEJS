@@ -163,7 +163,7 @@
             </div>
             <div class="menu-footer-container">
                 <div class="menu-footer-one">
-                    <span>Build: 0.1.0</span>
+                    <span><i class="ri-information-line"></i>⠀Version: <%= GLOBAL_VERSION %></span>
                 </div>
             </div>
         </div>
@@ -274,6 +274,7 @@
                                             <span class="dark-mode-department-button-slider round"></span>
                                         </label>
                                     </li>
+                                    <li><a href="/terms" target="_blank"><b><i class="ri-contacts-book-2-line"></i></b>⠀Termos & privacidade</a></li>
                                     <li><a class="class-loader" href="/painel/logout"><b><i class="ri-logout-box-r-line"></i>⠀Sair</b></a></li>
                                 </ul>
                             </li>
@@ -402,6 +403,7 @@
 </section>
 
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     //Get url start Socketio
     const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
@@ -412,7 +414,6 @@
 <!-- PARTIALS REPORT BUGS -->
 <%- include('../partials/system/reportError') %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
 
     function styleColorSpecial(){

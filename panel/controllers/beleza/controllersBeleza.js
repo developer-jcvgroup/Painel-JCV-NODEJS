@@ -262,7 +262,7 @@ exports.searchRequests = async (req,res) => {
     }
     
 
-    let referenceDate = typeof(req.body['sys-filter-name-date']) == 'object' ? 'in ('+convertStringNow()+')' : req.body['sys-filter-name-date'] == undefined ? '= "'+getMonthReferece()+'"' : '= "'+req.body['sys-filter-name-date']+'"';
+    let referenceDate = typeof(req.body['sys-filter-name-date']) == 'object' ? 'in ('+convertStringNow()+')' : req.body['sys-filter-name-date'] == undefined ? '= "'+getMonthReferece()+'"' : `= "${req.body['sys-filter-name-date']}"`;
 
     let blzStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 1 ?  1 : 'in ('+req.body['sys-filter-name-status']+')' : "= 2";
 
@@ -274,7 +274,7 @@ exports.searchRequests = async (req,res) => {
         .raw(`
             SELECT * FROM jcv_users e JOIN jcv_users_permissions ON jcv_id = sys_perm_idUser JOIN jcv_unitys ON e.jcv_userUnity = sys_unity_id  
             WHERE e.jcv_userUnity ${listUnitys} AND e.jcv_userManager ${listGestores} AND NOT EXISTS 
-            (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference '${referenceDate}')
+            (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference ${referenceDate})
         `)
         //.join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
         .then( data => {

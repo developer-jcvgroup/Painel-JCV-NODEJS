@@ -58,7 +58,7 @@ body, html{
     position: fixed;
     margin-top: calc(var(--heigth-header) - 4px);
     width: 260px;
-    height: calc(100% - var(--heigth-header));
+    height: calc(100% - var(--heigth-header) + 4px);
     max-height: 1000px;
     display: none;
     overflow-y: auto;
@@ -150,6 +150,8 @@ body, html{
     margin: 8px;
 }
 .menu-footer-one span{
+    display: flex;
+    align-items: center;
     font-size: 0.7rem;
     color: var(--color-three);
 }

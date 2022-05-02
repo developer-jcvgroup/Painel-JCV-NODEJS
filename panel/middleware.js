@@ -75,6 +75,21 @@ authenticate = async (req, res, next) => {
                 PAINEL_URL = 'https://jcv.net.br'
             }
 
+            //Pegando a ultima versão do painel
+
+            if(req.session.GLOBAL_VERSION == undefined){
+                req.session.GLOBAL_VERSION = await database
+                .select()
+                .orderBy("sys_update_idUp","DESC")
+                .limit(1)
+                .table("sys_update")
+                .then(data => {
+                    return data[0].sys_update_versionUpdate
+                })
+
+                global.GLOBAL_VERSION = req.session.GLOBAL_VERSION
+            }
+
             //-------------------------------------------------------
             //-------------------------------------------------------
             //Buscando todas as permissões

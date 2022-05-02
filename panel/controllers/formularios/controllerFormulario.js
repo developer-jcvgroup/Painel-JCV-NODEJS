@@ -28,6 +28,7 @@ exports.mainPage = async (req,res) => {
     .where({jcv_formularios_registers_enabled: 0})
     .table("jcv_formularios_registers")
     .join("jcv_users","jcv_users.jcv_id","jcv_formularios_registers.jcv_formularios_registers_userCreated")
+    .orderBy("jcv_formularios_registers_id","DESC")
     .then( data => {return data})
 
     var page = "formularios/mainForm";

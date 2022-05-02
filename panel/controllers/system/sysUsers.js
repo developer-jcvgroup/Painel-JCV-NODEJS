@@ -28,7 +28,21 @@ exports.listAllinformations = async (req,res) =>{
     JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
     JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
 
-    WHERE c1.jcv_userManager = c2.jcv_id ORDER BY c1.jcv_userEnabled DESC
+    WHERE c1.jcv_userManager = c2.jcv_id AND c1.jcv_userEnabled = 1 ORDER BY c1.jcv_id ASC
+    
+    `).then( data => {return data[0]})
+
+
+    const allUsersDisabled = await database.raw(`
+
+    SELECT c1.*, c2.jcv_userNameSecundary, j1.*, j2.*, j3.*
+    FROM (jcv_users c1, jcv_users c2)
+
+    JOIN jcv_unitys j1 ON c1.jcv_userUnity = j1.sys_unity_id
+    JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
+    JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
+
+    WHERE c1.jcv_userManager = c2.jcv_id AND c1.jcv_userEnabled = 0 ORDER BY c1.jcv_id ASC
     
     `).then( data => {return data[0]})
 
@@ -48,7 +62,7 @@ exports.listAllinformations = async (req,res) =>{
     })
     
     var page = "system/users";
-    res.render("panel/index", {page: page, allUsers: allUsers, allManager: allManager, allUnitys: allUnitys, allDepto})
+    res.render("panel/index", {page: page, allUsers: allUsers, allUsersDisabled: allUsersDisabled, allManager: allManager, allUnitys: allUnitys, allDepto})
 }
 
 exports.saveNewUser = async (req,res) => {

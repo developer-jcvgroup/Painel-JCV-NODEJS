@@ -33,6 +33,7 @@ app.use(cookieParser())
 app.use(flash());
 
 io.on('connection', (socket) => {
+
     socket.on("getNotificationsAll", (data) => {
         
         //Ao inserir as notif colocar o campo view: []
