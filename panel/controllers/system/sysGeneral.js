@@ -31,14 +31,14 @@ exports.closeUpdateSingle = async (req,res) => {
             if(moduleApp != ''){
                 res.redirect(moduleApp);
             }else{
-                res.redirect('/painel')
+                res.redirect(URL_GET_PARAMS)
             }
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
             if(moduleApp != ''){
                 res.redirect(moduleApp);
             }else{
-                res.redirect('/painel')
+                res.redirect(URL_GET_PARAMS)
             }
         }
     })
