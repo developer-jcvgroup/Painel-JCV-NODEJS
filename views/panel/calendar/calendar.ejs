@@ -218,13 +218,60 @@
                                     <div onclick="openOptionsDays('<%= i %>/<%= monthNow %>')" class="calendar-day-box">
 
                                         <% if(i < 10){ %>
-                                            <div id="day-<%= '0'+i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
-                                                <span><%= i %></span>
-                                            </div>
+                                            <!-- VALIDANDO FERIADOS -->
+                                            <% let iValidade = i >= 10 ? i : '0'+i %>
+                                            <% let dateNowSet = monthNow.split('/')[1]+'-'+monthNow.split('/')[0]+'-'+iValidade %>
+
+                                            <% let dayFeriado = '';%>
+                                            <% arrayFeriados.forEach(element => { %>
+                                                
+                                                <% if(element.split(' - ')[0] == dateNowSet){ %>
+                                                    <% dayFeriado = element.split(' - ')[1] %>
+                                                <% } %>
+                                
+
+                                            <% })%>
+
+                                            <% if (dayFeriado > ''){ %>
+                                                <div title="<%= dayFeriado %>" style="background: var(--color-five); color: var(--color-four);" id="day-<%= '0'+i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                    <div class="calendar-feriado-display">
+                                                        <b><%= dayFeriado %></b>
+                                                    </div>
+                                                    <span><%= i %></span>
+                                                </div>
+                                            <% }else{ %>
+                                                <div id="day-<%= '0'+i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                    <span><%= i %></span>
+                                                </div>
+                                            <% } %>
+
                                         <% }else{ %>
-                                            <div id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
-                                                <span><%= i %></span>
-                                            </div>
+                                            <!-- VALIDANDO FERIADOS -->
+                                            <% let iValidade = i >= 10 ? i : '0'+i %>
+                                            <% let dateNowSet = monthNow.split('/')[1]+'-'+monthNow.split('/')[0]+'-'+iValidade %>
+
+                                            <% let dayFeriado = '';%>
+                                            <% arrayFeriados.forEach(element => { %>
+                                                
+                                                <% if(element.split(' - ')[0] == dateNowSet){ %>
+                                                    <% dayFeriado = element.split(' - ')[1] %>
+                                                <% } %>
+
+                                            <% })%>
+
+                                            <% if (dayFeriado > ''){ %>
+                                                <div title="<%= dayFeriado %>" style="background: var(--color-five); color: var(--color-four);" id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                    <div class="calendar-feriado-display">
+                                                        <b><%= dayFeriado %></b>
+                                                    </div>
+                                                    <span><%= i %></span>
+                                                </div>
+                                            <% }else{ %>
+                                                <div id="day-<%= i %>-<%- monthNow.split('/')[0] %>-<%- monthNow.split('/')[1] %>" class="calendar-day-box-day">
+                                                    <span><%= i %></span>
+                                                </div>
+                                            <% } %>
+
                                         <% } %>
 
                                         <!--  -->
@@ -513,147 +560,9 @@
     </div>
 </section>
 
-<!-- AÇÃO AO CLICAR NO DIA (NOVO EVENTO) -->
-<section class="calendar-display-event" id="calendar-display-event">
-    <form class="calendar-event-box" method="post">
-        <div class="calendar-event-day-title">
-            <div class="calendar-event-day-title-set">
-                <span id="calendar-day-dinamic">Novo Evento</span>
-            </div>
-            <!--  -->
-            <div class="calendar-event-day-title-close">
-                <i id="event-close-display-day" class="ri-close-line"></i>
-            </div>
-        </div>
-        <!--  -->
-        <div class="calendar-event-main">
-            <div class="calendar-event-set-name">
-                <input name="calendar-register-name" type="text" placeholder="Nome do evento">
-            </div>
-        </div>
-        <!--  -->
-        <div class="calendar-event-description">
-            <label for="">Descrição</label>
-            <textarea name="calendar-register-description" rows="5"></textarea>
-        </div>
-        <!--  -->
-        <div class="calendar-event-select-day">
-            <label for="">Data</label>
-            <input required name="calendar-register-date" id="calendar-input-date" type="date">
-        </div>
-        <!--  -->
-        <div class="calendar-event-operation">
-            <div class="calendar-event-operation-initial">
-                <label for="">Das</label>
-                <input type="time" value="06:00" placeholder="06:00" name="calendar-register-hour-initial" id="">
-            </div>
-            <!--  -->
-            <div class="calendar-event-operation-final">
-                <label for="">Ás</label>
-                <input type="time" value="18:00" placeholder="18:00" name="calendar-register-hour-final">
-            </div>   
-            <!--  -->
-            <div class="calendar-event-operation-sep"></div><!-- SEPARATOR -->
-            <!--  -->
-            <div class="calendar-event-operation-day">
-                <label for="">Dia inteiro</label>
-                <input type="checkbox" name="calendar-register-all-day" id="calendar-register-all-day">
-            </div>
-            <!--  -->
-            <div class="calendar-event-operation-day">
-                <label for="">Evento Publico</label>
-                <input type="checkbox" name="calendar-register-event-public">
-            </div>  
-        </div>
-        <!--  -->
-        <div class="calendar-event-locate">
-            <div class="calendar-event-locate-cont">
-                <label for="">Local:</label>
-                <select name="calendar-register-location" id="calendar-register-location">
-                    <% allLocations.forEach(element => { %>
-                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
-                    <% }) %>
-                    <!-- <option value="not">Outro local</option> -->
-                </select>
-                <!--  -->
-            </div>
-            <!--  -->
-            <% let atualIndex = allLocations[0].sys_unity_id %>
-            
-            <% for(let i = 0; i < allLocations.length; i++){ %>
-                
-                <% if(allLocations[i].sys_unity_id == atualIndex){ %>
-                    <!-- console.log("é igual: "+resultData[i].jcv_userNameSecundary) -->
-                    <!-- <span>1</span> -->
+<!-- PARTIALS NOVO EVENTO -->
+<%- include('../../partials/panel/calendario/newEvent') %>
 
-                    <div class="calendar-event-reminder-room" id="room-and-unty-<%= atualIndex %>" >
-                        <label for="">Sala</label>
-                        <select name="calendar-register-room-<%= atualIndex %>">
-                            <% getAllRooms.forEach(element => { %>
-                                    
-                                <% if(element.sys_calendar_roomUnity == atualIndex){ %>
-                                    <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
-                                <% } %>
-
-                            <% }) %>
-                            <!-- <option value="1">Não usarei</option> -->
-                        </select>
-                    </div>
-
-
-                <% }else{ %>
-                    
-                    <!-- console.log("Mudou para: "+resultData[i].jcv_userNameSecundary) -->
-                    <% atualIndex = allLocations[i].sys_unity_id %>
-                    <% i-- %>
-                <% } %>
-            <% } %>
-            <!--  -->
-            <div class="calendar-event-reminder">
-                <div class="calendar-event-reminder-box">
-                    <label for="">Lembre-me</label>
-                    <select  name="calendar-register-reminder">
-                        <!-- FORMATO EM MINUTOS -->
-                        <option value="60">1 Hora antes</option>
-                        <option value="30">30 minutos antes</option>
-                        <option value="15">15 minutos antes</option>
-                    </select>
-                </div>
-                <!--  -->
-    
-            </div>
-            
-            <!--  -->
-            <div class="calendar-event-locate-name">
-                <input id="calendar-register-location-name" type="text" placeholder="Insira o nome do local..">
-            </div>
-        </div>
-        <!--  -->
-        <hr style="margin: 30px 0;">
-        <!--  -->
-        <div class="calendar-event-persons">
-            <div class="calendar-event-persons-filter">
-                <span>Busque pelo nome e selecione</span>
-                <input type="text" placeholder="Inserir participantes para este evento.." id="insert-person">
-                <button hidden type="button" id="button-add-person">Adicionar</button>
-            </div>
-            <!--  -->
-            <div class="calendar-event-persons-list">
-                <!--  -->
-                <!--  -->
-                <!--  -->
-                <!--  -->
-            </div>
-        </div>
-        <!--  -->
-        <hr style="margin: 30px 0;">
-        <!--  -->
-        <div class="calendar-event-actions">
-            <button class="class-loader" type="submit" formaction="../register/new">Salvar</button>
-            <button type="button" id="calendar-close-event">Cancelar</button>
-        </div>
-    </form>
-</section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     $(function(){

@@ -308,6 +308,23 @@
     padding: 5px;
 }
 
+/* FERIADO DISPLAY */
+.calendar-feriado-display{
+    position: absolute;
+    padding: 8px 10px;
+    display: none;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    color: var(--color-one);
+    margin-left: 110px;
+    margin-top: -25px;
+    font-size: 0.7rem;
+}
+
+.calendar-day-box-day:hover .calendar-feriado-display{
+    display: flex;
+} 
+
 /*  */
 .calendar-day-box-list-events{
     width: 80%;

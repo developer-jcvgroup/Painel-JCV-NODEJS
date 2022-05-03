@@ -140,6 +140,12 @@
             source: function(request, response) {
                 var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
                 response(results.slice(0, 5));
+            },
+            select: function (e, i) {
+                console.log(i.item.value)
+                setTimeout(() => {
+                    $("#input-item-amount").select()
+                }, 100);
             }
         });
 
@@ -166,6 +172,8 @@
             $("#req-new-section-final").fadeIn()
             addItemTable('input-item-amount','input-item-name', 'req-new-table', 'req-new-section-table', arrayDataOne)
         })
+
+
 
     })
 </script>

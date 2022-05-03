@@ -44,6 +44,10 @@
     <script src="/js/scriptNotifications.js"></script>
     <script src="/js/uuid.min.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
     <title>Painel | JCV Group</title>
 </head>
@@ -341,7 +345,7 @@
 <!--  -->
 
 <% if(DEFINEpassword != null){  %>
-<section class="sys-define-pass-main">
+<section class="sys-define-pass-main" id="sys-define-pass-main">
     <div class="sys-define-box">
         <form class="sys-define-form" method="post">
             <div class="sys-define-row">
@@ -389,6 +393,10 @@
                 button.css("border","1px solid var(--color-one)")
             }
         }) 
+
+        setInterval(() => {
+            $("#sys-define-pass-main").css({'display':'flex'})
+        }, 500);
     })
 </script>
 <% } %>

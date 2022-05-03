@@ -82,7 +82,7 @@ exports.resetPassWord = async (req,res) => {
     const cpfPass = req.body['cpfResetPass'];
     
     if(cpfPass != ''){
-        let RedcpfPass = parseInt(cpfPass.split('.').join("").split('-').join(""));
+        let RedcpfPass = cpfPass.split('.').join("").split('-').join("");
 
         database.select('jcv_userNamePrimary','jcv_userEmailCorporate','jcv_userEmailFolks').where({jcv_userCpf: RedcpfPass}).table("jcv_users").then( data => {
             if(data != ''){

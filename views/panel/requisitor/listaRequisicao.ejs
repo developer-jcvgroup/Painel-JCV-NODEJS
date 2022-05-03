@@ -136,8 +136,8 @@
                         <tbody id="all-orders-table-tbody">
 
                             <% resultSearchDataRequisitor.forEach(element => { %>
-                            <tr>
-                                <td><input type="checkbox" value="<%= element['sys_req_idOne'] %>" name="order-id-actions-all" class="checkbox-select-single"></td>
+                            <tr class="all-orders-click-row-table" value-row="<%= element['sys_req_idOne'] %>">
+                                <td><input type="checkbox" value="<%= element['sys_req_idOne'] %>" name="order-id-actions-all" id="checkbox-select-row-<%= element['sys_req_idOne'] %>" class="checkbox-select-single"></td>
                                 <td><b>#<%= element['sys_req_idOne'] %></b></td>
                                 <td><%= element['sys_req_orderEmitter'] %></td>
                                 <td><%= element['sys_req_userName'] %></td>
@@ -226,6 +226,15 @@
         //Paginação das tabelas
         $.fn.paginationTableMain('#all-orders-table',10,0);
 
+
+        $(".all-orders-click-row-table").click(function(){
+
+            let valueGet = $(this).attr('value-row')
+
+            $("#checkbox-select-all").prop('checked',false)
+            $("#checkbox-select-row-"+valueGet).prop('checked') == true ? $("#checkbox-select-row-"+valueGet).prop('checked',false) : $("#checkbox-select-row-"+valueGet).prop('checked',true) 
+
+        })
         
 
 

@@ -258,7 +258,7 @@ exports.indexSetPass = async (req,res) => {
 
         database.update({jcv_userPassword: passwordHash}).where({jcv_id: idUser}).table("jcv_users").then( data => {
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Senha definida com sucesso!");
-            res.redirect("/painel/perfil");
+            res.redirect("/painel");
         })
     }
 

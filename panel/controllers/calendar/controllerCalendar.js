@@ -4,6 +4,8 @@ moment.tz.setDefault('America/Sao_Paulo');
 const fs = require('fs')
 const uuid = require('uuid')
 
+const axios = require('axios')
+
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
 
@@ -140,7 +142,14 @@ exports.viewCalendarMonth = async (req,res) => {
         const NumberDayWeek =  moment(yearMonth+'-'+monthIndex).startOf('month').format('d');
 
         //Validando se estamos no mes atual
-        const monthAgo = moment().format("MM/YYYY") == monthIndex+'/'+yearMonth ? 1 : 0
+        const monthAgo = moment().format("MM/YYYY") == monthIndex+'/'+yearMonth ? 1 : 0;
+
+        //Pegando os feriados do ano do calendario
+        let arrayFeriados = [];
+        const getFeriados = await axios.get('https://brasilapi.com.br/api/feriados/v1/'+yearMonth)
+        getFeriados.data.map(function(values){
+            arrayFeriados.push(values.date+' - '+values.name)
+        })
 
         var page = "calendar/calendar";
         res.render("panel/index", {page: page,
@@ -159,7 +168,8 @@ exports.viewCalendarMonth = async (req,res) => {
             allEventsPrivate: allEventsPrivate,
             getAllRooms: getAllRooms,
             allEventsCount: allEventsCount,
-            monthAgo: monthAgo
+            monthAgo: monthAgo,
+            arrayFeriados: arrayFeriados
         })
     }
 }
@@ -891,6 +901,7 @@ exports.viewRoom = async (req,res) => {
             .table("jcv_calendar_rooms")
             .join("jcv_calendar_registers", "jcv_calendar_rooms.sys_calendar_roomId", "jcv_calendar_registers.sys_calendar_eventRoom")
             .join("jcv_users","jcv_calendar_registers.sys_calendar_eventUserId","jcv_users.jcv_id")
+            .orderBy("jcv_calendar_registers.sys_calendar_eventId","DESC")
             .then( data => {
                 return data
             })
