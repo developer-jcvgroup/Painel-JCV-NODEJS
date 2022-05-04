@@ -10,6 +10,7 @@ Compilado de apps do jcv group
 - JCVMOD05 = Trade MKT
 - JCVMOD06 = Config. Sistema: Geral
 - JCVMOD07 = Perfil Usuario
+- JCVMOD08 = Sistema de encurtador de links
 
 # Banco do usuarios
 CPF
@@ -354,6 +355,16 @@ Requisitor de Materiais
 * [jcv_sys_term_termText] *TEXT*
 * [jcv_sys_term_term_lastUpdate] *VARCHAR* //data
 * [jcv_sys_term_userId_update] *INT* // id do ultimo usuario do update
+
+# Tabela encurtador *Sistema de encurtador de url*
+* [jcv_sys_shortener_id] *PRIMARY KEY* //id
+* [jcv_sys_shortener_link_title] *VARCHAR* //Titulo
+* [jcv_sys_shortener_link_created_date] *VARCHAR* //Data da criação
+* [jcv_sys_shortener_link_createdUser] *INT* //Quem criou a url
+* [jcv_sys_shortener_link_original] *TEXT* //URL original
+* [jcv_sys_shortener_link_short] *TEXT* // URL encurtada
+* [jcv_sys_shortener_link_clicks] *INT* //Clicks totais
+* [jcv_sys_shortener_link_active] *TEXT* // Ativa?
 
 PADRAO DA URL DINAMICA PARA ACESSO
 ?linkspecial=/painel/calendario/main/

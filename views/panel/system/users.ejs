@@ -96,6 +96,10 @@
                     <% if(element.sys_forms_perm_admin == 1){ %>
                         <span><b>Sistema</b> <i class="ri-check-double-fill"></i></span>
                     <% } %>
+
+                    <% if(element.sys_enc_perm_use == 1){ %>
+                        <span><b>Encurtador</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
                 </div>
                 <!--  -->
                 <hr style="width: 100%; margin: 15px 0;">
@@ -298,6 +302,17 @@
                 <!--  -->
                 <div class="sys-edit-user-box-edit-row-permissions-box">
                     <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/encurtador.png" alt="">
+                        <label for="">Encurtador</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" id="sys-edit-user-enc-use">
+                    </div>
+                </div>
+                <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
                         <img src="/logos/jcvLogo.png" alt="">
                         <label for="">Sistema</label>
                     </div>
@@ -464,6 +479,18 @@
                         <input type="checkbox" name="save-new-sys-trade-admin" id="sys-new-user-trade-admin">
                     </div>
                 </div>
+                <!--  -->
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/encurtador.png" alt="">
+                        <label for="">Encurtador</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Utilizar</label>
+                        <input type="checkbox" name="save-new-sys-enc-use" id="sys-new-user-beleza-use">
+                    </div>
+                </div>
+                <!--  -->
                 <div class="sys-edit-user-box-edit-row-permissions-box">
                     <div class="sys-edit-user-box-edit-row-permissions-box-icon">
                         <img src="/logos/jcvLogo.png" alt="">
@@ -627,6 +654,10 @@
                     infoUserData.sys_tra_perm_use == 1 ? $("#sys-edit-user-trademkt-use").prop("checked", true) : $("#sys-edit-user-trademkt-use").prop("checked", false)
                     infoUserData.sys_tra_perm_admin == 1 ? $("#sys-edit-user-trademkt-admin").prop("checked", true) : $("#sys-edit-user-trademkt-admin").prop("checked", false)
                 
+                    //Permissions: Encurtador
+                    $("#sys-edit-user-enc-use").attr('name','save-edit-sys-enc-use-'+idSet)
+                    infoUserData.sys_enc_perm_use == 1 ? $("#sys-edit-user-enc-use").prop("checked", true) : $("#sys-edit-user-enc-use").prop("checked", false)
+
                     //Permissions: Formulários
                     $("#sys-edit-user-forms-admin").attr('name','save-edit-sys-forms-use-'+idSet)
                     infoUserData.sys_forms_perm_admin == 1 ? $("#sys-edit-user-forms-admin").prop("checked", true) : $("#sys-edit-user-forms-admin").prop("checked", false)

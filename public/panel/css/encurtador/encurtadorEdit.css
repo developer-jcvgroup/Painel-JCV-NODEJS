@@ -1,0 +1,108 @@
+.encurtador-edit-center{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TITULO PAGE */
+.encurtador-edit-title{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin: 2% 0;
+}
+.encurtador-edit-title span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.encurtador-edit-title span:nth-child(2){
+    font-size: 0.7rem;
+    color: var(--color-one);
+    margin-left: 4px;
+}
+
+
+/*  */
+.encurtador-edit-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--background-two);
+}
+.encurtador-edit-body-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.encurtador-edit-title{
+    display: flex;
+    margin: 14px 0;
+}
+.encurtador-edit-title input{
+    width: 100%;
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+
+/*  */
+.encurtador-edit-box{
+    display: flex;
+    flex-direction: column;
+}
+.encurtador-edit-box label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+    margin-bottom: 4px;
+}
+.encurtador-edit-box input{
+    width: 100%;
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+.encurtador-edit-box select{
+    outline: 0;
+    border: 0;
+    padding: 10px 7px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 1px solid var(--color-seven);
+    cursor: pointer;
+    color: var(--color-one);
+    background: transparent;
+}
+
+/*  */
+.encurtador-edit-actions{
+    display: flex;
+    margin: 19px 0;
+}
+.encurtador-edit-actions button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one-btn);
+    cursor: pointer;
+}
+
+/*  */
+.link-container-back{
+    display: flex;
+    align-items: center;
+    margin: 13px 0;
+}
+.link-container-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+/*  */

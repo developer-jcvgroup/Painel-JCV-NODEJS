@@ -280,6 +280,36 @@ app.get("/", (req,res)=>{
     }
 })
 
+//Encurtador
+app.get("/link/:urlEncurtada", (req,res) => {
+
+    const urlEncurtada = req.params.urlEncurtada;
+
+    database
+    .raw("update jcv_sys_shortener set jcv_sys_shortener_link_clicks = jcv_sys_shortener_link_clicks + 1 WHERE jcv_sys_shortener_link_short = '"+urlEncurtada+"'")
+    .then( data => {
+        //ok
+    })
+
+    //Validando se existe um link deste
+    database
+    .select()
+    .where({jcv_sys_shortener_link_short: urlEncurtada})
+    .table("jcv_sys_shortener")
+    .then( data => {
+        if(data != ''){
+            
+            const infoURL = [data[0].jcv_sys_shortener_link_original]
+
+            res.render("web/encurtadorClient", {infoURL: infoURL})
+
+        }else{
+
+        }
+    })
+
+})
+
 app.get('/maintenance', (req,res) => {
 
     if(enabledPanel == 1){

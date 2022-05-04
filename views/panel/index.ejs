@@ -146,6 +146,17 @@
                 </ul>
                 <% } %>
 
+                <% if(GLOBAL_PERM[0].sys_enc_perm_use == 1){ %>
+                <ul class="menu-ul-list-set-one">
+                    <li id="menu-06"><span>JCV Encurtador</span><i class="ri-arrow-down-s-line"></i></li>
+                    <ul id="sub-06" class="menu-list-set-two">
+                        <li><a class="class-loader" href="/painel/encurtador/main"><i class="ri-links-line"></i><span>Central de links</span></a></li>
+                        <li><a class="class-loader" href="/painel/encurtador/new"><i class="ri-link"></i><span>Criar link</span></a></li>
+                        <li><a class="class-loader" href="/painel/encurtador/main"><i class="ri-link-unlink"></i><span>Editar link</span></a></li>
+                    </ul>
+                </ul>
+                <% } %>
+
                 <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
                 <ul class="menu-ul-list-set-one">
                     <li id="menu-04"><span>Configurações do Sistema</span><i class="ri-arrow-down-s-line"></i></li>

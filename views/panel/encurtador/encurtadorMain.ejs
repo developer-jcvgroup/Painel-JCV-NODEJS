@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="/panel/css/encurtador/encurtadorMain.css">
+
+<section class="encurtador-new-main-section">
+    <section class="encurtador-new-main-section-page">
+        <div class="encurtador-new-main-title-page">
+            <span>Encurtador URL</span>
+            <span>/ Home</span>
+        </div>
+
+        <section class="encurtador-new-main-actions">
+            <div class="encurtador-new-display-center">
+                <div class="encurtador-new-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/encurtador/new"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="encurtador-new-main-container-body">
+            <section class="encurtador-new-main-section-list-forms" id="forms-list-display">
+                <div class="encurtador-new-main-forms">
+
+                    <% if(getAllShorts != ''){ %>
+
+                        <% getAllShorts.forEach(element => { %>
+                        <div class="encurtador-new-main-forms-link">
+                            <a class="encurtador-new-main-forms-link-info" href="/painel/encurtador/edit/<%= element.jcv_sys_shortener_id %>">
+                                <span><%= element.jcv_sys_shortener_link_title %></span>
+                                <span>ID <b>#<%= element.jcv_sys_shortener_id %></b></span>
+                                <span>Clicks: <b><%= element.jcv_sys_shortener_link_clicks %></b></span>
+                                <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_sys_shortener_link_created_date %></b></span>
+                            </a>
+                            <hr style="width: 100%; margin: 7px 0;">
+                            <form method="post" class="encurtador-new-main-forms-link-button">
+                                <button id="copy-link-<%= element.jcv_sys_shortener_id %>" url-link="<%= element.jcv_sys_shortener_link_short %>" class="class-loader" formaction="/painel/encurtador/delete" type="submit" name="button-delete-encurtador" value="<%= element.jcv_sys_shortener_id %>" title="Excluir encurtador"><i class="ri-delete-bin-line"></i></button>
+                                <button type="button" onclick="copyToClipboard('#copy-link-<%= element.jcv_sys_shortener_id %>')"><i class="ri-file-copy-line"></i></button>
+                            </form>
+                        </div>
+                        <% }) %>
+                    <% }else { %>
+                        <div class="encurtador-new-main-forms-not-found">
+                            <img class="encurtador-new-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Nenhum encurtador <b>ativo</b> encontrado.. <b><a href="/painel/encurtador/new">Novo Encurtador</a></b></span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="encurtador-new-main-section-list-forms" id="form-list-fished">
+                <div class="encurtador-new-main-forms-title">
+                    <span>Listando os utlimos <b>30 Encurtadoes</b> desabilitados</span>
+                </div>
+                <div class="encurtador-new-main-forms"> 
+
+                    <% if(getAllShortsInative != ''){ %>
+
+                        <% getAllShortsInative.forEach(element => { %>
+                            <a class="encurtador-new-main-forms-link"href="/painel/encurtador/edit/<%= element.jcv_sys_shortener_id %>">
+                                <div class="encurtador-new-main-forms-link-info">
+                                    <span><%= element.jcv_sys_shortener_link_title %></span>
+                                    <span>ID <b>#<%= element.jcv_sys_shortener_id %></b></span>
+                                    <span>Clicks: <b><%= element.jcv_sys_shortener_link_clicks %></b></span>
+                                    <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_sys_shortener_link_created_date %></b></span>
+                                    <span style="color: red;">DESABILITADO</span>
+                                </div>
+                                <hr style="width: 100%; margin: 7px 0;">
+                                <form method="post" class="encurtador-new-main-forms-link-button">
+                                    <button class="class-loader" formaction="/painel/updates/enabled" type="submit" name="button-delete-update" value="" title="Desabilitar Update"><i class="ri-check-line"></i></button>
+                                </form>
+                            </a>
+                        <% }) %>
+                    <% }else { %>
+                        <div class="encurtador-new-main-forms-not-found">
+                            <img class="encurtador-new-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Sem encurtadores..</span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+    function copyToClipboard(element) {
+
+        alert('Link copiado para clipboard com sucesso!')
+        var $temp = $("<input>");
+        $("body").append($temp);
+
+        $temp.val(window.location.host+'/link/'+$(element).attr('url-link')).select();
+
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+</script>

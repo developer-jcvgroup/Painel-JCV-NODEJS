@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="/panel/css/encurtador/encurtadorEdit.css">
+
+<section class="encurtador-edit-center">
+    <div class="link-container-back">
+        <a href="/painel/encurtador/main"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="encurtador-edit-title">
+        <span>Editar Link Encurtado <b>#<%= validateGet[0].jcv_sys_shortener_id %></b></span>
+        <span>/ JCV Encurtador</span>
+    </section>
+    <!--  -->
+    <section class="encurtador-edit-body">
+        <form method="post" class="encurtador-edit-body-form">
+            <div class="encurtador-edit-title">
+                <input type="text" name="encurtador-edit-url-title" value="<%= validateGet[0].jcv_sys_shortener_link_title %>" placeholder="Titulo do link">
+            </div>
+            <!--  -->
+            <div class="encurtador-edit-box">
+                <label for="">Link Original</label>
+                <input type="text" name="encurtador-edit-url-original" id="encurtador-edit-url-original" value="<%= validateGet[0].jcv_sys_shortener_link_original %>" placeholder="Insira o link original, caso esteje vazio um link sera gerado">
+            </div>
+            <!--  -->
+            <div class="encurtador-edit-box">
+                <label for="">URL encurtada</label>
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-right: 5px; font-size: 0.8rem; color: vra(--color-one);">https://jcv.net.br/link/</span>
+                    <input type="text" name="encurtador-edit-url-short" id="encurtador-edit-url-short" value="<%= validateGet[0].jcv_sys_shortener_link_short %>" placeholder="A nova url e gerada automaticamente caso voce altere a url, mas você pode gerar uma personalizada">
+                </div>
+            </div>
+            <!--  -->
+            <div class="encurtador-edit-box">
+                <label for="">Ativo?</label>
+                <select name="encurtador-edit-url-active">
+                    <% if(validateGet[0].jcv_sys_shortener_link_active == 1){ %>
+                        <option value="1">Sim</option>
+                    <% }else{ %>
+                        <option value="0">Não</option>
+                    <% } %>
+
+                    <option disabled></option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+           
+            <!--  -->
+            <section class="encurtador-edit-actions">
+                <button formaction="/painel/encurtador/edit" name="encurtador-edit-url-id" value="<%= validateGet[0].jcv_sys_shortener_id %>" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+        </form>
+    </section>
+</section>
+<script>
+
+    $("#encurtador-edit-url-original").keyup(function(e){
+
+        //Gerando um UUID para esta operação (a cada tecla precionada)
+        let uuidGet = uuid.v4();
+
+        //Pegando os 7 primeiros digitos
+        let indexCount = 7; 
+        const stringValue = uuidGet.split('-')[0]
+
+        //Pegando o cookie que tem uuid
+        let cookieGetUUID = Cookies.get("COOKIE-UUID-URL-LINKS-EDIT")
+
+        let validateUUID = uuid.validate(Cookies.get(cookieGetUUID))
+
+        //Caso o input esteja vazio faça isto
+        if($("#encurtador-edit-url-short").val() == ''){
+            $("#encurtador-edit-url-short").val(uuidGet.split('-')[0])
+            Cookies.set("COOKIE-UUID-URL-LINKS-EDIT", uuidGet)
+        }
+        
+        if(cookieGetUUID == undefined){
+
+            //O cookie com o uuid não existe
+            console.log('cookie undefined')
+
+            Cookies.set("COOKIE-UUID-URL-LINKS-EDIT", uuidGet)
+
+            //Setando valores
+            $("#encurtador-edit-url-short").val(uuidGet.split('-')[0])
+
+        }
+    })    
+
+</script>

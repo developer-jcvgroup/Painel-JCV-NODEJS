@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="/panel/css/encurtador/encurtadorNew.css">
+
+<section class="encurtador-new-center">
+    <div class="link-container-back">
+        <a href="/painel/encurtador/main"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="encurtador-new-title">
+        <span>Novo Link Encurtado</span>
+        <span>/ JCV Encurtador</span>
+    </section>
+    <!--  -->
+    <section class="encurtador-new-body">
+        <form method="post" class="encurtador-new-body-form">
+            <div class="encurtador-new-title">
+                <input type="text" name="encurtador-url-title" placeholder="Titulo do update">
+            </div>
+            <!--  -->
+            <div class="encurtador-new-box">
+                <label for="">URL Original</label>
+                <input type="text" name="encurtador-url-original" id="encurtador-url-original" placeholder="Insira a url original">
+            </div>
+            <!--  -->
+            <div class="encurtador-new-box">
+                <label for="">Link encurtado</label>
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-right: 5px; font-size: 0.8rem; color: vra(--color-one);">https://jcv.net.br/link/</span>
+                    <input type="text" name="encurtador-url-short" id="encurtador-url-short" placeholder="A nova url e gerada automaticamente, mas você pode gerar uma personalizada">
+                </div>
+            </div>
+            <!--  -->
+            <div class="encurtador-new-box">
+                <label for="">Ativo?</label>
+                <select name="encurtador-url-active">
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <!--  -->
+            <section class="encurtador-new-actions">
+                <button formaction="/painel/encurtador/new" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+        </form>
+    </section>
+</section>
+<script>
+
+    $("#encurtador-url-original").keyup(function(e){
+
+        //Gerando um UUID para esta operação (a cada tecla precionada)
+        let uuidGet = uuid.v4();
+
+        //Pegando os 7 primeiros digitos
+        let indexCount = 7; 
+        const stringValue = uuidGet.split('-')[0]
+
+        //Pegando o cookie que tem uuid
+        let cookieGetUUID = Cookies.get("COOKIE-UUID-URL-LINKS")
+
+        let validateUUID = uuid.validate(Cookies.get(cookieGetUUID))
+
+        //Caso o input esteja vazio faça isto
+        if($("#encurtador-url-short").val() == ''){
+            $("#encurtador-url-short").val(uuidGet.split('-')[0])
+            Cookies.set("COOKIE-UUID-URL-LINKS", uuidGet)
+        }
+        
+        if(cookieGetUUID == undefined){
+
+            //O cookie com o uuid não existe
+            console.log('cookie undefined')
+
+            Cookies.set("COOKIE-UUID-URL-LINKS", uuidGet)
+
+            //Setando valores
+            $("#encurtador-url-short").val(uuidGet.split('-')[0])
+
+        }
+    })    
+
+</script>

@@ -121,6 +121,8 @@ exports.saveNewUser = async (req,res) => {
             const userFormsAdmin = req.body['save-new-sys-forms-admin'] == 'on' ? 1 : 0;
             const userNotifyAdmin = req.body['save-new-sys-notify-admin'] == 'on' ? 1 : 0;
             const userReportAdmin = req.body['save-new-sys-report-admin'] == 'on' ? 1 : 0;
+
+            const useEncurtador = req.body['save-new-sys-enc-use'] == 'on' ? 1 : 0;
     
             database.insert({
     
@@ -157,7 +159,8 @@ exports.saveNewUser = async (req,res) => {
                     sys_forms_perm_admin: userFormsAdmin,
                     sys_notify_perm_admin: userNotifyAdmin,
 
-                    sys_reports_perm_admin: userReportAdmin
+                    sys_reports_perm_admin: userReportAdmin,
+                    sys_enc_perm_use: useEncurtador
     
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){
@@ -228,6 +231,8 @@ exports.editSaveUser = async (req,res) => {
         const userNotifyAdmin = req.body['save-edit-sys-notify-use-'+idUser] == 'on' ? 1 : 0;
         const userReportAdmin = req.body['save-edit-sys-report-use-'+idUser] == 'on' ? 1 : 0;
 
+        const useEncurtador = req.body['save-edit-sys-enc-use-'+idUser] == 'on' ? 1 : 0;
+
 
         const userType = parseInt(req.body['save-edit-sys-type-user-'+idUser]);
         //const userSYSemail = parseInt(req.body['save-edit-sys-mails-'+idUser]);
@@ -278,7 +283,8 @@ exports.editSaveUser = async (req,res) => {
                         sys_forms_perm_admin: userFormsAdmin,
                         sys_notify_perm_admin: userNotifyAdmin,
 
-                        sys_reports_perm_admin: userReportAdmin
+                        sys_reports_perm_admin: userReportAdmin,
+                        sys_enc_perm_use: useEncurtador,
             
                     }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                         if(data != ''){

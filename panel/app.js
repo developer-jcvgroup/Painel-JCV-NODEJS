@@ -56,7 +56,8 @@ const controllerUpdates = require("./controllers/updates/controllerUpdate")
 const controllerReport = require("./controllers/system/controllerReport")
 //Controllers Terms
 const controllerTerms = require("./controllers/system/controllerTerms")
-
+//Controller encurtador
+const controllerEncurtador = require("./controllers/encurtador/controllerEncurtador")
 
 
 /*===================================*/
@@ -321,6 +322,17 @@ router.post("/formularios/delete", authenticate, controllerFormulario.deleteForm
 router.post("/formularios/disabled", authenticate, controllerFormulario.disabledForm)
 router.post("/formularios/reponse", authenticate, controllerFormulario.sendResponse)
 router.post("/formularios/reponse/downlod", authenticate, controllerFormulario.exportResponses)
+
+/***********************************/
+/***********************************/
+//Termos: Encurtador
+router.get("/encurtador/main", authenticate, getPermissions, controllerEncurtador.encurtadorMain)
+router.get("/encurtador/new", authenticate, getPermissions, controllerEncurtador.encurtadorNew)
+router.get("/encurtador/edit/:id?", authenticate, getPermissions, controllerEncurtador.encurtadorEdit)
+
+router.post("/encurtador/new", authenticate, controllerEncurtador.encurtadorNewSave)
+router.post("/encurtador/edit", authenticate, controllerEncurtador.encurtadorEditSave)
+router.post("/encurtador/delete", authenticate, controllerEncurtador.encurtadorDelete)
 
 /***********************************/
 /***********************************/

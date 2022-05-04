@@ -171,6 +171,12 @@ $(function(){
         var subMeu = $("#sub-05");
         $(subMeu).slideToggle();
     })
+    $("#menu-06").click(function(){
+        $("#menu-06 > i").toggleClass('rotate-90')
+
+        var subMeu = $("#sub-06");
+        $(subMeu).slideToggle();
+    })
 
 
     //Drop info user
