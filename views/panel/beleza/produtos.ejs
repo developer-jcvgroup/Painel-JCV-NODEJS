@@ -44,6 +44,7 @@
                                 <th>SKU</th>
                                 <th>Marca</th>
                                 <th>Produto</th>
+                                <th>Link da imagem</th>
                                 <th>Classificado</th>
                                 <th>Ativo</th>
                                 <th>Ação</th>
@@ -64,6 +65,7 @@
                                     </select>
                                 </td>
                                 <td><input type="text" name="productName" placeholder="Insira o produto.."></td>
+                                <td><input type="text" name="productLinkImg" placeholder="Insira um link de imagem"></td>
                                 <td>
                                     <select name="productType">
                                         <option value="">Tipo de produto</option>
@@ -94,6 +96,7 @@
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
+                                <td> </td>
                             </tr>
 
                             <% productsData.forEach(element => { %>
@@ -110,6 +113,7 @@
                                     </select>
                                 </td>
                                 <td><input value="<%= element['sys_blz_productName'] %>" type="text" name="editProductName<%= element['sys_blz_product_id'] %>"></td>
+                                <td><input value="<%= element['sys_blz_productImage'] %>" type="text" name="editProductIMG<%= element['sys_blz_product_id'] %>" type="text"></td>
                                 <td>
                                     <select name="editProductType<%= element['sys_blz_product_id'] %>" id="">
                                         <option value="<%= element['sys_blz_productType'] %>">

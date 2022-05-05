@@ -34,7 +34,7 @@
     margin-top: -100px;
     height: fit-content;
     background: var(--background-two);
-    box-shadow: 0 0 20px 0 var(--color-three);
+    box-shadow: 0 0 4px 0 var(--color-three);
 }
 
 .beleza-new-container-box{
@@ -73,96 +73,6 @@
     flex-direction: column;
     align-items: center;
 }
-
-/* BOX PRODUCT ONE */
-.beleza-new-box-product-one{
-    width: 100%;
-    display: none;
-    align-items: center;
-    margin: 22px 0;
-    padding: 10px 17px;
-    border-radius: 5px;
-    border: 2px solid var(--color-three);
-}
-.beleza-new-box-product-one-img{
-    min-width: 100px;
-    max-width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-}
-.beleza-new-box-product-one-img img{
-    width: 100%;
-    object-fit: contain;
-}
-
-.beleza-new-box-product-one-info{
-    display: flex;
-    font-size: 0.9rem;
-    color: var(--color-one);
-    width: 100%;
-}
-.beleza-new-box-product-one-info input{
-    width: 100%;
-    border: none;
-    font-size: 1rem;
-    color: var(--color-one);
-    background: transparent;
-    outline: 0;
-}
-.beleza-new-box-product-one-info button{
-    background: transparent;
-    outline: 0;
-    font-size: 1.3rem;
-    color: var(--color-two);
-    border: none;
-    cursor: pointer;
-}
-
-/* BOX PRODUCT ONE */
-.beleza-new-box-product-two{
-    width: 100%;
-    display: none;
-    align-items: center;
-    margin: 22px 0;
-    padding: 10px 17px;
-    border-radius: 5px;
-    border: 2px solid var(--color-three);
-}
-.beleza-new-box-product-two-img{
-    max-width: 100px;
-    display: flex;
-    justify-content: center;
-}
-.beleza-new-box-product-two-img img{
-    width: 100%;
-    object-fit: contain;
-}
-
-.beleza-new-box-product-two-info{
-    display: flex;
-    font-size: 0.9rem;
-    color: var(--color-one);
-    width: 100%;
-}
-.beleza-new-box-product-two-info input{
-    width: 100%;
-    border: none;
-    font-size: 1rem;
-    color: var(--color-one);
-    background: transparent;
-    outline: 0;
-}
-.beleza-new-box-product-two-info button{
-    background: transparent;
-    outline: 0;
-    font-size: 1.3rem;
-    color: var(--color-two);
-    border: none;
-    cursor: pointer;
-}
-
-/*  */
 
 
 .beleza-new-form-row{
@@ -226,31 +136,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    margin-bottom: 38px;
-}
-
-/* filter */
-.beleza-new-list-filters{
-    display: none;
-    position: absolute;
-    max-height: 250px;
-    background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
-    overflow: auto;
-    margin-top: -36px;
-    z-index: 1;
-}
-.beleza-new-list-filters ul{
-    list-style: none;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.beleza-new-list-filters ul li{
-    width: 95%;
-    padding: 8px 9px;
-    border-bottom: 1px solid var(--color-two);
+    margin-bottom: 28px;
 }
 
 /* options */
@@ -408,9 +294,5 @@
 
     .beleza-search-box{
         width: 95%;
-    }
-
-    .beleza-new-section-display-body{
-        width: 98%;
     }
 }

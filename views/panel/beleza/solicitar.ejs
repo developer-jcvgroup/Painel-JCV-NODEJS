@@ -15,18 +15,100 @@
                 </div>
                 <div class="beleza-new-container-body">
                     <form class="beleza-new-form" action="">
-                        <div class="beleza-new-form-row-large">
-                            <input placeholder="Selecione seu shampoo" type="text" name="inputProductOne" id="product-one-auto">
+
+                        <div class="beleza-new-box-product-one" id="beleza-new-box-product-one">
+                            <div class="beleza-new-box-product-one-img">
+                                <img style="width: 100%; object-fit: contain;" id="image-product-one" src="https://www.felps.com.br/wp-content/uploads/2021/07/7898639794758-Vegan-Oil_Kalahari_shampoo_250ml_frente-1024x1024.png" alt="">
+                            </div>
+                            <div class="beleza-new-box-product-one-info">
+                                <div style="display: flex; flex-direction: column; width: 100%;">
+                                    <span style="font-size: 0.8rem; margin-bottom: 5px;">Shampoo</span>
+                                    <input readonly type="text" id="name-product-one" name="inputProductOne" value="Felps Teste produto um dois tres 250mL">
+                                </div>
+                                <div>
+                                    <button type="button" onclick="$.fn.removeProductOne()"><i class="ri-close-line"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="beleza-new-box-product-two" id="beleza-new-box-product-two">
+                            <div class="beleza-new-box-product-two-img">
+                                <img style="width: 100%; object-fit: contain;" id="image-product-two" src="https://www.felps.com.br/wp-content/uploads/2021/07/7898639794758-Vegan-Oil_Kalahari_shampoo_250ml_frente-1024x1024.png" alt="">
+                            </div>
+                            <div class="beleza-new-box-product-two-info">
+                                <div style="display: flex; flex-direction: column; width: 100%;">
+                                    <span style="font-size: 0.8rem; margin-bottom: 5px;">Tratamento</span>
+                                    <input readonly type="text" id="name-product-two" name="inputProductTwo" value="Felps Teste produto um dois tres 250mL">
+                                </div>
+                                <div>
+                                    <button type="button" onclick="$.fn.removeProductTwo()"><i class="ri-close-line"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr id="hr-list-products-row" style="display: none; width: 100%; margin: 17px 0;">
+
+
+
+
+
+
+
+                        <div class="beleza-new-form-row-large" id="beleza-new-one-box">
+                            <input placeholder="Selecione seu shampoo" type="text" onkeyup="myFunctionFilter('product-one-auto','beleza-new-list-filters-one','beleza-new-ul-filters-one')" id="product-one-auto">
                             <span id="open-search-product-one"><i class="ri-search-line"></i></span>
                         </div>
-                        <div class="beleza-new-form-row">
-                            <button type="button" id="next-action">Próximo <i class="ri-arrow-right-line"></i></button>
+                        <div class="beleza-new-list-filters" id="beleza-new-list-filters-one">
+                            <ul id="beleza-new-ul-filters-one">
+                                
+                                <% arrayProductOne.forEach(element => { %>
+                                    <li>
+                                        <a href="#" onclick="$.fn.insertProductOne('<%= element[0] %>','<%= element[1] %>')" style="display: flex; align-items: center; text-decoration: none;">
+                                            <div style="min-width: 90px; max-width: 90px; height: 90px; display: flex; justify-content: center;">
+                                                <img style="width: 100%; object-fit: contain;" src="<%= element[1] == '' ? '/logos/jcvLogo.png' : element[1] %>" alt="">
+                                            </div>
+                                            <span style="font-size: 0.9rem; color: var(--color-one)">
+                                                <span><%= element[0] %></span>
+                                                <br>
+                                                <span style="font-size: 0.7rem;"><b><%= element[2] %></b></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                <% })%>
+                            
+                            </ul>
                         </div>
+                        <!-- <div class="beleza-new-form-row">
+                            <button type="button" id="next-action">Próximo <i class="ri-arrow-right-line"></i></button>
+                        </div> -->
                         <div class="beleza-new-cont-off" id="beleza-new-cont-off">
-                            <div class="beleza-new-form-row-large">
-                                <input placeholder="Selecione seu tratamento" type="text" name="inputProductTwo" id="product-two-auto">
+                            <div class="beleza-new-form-row-large" id="beleza-new-two-box">
+                                <input placeholder="Selecione seu tratamento" type="text" onkeyup="myFunctionFilter('product-two-auto','beleza-new-list-filters-two','beleza-new-ul-filters-two')" id="product-two-auto">
                                 <span id="open-search-product-two"><i class="ri-search-line"></i></span>
                             </div>
+
+
+                            <div class="beleza-new-list-filters" id="beleza-new-list-filters-two">
+                                <ul id="beleza-new-ul-filters-two">
+                                    
+                                    <% arrayProductTwo.forEach(element => { %>
+                                        <li>
+                                            <a href="#" onclick="$.fn.insertProductTwo('<%= element[0] %>',`<%= element[1] %>`)" style="display: flex; align-items: center; text-decoration: none;">
+                                                <div style="min-width: 90px; max-width: 90px; height: 90px; display: flex; justify-content: center;">
+                                                    <img style="width: 100%; object-fit: contain;" src="<%= element[1] == null ? '/logos/jcvLogo.png' : element[1] %>" alt="">
+                                                </div>
+                                                <span style="font-size: 0.9rem; color: var(--color-one)">
+                                                    <span><%= element[0] %></span>
+                                                    <br>
+                                                    <span style="font-size: 0.7rem;"><b><%= element[2] %></b></span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    <% })%>
+                                
+                                </ul>
+                            </div>
+
                             <div class="beleza-new-form-row-options">
                                 <label for="button-send-confirm">Enviar registro por e-mail</label>
                                 <label class="system-mode-department-button-switch">
@@ -64,8 +146,8 @@
                 <tbody>
                     <% arrayProductOne.forEach(element => { %>
                         <tr>
-                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-one"><%= element %></button></td>
-                            <td><button class="beleza-button-select-product button-select-one" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
+                            <td><button value="<%= element[0] %>" onclick="$.fn.insertProductOne('<%= element[0] %>',`<%= element[1] %>`)" class="beleza-search-button-item button-select-one"><%= element[0] %></button></td>
+                            <td><button class="beleza-button-select-product button-select-one" value="<%= element[0] %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
                         </tr>
                     <% }) %>
                 </tbody>
@@ -93,8 +175,8 @@
                 <tbody>
                     <% arrayProductTwo.forEach(element => { %>
                         <tr>
-                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-two"><%= element %></button></td>
-                            <td><button class="beleza-button-select-product button-select-two" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
+                            <td><button value="<%= element[0] %>" onclick="$.fn.insertProductTwo('<%= element[0] %>',`<%= element[1] %>`)" class="beleza-search-button-item button-select-two"><%= element[0] %></button></td>
+                            <td><button class="beleza-button-select-product button-select-two" value="<%= element[0] %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
                         </tr>
                     <% }) %>
                 </tbody>
@@ -103,10 +185,99 @@
     </div>
 </section>
 <script>
+    function myFunctionFilter(inputSreact, boxFilterDiv, listFilters) {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById(inputSreact);
+
+        $(`#${boxFilterDiv}`).css({'display':'flex'})
+
+        filter = input.value.toUpperCase();
+        ul = document.getElementById(listFilters);
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+
+        /* setTimeout(() => {
+            $(`#${boxFilterDiv}`).fadeOut()
+        }, 5000); */
+
+        $("#beleza-new-list-filters-two").css({'width': $("#product-two-auto").width()+'px'})
+    }
+    </script>
+<script>
     
 $(function(){
+
+    //Definindo a largura
+    $("#beleza-new-list-filters-one").css({'width': $("#product-one-auto").width()+'px'})
+
+    //Inserindo produto
+    $.fn.insertProductOne = function(nameProduct, image){
+
+        $.fn.loadSpin(1)
+
+        $("#beleza-new-list-filters-one").fadeOut()
+        $("#beleza-new-one-box").css({'display':'none'})
+
+        image == '' ? $("#image-product-one").attr('src', '/logos/jcvLogo.png') : $("#image-product-one").attr('src', image)
+        $("#name-product-one").val(nameProduct)
+        $("#beleza-new-box-product-one").fadeIn().css({'display':'flex'})
+
     
-    //Pegando a lista de itens
+        //Ativando input two
+        $("#beleza-new-cont-off").fadeIn()
+        $("#hr-list-products-row").fadeIn()
+
+        $.fn.loadSpin(0)
+    }
+
+    //Removendo o produto
+    $.fn.removeProductOne = function(nameProduct, image){
+        $.fn.loadSpin(1)
+
+        $("#beleza-new-one-box").fadeIn()
+        $("#beleza-new-box-product-one").fadeOut()
+
+        $("#product-one-auto").val('')
+
+        $.fn.loadSpin(0)
+    }
+
+    /*  */
+    /*  */
+    /*  */
+
+    //Inserindo produto
+    $.fn.insertProductTwo = function(nameProduct, image){
+        $.fn.loadSpin(1)
+
+        $("#beleza-new-box-product-two").fadeIn().css({'display':'flex'})
+        $("#image-product-two").attr('src', image)
+        $("#name-product-two").val(nameProduct)
+
+        $("#beleza-new-list-filters-two").fadeOut()
+        
+        $("#beleza-new-two-box").fadeOut()
+
+        $.fn.loadSpin(0)
+    }
+
+    //Removendo o produto
+    $.fn.removeProductTwo = function(nameProduct, image){
+        $("#beleza-new-two-box").fadeIn()
+        $("#beleza-new-box-product-two").fadeOut()
+
+        $("#product-two-auto").val('')
+    }
+
+    /* //Pegando a lista de itens
     let dataOne = '<%- arrayProductOne %>';
     let arrayDataOne = dataOne.split(',');
 
@@ -127,12 +298,12 @@ $(function(){
             var results = $.ui.autocomplete.filter(arrayDataTwo, request.term);        
             response(results.slice(0, 5));
         }
-    });
+    }); */
 
-    $("#next-action").click(function(){
+    /* $("#next-action").click(function(){
         $(this).css("display","none");
         $("#beleza-new-cont-off").fadeIn();
-    })
+    }) */
 
     //////////////////////////////
     //Abrindo a busca para SHAMPOO

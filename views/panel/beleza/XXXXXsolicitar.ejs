@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/panel/css/beleza/solicitar.css">
+<section class="beleza-new-main-section">
+    <section class="beleza-new-image-display">
+        <img class="beleza-new-img-desktop" src="/panel/img/image-solicitar-desktop.jpg" alt="" srcset="">
+        <img class="beleza-new-img-mobile" src="/panel/img/image-solicitar-mobile.jpg" alt="" srcset="">
+    </section>
+    <section class="beleza-new-section-display-body">
+        <div class="beleza-new-display-solicitar">
+            <form class="beleza-new-container-box" action="./action/solicitar" method="post">
+                <div class="beleza-new-title-box"><span>Programa da Beleza</span></div>
+                <div class="beleza-new-info">
+                    <span><b><%= GLOBAL_DASH[9] %></b>, selecione abaixo os produtos do seu benefício referente ao mês <b><%= monthReference %></b>:</span>
+                </div>
+                <div class="beleza-new-container-body">
+                    <form class="beleza-new-form" action="">
+                        <div class="beleza-new-form-row-large">
+                            <input placeholder="Selecione seu shampoo" type="text" name="inputProductOne" id="product-one-auto">
+                            <span id="open-search-product-one"><i class="ri-search-line"></i></span>
+                        </div>
+                        <div class="beleza-new-form-row">
+                            <button type="button" id="next-action">Próximo <i class="ri-arrow-right-line"></i></button>
+                        </div>
+                        <div class="beleza-new-cont-off" id="beleza-new-cont-off">
+                            <div class="beleza-new-form-row-large">
+                                <input placeholder="Selecione seu tratamento" type="text" name="inputProductTwo" id="product-two-auto">
+                                <span id="open-search-product-two"><i class="ri-search-line"></i></span>
+                            </div>
+                            <div class="beleza-new-form-row-options">
+                                <label for="button-send-confirm">Enviar registro por e-mail</label>
+                                <label class="system-mode-department-button-switch">
+                                    <input id="button-send-confirm" name="input-send-confirm" type="checkbox">
+                                    <span class="system-mode-department-button-slider round"></span>
+                                </label>
+                            </div>
+                            <div class="beleza-new-form-row-actions">
+                                <button class="class-loader">Finalizar <i class="ri-check-double-fill"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+<!--  -->
+<section class="beleza-search-screen" id="beleza-search-screen-one">
+    <div class="beleza-search-box">
+        <div class="beleza-search-box-row">
+            <span>Busque por um shampoo..</span>
+            <span style="cursor: pointer; font-size: 1.5rem;" id="beleza-close-one"><i class="ri-close-line"></i></span>
+        </div>
+        <!--  -->
+        <div class="beleza-search-box-row">
+            <input placeholder="Busque por um shampoo" type="text" id="search-product-solicitar-one">
+        </div>
+        <!--  -->
+        <div class="beleza-search-box-table">
+            <table class="beleza-search-table" id="beleza-search-table-one">
+                <thead>
+                    <!--  -->
+                </thead>
+                <tbody>
+                    <% arrayProductOne.forEach(element => { %>
+                        <tr>
+                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-one"><%= element %></button></td>
+                            <td><button class="beleza-button-select-product button-select-one" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--  -->
+<section class="beleza-search-screen" id="beleza-search-screen-two">
+    <div class="beleza-search-box">
+        <div class="beleza-search-box-row">
+            <span>Busque por um tratamento..</span>
+            <span style="cursor: pointer; font-size: 1.5rem;" id="beleza-close-two"><i class="ri-close-line"></i></span>
+        </div>
+        <!--  -->
+        <div class="beleza-search-box-row">
+            <input placeholder="Busque por um tratamento" type="text" id="search-product-solicitar-two">
+        </div>
+        <!--  -->
+        <div class="beleza-search-box-table">
+            <table class="beleza-search-table" id="beleza-search-table-two">
+                <thead>
+                    <!--  -->
+                </thead>
+                <tbody>
+                    <% arrayProductTwo.forEach(element => { %>
+                        <tr>
+                            <td><button value="<%= element %>" class="beleza-search-button-item button-select-two"><%= element %></button></td>
+                            <td><button class="beleza-button-select-product button-select-two" value="<%= element %>" name="button-add-product-one" type="submit"><i class="ri-arrow-right-line"></i></button></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    
+$(function(){
+    
+    //Pegando a lista de itens
+    let dataOne = '<%- arrayProductOne %>';
+    let arrayDataOne = dataOne.split(',');
+
+    let dataTwo = '<%- arrayProductTwo %>';
+    let arrayDataTwo = dataTwo.split(',');
+
+    //Primeiro campo
+    $("#product-one-auto").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+
+    //Segundo campo
+    $("#product-two-auto").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataTwo, request.term);        
+            response(results.slice(0, 5));
+        }
+    });
+
+    $("#next-action").click(function(){
+        $(this).css("display","none");
+        $("#beleza-new-cont-off").fadeIn();
+    })
+
+    //////////////////////////////
+    //Abrindo a busca para SHAMPOO
+    $("#open-search-product-one").click(function(){
+        $("#beleza-search-screen-one").fadeIn();
+        $("#beleza-search-screen-one").css("display",'flex')
+    })
+    //Search na tabela ONE
+    $.fn.searchInputTable('#beleza-search-table-one tr', '#search-product-solicitar-one')
+    //Inserindo o SHAMPOO dinamicamente
+    $('.button-select-one').click(function(){
+        var valor = $(this).val();
+        
+        $("#product-one-auto").val(valor)
+        $("#beleza-search-screen-one").fadeOut();
+    });
+
+
+    /////////////////////////////////////////
+    /////////////////////////////////////////
+    //Abrindo a busca para CONDICIONADOR
+    $("#open-search-product-two").click(function(){
+        $("#beleza-search-screen-two").fadeIn();
+        $("#beleza-search-screen-two").css("display",'flex')
+    })
+    //Search na tabela TWO
+    $.fn.searchInputTable('#beleza-search-table-two tr', '#search-product-solicitar-two')
+    //Inserindo o CONDICIONADOR dinamicamente
+    $('.button-select-two').click(function(){
+        var valor = $(this).val();
+        
+        $("#product-two-auto").val(valor)
+        $("#beleza-search-screen-two").fadeOut();
+    });
+
+    $("#beleza-close-one").click(function(){
+        $("#beleza-search-screen-one").fadeOut();
+    })
+    $("#beleza-close-two").click(function(){
+        $("#beleza-search-screen-two").fadeOut();
+    })
+})
+</script>

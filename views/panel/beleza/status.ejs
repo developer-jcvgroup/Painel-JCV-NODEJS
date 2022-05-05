@@ -27,11 +27,17 @@
                 <div class="beleza-view-container-body">
                     <form class="beleza-view-form" action="">
                         <div class="beleza-view-form-row-large">
-                            <span><%= productOne %></span>
+                            <div style="max-width: 120px; max-height: 120px; display: flex; justify-content: center;">
+                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[0].sys_blz_productImage %>" alt="">
+                            </div>
+                            <span><%= verifyProd[0].sys_blz_productName %></span>
                         </div>
 
                         <div class="beleza-view-form-row-large">
-                            <span><%= productTwo %></span>
+                            <div style="max-width: 120px; max-height: 120px; display: flex; justify-content: center;">
+                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[1].sys_blz_productImage %>" alt="">
+                            </div>
+                            <span><%= verifyProd[1].sys_blz_productName %></span>
                         </div>
                         <% if(requestUser[0].sys_blz_requestStatus == 2 ){ %>
                         <div class="beleza-view-form-row-action">

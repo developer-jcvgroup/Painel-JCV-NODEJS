@@ -48,9 +48,9 @@ exports.sysBLZrequest = async (req, res) =>{
         database.select().where({sys_blz_productEnabled: 1}).table("jcv_blz_products").then(result => {
             result.forEach(element => {
                 if(element["sys_blz_productType"] === 1){
-                    arrayProductOne.push(element["sys_blz_productName"]);
+                    arrayProductOne.push([element["sys_blz_productName"], element["sys_blz_productImage"], element["sys_blz_productBrand"]]);
                 }else{
-                    arrayProductTwo.push(element["sys_blz_productName"]);
+                    arrayProductTwo.push([element["sys_blz_productName"], element["sys_blz_productImage"], element["sys_blz_productBrand"]]);
                 }
             });
 
@@ -173,6 +173,15 @@ exports.listOrder = async (req,res,next) => {
 
     if(requestUser != "" ){
 
+        //Pegando dados dos produtos
+        const verifyProd = await database
+        .select()
+        .whereIn("sys_blz_productName ", [requestUser[0].sys_blz_tratmentOne.split(' - ')[1], requestUser[0].sys_blz_tratmentTwo.split(' - ')[1]])
+        .table("jcv_blz_products")
+        .then( data => {
+            return data
+        }) 
+
         //Verificando se o pedido esta com a solicitação de cancelamento e se é deste mes
         if(requestUser[0]["sys_blz_requestStatus"] == 5){
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.");
@@ -189,7 +198,9 @@ exports.listOrder = async (req,res,next) => {
             productTwo: requestUser[0]["sys_blz_tratmentTwo"].split('-')[1], 
             idRequest: requestUser[0]["sys_blz_id"], 
             mesReferencia: getMonthReferece(), 
-            statusCancel: statusCancel})
+            statusCancel: statusCancel,
+            verifyProd:verifyProd
+        })
     }else{
         res.redirect("/painel/beleza/solicitar");
     }
@@ -323,6 +334,8 @@ exports.registerProduct = async (req,res) => {
         const productBrand = req.body.productBrand;
         const productName = req.body.productName;
         const productType = req.body.productType;
+        const productLinkImg = req.body.productLinkImg
+
         let productEnabled;
     
         if(req.body.productEnabled == undefined){
@@ -336,7 +349,8 @@ exports.registerProduct = async (req,res) => {
             sys_blz_productName: productName,
             sys_blz_productEnabled: productEnabled,
             sys_blz_productType: productType,
-            sys_blz_productBrand: productBrand
+            sys_blz_productBrand: productBrand,
+            sys_blz_productImage: productLinkImg
         }).table("jcv_blz_products").then(data => {
             if(data != ""){
                 res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+productName+"' foi cadastrado com sucesso!");
@@ -360,6 +374,8 @@ exports.actionProductSave = async (req,res) => {
     const editproductBrand = req.body['editProductBrand'+idProd];
     const editproductName = req.body['editProductName'+idProd];
     const editproductType = req.body['editProductType'+idProd];
+    const productLinkImg = req.body['editProductIMG'+idProd];
+
     let editproductEnabled;
 
     if(req.body['editProductEnabled'+idProd] == undefined){
@@ -374,7 +390,8 @@ exports.actionProductSave = async (req,res) => {
         sys_blz_productEnabled: editproductEnabled,
         sys_blz_productType: editproductType,
         sys_blz_productBrand: editproductBrand,
-        sys_blz_productUpdate: generateDate()
+        sys_blz_productUpdate: generateDate(),
+        sys_blz_productImage: productLinkImg
     })
     .where({sys_blz_product_id: idProd})
     .table("jcv_blz_products").then(data => {
