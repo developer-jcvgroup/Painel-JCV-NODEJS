@@ -5,7 +5,7 @@ const emailSystemExe = require('../system/emailSystem');
 
 exports.saveNewReport = async (req,res) => {
     const dataReport = req.body['sys-report-text'];
-    console.log(req.body['sys-report-text'])
+    //console.log(req.body['sys-report-text'])
 
     if(dataReport == ''){
         res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você precisa inserir algo para reportar");
@@ -25,7 +25,7 @@ exports.saveNewReport = async (req,res) => {
             return array;
         })
 
-        const textOne = 'Report do usuario <b>'+GLOBAL_DASH[1]+'</b>';
+        const textOne = 'Report do usuario <b>'+GLOBAL_DASH[1]+'</b>. '+GLOBAL_DASH[5];
         const textTwo = `Olá, o usuario <b>${GLOBAL_DASH[1]}</b> reportou: <br><br> <b>${dataReport}</b>`;
         emailSystemExe.sendMailExe(allMasters, 'Report System', 'Report System', 'Sistema', 'Masters', textOne, textTwo);
 
