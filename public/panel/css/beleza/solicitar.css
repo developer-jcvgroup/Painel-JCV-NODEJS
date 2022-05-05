@@ -413,4 +413,29 @@
     .beleza-new-section-display-body{
         width: 98%;
     }
+
+    /*  */
+    .beleza-new-box-product-one{
+        flex-direction: column;
+    }
+    .beleza-new-box-product-one-info{
+        margin-top: 7px;
+    }
+    .beleza-new-box-product-two{
+        flex-direction: column;
+    }
+    .beleza-new-box-product-two-info{
+        margin-top: 7px;
+    }
+
+    .beleza-new-box-product-one-img{
+        min-height: 130px;
+        max-width: 130px;
+        height: 130px;
+    }
+    .beleza-new-box-product-two-img{
+        min-height: 130px;
+        max-width: 130px;
+        height: 130px;
+    }
 }
