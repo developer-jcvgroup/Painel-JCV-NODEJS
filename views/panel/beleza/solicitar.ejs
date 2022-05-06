@@ -48,47 +48,20 @@
 
 
                         <div class="beleza-new-form-row-large" id="beleza-new-one-box">
-                            <input placeholder="Selecione seu shampoo" type="text" onkeyup="myFunctionFilter('product-one-auto','beleza-new-list-filters-one','beleza-new-ul-filters-one')" id="product-one-auto">
-                            <span id="open-search-product-one"><i class="ri-search-line"></i></span>
-                        </div>
-                        <div class="beleza-new-list-filters" id="beleza-new-list-filters-one">
-                            <ul id="beleza-new-ul-filters-one">
-                                
-                                <% arrayProductOne.forEach(element => { %>
-                                    <li>
-                                        <a href="#" onclick="$.fn.insertProductOne('<%= element[0] %>','<%= element[1] %>')" style="display: flex; align-items: center; text-decoration: none;">
-                                            <div style="min-width: 90px; max-width: 90px; height: 90px; display: flex; justify-content: center;">
-                                                <img style="width: 100%; object-fit: contain;" src="<%= element[1] == '' ? '/logos/jcvLogo.png' : element[1] %>" alt="">
-                                            </div>
-                                            <span style="font-size: 0.9rem; color: var(--color-one)">
-                                                <span><%= element[0] %></span>
-                                                <br>
-                                                <span style="font-size: 0.7rem;"><b><%= element[2] %></b></span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                <% })%>
-                            
-                            </ul>
-                        </div>
-                        <!-- <div class="beleza-new-form-row">
-                            <button type="button" id="next-action">Próximo <i class="ri-arrow-right-line"></i></button>
-                        </div> -->
-                        <div class="beleza-new-cont-off" id="beleza-new-cont-off">
-                            <div class="beleza-new-form-row-large" id="beleza-new-two-box">
-                                <input placeholder="Selecione seu tratamento" type="text" onkeyup="myFunctionFilter('product-two-auto','beleza-new-list-filters-two','beleza-new-ul-filters-two')" id="product-two-auto">
-                                <span id="open-search-product-two"><i class="ri-search-line"></i></span>
+                            <div style="display: flex; flex-direction: column; width: 100%; justify-content: space-around; align-items: flex-end;">
+                                <input placeholder="Selecione seu shampoo" type="text" onkeyup="myFunctionFilter('product-one-auto','beleza-new-list-filters-one','beleza-new-ul-filters-one')" id="product-one-auto">
+                                <span id="open-search-product-one"><i class="ri-search-line"></i></span>
                             </div>
-
-
-                            <div class="beleza-new-list-filters" id="beleza-new-list-filters-two">
-                                <ul id="beleza-new-ul-filters-two">
+                        
+                        
+                            <div class="beleza-new-list-filters" id="beleza-new-list-filters-one">
+                                <ul id="beleza-new-ul-filters-one">
                                     
-                                    <% arrayProductTwo.forEach(element => { %>
+                                    <% arrayProductOne.forEach(element => { %>
                                         <li>
-                                            <a href="#" onclick="$.fn.insertProductTwo('<%= element[0] %>',`<%= element[1] %>`)" style="display: flex; align-items: center; text-decoration: none;">
+                                            <a href="#" onclick="$.fn.insertProductOne('<%= element[0] %>','<%= element[1] %>')" style="overflow: auto ;display: flex; align-items: center; text-decoration: none;">
                                                 <div style="min-width: 90px; max-width: 90px; height: 90px; display: flex; justify-content: center;">
-                                                    <img style="width: 100%; object-fit: contain;" src="<%= element[1] == null ? '/logos/jcvLogo.png' : element[1] %>" alt="">
+                                                    <img style="width: 100%; object-fit: contain;" src="<%= element[1] == '' ? '/logos/jcvLogo.png' : element[1] %>" alt="">
                                                 </div>
                                                 <span style="font-size: 0.9rem; color: var(--color-one)">
                                                     <span><%= element[0] %></span>
@@ -100,6 +73,40 @@
                                     <% })%>
                                 
                                 </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="beleza-new-form-row">
+                            <button type="button" id="next-action">Próximo <i class="ri-arrow-right-line"></i></button>
+                        </div> -->
+                        <div class="beleza-new-cont-off" id="beleza-new-cont-off">
+                            <div class="beleza-new-form-row-large" id="beleza-new-two-box">
+
+                                <div style="display: flex; flex-direction: column; width: 100%; justify-content: space-around; align-items: flex-end;">
+                                    <input placeholder="Selecione seu tratamento" type="text" onkeyup="myFunctionFilter('product-two-auto','beleza-new-list-filters-two','beleza-new-ul-filters-two')" id="product-two-auto">
+                                    <span id="open-search-product-two"><i class="ri-search-line"></i></span>
+                                </div>
+
+                                <div class="beleza-new-list-filters" id="beleza-new-list-filters-two">
+                                    <ul id="beleza-new-ul-filters-two">
+                                        
+                                        <% arrayProductTwo.forEach(element => { %>
+                                            <li>
+                                                <a href="#" onclick="$.fn.insertProductTwo('<%= element[0] %>',`<%= element[1] %>`)" style="overflow: auto ; display: flex; align-items: center; text-decoration: none;">
+                                                    <div style="min-width: 90px; max-width: 90px; height: 90px; display: flex; justify-content: center;">
+                                                        <img style="width: 100%; object-fit: contain;" src="<%= element[1] == null ? '/logos/jcvLogo.png' : element[1] %>" alt="">
+                                                    </div>
+                                                    <span style="font-size: 0.9rem; color: var(--color-one)">
+                                                        <span><%= element[0] %></span>
+                                                        <br>
+                                                        <span style="font-size: 0.7rem;"><b><%= element[2] %></b></span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        <% })%>
+                                    
+                                    </ul>
+                                </div>
                             </div>
 
                             <div class="beleza-new-form-row-options">
