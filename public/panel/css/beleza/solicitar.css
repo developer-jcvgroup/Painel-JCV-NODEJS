@@ -232,12 +232,12 @@
 /* filter */
 .beleza-new-list-filters{
     display: none;
-    position: absolute;
+    position: fixed;
     max-height: 250px;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     overflow: auto;
-    margin-top: -36px;
+    /* margin-top: -36px; */
     z-index: 1;
 }
 .beleza-new-list-filters ul{
