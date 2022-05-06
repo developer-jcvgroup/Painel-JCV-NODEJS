@@ -153,11 +153,21 @@ exports.updateEdit = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
-            var page = "system/updatesEdit";
-            res.render("panel/index", {
-                page: page,
-                infoUpdate: data,
-                allUpdates: allUpdates
+
+            database
+            .select("jcv_id","jcv_userNamePrimary","jcv_userImageIcon")
+            .table("jcv_users")
+            .whereIn("jcv_id", JSON.parse(data[0].sys_update_usersOkUpdate))
+            .orderBy("jcv_id","ASC")
+            .then( dataUsersInfo => {
+
+                var page = "system/updatesEdit";
+                res.render("panel/index", {
+                    page: page,
+                    infoUpdate: data,
+                    allUpdates: allUpdates,
+                    dataUsersInfo: dataUsersInfo
+                })  
             })
         }else{
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum update encontrado");

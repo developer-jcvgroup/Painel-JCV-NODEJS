@@ -1,0 +1,109 @@
+<section class="index-container-main-menu" id="menu-action-main">
+    <div class="menu-container-main">
+        <div class="menu-ul-list-container">
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-01"><span>Páginas</span><i class="ri-arrow-up-s-line"></i></li>
+                <ul id="sub-01" class="menu-list-set-two" style="display: flex">
+                    <li><a class="class-loader" href="/painel"><i class="ri-home-2-line"></i><span>Home</span></a></li>
+                    <% if(GLOBAL_PERM[0].sys_cal_perm_use == 1){ %>
+                        <li><a class="class-loader" href="/painel/calendario/main"><i class="ri-calendar-2-line"></i><span>Calendário</span></a></li>
+                    <% } %>
+                    <!-- <li><a class="class-loader" href="/painel/chat"><i class="ri-chat-1-line"></i><span>Chats & Grupos</span></a></li> -->
+                </ul>
+            </ul>
+
+            <% if(GLOBAL_PERM[0].sys_blz_perm_use == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-03"><span>Programa da Beleza</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-03" class="menu-list-set-two">
+                        <li><a class="class-loader" href="/painel/beleza/solicitar"><i class="ri-add-line"></i><span>Nova Solicitação</span></a></li>
+                        <li><a class="class-loader" href="/painel/beleza/status"><i class="ri-file-paper-2-line"></i><span>Minha Solicitação</span></a></li>
+    
+                    <% if(GLOBAL_PERM[0].sys_blz_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/beleza/solicitacoes"><i class="ri-list-ordered"></i><span>Lista de Solicitações</span></a></li>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1 || GLOBAL_PERM[0].sys_blz_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/beleza/produtos"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
+                    <% } %>
+                </ul>
+            </ul>
+            <% } %>
+
+            <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-02"><span>Requisitor de Materiais</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-02" class="menu-list-set-two">       
+                        <li><a class="class-loader" href="/painel/requisitor/Novo"><i class="ri-add-line"></i><span>Nova Requisição</span></a></li>
+                        <li><a class="class-loader" href="/painel/requisitor/MinhasRequisicoes"><i class="ri-file-paper-2-line"></i></i><span>Minhas Requisições</span></a></li>
+                    
+                        <% if(GLOBAL_PERM[0].sys_req_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/requisitor/ListaRequisicoes"><i class="ri-list-ordered"></i><span>Lista de Requisições</span></a></li>
+                        <% } %>
+                    
+                        <% if(GLOBAL_PERM[0].sys_req_perm_manager == 1 || GLOBAL_PERM[0].sys_req_perm_admin == 1){ %>
+                            <li><a class="class-loader" href="/painel/requisitor/items"><i class="ri-pencil-ruler-line"></i><span>Itens</span></a></li>
+                        <% } %>
+                </ul>
+            </ul>
+            <% } %>
+
+            <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-05"><span>Trade Marketing</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-05" class="menu-list-set-two">       
+                    <li><a class="class-loader" href="/painel/trademkt/main"><i class="ri-home-2-line"></i><span>Home</span></a></li>
+
+                    <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/salesDay"><i class="ri-add-line"></i></i><span>Vendas Diárias</span></a></li>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
+                    <% } %>
+                    
+                    <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/formSearch/new"><i class="ri-add-line"></i></i><span>Formulario de Pesquisa</span></a></li>
+                        <li><a class="class-loader" href="/painel/trademkt/listTrade"><i class="ri-file-list-3-line"></i><span>Lista Formulário de Pesquisa</span></a></li>
+                        <li><a class="class-loader" href="/painel/trademkt/shops"><i class="ri-store-2-line"></i><span>Lojas</span></a></li>
+                        <li><a class="class-loader" href="/painel/trademkt/products"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
+                    <% } %>
+                </ul>
+            </ul>
+            <% } %>
+
+            <% if(GLOBAL_PERM[0].sys_enc_perm_use == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-06"><span>JCV Encurtador</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-06" class="menu-list-set-two">
+                    <li><a class="class-loader" href="/painel/encurtador/main"><i class="ri-links-line"></i><span>Central de links</span></a></li>
+                    <li><a class="class-loader" href="/painel/encurtador/new"><i class="ri-link"></i><span>Criar link</span></a></li>
+                    <li><a class="class-loader" href="/painel/encurtador/main"><i class="ri-link-unlink"></i><span>Editar link</span></a></li>
+                </ul>
+            </ul>
+            <% } %>
+
+            <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-04"><span>Configurações do Sistema</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-04" class="menu-list-set-two">
+                    <li><a class="class-loader" href="/painel/system/users"><i class="ri-braces-line"></i><span>Usuarios & Permissões</span></a></li>
+                    <li><a class="class-loader" href="/painel/system/unidades"><i class="ri-building-line"></i><span>Unidades</span></a></li>
+                    <li><a class="class-loader" href="/painel/system/departamentos"><i class="ri-door-open-line"></i><span>Departamentos</span></a></li>
+                    <li><a class="class-loader" href="/painel/updates/main"><i class="ri-refresh-line"></i><span>Updates</span></a></li>
+                    <% if(GLOBAL_PERM[0].sys_forms_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/formularios/main"><i class="ri-file-list-3-line"></i><span>Formulários</span></a></li>
+                    <% } %>
+                    <li><a class="class-loader" href="/painel/notifications/main"><i class="ri-notification-3-line"></i><span>Notificações</span></a></li>
+                    <li><a class="class-loader" href="/painel/terms"><i class="ri-shield-user-line"></i><span>Termos de uso</span></a></li>
+                </ul>
+            </ul>
+            <% } %>
+        </div>
+        <div class="menu-footer-container">
+            <div class="menu-footer-one">
+                <span><i class="ri-information-line"></i>⠀Version: <%= GLOBAL_VERSION %></span>
+            </div>
+        </div>
+    </div>
+</section>

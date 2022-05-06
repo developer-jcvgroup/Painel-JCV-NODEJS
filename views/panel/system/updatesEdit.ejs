@@ -1,32 +1,54 @@
-<link rel="stylesheet" href="/panel/css/system/updatesNew.css">
+<link rel="stylesheet" href="/panel/css/system/updatesEdit.css">
 
-<section class="update-new-center">
+<section class="update-edit-center">
     <div class="link-container-back">
         <a href="/painel/updates/main"><i class="ri-arrow-left-line"></i></a>
     </div>
     <!--  -->
-    <section class="update-new-title">
+    <section class="update-edit-title">
         <span>Editar Update <b>#<%= infoUpdate[0].sys_update_idUp %></b></span>
         <span>/ Sistema</span>
     </section>
     <!--  -->
-    <section class="update-new-body">
-        <form method="post" class="update-new-body-form">
-            <div class="update-new-title">
+    <section class="update-edit-body">
+
+        <div class="update-edit-list-users-views">
+            <span>Views</span>
+            <div class="update-edit-list-users-cont">
+
+                <% dataUsersInfo.forEach(element => { %>
+                <div class="update-edit-list-users-views-box">
+
+                    <% if(typeof(element.jcv_userImageIcon) == 'string'){ %>
+                        <img src="<%= element.jcv_userImageIcon %>" alt="">
+                    <% } %>
+                    
+                    <span><%= element.jcv_userNamePrimary %></span>
+                </div>
+                <% }) %>
+
+
+            </div>
+        </div>
+
+        <hr style="margin: 17px 0; width: 100%;">
+
+        <form method="post" class="update-edit-body-form">
+            <div class="update-edit-title">
                 <input type="text" name="update-name" value="<%= infoUpdate[0].sys_update_nameUpdate %>" placeholder="Titulo do update">
             </div>
             <!--  -->
-            <div class="update-new-box">
+            <div class="update-edit-box">
                 <label for="">Ultima versão: <%= allUpdates[0].sys_update_versionUpdate %></label>
                 <input type="text" name="update-version" value="<%= infoUpdate[0].sys_update_versionUpdate %>" placeholder="Escolha a versão">
             </div>
             <!--  -->
-            <div class="update-new-box">
+            <div class="update-edit-box">
                 <label for="">Url do update?</label>
                 <input type="text" name="update-url" value="<%= infoUpdate[0].sys_update_urlRedirect %>" placeholder="Não deixe este campo vazio, coloque sempre a url pai para quando ele fechar ele redirecionar: '/painel/calendario/main'">
             </div>
             <!--  -->
-            <div class="update-new-box">
+            <div class="update-edit-box">
                 <label for="">Aplicativo</label>
                 <select name="update-app" id="">
                     <option value="<%= infoUpdate[0].sys_update_moduleUp %>"><%= infoUpdate[0].sys_update_moduleUp %></option>
@@ -41,7 +63,7 @@
                 </select>
             </div>
             <!--  -->
-            <div class="update-new-box">
+            <div class="update-edit-box">
                 <label for="">Ativo?</label>
                 <select name="update-enabled" id="">
                     <% if(infoUpdate[0].sys_update_enabled == 1){ %>
@@ -56,11 +78,11 @@
             </div>
            
             <!--  -->
-            <section class="update-new-actions">
+            <section class="update-edit-actions">
                 <button formaction="/painel/updates/edit" name="update-id" value="<%= infoUpdate[0].sys_update_idUp %>" type="submit" id="button-save">Salvar</button>
             </section>
             <!--  -->
-            <section class="update-new-tiny-body">
+            <section class="update-edit-tiny-body">
                 <label for="">Descreva</label>
                 <textarea name="textarea-update-get" cols="30" rows="50"></textarea>
             </section>
