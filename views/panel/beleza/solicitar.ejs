@@ -201,7 +201,7 @@
             $(`#${boxFilterDiv}`).fadeOut()
         }, 5000); */
 
-        $("#beleza-new-list-filters-two").css({'width': $("#product-two-auto").width()+'px'})
+        $("#beleza-new-list-filters-two").css({'width': $("#product-two-auto").width()+'px', 'margin-top':'40px'})
     }
     </script>
 <script>
@@ -225,8 +225,8 @@ $(function(){
 
     
         //Ativando input two
-        $("#beleza-new-cont-off").fadeIn()
-        $("#hr-list-products-row").fadeIn()
+        $("#beleza-new-cont-off").fadeIn().css({'display':'flex'})
+        $("#hr-list-products-row").fadeIn().css({'display':'flex'})
 
         $.fn.loadSpin(0)
     }
