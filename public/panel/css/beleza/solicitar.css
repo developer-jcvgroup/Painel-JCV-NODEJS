@@ -234,7 +234,7 @@
     position: absolute;
     max-height: 250px;
     background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
+    box-shadow: 0 0 40px 0 var(--color-three);
     overflow: auto;
     margin-bottom: 45px;
     z-index: 1;
