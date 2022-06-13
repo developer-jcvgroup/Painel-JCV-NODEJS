@@ -11,6 +11,7 @@ Compilado de apps do jcv group
 - JCVMOD06 = Config. Sistema: Geral
 - JCVMOD07 = Perfil Usuario
 - JCVMOD08 = Sistema de encurtador de links
+- JCVMOD09 = Sistema de cursos e treinamentos
 
 # Banco do usuarios
 CPF
@@ -31,7 +32,7 @@ Setor
     * SYS-03: Error;
 
 # Solictações {Programa da beleza}
-- status: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{separado}, 5{pedido de cancelamento}, 6{Pedido coletado pelo gestor}, 7{Pedido recebido pelo usuario};
+- status: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{EM separção}, 5{pedido de cancelamento}, 6{Pedido separador pela expedição}, 7{Pedido recebido pelo gestor};
 # Commandos para o PROGRAMA DA BELEZA
 - CMD01{Setar como pedido pendente}
 - CMD02{Setar como pedido separado}

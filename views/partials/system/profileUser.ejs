@@ -312,7 +312,6 @@
     //Pegando as informações via socket
     socket.emit("getInfoUserProfile", '<%- GLOBAL_DASH[0] %>');
     socket.on('getInfoUserProfileResult', (resultData) => {
-        //alert(resultData)
 
         $.fn.loadSpin(0)
 

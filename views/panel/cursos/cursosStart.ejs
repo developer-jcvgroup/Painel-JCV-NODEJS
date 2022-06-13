@@ -1,0 +1,293 @@
+<link rel="stylesheet" href="/panel/css/cursos/cursosStart.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="/js/jquery.mask.js"></script>
+
+<section class="cursos-stratup-center">
+    <div class="link-container-back">
+        <a href="/painel/cursos/main" class="class-loader"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="cursos-stratup-title">
+        <span id="status-course"></span>
+        <span>/ Cursos</span>
+    </section>
+    <!--  -->
+    <section class="cursos-stratup-body">
+        <form method="post" class="cursos-stratup-body-form">
+            <div class="cursos-stratup-info">
+                <span>Carga Horária: <b><%= JSON.parse(validationCourse)[0].jcv_course_total_hours %></b></span>
+                <span>Instrutor: <b><%= getInfoIntructor[0].jcv_userNamePrimary %></b></span>
+                <span>Criado por: <b><%= getInfoCreater[0].jcv_userNamePrimary %></b></span>
+                <span>Marca: <b><%= JSON.parse(validationCourse)[0].jcv_course_brand %></b></span>
+                <br>
+                <span>Descrição:</span>
+                <span><%- JSON.parse(validationCourse)[0].jcv_course_description %></span>
+                <hr style="margin: 8px 0;">
+            </div>
+            <!--  -->
+            <div class="cursos-stratup-table-insert">
+
+                <div class="cursos-stratup-table-insert-user">
+                    <input type="text" id="input-cpf-insert" placeholder="Insira um CPF, nome..">
+                </div>
+
+                <table id="cursos-stratup-table" class="cursos-stratup-table">
+                    <thead>
+                        <th></th>
+                        <th>CPF</th>
+                        <th>Nome Completo</th>
+                        <th>Telefone Celular</th>
+                    </thead>
+                    <tbody>
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </tbody>
+                </table>
+
+                <span id="msg-show" style="color: var(--color-two); margin: 8px; font-size: 0.9rem;">As pessoas serão exibidas aqui..</span>
+
+            </div>
+            <!--  -->
+            <hr style="width: 100%; margin: 10px 0">
+            <!--  -->
+            <% if(JSON.parse(validationCourse)[0].jcv_course_status == 3){ %>
+                <div class="cursos-stratup-ass">
+                    <label for="">Insira sua assinatura! <b>Ela ficará registrada no certificado</b></label>
+                    <input hidden type="text" id="save-ass" name="save-ass">
+                    <canvas id="signature-pad" class="signature-pad" width=400 height=100></canvas>
+                    <hr>
+                    <div class="cursos-action-buttons">
+                        <button type="button" id="save-ass-action">Salvar</button>
+                        <button type="button" id="clear-ass">Limpar</button>
+                    </div>
+                </div>
+            <% } %>
+            
+            <!--  -->
+            <div id="cursos-stratup-actions" class="cursos-stratup-actions">
+                <!--  -->
+                <!--  -->
+            </div>
+        </form>
+    </section>
+</section>
+
+
+<script>
+
+    //Pegando a lista de pessoas CADASTRADAS NO PAINEL DO CERTIFICADOS
+    let dataOne = '<%- getAllInfoUsers %>';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#input-cpf-insert").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            
+            //console.log(i.item.value)
+            addItemTableCourse (i.item.value)
+        
+            /* setTimeout(() => {
+                $("#input-item-amount").select()
+            }, 100); */
+        }
+    });
+
+
+    let arrayInsertData = [];//Array onde os IDS dos usuarios serão armazenados
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    // CASO O CURSO ESTEJA COM STATUS INICIADO
+    
+    let validationCourse = JSON.parse('<%- validationCourse %>');
+
+    if(validationCourse[0].jcv_course_status == 3){
+
+        //Title page
+        $("#status-course").append(`Finalizar Curso <b>${validationCourse[0].jcv_course_name}</b>`)
+
+        //Curso iniciado
+        //Adicionando os usuario ao array
+        arrayInsertData = JSON.parse(validationCourse[0].jcv_course_array_users)
+        //console.log(JSON.parse(validationCourse[0].jcv_course_array_users))
+
+        //Inserindo na tebela
+        $("#cursos-stratup-table").is(':visible') == false ? [$("#msg-show").fadeOut(), $("#cursos-stratup-table").fadeIn()] : ''  
+
+        //Array de usuarios
+        let arrayUsersAllGet = JSON.parse('<%- getUsersCourse %>')
+        //console.log(arrayUsersAllGet)
+
+        arrayUsersAllGet.forEach(element => {
+            let stringHTML = `
+            <tr id='tr-id-${element.jcv_user_id}'>
+                <td><button type='button' onclick="RemoveUserCourse(this, '${element.jcv_user_id}')" ><i class="ri-delete-bin-5-line"></i></button></td>
+                <td><input type="text" value="${element.jcv_users_cpf}"></td>
+                <td><input type="text" disabled value="${element.jcv_users_name}"></td>
+                <td><input type="text" disabled value="${element.jcv_users_telefone == null ? '' : element.jcv_users_telefone}"></td>
+            </tr>
+            `;
+
+            $("#cursos-stratup-table").append(stringHTML)
+        });
+
+        //Buttons
+        $("#cursos-stratup-actions").append(`
+        <button type="submit" formaction="/painel/course/finality" id="button-end-course" name="button-end-course">Finalizar Curso</button>
+        `)
+
+        //Adicionando ao botão
+        $("#button-start-course").val(JSON.stringify({courseID: `${validationCourse[0].jcv_course_id}`, listUsers: JSON.stringify(arrayInsertData)}))
+        $("#button-end-course").val(JSON.stringify({courseID: `${validationCourse[0].jcv_course_id}`, listUsers: JSON.stringify(arrayInsertData)}))
+
+        
+    }else{
+
+        //Title page
+        $("#status-course").append(`Iniciar Curso <b>${validationCourse[0].jcv_course_name}</b>`)
+
+        //Buttons
+        $("#cursos-stratup-actions").append(`
+        <button type="submit" formaction="/painel/course/start" id="button-start-course" name="button-start-course">Iniciar Curso</button>
+        `)
+    }
+    
+    
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    // AO SELECIONAR O USUARIO ELE FARÁ UMA BUSCA PELOS DADOS
+
+    function addItemTableCourse (valueGet){
+        
+        let keyUserSearch = valueGet;//Valor digitado
+        
+        //console.log(keyUserSearch)
+        socket.emit("getInfoUserCourse", (keyUserSearch))
+
+        //Pegando os usuarios
+        socket.on('resultInfoUserCourse', (data) => {
+
+            //Chamando a função para inserir as informações na tabela
+
+            ///////////////////////////////////////
+            ///////////////////////////////////////
+            ///////////////////////////////////////
+            // FUNÇÃO PARA ADICIONAR NA TABELA
+
+            if(arrayInsertData.indexOf(parseInt(data[0].jcv_user_id)) == -1){
+                //Vamos adicionar o usuario na tabela
+
+                //Adicionando no array
+                arrayInsertData.push(parseInt(data[0].jcv_user_id));
+
+                $("#cursos-stratup-table").is(':visible') == false ? [$("#msg-show").fadeOut(), $("#cursos-stratup-table").fadeIn()] : ''  
+
+                let stringHTML = `
+                <tr id='tr-id-${data[0].jcv_user_id}'>
+                    <td><button type='button' onclick="RemoveUserCourse(this, '${data[0].jcv_user_id}')" ><i class="ri-delete-bin-5-line"></i></button></td>
+                    <td><input type="text" value="${data[0].jcv_users_cpf}"></td>
+                    <td><input type="text" disabled value="${data[0].jcv_users_name}"></td>
+                    <td><input type="text" disabled value="${data[0].jcv_users_telefone == null ? '' : data[0].jcv_users_telefone}"></td>
+                </tr>
+                `
+
+                //Adicionando ao botão
+                $("#button-start-course").val(JSON.stringify({courseID: '<%- courseId %>', listUsers: JSON.stringify(arrayInsertData)}))
+                $("#button-end-course").val(JSON.stringify({courseID: '<%- courseId %>', listUsers: JSON.stringify(arrayInsertData)}))
+
+                $("#cursos-stratup-table").append(stringHTML)
+            }else{
+                //Usuario já adicionado
+                $.fn.sys_popupSystem("SYS02", "Pessoa já adicionada!")
+
+                $(`#tr-id-${data[0].jcv_user_id}`).addClass('animation-select-user')
+
+                setTimeout(() => {
+                    $(`#tr-id-${data[0].jcv_user_id}`).removeClass('animation-select-user')
+                }, 2500);
+
+            }
+
+            //console.log(arrayInsertData)
+            //console.log(data.length)
+
+            $("#input-cpf-insert").val('')
+
+            socket.removeListener('resultInfoUserCourse')
+
+        })
+
+    }
+
+    RemoveUserCourse = function(handler, idItem) {
+        
+        arrayInsertData.splice(arrayInsertData.indexOf(parseInt(idItem)), 1);
+        //console.log(arrayInsertData)
+
+        arrayInsertData.length == '' ? [$("#cursos-stratup-table").fadeOut(), $("#msg-show").fadeIn()] : '';
+
+        let tr = $(handler).closest('tr');
+        tr.fadeOut(400, function(){ 
+            currentRow--;
+            tr.remove();
+        }); 
+
+        $("#button-start-course").val(JSON.stringify({courseID: '<%- courseId %>', listUsers: JSON.stringify(arrayInsertData)}))
+        $("#button-end-course").val(JSON.stringify({courseID: '<%- courseId %>', listUsers: JSON.stringify(arrayInsertData)}))
+        
+        return false;
+    };
+</script>
+<script src="https://szimek.github.io/signature_pad/js/signature_pad.umd.js"></script>
+<script>
+    //Script assinatura
+    var canvas = document.getElementById('signature-pad');
+
+    function resizeCanvas() {
+        // When zoomed out to less than 100%, for some very strange reason,
+        // some browsers report devicePixelRatio as less than 1
+        // and only part of the canvas is cleared then.
+        var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'transparent' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+    });
+
+    //
+    document.getElementById('save-ass-action').addEventListener('click', function () {
+        if (signaturePad.isEmpty()) {
+            $.fn.sys_popupSystem("SYS02", "Insira uma assinatura!")
+        }else{
+            var data = signaturePad.toDataURL('image/png');
+            $("#save-ass").val(data);
+            $.fn.sys_popupSystem("SYS01", "Assinatura salva temporaiamente. Agora finalize!")
+        }
+
+        //window.open(data);
+    });
+
+    document.getElementById('clear-ass').addEventListener('click', function () {
+        $("#save-ass").val('');
+        signaturePad.clear();
+    });
+</script>

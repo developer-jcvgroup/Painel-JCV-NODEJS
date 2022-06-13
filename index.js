@@ -12,6 +12,7 @@ const io = require('socket.io')(http, {
   })
 
 const database = require("./panel/database/database");
+const databaseCertificates = require("./panel/database/databaseCertificates");
 
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
@@ -244,6 +245,23 @@ io.on('connection', (socket) => {
         }).catch(err => {
             socket.emit('getInfoUserProfileResult', arrayData)
         })
+    })
+
+    //Socket para iniciar curso
+    socket.on("getInfoUserCourse", (data) => {
+
+        //Valor a ser procurado
+        let valueSearch = data;
+
+        databaseCertificates
+        .select()
+        .whereRaw(`jcv_users_cpf like '${valueSearch}' OR jcv_users_name = '${valueSearch}' AND jcv_users_enabled  = 1`)
+        .table("jcv_users")
+        .then( data => {
+            socket.emit('resultInfoUserCourse', (data))
+        })
+
+
     })
 })
 

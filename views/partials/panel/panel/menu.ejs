@@ -83,6 +83,29 @@
             </ul>
             <% } %>
 
+
+
+            <% if(GLOBAL_PERM[0].sys_courses_perm_admin == 1){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-07"><span>Cursos & Treinamentos</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-07" class="menu-list-set-two">
+                    <li><a class="class-loader" href="/painel/cursos/main"><i class="ri-macbook-line"></i><span>Central de cursos</span></a></li>
+                    <li><a class="class-loader" href="/painel/cursos/main"><i class="ri-play-line"></i><span>Iniciar Cursos</span></a></li>
+                    <li><a class="class-loader" href="/painel/cursos/new"><i class="ri-add-line"></i><span>Novo Curso</span></a></li>
+                </ul>
+            </ul>
+            <% } %>
+            <% if(GLOBAL_PERM[0].sys_courses_perm_manager == 1 && GLOBAL_PERM[0].sys_courses_perm_admin == 0){ %>
+            <ul class="menu-ul-list-set-one">
+                <li id="menu-07"><span>Cursos & Treinamentos</span><i class="ri-arrow-down-s-line"></i></li>
+                <ul id="sub-07" class="menu-list-set-two">
+                    <li><a class="class-loader" href="/painel/cursos/main"><i class="ri-play-line"></i><span>Iniciar Cursos</span></a></li>
+                </ul>
+            </ul>
+            <% } %>
+
+
+
             <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
             <ul class="menu-ul-list-set-one">
                 <li id="menu-04"><span>Configurações do Sistema</span><i class="ri-arrow-down-s-line"></i></li>

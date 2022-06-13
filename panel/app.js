@@ -58,7 +58,10 @@ const controllerReport = require("./controllers/system/controllerReport")
 const controllerTerms = require("./controllers/system/controllerTerms")
 //Controller encurtador
 const controllerEncurtador = require("./controllers/encurtador/controllerEncurtador")
-
+//Controller certificados
+const controllerCursos = require("./controllers/certificados/controllerCursos")
+//Controller External Login
+const controllerExternalLogin = require("./controllers/system/controllerExternalLogin")
 
 /*===================================*/
 
@@ -325,10 +328,10 @@ router.post("/formularios/reponse/downlod", authenticate, controllerFormulario.e
 
 /***********************************/
 /***********************************/
-//Termos: Encurtador
-router.get("/encurtador/main", authenticate, getPermissions, controllerEncurtador.encurtadorMain)
-router.get("/encurtador/new", authenticate, getPermissions, controllerEncurtador.encurtadorNew)
-router.get("/encurtador/edit/:id?", authenticate, getPermissions, controllerEncurtador.encurtadorEdit)
+//Encurtador: Encurtador
+router.get("/encurtador/main", middlewareURL, authenticate, getPermissions, controllerEncurtador.encurtadorMain)
+router.get("/encurtador/new", middlewareURL, authenticate, getPermissions, controllerEncurtador.encurtadorNew)
+router.get("/encurtador/edit/:id?", middlewareURL, authenticate, getPermissions, controllerEncurtador.encurtadorEdit)
 
 router.post("/encurtador/new", authenticate, controllerEncurtador.encurtadorNewSave)
 router.post("/encurtador/edit", authenticate, controllerEncurtador.encurtadorEditSave)
@@ -336,8 +339,30 @@ router.post("/encurtador/delete", authenticate, controllerEncurtador.encurtadorD
 
 /***********************************/
 /***********************************/
+//Cursos: Sistema de cursos e certificados
+router.get("/cursos/main", middlewareURL, authenticate, getPermissions,controllerCursos.cursosMain)
+router.get("/cursos/new", middlewareURL, authenticate, getPermissions, controllerCursos.cursosNew)
+router.get("/cursos/edit/:id?", middlewareURL, authenticate, getPermissions, controllerCursos.cursosEdit)
+router.get("/cursos/start/:id?", middlewareURL, authenticate, getPermissions, controllerCursos.cursosStartup)
+router.get("/cursos/sinc/profile", middlewareURL, authenticate, controllerCursos.moduleSicProfile)
+
+router.post("/course/new", authenticate, controllerCursos.saveNewCourse)
+router.post("/course/edit", authenticate, controllerCursos.saveEditCourse)
+router.post("/course/delete", authenticate, getPermissions, controllerCursos.courseDelete)
+router.post("/course/start", authenticate, controllerCursos.startCourse)
+router.post("/course/finality", authenticate, controllerCursos.finalityCourse)
+
+router.post("/course/sync/profile", authenticate, controllerCursos.moduleActionSync)
+
+/***********************************/
+/***********************************/
 //Termos: Sistema
 router.get("/terms", authenticate, controllerTerms.moduleTerms)
 router.post("/terms/save", authenticate, controllerTerms.termsSave)
+
+/***********************************/
+/***********************************/
+//Login: Login externo
+router.get("/external/login", authenticate, controllerExternalLogin.moduleLoginExternal)
 
 module.exports = router;

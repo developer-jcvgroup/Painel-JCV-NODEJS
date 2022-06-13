@@ -1,0 +1,231 @@
+.cursos-stratup-center{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TITULO PAGE */
+.cursos-stratup-title{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin: 2% 0;
+}
+.cursos-stratup-title > span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.cursos-stratup-title > span:nth-child(2){
+    font-size: 0.7rem;
+    color: var(--color-one);
+    margin-left: 4px;
+}
+
+
+/*  */
+.cursos-stratup-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--background-two);
+}
+.cursos-stratup-body-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cursos-stratup-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.cursos-stratup-info span{
+    font-size: 0.9rem;
+    line-height: 2;
+}
+
+.cursos-stratup-table-insert{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+/*  */
+.cursos-stratup-table-insert-user{
+    width: 100%;
+    margin: 12px 0;
+}
+.cursos-stratup-table-insert-user input{
+    width: 300px;
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+
+/*  */
+
+.cursos-stratup-table{
+    display: none;
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 700px;
+}
+.cursos-stratup-table tr th{
+    border: none;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    font-weight: normal;
+    background: var(--color-one-boxs);
+    color: var(--color-four);
+    padding: 8px;
+    font-size: 0.9rem;
+}
+.cursos-stratup-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 10px;
+    color: var(--color-one);
+    font-size: 0.9rem;
+}
+
+.cursos-stratup-table tr th:nth-child(1){
+    width: 50px;
+}
+.cursos-stratup-table tr th:nth-child(2){
+    width: 15%;
+}
+
+.cursos-stratup-table tr td input{
+    width: 100%;
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+
+.cursos-stratup-table tr td button{
+    outline: 0;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--color-one);
+    cursor: pointer;
+    background: transparent;
+}
+
+/*  */
+/*  */
+/*  */
+.cursos-stratup-actions{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+.cursos-stratup-actions button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one-btn);
+    cursor: pointer;
+    margin: 8px;
+}
+
+/*  */
+/*  */
+/*  */
+.cursos-stratup-ass{
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid var(--color-three);
+    display: flex;
+    flex-direction: column;
+}
+
+.cursos-stratup-ass label{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.cursos-stratup-ass button{
+    width: fit-content;
+    outline: 0;
+    border: 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-two);
+    border: 1px solid var(--color-two);
+    background: transparent;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.cursos-action-buttons{
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/*  */
+.link-container-back{
+    display: flex;
+    align-items: center;
+    margin: 13px 0;
+}
+.link-container-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+
+.animation-select-user{
+    animation: animateSelected 2.5s linear;
+}
+
+@keyframes animateSelected {
+
+    0% {
+        background: rgba(91, 216, 91, 0.438);
+    }
+
+    100%{
+        background: transparent;
+    }
+
+}
+
+@media only screen and (max-width: 900px) {
+    .cursos-stratup-title{
+        flex-direction: column;
+        white-space: normal;
+    }
+    .cursos-stratup-title span:nth-child(2){
+        line-height: 3;
+    }
+    .cursos-stratup-ass{
+        width: 100%;
+    }
+
+    .signature-pad{
+        height: 100px;
+    }
+}

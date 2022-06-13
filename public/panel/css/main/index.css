@@ -238,6 +238,17 @@ header{
     display: flex;
     color: var(--color-two);
 }
+.header-links-nav-btn{
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: flex;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    color: var(--color-two);
+    border: 0;
+    background: transparent;
+}
 
 /* NOTIFICATION */
 .notification-container{

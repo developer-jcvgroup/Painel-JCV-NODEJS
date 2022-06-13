@@ -61,6 +61,14 @@
     self.caches.keys().then(keys => { keys.forEach(key => console.log(key)) })
     self.caches.delete('JCV-GROUP');//Nome do cache
 </script>
+
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    //Get url start Socketio
+    const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
+</script>
+
 <body>
 <section class="sys-section-loader" id="sys-section-loader">
     <section class="sys-section-load-main">
@@ -91,6 +99,8 @@
                 <div class="index-cont-rigth">
                     <ul class="header-nav-ul">
                         <ul class="header-links-nav">
+                            
+                            <li><a href="/painel/external/login" target="_blank" title="Cursos & Treinamento"><i class="ri-slideshow-2-line"></i></a></li>
                             <li><a href="#" id="sys-report-open-screen"><i class="ri-alarm-warning-line"></i></a></li>
                             <li><a title="Webmail" target="_blank" href="https://webmail7.ultramail.com.br/"><i class="ri-mail-send-line"></i></a></li>
                             <li class="notification-container">
@@ -312,12 +322,6 @@
     <!--  -->
 </section>
 
-<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script>
-    //Get url start Socketio
-    const socket = io('<%- PAINEL_URL %>', {transports: ['polling']})
-</script>
 
 <!-- PARTIALS INFO USER -->
 <%- include('../partials/system/profileUser') %>

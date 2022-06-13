@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="/panel/css/cursos/cursosMain.css">
+
+<section class="certificados-main-main-section">
+    <section class="certificados-main-main-section-page">
+        <div class="certificados-main-main-title-page">
+            <span>Lista de cursos</span>
+            <span>/ Cursos</span>
+        </div>
+
+        <section class="certificados-main-main-actions">
+            <div class="certificados-main-display-center">
+                <div class="certificados-main-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/cursos/new"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="certificados-main-main-container-body">
+            <section class="certificados-main-main-section-list-forms" id="forms-list-display">
+                <div class="certificados-main-main-forms">
+
+                    <% if(getAllCourseEnabled != ''){ %>
+
+                        <% let statusOptions = {1: 'ATIVO', 2: 'INATIVO', 3:'INICIADO', 4:'FINALIZADO'} %>
+
+                        <% getAllCourseEnabled.forEach(element => { %>
+
+                            <div class="certificados-main-main-forms-link">
+                                <a class="certificados-main-main-forms-link-info" href="/painel/cursos/edit/<%= element.jcv_course_id %>">
+                                    <span><%= element.jcv_course_name %></span>
+                                    <span><b><%= element.jcv_course_brand %></b></span>
+                                    <span style="text-align: center"><%- element.jcv_course_description.substring(0,100) %></span>
+                                    <br>
+                                    <span style="text-align: center">Carga Horária: <b><%= element.jcv_course_total_hours %> h(rs)</b></span>
+                                    <br>
+                                    <span>Criado por: <b><%= getAllUsers[element.jcv_course_created] %></b></span>
+                                    <span>Ministrado por: <b><%= getAllUsers[element.jcv_course_manager_course].split(' ')[0] +' '+getAllUsers[element.jcv_course_manager_course].split(' ')[1] %></b></span>
+                                    <br>
+                                    <div class="certificados-main-info-link">
+                                        <span>
+                                            <%= element.jcv_course_initial_date.split('T')[0] +' ás '+element.jcv_course_initial_date.split('T')[1] %>
+                                            |
+                                            <b><%= statusOptions[element.jcv_course_status] %></b>
+                                        </span>
+                                    </div>
+                                </a>
+                                <hr style="width: 100%; margin: 7px 0;">
+                                <form method="post" class="certificados-main-main-forms-link-button">
+                                    <a href="/painel/cursos/start/<%= element.jcv_course_id %>" title="Iniciar Curso"><i class="ri-play-mini-line"></i></a>
+                                    <button class="class-loader" formaction="/painel/course/delete" type="submit" name="button-delete-couser" value="<%= element.jcv_course_id %>" title="Excluir curso"><i class="ri-delete-bin-line"></i></button>
+                                </form>
+                            </div>
+
+                        <% }) %>
+                    <% }else{ %>
+                        <div class="certificados-main-main-forms-not-found">
+                            <img class="certificados-main-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Nenhum curso encontrado.. <b><a href="/painel/cursos/new">Novo Curso</a></b></span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="certificados-main-main-section-list-forms" id="form-list-fished">
+                <div class="certificados-main-main-forms-title">
+                    <span>Listando os utlimos <b>30 cursos</b> desabilitados</span>
+                </div>
+
+
+                <div class="certificados-main-main-forms"> 
+
+                    <% if(getAllCourseFinalyEnd != ''){ %>
+                        <% getAllCourseFinalyEnd.forEach(element => { %>
+                            <a class="certificados-main-main-forms-link"href="/painel/cursos/edit/<%= element.jcv_course_id %>">
+                                <div class="certificados-main-main-forms-link-info">
+                                    <span><%= element.jcv_course_name %></span>
+                                    <span><b><%= element.jcv_course_brand %></b></span>
+                                    <span style="text-align: center"><%= element.jcv_course_description.substring(0,100) %></span>
+                                    <br>
+                                    <span>Criado por: <b><%= getAllUsers[element.jcv_course_created] %></b></span>
+                                    <span>Ministrado por: <b><%= getAllUsers[element.jcv_course_manager_course].split(' ')[0] +' '+getAllUsers[element.jcv_course_manager_course].split(' ')[1] %></b></span>
+                                    <br>
+
+                                    <% let statusOptions = {1: 'ATIVO', 2: 'INATIVO', 3:'INICIADO',4:'FINALIZADO'} %>
+
+                                    <span style="color: red;"><b><%= statusOptions[element.jcv_course_status] +' / '+ element.jcv_course_initial_date.split('T')[0] +' ás '+element.jcv_course_initial_date.split('T')[1] %></b></span>
+                                </div>
+                                <hr style="width: 100%; margin: 7px 0;">
+                                <form method="post" class="certificados-main-main-forms-link-button">
+
+                                    <% if(getPermissionCourses[0].sys_tra_perm_admin == 1){ %>
+                                        <button type="button"><i class="ri-pencil-line"></i></button>
+                                    <% } %>
+                                </form>
+                            </a>
+                        <% }) %>
+                    <% }else{ %>
+                        <div class="certificados-main-main-forms-not-found">
+                            <img class="certificados-main-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Sem cursos inativos..</span>
+                        </div>
+                    <% } %>
+                    
+                </div>
+
+                
+            </section>
+        </section>
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+</script>

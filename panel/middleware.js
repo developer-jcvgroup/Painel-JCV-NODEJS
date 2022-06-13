@@ -67,7 +67,7 @@ authenticate = async (req, res, next) => {
                 unityUser
             ];
 
-            //Pegando a url e validando
+            //Pegando a url do e validando
             global.PAINEL_URL;
             if(req.get('host') == 'localhost:8080'){
                 PAINEL_URL = 'http://localhost:8080';

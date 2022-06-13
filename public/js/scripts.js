@@ -177,6 +177,12 @@ $(function(){
         var subMeu = $("#sub-06");
         $(subMeu).slideToggle();
     })
+    $("#menu-07").click(function(){
+        $("#menu-07 > i").toggleClass('rotate-90')
+
+        var subMeu = $("#sub-07");
+        $(subMeu).slideToggle();
+    })
 
 
     //Drop info user
@@ -411,11 +417,6 @@ $(function(){
             $("#"+itemAmount+"").val('');//Limpando o input amount
             $.fn.sys_popupSystem("SYS02", "O item não foi encontrado")
         }
-
-
-
-        
-
     };
 
 /* 

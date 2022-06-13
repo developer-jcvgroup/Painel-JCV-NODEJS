@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="/panel/css/cursos/cursosEdit.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="cursos-edit-center">
+    <div class="link-container-back">
+        <a href="/painel/cursos/main" class="class-loader"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="cursos-edit-title">
+        <span>Editar <b><%= allInfo[0].jcv_course_name %></b></span>
+        <span>/ Cursos</span>
+    </section>
+    <!--  -->
+    <section class="cursos-edit-body">
+        <form method="post" class="cursos-edit-body-form">
+            <div class="cursos-edit-title">
+                <input required type="text" name="course-name" value="<%= allInfo[0].jcv_course_name %>" placeholder="Nome do curso">
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Carga Horária</label>
+                <input required type="number" name="course-total-hours" value="<%= allInfo[0].jcv_course_total_hours %>" placeholder="Insira a carga horária total">
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Ministrado por:</label>
+                <input required type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Marca</label>
+                <select required name="course-brand">
+                    <option value="<%= allInfo[0].jcv_course_brand %>"><%= allInfo[0].jcv_course_brand %></option>
+                    <option disabled></option>
+                    <option value="Felps Professional">Felps Professional</option>
+                    <option value="Felps Men">Felps Men</option>
+                    <option value="Retrô Cosméticos">Retrô Cosméticos</option>
+                    <option value="Avenca Cosméticos">Avenca Cosméticos</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Inicia</label>
+                <input required style="width: fit-content;" value="<%= allInfo[0].jcv_course_initial_date %>" type="datetime-local" name="course-initial" id="">
+            </div>
+            <!--  -->
+            <% if(allInfo[0].jcv_course_status != 4 ){ %>
+                <div class="cursos-edit-box">
+                    <label for="">Status</label>
+                    <select name="course-status">
+
+                        <% let statusOptions = {1: 'Ativo', 2: 'Inativo', 3: 'Iniciado', 4:'Finalizado'} %>
+
+                        <option value="<%= allInfo[0].jcv_course_status %>"><%= statusOptions[allInfo[0].jcv_course_status] %></option>
+                        <option disabled></option>
+                        <option value="1">Ativo</option>
+                        <option value="2">Inativo</option>
+                        <option value="3">Finalizado</option>
+                    </select>
+                </div>
+            <% } %>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Texto de exibição do certificado. <b>Insira o texto com base nas informações préviamente inseridas, respeite as tags "${}" que são exibidas</b> <br><br> <b>Tag necessárias: ${courseName}, ${managerCourse}, ${brandName}, ${dateCourse}, ${hoursCourse}</b></label>
+                <input required type="text" name="course-text-certificate" id="course-text-certificate" value="<%= allInfo[0].jcv_course_text %>">
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Descrição</label>
+                <input type="text" value="<%= allInfo[0].jcv_course_description %>" name="course-description">
+            </div>
+            <!--  -->
+            <section class="cursos-edit-actions">
+                <button formaction="/painel/course/edit" name="id-course" value="<%= allInfo[0].jcv_course_id %>" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+        </form>
+    </section>
+</section>
+<!--  -->
+<script>
+    //LISTANDO OS USUARIOS
+    let dataOne = '<%- getAllUsers %>';
+    let arrayDataOne = dataOne.split(',');
+
+    //Primeiro campo
+    $("#instrutor-manager").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);
+            response(results.slice(0, 5));
+        }
+    });
+
+    
+    $("#course-text-certificate").keyup(function(e){
+        let value = this.value;
+
+        let arrayDataMandatory = [
+            '${courseName}', 
+            '${managerCourse}', 
+            '${brandName}', 
+            '${dateCourse}', 
+            '${hoursCourse}',
+        ]
+
+        var errrorEnable;
+        for (let i = 0; i < arrayDataMandatory.length; i++) {
+            if(value.indexOf(arrayDataMandatory[i]) == -1){
+                //Os dados não foram encotrados
+                errrorEnable = true
+            }else{
+                //Todos encotrados
+            }
+        }
+
+        if(errrorEnable == true){
+            $("#button-save").attr('disabled','disabled');
+            $(this).css({'border':'1px solid red','outline':'none'})
+        }else{
+            $("#button-save").removeAttr('disabled');
+            $(this).css({'border':'1px solid green','outline':'none'})
+        }
+
+    })
+</script>

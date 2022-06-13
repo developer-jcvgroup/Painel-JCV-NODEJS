@@ -232,7 +232,38 @@ async function getPermissions (req, res, next) {
         }
     }
 
-    //NOTIFICAÇÕES
+    //Cursos & Treinamentos
+    if(urlPage[0] == "cursos"){        
+        //Pegando os updates
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD09')
+
+        let pageError = true;
+        //ADMIN GERAL
+        if(urlPage[1] == "main"){
+            if(resultPermissions[0].sys_courses_perm_admin == 1 || resultPermissions[0].sys_courses_perm_manager == 1){
+                return next();
+            }
+        }
+        if(urlPage[1] == "start"){
+            if(resultPermissions[0].sys_courses_perm_admin == 1 || resultPermissions[0].sys_courses_perm_manager == 1){
+                return next();
+            }
+        }
+        if(urlPage[1] == "new" && resultPermissions[0].sys_courses_perm_admin == 1){
+            return next();
+        }
+        if(urlPage[1] == "edit" && resultPermissions[0].sys_courses_perm_admin == 1){
+            return next();
+        }
+        
+        //Não foi encontrado
+        if(pageError){
+            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.redirect("/painel");
+        }
+    }
+
+    //Encurtador
     if(urlPage[0] == "encurtador"){
         
 

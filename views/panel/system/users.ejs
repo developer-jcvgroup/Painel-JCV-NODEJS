@@ -100,6 +100,10 @@
                     <% if(element.sys_enc_perm_use == 1){ %>
                         <span><b>Encurtador</b> <i class="ri-check-double-fill"></i></span>
                     <% } %>
+
+                    <% if(element.sys_courses_perm_admin == 1){ %>
+                        <span><b>Cursos & Treinamento</b> <i class="ri-check-double-fill"></i></span>
+                    <% } %>
                 </div>
                 <!--  -->
                 <hr style="width: 100%; margin: 15px 0;">
@@ -330,6 +334,21 @@
                     </div>
                 </div>
                 <!--  -->
+                <div class="sys-edit-user-box-edit-row-permissions-box">
+                    <div class="sys-edit-user-box-edit-row-permissions-box-icon">
+                        <img src="/icons/icon-courses.png" alt="">
+                        <label for="" style="text-align: center;">Cursos & <br> Treinamento</label>
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" id="sys-edit-user-course-admin">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Gestor</label>
+                        <input type="checkbox" id="sys-edit-user-course-manager">
+                    </div>
+                </div>
+                <!--  -->
 
             </div>
             <!--  -->
@@ -510,6 +529,21 @@
                     </div>
                 </div>
                 <!--  -->
+                <div class="sys-save-user-box-save-row-permissions-box">
+                    <div class="sys-save-user-box-save-row-permissions-box-icon">
+                        <img src="/icons/icon-courses.png" alt="">
+                        <label for="" style="text-align: center;">Cursos & <br> Treinamento</label>
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Admin</label>
+                        <input type="checkbox" name="save-new-sys-course-admin" id="sys-new-user-course-admin">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Gestor</label>
+                        <input type="checkbox" name="save-new-sys-course-manager" id="sys-new-user-course-manager">
+                    </div>
+                </div>
+                <!--  -->
 
             </div>
             <!--  -->
@@ -657,6 +691,12 @@
                     //Permissions: Encurtador
                     $("#sys-edit-user-enc-use").attr('name','save-edit-sys-enc-use-'+idSet)
                     infoUserData.sys_enc_perm_use == 1 ? $("#sys-edit-user-enc-use").prop("checked", true) : $("#sys-edit-user-enc-use").prop("checked", false)
+
+                    //Permissions: Cursos & Treinamentos
+                    $("#sys-edit-user-course-admin").attr('name','save-edit-sys-course-admin-'+idSet)
+                    $("#sys-edit-user-course-manager").attr('name','save-edit-sys-course-manager-'+idSet)
+                    infoUserData.sys_courses_perm_admin == 1 ? $("#sys-edit-user-course-admin").prop("checked", true) : $("#sys-edit-user-course-admin").prop("checked", false)
+                    infoUserData.sys_courses_perm_manager == 1 ? $("#sys-edit-user-course-manager").prop("checked", true) : $("#sys-edit-user-course-manager").prop("checked", false)
 
                     //Permissions: Formulários
                     $("#sys-edit-user-forms-admin").attr('name','save-edit-sys-forms-use-'+idSet)
