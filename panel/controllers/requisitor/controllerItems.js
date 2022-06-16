@@ -25,7 +25,8 @@ exports.saveEditItem = async(req,res) => {
     const inputEnabledItem = req.body['item-input-edit-enabled-'+idItem] != undefined ? 1 : 0;
 
     database.update({sys_req_itemName: inputNameItem, sys_req_itemEnabled: inputEnabledItem}).where({sys_req_itemId: idItem}).table("jcv_req_items").then( data => {
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item '"+inputNameItem+"' foi editado com sucesso!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item '"+inputNameItem+"' foi editado com sucesso!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O item '"+inputNameItem+"' foi editado com sucesso!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/items");
     })
 }
@@ -41,7 +42,8 @@ exports.saveNewItem = async (req,res) => {
     .table("jcv_req_items")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item '"+nameItem+"' foi cadastrado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item '"+nameItem+"' foi cadastrado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"O item <b>${nameItem}</b> foi cadastrado com sucesso!","timeMsg": 4000}`);
             res.redirect("/painel/requisitor/items");
         }
     })
@@ -82,6 +84,7 @@ exports.requestItemAdmin = async (req,res) =>{
         
     })
 
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Solicitação recebida pelo administrador!");
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Solicitação recebida pelo administrador!");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Solicitação recebida pelo administrador!","timeMsg": 4000}`);
     res.redirect("/painel/requisitor/Novo");
 }

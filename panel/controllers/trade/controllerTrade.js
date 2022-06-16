@@ -179,15 +179,18 @@ exports.visitFormNew = async (req,res) => {
         .table("jcv_trade_visit")
         .then( data => {
             if(data[0] > 0){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario de visita da loja <b>"+shopInfo[0].jcv_trade_shops_name_fantasy+"</b> realizado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario de visita da loja <b>"+shopInfo[0].jcv_trade_shops_name_fantasy+"</b> realizado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulario de visita da loja <b>${shopInfo[0].jcv_trade_shops_name_fantasy}</b> realizado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/main");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao registrar o formulario de visita.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao registrar o formulario de visita.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Formulario de visita da loja <b>${shopInfo[0].jcv_trade_shops_name_fantasy}</b> realizado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/main");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Loja não encontrada.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Loja não encontrada.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Loja não encontrada","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/visit");
     }
 }
@@ -392,7 +395,8 @@ exports.visitFormModule = async (req,res) => {
         wb.write(nameData+'.xlsx', res);//o res faz o download
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma ação!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma ação!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione uma ação!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/listTrade");
     }
         
@@ -423,7 +427,8 @@ exports.exportFVPDF = async (req,res) => {
             }
         });
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione apenas um pedido por vez!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione apenas um pedido por vez!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione apenas um pedido por vez!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/listTrade");
     }
 }
@@ -486,16 +491,19 @@ exports.salesDayRegister = async (req,res) => {
             .table("jcv_trade_sales_form")
             .then( data => {
                 if(data[0] > 0){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Venda diaria <b>#"+shopSelect+"</b> realizado com sucesso.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Venda diaria <b>#"+shopSelect+"</b> realizado com sucesso.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Venda diaria <b>#${shopSelect}</b> realizado com sucesso","timeMsg": 3000}`);
                     res.redirect("/painel/trademkt/main");
                 }
             })
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Esta lojá já possui um registro na data informada.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Esta lojá já possui um registro na data informada.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Esta lojá já possui um registro na data informada.","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/main");
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira uma loja válida!.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Insira uma loja válida!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/salesDay");
     }
 }
@@ -582,7 +590,8 @@ exports.formSearchNew = async (req,res) => {
     .table("jcv_trade_form_create")
     .then( data => {
         if(data[0] > 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario registrado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario registrado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulario registrado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/main");
         }
     })
@@ -622,12 +631,14 @@ exports.formResponse = async (req,res) => {
                 getForm: getForm
             })
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você nao pode mais responder este formulário.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você nao pode mais responder este formulário.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você nao pode mais responder este formulário.","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/main");
         }
         
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulario não encontrado.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulario não encontrado.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Formulario não encontrado.","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/main");
     } 
 }
@@ -668,14 +679,16 @@ exports.formResponseAction = async (req,res) => {
                 //.where({})
                 //.table("jcv_trade_form_create")
                 .then( datas => {
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sua resposta do formulario <b>"+titleForm+"</b> foi registrada com sucesso!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sua resposta do formulario <b>"+titleForm+"</b> foi registrada com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sua resposta do formulario <b>${titleForm}</b> foi registrada com sucesso!","timeMsg": 3000}`);
                     res.redirect("/painel/trademkt/main");
                 })
             }
         })
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode mais responder o formulário <b>"+titleForm+"</b>!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode mais responder o formulário <b>"+titleForm+"</b>!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode mais responder o formulário <b>${titleForm}</b>!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/main");
     }
 
@@ -745,7 +758,8 @@ exports.listTradeSearch = async (req,res) => {
                 req.flash('resultSearchDataTrade', [ 1,data])
                 res.redirect("/painel/trademkt/listTrade");   
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum registro encontrado","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/listTrade");
             }
 
@@ -782,7 +796,8 @@ exports.listTradeSearch = async (req,res) => {
                 req.flash('resultSearchDataTrade', [ 2,data])
                 res.redirect("/painel/trademkt/listTrade");   
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum registro encontrado","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/listTrade");
             }
 
@@ -817,13 +832,15 @@ exports.listTradeSearch = async (req,res) => {
                 req.flash('resultSearchDataTrade', [ 3,data])
                 res.redirect("/painel/trademkt/listTrade");   
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum registro encontrado","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/listTrade");
             }
 
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Relatorio</b>.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Relatorio</b>.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione uma opção no filtro de <b>Relatorio</b>","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/listTrade");
     }
 
@@ -927,7 +944,8 @@ exports.actionVDmodule = async (req,res) => {
 
         wb.write(nameData+'.xlsx', res);//o res faz o download
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Ação</b>.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Ação</b>.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione uma opção no filtro de <b>Ação</b>.","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/listTrade");
     }
 
@@ -1076,7 +1094,8 @@ exports.actionFPmodule = async (req,res) => {
         wb.write(nameData+'.xlsx', res);//o res faz o download
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Ação</b>.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione uma opção no filtro de <b>Ação</b>.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione uma opção no filtro de <b>Ação</b>.","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/listTrade");
     }
 
@@ -1233,10 +1252,12 @@ exports.formSearchEditAction = async (req,res) => {
         .table("jcv_trade_form_create")
         .then( data => {
             if(data[0] != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Edição realizada com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Edição realizada com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Edição realizada com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/formSearch/edit/"+idForm);
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao editar o formulario!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao editar o formulario!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao editar o formulario!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/main");
             }
         })
@@ -1278,12 +1299,14 @@ exports.shopsRegisterNew = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Loja <b>${nameShopSocial}</b> foi cadastrado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você precisa colocar mais informações!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/shops");
     }
 
@@ -1345,14 +1368,16 @@ exports.shopsRegisterEdit = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Loja <b>"+nameShopSocial+"</b> foi cadastrado com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Loja <b>${nameShopSocial}</b> foi cadastrado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }else{
                 res.redirect("/painel/trademkt/shops");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você precisa colocar mais informações!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/shops");
     }
 
@@ -1375,7 +1400,8 @@ exports.shopsRegisterActions = async (req,res) => {
         //Exportar
         actionShops(req,res,allIds)
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Informe o tipo de operação!.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Informe o tipo de operação!.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Informe o tipo de operação!.","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/shops");
     }
 }
@@ -1455,9 +1481,11 @@ async function actionShopsEnabled(req,res,allIds){
     .table("jcv_trade_shops")
     .then(data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+allIds.length+"</b> teve seu status alterado para <b>Habilitado</b>!.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+allIds.length+"</b> teve seu status alterado para <b>Habilitado</b>!.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${allIds.length}</b> teve seu status alterado para <b>Habilitado</b>!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/shops");
         }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/shops");
         }
     })
@@ -1472,9 +1500,11 @@ async function actionShopsDisabled(req,res,allIds){
     .table("jcv_trade_shops")
     .then(data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+allIds.length+"</b> teve seu status alterado para <b>Habilitado</b>!.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+allIds.length+"</b> teve seu status alterado para <b>Habilitado</b>!.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${allIds.length}</b> teve seu status alterado para <b>Desabilitado</b>!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/shops");
         }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/shops");
         }
     })
@@ -1556,10 +1586,12 @@ exports.saveSetUsers = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b> foram atualizados com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b> foram atualizados com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Os usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b> foram atualizados com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao atualizar usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao atualizar usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }
         })
@@ -1572,10 +1604,12 @@ exports.saveSetUsers = async (req,res) => {
         .table("jcv_trade_shops")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram removidos os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram removidos os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Foram removidos os usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao remover os usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/shops");
             }
         })
@@ -1595,10 +1629,12 @@ exports.deleteFV = async (req,res) => {
     .table("jcv_trade_visit")
     .then( data => {
         if(data == 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulário removido com sucesso","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao remover o formulário","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }
     })
@@ -1613,10 +1649,12 @@ exports.deleteVD = async (req,res) => {
     .table("jcv_trade_sales_form")
     .then( data => {
         if(data == 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário removido com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulário removido com sucesso","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao remover o formulário.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro ao remover o formulário","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }
     })
@@ -1658,10 +1696,12 @@ exports.saveNewProduct = async (req,res) => {
         .table("jcv_trade_products")
         .then( data => {
             if(data[0] != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> registrado com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> registrado com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produto <b>${productName}</b> registrado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao adicionar o <b>"+productName+"</b>.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao adicionar o <b>"+productName+"</b>.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao adicionar o <b>${productName}</b>.","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }
         })
@@ -1691,10 +1731,12 @@ exports.editNewProduct = async (req,res) => {
         .table("jcv_trade_products")
         .then( data => {
             if(data[0] != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> editado com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> editado com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produto <b>${productName}</b> editado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao editar o <b>"+productName+"</b>.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao editar o <b>"+productName+"</b>.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao editar <b>${productName}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }
         })
@@ -1715,10 +1757,12 @@ exports.actionProductsTrade = async (req,res) => {
         .table("jcv_trade_products")
         .then( data => {
             if(data[0] != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>HABILITADOS</b> com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>HABILITADOS</b> com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produtos <b>HABILITADOS</b> com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao habilitar os produtos!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao habilitar os produtos!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao habilitar os produtos!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }
         })
@@ -1731,15 +1775,18 @@ exports.actionProductsTrade = async (req,res) => {
         .table("jcv_trade_products")
         .then( data => {
             if(data[0] != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>DESABILITADOS</b> com sucesso!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>DESABILITADOS</b> com sucesso!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produtos <b>DESABILITADOS</b> com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao desabilitar os produtos!.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao desabilitar os produtos!.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao desabilitar os produtos!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/products");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Escolha uma operação");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Escolha uma operação");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Escolha uma operação!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/products");
     }
 }
@@ -1782,17 +1829,20 @@ exports.deleteFPform = async (req,res) => {
                         //ok
                     })
                     
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario e suas respostas deletados com sucesso");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulario e suas respostas deletados com sucesso");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulario e suas respostas deletados com sucesso!","timeMsg": 3000}`);
                     res.redirect("/painel/trademkt/listTrade");
 
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao deletar seu formulario");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao deletar seu formulario");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao deletar seu formulario","timeMsg": 3000}`);
                     res.redirect("/painel/trademkt/listTrade");
                 }
             })
 
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao deletar as resposts do formulario. Elas já foram excluidas.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao deletar as resposts do formulario. Elas já foram excluidas.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao deletar as resposts do formulario. Elas já foram excluidas","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }
     })
@@ -1821,11 +1871,13 @@ exports.removeFPresponses = async (req,res) => {
                 //ok
             })
             
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Respostas do formulário foram deletados com sucesso");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Respostas do formulário foram deletados com sucesso");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Respostas do formulário foram deletados com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
 
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhuma resposta encontrada para este formulario");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhuma resposta encontrada para este formulario");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhuma resposta encontrada para este formulario","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/listTrade");
         }
     })

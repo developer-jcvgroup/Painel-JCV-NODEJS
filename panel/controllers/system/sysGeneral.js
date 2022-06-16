@@ -27,14 +27,16 @@ exports.closeUpdateSingle = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update lido com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update lido com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update lido com sucesso","timeMsg": 3000}`);
             if(moduleApp != ''){
                 res.redirect(moduleApp);
             }else{
                 res.redirect(URL_GET_PARAMS)
             }
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro","timeMsg": 3000}`);
             if(moduleApp != ''){
                 res.redirect(moduleApp);
             }else{

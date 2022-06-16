@@ -18,10 +18,12 @@ exports.editSaveDepartment = async (req,res) => {
     database.update({sys_department_name: editName, sys_department_enabled: editEnabled}).where({sys_department_id: id}).table("jcv_departments").then( data => {
 
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Departamento salvo!.","timeMsg": 3000}`);
             res.redirect("/painel/system/departamentos");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao salvar.","timeMsg": 3000}`);
             res.redirect("/painel/system/departamentos");
         }
     
@@ -37,10 +39,12 @@ exports.saveNewDepartment = async (req,res) => {
         sys_department_enabled: depEnabled
     }).table("jcv_departments").then( data => {
         if(data > 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Departamento salvo!.","timeMsg": 3000}`);
             res.redirect("/painel/system/departamentos");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao salvar.","timeMsg": 3000}`);
             res.redirect("/painel/system/departamentos");
         }
     })
@@ -65,10 +69,12 @@ exports.saveUnity = (req,res) =>{
         sys_unity_enabled: unityEnabled
     }).table("jcv_unitys").then( data => {
         if(data > 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Departamento salvo!","timeMsg": 3000}`);
             res.redirect("/painel/system/unidades");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao salvar","timeMsg": 3000}`);
             res.redirect("/painel/system/unidades");
         }
     })
@@ -87,10 +93,12 @@ exports.saveEditUnity = (req,res) =>{
         sys_unity_enabled: unityEnabled
     }).where({sys_unity_id: id}).table("jcv_unitys").then( data => {
         if(data > 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Departamento salvo!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Departamento salvo!","timeMsg": 3000}`);
             res.redirect("/painel/system/unidades");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao salvar.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao salvar","timeMsg": 3000}`);
             res.redirect("/painel/system/unidades");
         }
     })

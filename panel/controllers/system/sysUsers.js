@@ -87,7 +87,8 @@ exports.saveNewUser = async (req,res) => {
 
 
         if(validationCPF != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| CPF já cadastrado!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| CPF já cadastrado!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"CPF já cadastrado!","timeMsg": 3000}`);
             res.redirect("/painel/system/users");
         }else{
 
@@ -178,7 +179,8 @@ exports.saveNewUser = async (req,res) => {
                         emailSystemExe.sendMailExe(userEmailCorporativo, 'Conta Criada', 'Conta Criada', 'Sistema JCV', userName, textOne, textTwo);
     
     
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi cadastrado com sucesso, um e-mail de confirmação foi enviado!");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi cadastrado com sucesso, um e-mail de confirmação foi enviado!");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi cadastrado com sucesso, um e-mail de confirmação foi enviado!","timeMsg": 3000}`);
                         res.redirect("/painel/system/users");
                     }
                 })
@@ -189,7 +191,8 @@ exports.saveNewUser = async (req,res) => {
 
         
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres, ou o setor não foi definido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres, ou o setor não foi definido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"O CPF precisa ter no minimo <b>11</b> caracteres, ou o setor não foi definido!","timeMsg": 3000}`);
         res.redirect("/painel/system/users");
     }
 }
@@ -300,7 +303,8 @@ exports.editSaveUser = async (req,res) => {
             
                     }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                         if(data != ''){
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi alterado com sucesso","timeMsg": 3000}`);
                             res.redirect("/painel/system/users");
                         }
                     })
@@ -326,7 +330,8 @@ exports.editSaveUser = async (req,res) => {
                         sys_reports_perm_admin: userReportAdmin
                     }).table("jcv_users_permissions").then(data => {
                         if(data != ''){
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi alterado com sucesso","timeMsg": 3000}`);
                             res.redirect("/painel/system/users");
                         }
                     })
@@ -334,7 +339,8 @@ exports.editSaveUser = async (req,res) => {
             })
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O CPF precisa ter no minimo <b>11</b> caracteres!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"O CPF precisa ter no minimo <b>11</b> caracteres!","timeMsg": 3000}`);
         res.redirect("/painel/system/users");
     }
 }
@@ -346,15 +352,18 @@ exports.resetPassUser = async (req,res) => {
         if(data == 1){
 
             if(idUser == GLOBAL_DASH[0]){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"A senha do usuario foi resetada com sucesso!","timeMsg": 3000}`);
                 req.session.cookieLogin = undefined;
                 res.redirect("/login");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"A senha do usuario foi resetada com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/system/users");
             }            
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno, tente novamente mais tarde","timeMsg": 3000}`);
             res.redirect("/painel/system/users");
         }
     })
@@ -367,15 +376,17 @@ exports.resetPassUserSingle = async (req,res) => {
         if(data == 1){
 
             if(idUser == GLOBAL_DASH[0]){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"A senha do usuario foi resetada com sucesso!","timeMsg": 3000}`);
                 req.session.cookieLogin = undefined;
                 res.redirect("/login");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| A senha do usuario foi resetada com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"A senha do usuario foi resetada com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/system/users");
             }            
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno, tente novamente mais tarde");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno, tente novamente mais tarde","timeMsg": 3000}`);
             res.redirect("/painel/system/users");
         }
     })
@@ -470,7 +481,8 @@ exports.downloadDataUsers = async (req,res) => {
             wb.write(nameData+'.xlsx', res)
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione ao menos um usuario");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione ao menos um usuario");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione ao menos um usuario","timeMsg": 3000}`);
         res.redirect("/painel/system/users");
     }
 }

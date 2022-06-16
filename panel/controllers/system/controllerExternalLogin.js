@@ -49,7 +49,8 @@ exports.moduleLoginExternal = async (req,res) => {
                 }, 500);
             }else{
                 //Erro ao criar
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao fazer login no portal. Contate um administrador.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao fazer login no portal. Contate um administrador.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao fazer login no portal. Contate um administrador.","timeMsg": 3000}`);
                 res.redirect("/painel/cursos/main");
             }
         })

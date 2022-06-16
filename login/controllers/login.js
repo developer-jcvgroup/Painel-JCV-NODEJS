@@ -47,7 +47,7 @@ exports.commandLogar = async (req, res) =>{
                     }
                 }else{
                     //Senha incorreta
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Senha incorreta");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"Senha Incorreta!","timeMsg": 3000}');
                     res.redirect("/login");
                 }
             }else if(data[0].cv_userPassword == null){
@@ -71,7 +71,7 @@ exports.commandLogar = async (req, res) =>{
 
         }else{
             //Erro conta não econtrada
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Usuario inexistente");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Nenhum usuário encontrado!","timeMsg": 3000}');
             res.redirect("/login");
         }
     })
@@ -100,16 +100,16 @@ exports.resetPassWord = async (req,res) => {
                 const textTwo = `Sua senha foi redefinida!. <b>Efetue o login usando somente seu CPF</b> e em seguida uma tela pedira para você inserir sua nova senha.`;
                 emailSystemExe.sendMailExe(arr, 'Pedido de redefinição de senha', 'Redefinição de senha', 'Sistema JCV GROUP', data[0].jcv_userNamePrimary, textOne, textTwo);
 
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Um e-mail foi enviado, senha resetada com sucesso");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "success","message":"Sua senha foi resetada com sucesso! E-mail com as instruções foi enviado.","timeMsg": 5000}');
                 res.redirect("/login");
             }else{
                 //error
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| CPF não encontrado");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Nenhum dado foi encontrado.","timeMsg": 3000}');
                 res.redirect("/login");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira seu CPF para a recuperação");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Insira seu CPF para a recuperação!","timeMsg": 3000}');
         res.redirect("/login");
     }
 }

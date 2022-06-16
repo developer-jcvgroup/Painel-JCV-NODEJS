@@ -23,7 +23,8 @@ exports.sysNewpassword = async (req,res) => {
     var passTwo = req.body.sysNewPassTwo;
 
     if(passOne != passTwo){
-      res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Ambas as senha não coincidem! revise-as");
+      //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Ambas as senha não coincidem! revise-as");
+      res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Ambas as senha não coincidem! revise-as","timeMsg": 3000}`);
       res.redirect("/painel/perfil");
     }else{
 
@@ -32,10 +33,12 @@ exports.sysNewpassword = async (req,res) => {
         
         await database.update({jcv_userPassword: passwordHash}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data => {
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Senha definida com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Senha definida com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Senha definida com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel");
         }).catch(err => {
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao salvar sua senha.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao salvar sua senha.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao salvar sua senha","timeMsg": 3000}`);
             res.redirect("/painel");
         })
         
@@ -58,11 +61,13 @@ exports.updateDataUser = async (req,res) =>{
 
   await database.update({jcv_userNamePrimary: userName, jcv_userNameSecundary: userName, jcv_userEmailCorporate: userEmailCorp, jcv_userEmailFolks: userEmailPer, jcv_userExtension: userRamal, jcv_sysEmail: userApps, jcv_userCpf: userCpf}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
-      res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Seus dados foram atualizados com sucesso!");
+      //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Seus dados foram atualizados com sucesso!");
+      res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Seus dados foram atualizados com sucesso!","timeMsg": 3000}`);
       res.redirect("/painel");
     }
   }).catch(err => {
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao atualizar seus dados!");
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao atualizar seus dados!");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro ao atualizar seus dados!","timeMsg": 3000}`);
     res.redirect("/painel");
   })
   
@@ -74,16 +79,19 @@ exports.updateImageUser = async (req,res) => {
 
   if(urlAvataars.length > 20){
   await database.update({jcv_userImageIcon: urlAvataars}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
-    if(data){
-      res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Avataars atualizada com sucesso!");
-      res.redirect("/painel");
+  if(data){
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Avataars atualizada com sucesso!");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Avataars atualizada com sucesso!","timeMsg": 3000}`);
+    res.redirect("/painel");
     }
   }).catch(err => {
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars: erro ao atualizar seus dados!");
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Avataars: erro ao atualizar seus dados!");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Avataars: erro ao atualizar seus dados","timeMsg": 3000}`);
     res.redirect("/painel");
-  })
+    })
   }else{
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Avataars: não foi idenficado nenhuma modificação.");
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Avataars: não foi idenficado nenhuma modificação.");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Avataars: não foi idenficado nenhuma modificação","timeMsg": 3000}`);
     res.redirect("/painel");
   }
 

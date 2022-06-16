@@ -97,15 +97,18 @@ exports.saveNotifications = async (req,res) => {
         .table("jcv_notifications")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+notificationsTitle+"</b> criado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+notificationsTitle+"</b> criado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${notificationsTitle}</b> criado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/notifications/main");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao criar","timeMsg": 3000}`);
                 res.redirect("/painel/notifications/main");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você precisa inserir mais informações");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você precisa inserir mais informações");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você precisa inserir mais informações","timeMsg": 3000}`);
         res.redirect("/painel/notifications/new");
     }
 }
@@ -141,15 +144,18 @@ exports.saveEditNotifications = async (req,res) => {
         .table("jcv_notifications")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+notificationsTitle+"</b> foi editado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+notificationsTitle+"</b> foi editado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${notificationsTitle}</b> foi editado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/notifications/main");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao editar","timeMsg": 3000}`);
                 res.redirect("/painel/notifications/main");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você precisa inserir mais informações");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você precisa inserir mais informações");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você precisa inserir mais informações","timeMsg": 3000}`);
         res.redirect("/painel/notifications/new");
     }
 }
@@ -163,10 +169,12 @@ exports.deleteNotifications = async (req,res) => {
     .table("jcv_notifications")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação deletada com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação deletada com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Notificação deletada com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/notifications/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao excluir","timeMsg": 3000}`);
             res.redirect("/painel/notifications/main");
         }
     })
@@ -183,10 +191,12 @@ exports.resetViews = async (req,res) =>{
     .table("jcv_notifications")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação resetada com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação resetada com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Notificação resetada com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/notifications/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao excluir","timeMsg": 3000}`);
             res.redirect("/painel/notifications/main");
         }
     })

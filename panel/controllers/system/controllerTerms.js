@@ -40,10 +40,12 @@ exports.termsSave = async (req,res) => {
     .table("jcv_sys_term")
     .then( data => {
         if( data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Atualização computada com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Atualização computada com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Atualização computada com sucesso!.","timeMsg": 3000}`);
             res.redirect("/painel/terms");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao computar atualização");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Erro ao computar atualização");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao computar atualização.","timeMsg": 3000}`);
             res.redirect("/painel/terms");
         }
     })

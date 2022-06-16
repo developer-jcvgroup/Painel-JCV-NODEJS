@@ -132,7 +132,8 @@ exports.createOrder = async(req,res) => {
         
         //Caso tenha algum erro na insersão de itens do pedido
         if(errorArray.length > 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição regsitrada!.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição regsitrada!.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os itens: "${errorArray}" não puderam ser adicionados, requisição registrada!","timeMsg": 4000}`);
             res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrder);
         }else{
 
@@ -176,12 +177,14 @@ exports.createOrder = async(req,res) => {
                 
             })
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição realizada com sucesso. #"+idOrder+"!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição realizada com sucesso. #"+idOrder+"!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"#${idOrder}. Requisição realizada com sucesso.","timeMsg": 4000}`);
             res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrder);
             
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira ao menos um item na requisição.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Insira ao menos um item na requisição.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Insira ao menos um item na requisição.","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/Novo")
     }
 
@@ -191,7 +194,8 @@ exports.viewRequest = async (req,res) => {
 
     //Verificando se o id foi inserido no HTTP
     if(req.params.id == undefined){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Informe um pedido válido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Informe um pedido válido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Insira um pedido válido","timeMsg": 4000}`);
         res.redirect("/painel")
     }else{
 
@@ -218,7 +222,8 @@ exports.viewRequest = async (req,res) => {
 
             //Verificando se foi encontrado
             if(orderSearch == ""){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum pedido encontrado.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum pedido encontrado.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum pedido encontrado","timeMsg": 4000}`);
                 res.redirect("/painel/requisitor/ListaRequisicoes")
             }else{
                 //Buscando os itens do pedido
@@ -240,7 +245,8 @@ exports.viewRequest = async (req,res) => {
 
             //Verificando se foi encontrado
             if(orderSearch == ""){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum pedido encontrado.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum pedido encontrado.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum pedido encontrado","timeMsg": 4000}`);
                 res.redirect("/painel/requisitor/minhasRequisicoes")
             }else{
                 //Buscando os itens do pedido
@@ -709,7 +715,8 @@ exports.actionSearchOrder = async (req,res) => {
         req.flash('resultSearchDataRequisitor', resultSearch)
         res.redirect("/painel/requisitor/ListaRequisicoes");
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum registro encontrado","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/ListaRequisicoes");
     }
 
@@ -755,11 +762,13 @@ exports.actionCommandsORders = async(req,res) => {
                 res.redirect("/painel/requisitor/ListaRequisicoes");
             }
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Selecione algum pedido!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Selecione algum pedido!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione algum pedido","timeMsg": 4000}`);
             res.redirect("/painel/requisitor/ListaRequisicoes");
         }       
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Selecione alguma ação!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Selecione alguma ação!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione alguma ação","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/ListaRequisicoes");
     }
     
@@ -800,7 +809,8 @@ exports.searchMyRequest = async (req,res) => {
         req.flash('resultSearchMyRequests', resultSearch)
         res.redirect("/painel/requisitor/MinhasRequisicoes");
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Nenhum registro encontrado.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum registro encontrado","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/MinhasRequisicoes");
     }
 }
@@ -840,7 +850,8 @@ exports.editRequestUser = async (req,res) => {
 
                 //Validando e criando um cookie caso o status seja diferente de solicitado
                 if(result[0].sys_req_orderStatus != 1){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar este pedido por conta do status atual dele.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar este pedido por conta do status atual dele.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode editar este pedido por conta do status atual dele","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/ListaRequisicoes");
                 }else{
                     //O pedido pode ser exibido
@@ -862,7 +873,8 @@ exports.editRequestUser = async (req,res) => {
                     })
                 }
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Requisição não encontrada","timeMsg": 4000}`);
                 res.redirect("/painel/requisitor/ListaRequisicoes");
             }
         }else if(validateUser == false){
@@ -883,7 +895,8 @@ exports.editRequestUser = async (req,res) => {
 
             //Validando e criando um cookie caso o status seja diferente de solicitado
             if(result[0].sys_req_orderStatus != 1){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar este pedido por conta do status atual dele.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar este pedido por conta do status atual dele.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode editar este pedido por conta do status atual dele","timeMsg": 4000}`);
                 res.redirect("/painel/requisitor/minhasRequisicoes");
             }else{
                 //Validando se o pedido é do usuario ou não
@@ -908,13 +921,15 @@ exports.editRequestUser = async (req,res) => {
                     })
 
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Requisição não encontrada","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/minhasRequisicoes");
                 }
             }
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Requisição não encontrada.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Requisição não encontrada","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
@@ -1035,7 +1050,8 @@ exports.editRequestUserCommand = async(req,res) => {
                 
                 //Valida se teve algum erro no insert dos itens
                 if(errorArray.length > 0){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição regsitrada!.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição registrada!.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os itens: "${errorArray}" não puderam ser adicionados, requisição registrada!","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrderUpdate);
                 }else{
 
@@ -1078,7 +1094,8 @@ exports.editRequestUserCommand = async(req,res) => {
                         
                     })
 
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição editada com sucesso. #"+idOrderUpdate+"!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição editada com sucesso. #"+idOrderUpdate+"!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"#${idOrderUpdate} editada com sucess!","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrderUpdate);
                 }
             }
@@ -1163,7 +1180,8 @@ exports.editRequestUserCommand = async(req,res) => {
                 
                 //Valida se teve algum erro no insert dos itens
                 if(errorArray.length > 0){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição regsitrada!.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os itens: "+errorArray+" não puderam ser adicionados, requisição registrada!.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os itens: "${errorArray}" não puderam ser adicionados, requisição registrada!","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrderUpdate);
                 }else{
 
@@ -1205,13 +1223,15 @@ exports.editRequestUserCommand = async(req,res) => {
                         
                     })
 
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição editada com sucesso. #"+idOrderUpdate+"!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Requisição editada com sucesso. #"+idOrderUpdate+"!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"#${idOrderUpdate} editado com sucesso!","timeMsg": 4000}`);
                     res.redirect("/painel/requisitor/VisualizarRequisicao/"+idOrderUpdate);
                 }
             }
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar esta requisição.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode editar esta requisição.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode editar esta requisição","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/minhasRequisicoes");
     }
 }
@@ -1417,14 +1437,13 @@ exports.myRequestRemove = async (req,res) => {
             
         })
 
-
-
-
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Exclusão realizada com sucesso!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/MinhasRequisicoes");
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode excluir este pedido!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/MinhasRequisicoes");
     }
 }
@@ -1492,11 +1511,12 @@ exports.adminRequestRemove = async (req,res) => {
             
         })
 
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Exclusão realizada com sucesso!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Exclusão realizada com sucesso!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/ListaRequisicoes");
-
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não pode excluir este pedido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode excluir este pedido!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/ListaRequisicoes");
     }
 }
@@ -1719,7 +1739,8 @@ async function modifiOrderStatus(req,res,ids,code){
 
         //Validando se os arrays possuem dados
         if(arrayErr.length > 0){
-            res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| O(s) pedido(s) ("+arrayErr+") não foram atualizados por conta dos status atuais.");
+            //res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| O(s) pedido(s) ("+arrayErr+") não foram atualizados por conta dos status atuais.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"O(s) pedido(s) (${arrayErr}) não foram atualizados por conta dos status atuais","timeMsg": 4000}`);
         }
         
         if(arrayOkay.length > 0){
@@ -1745,7 +1766,8 @@ async function modifiOrderStatus(req,res,ids,code){
                 }
             })
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O(s) pedido(s) ("+arrayOkay+") foram atualizados com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O(s) pedido(s) ("+arrayOkay+") foram atualizados com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O(s) pedido(s) (${arrayOkay}) foram atualizados com sucesso.","timeMsg": 4000}`);
         }
 
 
@@ -1774,7 +1796,8 @@ async function modifiOrderStatus(req,res,ids,code){
 
         //Validando se os arrays possuem dados
         if(arrayErr.length > 0){
-            res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| Os pedidos ("+arrayErr+") não foram atualizados por conta dos status atuais");
+            //res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| Os pedidos ("+arrayErr+") não foram atualizados por conta dos status atuais");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos (${arrayErr}) não foram atualizados por conta dos status atuais","timeMsg": 4000}`);
         }
         if(arrayOkay.length > 0){
 
@@ -1799,7 +1822,8 @@ async function modifiOrderStatus(req,res,ids,code){
                 }
             })
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status CANCELADO para os pedidos: ("+arrayOkay+") foi realizado com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status CANCELADO para os pedidos: ("+arrayOkay+") foi realizado com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status CANCELADO para os pedidos: (${arrayOkay}) foi realizado com sucesso","timeMsg": 4000}`);
         }
 
         res.redirect("/painel/requisitor/ListaRequisicoes");
@@ -1825,8 +1849,8 @@ async function modifiOrderStatus(req,res,ids,code){
 
         //Validando se os arrays possuem dados
         if(arrayErr.length > 0){
-
-            res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| Os pedidos ("+arrayErr+") não foram atualizados, altere para status EM SEPARAÇÃO");
+            //res.cookie('SYS-NOTIFICATION-EXE2', "SYS02| Os pedidos ("+arrayErr+") não foram atualizados, altere para status EM SEPARAÇÃO");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos (${arrayErr}) não foram atualizados, altere para status EM SEPARAÇÃO","timeMsg": 4000}`);
         }
         if(arrayOkay.length > 0){
 
@@ -1851,14 +1875,13 @@ async function modifiOrderStatus(req,res,ids,code){
                 }
             })
 
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status REQUSIÇÃO ENVIADA para os pedidos: ("+arrayOkay+") foi realizado com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status REQUSIÇÃO ENVIADA para os pedidos: ("+arrayOkay+") foi realizado com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status REQUSIÇÃO ENVIADA para os pedidos: (${arrayOkay}) foi realizado com sucesso","timeMsg": 4000}`);
         }
         res.redirect("/painel/requisitor/ListaRequisicoes");
     }
 }
 
 async function sendRequests (req,res,idsOrders){
-
-
     res.redirect("/painel/requisitor/enviarRequisicoes/"+idsOrders)
 }

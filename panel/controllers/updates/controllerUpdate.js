@@ -69,15 +69,18 @@ exports.updatesNewSave = async (req,res) => {
         .table("sys_update")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update <b>"+updateTitle+"</b> criado com sucesso.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update <b>"+updateTitle+"</b> criado com sucesso.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update <b>${updateTitle}</b> criado com sucesso","timeMsg": 3000}`);
                 res.redirect("/painel/updates/main");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar o update <b>"+updateTitle+"</b>");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar o update <b>"+updateTitle+"</b>");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao criar o update <b>${updateTitle}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/updates/new");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Existem dados essenciais para serem inseridos");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Existem dados essenciais para serem inseridos");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Existem dados essenciais para serem inseridos","timeMsg": 3000}`);
         res.redirect("/painel/updates/new");
     }
     
@@ -92,10 +95,12 @@ exports.updatesDisabled = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update desabilitado com sucesso","timeMsg": 3000}`);
             res.redirect("/painel/updates/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao desabilitar o update","timeMsg": 3000}`);
             res.redirect("/painel/updates/new");
         }
     })
@@ -110,10 +115,12 @@ exports.updatesDelete = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update desabilitado com sucesso.","timeMsg": 3000}`);
             res.redirect("/painel/updates/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao desabilitar o update.","timeMsg": 3000}`);
             res.redirect("/painel/updates/new");
         }
     })
@@ -128,10 +135,12 @@ exports.updatesEnabled = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update desabilitado com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update desabilitado com sucesso.","timeMsg": 3000}`);
             res.redirect("/painel/updates/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao desabilitar o update");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao desabilitar o update.","timeMsg": 3000}`);
             res.redirect("/painel/updates/new");
         }
     })
@@ -170,7 +179,8 @@ exports.updateEdit = async (req,res) => {
                 })  
             })
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum update encontrado");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum update encontrado");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhum update encontrado.","timeMsg": 3000}`);
             res.redirect("/painel/updates/main");
         }
     })
@@ -202,15 +212,18 @@ exports.updateEditSave = async (req,res) => {
         .table("sys_update")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update <b>"+updateTitle+"</b> editado com sucesso.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update <b>"+updateTitle+"</b> editado com sucesso.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update <b>${updateTitle}</b> editado com sucesso.","timeMsg": 3000}`);
                 res.redirect("/painel/updates/edit/"+idUpdate);
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar o update <b>"+updateTitle+"</b>");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar o update <b>"+updateTitle+"</b>");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro interno ao editar o update <b>${updateTitle}</b>.","timeMsg": 3000}`);
                 res.redirect("/painel/updates/edit/"+idUpdate);
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Existem dados essenciais para serem inseridos");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Existem dados essenciais para serem inseridos");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Existem dados essenciais para serem inseridos.","timeMsg": 3000}`);
         res.redirect("/painel/updates/new");
     }
     

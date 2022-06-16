@@ -43,7 +43,8 @@ exports.alterDataUsers = (req, res, idUser, userName, userAtivo) => {
         //console.log('ok: '+data)
     })
 
-    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi desabilitado(a) com sucesso.");
+    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario '"+userName+"' foi desabilitado(a) com sucesso.");
+    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi desabilitado(a) com sucesso","timeMsg": 3000}`);
     res.redirect("/painel/system/users");
 
 }

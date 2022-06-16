@@ -135,27 +135,32 @@ exports.finalizarSolicitacao = async (req,res) => {
                         .then( datas => {
                             //Registro confirmado
                             //Redirecionando para a pagina status
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Benefício referente ao mês ("+getMonthReferece()+") registrado!");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Benefício referente ao mês (${getMonthReferece()}) registrado!","timeMsg": 3000}`);
                             res.redirect("/painel/beleza/status");
                         })
                     }).catch(err => {
                         //Erro ao registrar
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Erro ao registrar sua solcitação, erro interno");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Erro ao registrar sua solcitação, erro interno");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao registrar sua solcitação, erro interno","timeMsg": 3000}`);
                         res.redirect("/painel/beleza/solicitar");
                     })
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Benefício referente ao mês ("+getMonthReferece()+") já registrado!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Benefício referente ao mês ("+getMonthReferece()+") já registrado!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Benefício referente ao mês (${getMonthReferece()}) já registrado!","timeMsg": 3000}`);
                     res.redirect("/painel/beleza/status");
                 }
             })
         }else{
             //Erro ao validar os produtos
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Um dos produtos inserido é inválido, revise-o");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Um dos produtos inserido é inválido, revise-o");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Um dos produtos inserido é inválido, revise-o.","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitar");
         }
     }).catch(err => {
         //Erro ao validar os produtos
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Os produtos inserido são inválidos, revise-os");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Os produtos inserido são inválidos, revise-os");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os produtos inserido são inválidos, revise-os.","timeMsg": 3000}`);
         res.redirect("/painel/beleza/solicitar");
     })
 }
@@ -184,7 +189,8 @@ exports.listOrder = async (req,res,next) => {
 
         //Verificando se o pedido esta com a solicitação de cancelamento e se é deste mes
         if(requestUser[0]["sys_blz_requestStatus"] == 5){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.","timeMsg": 3000}`);
             var statusCancel = true;
         }else{
             var statusCancel = false;
@@ -226,12 +232,14 @@ exports.cancelOrder = async (req,res) => {
 
     if(validateCancel >= 2){
         //Já atingiu a cota
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você não pode mais cancelar sua solicitação sua cota foi excedida.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você não pode mais cancelar sua solicitação sua cota foi excedida.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode mais cancelar sua solicitação sua cota foi excedida.","timeMsg": 3000}`);
         res.redirect("/painel/beleza/status");
     }else{
         //Cancelando o pedido
         database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: idOrder}).table("jcv_blz_orders").then(data => {
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!.","timeMsg": 3000}`);
             res.redirect("/painel/beleza/status");
         })
     }
@@ -295,7 +303,8 @@ exports.searchRequests = async (req,res) => {
                 req.flash('resultReferenceDate',referenceDate)
                 res.redirect("/painel/beleza/solicitacoes");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrado em sua busca");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrado em sua busca");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhuma solicitação encontrado em sua busca.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }
         })
@@ -314,7 +323,8 @@ exports.searchRequests = async (req,res) => {
                 req.flash('resultSearchData', data)
                 res.redirect("/painel/beleza/solicitacoes");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrada em sua busca");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhuma solicitação encontrada em sua busca");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Nenhuma solicitação encontrada em sua busca.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }
         })
@@ -353,15 +363,18 @@ exports.registerProduct = async (req,res) => {
             sys_blz_productImage: productLinkImg
         }).table("jcv_blz_products").then(data => {
             if(data != ""){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+productName+"' foi cadastrado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+productName+"' foi cadastrado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O produto <b>${productName}</b> foi cadastrado com sucesso!.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/produtos");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao inserir o produto");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao inserir o produto");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao inserir o produto.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/produtos");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| SKU inválido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| SKU inválido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"SKU inválido!.","timeMsg": 3000}`);
         res.redirect("/painel/beleza/produtos");
     }
 }
@@ -396,10 +409,12 @@ exports.actionProductSave = async (req,res) => {
     .where({sys_blz_product_id: idProd})
     .table("jcv_blz_products").then(data => {
         if(data != ""){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+editproductName+"' foi salvo com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+editproductName+"' foi salvo com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O produto <b>${editproductName}</b> foi salvo com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/beleza/produtos");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao inserir o produto");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao inserir o produto");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao inserir o produto","timeMsg": 3000}`);
             res.redirect("/painel/beleza/produtos");
         }
     })
@@ -410,10 +425,12 @@ exports.actionProductDelete = async (req,res) => {
 
     database.where({sys_blz_product_id: id}).delete().table("jcv_blz_products").then( data => {
         if(data = 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto deletado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto deletado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produto deletado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/beleza/produtos");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao deletar o produto.");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao deletar o produto.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao deletar o produto.","timeMsg": 3000}`);
             res.redirect("/painel/beleza/produtos");
         }
     })
@@ -441,7 +458,8 @@ exports.statusProducts = async (req,res) => {
             
         }
 
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+updateSucess+" foram alterados. Total de: "+updateError+" não teve o status alterado.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+updateSucess+" foram alterados. Total de: "+updateError+" não teve o status alterado.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${updateSucess} foram alterados. Total de: ${updateError} não teve o status alterado.","timeMsg": 5000}`);
         res.redirect("/painel/beleza/produtos");
     }else if(action == "CMD02"){
         {
@@ -463,6 +481,7 @@ exports.statusProducts = async (req,res) => {
             }
     
             res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+updateSucess+" foram alterados. Total de: "+updateError+" não teve o status alterado.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${updateSucess} foram alterados. Total de: ${updateError} não teve o status alterado.","timeMsg": 5000}`);
             res.redirect("/painel/beleza/produtos");
         }
     }else if(action == "CMD03"){
@@ -529,7 +548,8 @@ exports.actionsCommandsOrder = async (req,res) => {
     const arrayPedidos = req.body.requestOrderId;
 
     if(arrayPedidos == undefined){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione algum pedido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione algum pedido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Selecione algum pedido!","timeMsg": 3000}`);
         res.redirect("/painel/beleza/solicitacoes");
     }
 
@@ -638,10 +658,12 @@ exports.actionsCommandsUnityCancel = async (req,res) => {
     database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: id, sys_blz_requestStatus: 2}).table("jcv_blz_orders").then(data => {
 
         if(data != ""){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Pedido #"+id+" cancelado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Pedido #"+id+" cancelado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Pedido #${id} cancelado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitacoes");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro, você não pode excluir o pedido #"+id);
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro, você não pode excluir o pedido #"+id);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não pode excluir o pedido #${id}","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitacoes");
         }
     })
@@ -1005,15 +1027,18 @@ async function alterarStatus(ids, status,req,res) {
     
         if(ordersNoUpdated != ""){
             if(ordersUpdated != ""){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${ordersNoUpdated} não podem ser alterados. ${ordersUpdated} teve o status alterado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos: não podem ser alterados");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos: não podem ser alterados");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos não podem ser alterados","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }
         }else{
-            console.log("Não tem pedidos")
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
+            //console.log("Não tem pedidos")
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado(s) com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitacoes");
         }
     }else if (status == "CMD03"){
@@ -1036,15 +1061,18 @@ async function alterarStatus(ids, status,req,res) {
     
         if(ordersNoUpdated != ""){
             if(ordersUpdated != ""){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Total de: ${ordersNoUpdated} não podem ser alterados. ${ordersUpdated} teve o status alterado com sucesso.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos: não podem ser alterados");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos não podem ser alterados");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Os pedidos não podem ser alterados.","timeMsg": 3000}`);
                 res.redirect("/painel/beleza/solicitacoes");
             }
         }else{
-            console.log("Não tem pedidos")
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
+            //console.log("Não tem pedidos")
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado com sucesso.","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitacoes");
         }
     }

@@ -27,12 +27,16 @@
     <link rel="stylesheet" href="/login/css/index.css">
     <link rel="stylesheet" href="/login/css/spinLoad.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="/js/jquery-3.5.1.min.js"></script>
-    <script src="/js/js.cookie.min.js"></script>
+
+
+    <script src="/js/global/jquery-3.5.1.min.js"></script>
+    <script src="/js/global/js.cookie.min.js"></script>
+    <script src="/js/global/notifications.js"></script>
+    <script src="/js/login/scripts-login.js"></script>
+
     <link rel="stylesheet" href="/panel/css/main/popups.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
     <link rel="shortcut icon" href="/logos/favicon.png" type="image/x-icon">
-    <script src="/js/scripts-login.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +85,7 @@
                         </a>
                     </div>
                     <div class="index-title-box">
-                        <span>Sistema JCV GROUP</span>
+                        <span>Portal JCV GROUP</span>
                     </div>
                     <div class="index-inputs-container">
                         <div class="index-row-form">
@@ -91,7 +95,7 @@
                             </div>
                         </div>
 
-                        <div class="index-row-form">
+                        <div class="index-row-form" id="login-div-inputs">
                             <div class="index-box-input" id="index-form-container-password">
                                 <!--  -->
                             </div>
@@ -99,11 +103,12 @@
 
                         <div class="index-row-commands">
                             <input hidden name="input-link-special" type="text" value="<%= linkspecial %>">
-                            <button class="class-loader g-recaptcha" data-sitekey="6LfOKqMfAAAAADhQdS-6kNvXTdfLwXtyshw0N_Rz" data-callback='onSubmit' data-action='submit' type="submit">logar</button>
-                        </div>
-                        <div class="index-help-pass">
+                            <button class="class-loader g-recaptcha" data-sitekey="6LfOKqMfAAAAADhQdS-6kNvXTdfLwXtyshw0N_Rz" data-callback='onSubmit' data-action='submit' type="submit">Logar</button>
                             <span id="index-recovery-open">Esqueci minha senha</span>
                         </div>
+                        <!-- <div class="index-help-pass">
+                            <span id="index-recovery-open">Esqueci minha senha</span>
+                        </div> -->
                         <div class="index-install-app">
                             <button type="button" id="setup_button" onclick="installApp()">Instalar App</button>
                         </div>
@@ -121,7 +126,7 @@
     <section class="index-recover-container-main">
         <div class="index-recover-center">
             <div class="index-recover-header">
-                <span>Recupera senha</span>
+                <span>Esqueceu sua senha?</span>
                 <span><i id="index-recover-close" class="ri-close-line"></i></span>
             </div>
             <div class="index-recover-body">
@@ -147,13 +152,18 @@
         </div>
     </section>
 </section>
-<section class="system-section-notification" id="system-section-notification">
+<section id="notifications-main">
+    <!--  -->
+    <!--  -->
+    <!--  -->
+</section>
+<!-- <section class="system-section-notification" id="system-section-notification">
     <div class="sys-notifi-container-main" id="sys-notifi-container-main">
 
-        <!-- itens inseridos dinamicamente -->
+        itens inseridos dinamicamente
 
     </div>
-</section>
+</section> -->
 <section class="system-lgpd-container" id="system-lgpd-container">
     <div class="system-lgpd-main">
         <span>Ao acessar o sistema você automaticamente <b>aceita os nossos termos</b> da Lei Geral de Proteção de Dados Pessoais (LGPD)

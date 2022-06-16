@@ -8,7 +8,8 @@ exports.saveNewReport = async (req,res) => {
     //console.log(req.body['sys-report-text'])
 
     if(dataReport == ''){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você precisa inserir algo para reportar");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você precisa inserir algo para reportar");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você precisa inserir algo para reportar.","timeMsg": 3000}`);
         res.redirect("/painel");
     }else{
         //Pegando quem é master
@@ -29,7 +30,8 @@ exports.saveNewReport = async (req,res) => {
         const textTwo = `Olá, o usuario <b>${GLOBAL_DASH[1]}</b> reportou: <br><br> <b>${dataReport}</b>`;
         emailSystemExe.sendMailExe(allMasters, 'Report System', 'Report System', 'Sistema', 'Masters', textOne, textTwo);
 
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Report enviado para o administrador");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Report enviado para o administrador");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Report enviado para o administrador.","timeMsg": 3000}`);
         res.redirect("/painel");
     }
 }

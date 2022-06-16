@@ -47,8 +47,8 @@ body, html{
     max-height: 1000px;
     margin: 0 auto;
     display: flex;
-    align-content: center;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     background: var(--background-one);
     white-space: nowrap;
     /*background-color: rgba(137, 43, 226, 0.226);*/
@@ -88,7 +88,7 @@ body, html{
     top: 4%;
     left: 2%;
     background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
+    box-shadow: 0 0 15px 0 var(--color-three);
     border-radius: 4px;
 }
 .index-cont-msg{
@@ -115,13 +115,14 @@ body, html{
 /***************************/
 /* CONTAINER LOGIN */
 .index-section-login{
-    width: 340px;
+    width: 370px;
     display: flex;
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     z-index: 1;
     position: absolute;
     right: 2%;
+    border-radius: 3px;
 }
 .index-login-container{
     width: 100%;
@@ -148,7 +149,7 @@ body, html{
     align-items: center;
 }
 .index-logo{
-    width: 45%;
+    width: 35%;
     object-fit: cover;
 }
 
@@ -172,11 +173,10 @@ body, html{
 
 .index-row-form{
     width: 100%;
-    margin-bottom: 26px;
+    margin-bottom: 32px;
     display: flex;
     justify-content: center;
 }
-
 .index-box-input{
     width: 100%;
     display: flex;
@@ -215,7 +215,7 @@ body, html{
     width: 100%;
     height: 50px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 .index-row-commands button{
@@ -237,6 +237,12 @@ body, html{
     color: var(--color-one);
     border: 1px solid var(--color-one);
     box-shadow: 0 0 4px 0 var(--color-three);
+}
+.index-row-commands span{
+    font-size: 0.8rem;
+    text-decoration: underline;
+    color: var(--color-two);
+    cursor: pointer;
 }
 
 .index-help-pass{
@@ -311,7 +317,7 @@ body, html{
     align-items: center;
 }
 .index-recover-header span:nth-child(1){
-    font-size: 1rem;
+    font-size: 1.3rem;
     color: var(--color-one);
 }
 .index-recover-header span:nth-child(2){
@@ -515,7 +521,7 @@ body, html{
 /********************************/
 /* LGPD */
 .system-lgpd-container{
-    width: 100%;
+    width: 90%;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -529,7 +535,7 @@ body, html{
     padding: 20px 10px;
     border-radius: 4px;
     background: var(--background-two);
-    box-shadow: 0 0 4px 0 var(--color-three);
+    box-shadow: 0 0 5px 0 var(--color-three);
 }
 .system-lgpd-main span{
     text-align: center;

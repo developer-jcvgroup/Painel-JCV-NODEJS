@@ -51,8 +51,9 @@ exports.encurtadorEdit = async (req,res) => {
         var page = "encurtador/encurtadorEdit";
         res.render("panel/index", {page: page, validateGet: validateGet})
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Link encurtado inexistente");
-            res.redirect("/painel/encurtador/main");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Link encurtado inexistente");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Link encurtado inexistente!","timeMsg": 3000}');
+        res.redirect("/painel/encurtador/main");
     }
     
 }
@@ -69,7 +70,8 @@ exports.encurtadorNewSave = async (req,res) => {
     const linkactive = req.body['encurtador-url-active']
 
     if(linkTitle == '' || linkOriginal == '' || linkShort == ''){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Alguns parametros faltantes!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Alguns parametros faltantes!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"Alguns parâmetros faltantes!","timeMsg": 3000}');
         res.redirect("/painel/encurtador/new");
     }else{
         //Validando se não existe uma url com este link
@@ -81,7 +83,8 @@ exports.encurtadorNewSave = async (req,res) => {
         .then( data => {
             if(data != ''){
                 //Link igual
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O link encurtado <b>"+linkShort+"</b> já existe! (criado por: <b>"+data[0].jcv_userNamePrimary+"</b>)");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| O link encurtado <b>"+linkShort+"</b> já existe! (criado por: <b>"+data[0].jcv_userNamePrimary+"</b>)");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"O link encurtado <b>'+linkShort+'</b> já existe! (criado por: <b>'+data[0].jcv_userNamePrimary+'</b>)!","timeMsg": 3000}');
                 res.redirect("/painel/encurtador/new");
             }else{
                 //Link disponivel
@@ -98,10 +101,12 @@ exports.encurtadorNewSave = async (req,res) => {
                 .table("jcv_sys_shortener")
                 .then(data => {
                     if(data != ''){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> criado com sucesso!");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> criado com sucesso!");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "success","message":"Encurtador <b>'+linkTitle+'</b> criado com sucesso!","timeMsg": 3000}');
                         res.redirect("/painel/encurtador/main");
                     }else{
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao criar o encurtador <b>"+linkTitle+"</b>");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao criar o encurtador <b>"+linkTitle+"</b>");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Erro interno ao criar o encurtador <b>'+linkTitle+'</b>","timeMsg": 3000}');
                         res.redirect("/painel/encurtador/new");
                     }
                 })
@@ -120,8 +125,9 @@ exports.encurtadorEditSave = async (req,res) => {
     const linkactive = req.body['encurtador-edit-url-active']
 
     if(linkTitle == '' || linkOriginal == '' || linkShort == ''){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Alguns parametros faltantes!");
-        res.redirect("/painel/encurtador/new");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Alguns parametros faltantes!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Alguns parametros faltantes!","timeMsg": 3000}');
+        res.redirect("/painel/encurtador/edit/"+idUrl);
     }else{
         //Validando se não existe uma url com este link
         database
@@ -133,7 +139,8 @@ exports.encurtadorEditSave = async (req,res) => {
             if(data != ''){
                 if(data[0].jcv_sys_shortener_link_active == 1 && data[0].jcv_sys_shortener_id == linkShort){
                     //Link igual
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| O link encurtado <b>"+linkShort+"</b> já existe!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| O link encurtado <b>"+linkShort+"</b> já existe!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"O link encurtado <b>'+linkShort+'</b> já existe!","timeMsg": 3000}');
                     res.redirect("/painel/encurtador/edit/"+idUrl);
                 }else{
                     //Link disponivel
@@ -149,10 +156,12 @@ exports.encurtadorEditSave = async (req,res) => {
                     .table("jcv_sys_shortener")
                     .then(data => {
                         if(data == 1){
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> editado com sucesso!");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> editado com sucesso!");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Encurtador <b>${linkTitle}</b> editado com sucesso!","timeMsg": 3000}`);
                             res.redirect("/painel/encurtador/main");
                         }else{
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao editar o encurtador <b>"+linkTitle+"</b>");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao editar o encurtador <b>"+linkTitle+"</b>");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Erro interno ao editar o encurtador <b>'+linkTitle+'</b>","timeMsg": 3000}');
                             res.redirect("/painel/encurtador/new");
                         }
                     })
@@ -171,10 +180,12 @@ exports.encurtadorEditSave = async (req,res) => {
                 .table("jcv_sys_shortener")
                 .then(data => {
                     if(data == 1){
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> editado com sucesso!");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador <b>"+linkTitle+"</b> editado com sucesso!");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Encurtador <b>${linkTitle}</b> editado com sucesso!","timeMsg": 3000}`);
                         res.redirect("/painel/encurtador/main");
                     }else{
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao editar o encurtador <b>"+linkTitle+"</b>");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao editar o encurtador <b>"+linkTitle+"</b>");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Erro interno ao editar o encurtador <b>'+linkTitle+'</b>","timeMsg": 3000}');
                         res.redirect("/painel/encurtador/new");
                     }
                 })
@@ -196,10 +207,12 @@ exports.encurtadorDelete = async (req,res) => {
     .table("jcv_sys_shortener")
     .then(data => {
         if(data == 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador deletado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Encurtador deletado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "success","message":"Encurtador deletado com sucesso!","timeMsg": 3000}');
             res.redirect("/painel/encurtador/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao deltar o encurtador");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao deltar o encurtador");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Erro interno ao deletar o encurtador!","timeMsg": 3000}');
             res.redirect("/painel/encurtador/main");
         }
     })

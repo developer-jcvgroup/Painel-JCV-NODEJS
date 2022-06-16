@@ -105,16 +105,19 @@ exports.saveNewForm = async (req,res) => {
                 .then( datas => {
                     //Registro confirmado
                     //Redirecionando para a pagina status
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> criado com sucesso!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> criado com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${titleForm}</b> criado com sucesso!","timeMsg": 4000}`);
                     res.redirect("/painel/formularios/main");
                 })
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar o <b>"+titleForm+"</b>");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao criar o <b>"+titleForm+"</b>");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao criar o <b>${titleForm}</b>","timeMsg": 4000}`);
                 res.redirect("/painel/formularios/novo");
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Dados necessários para a criação inexistentes");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Dados necessários para a criação inexistentes");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Dados necessários para a criação inexistentes","timeMsg": 4000}`);
         res.redirect("/painel/formularios/novo");
     }
     
@@ -206,16 +209,19 @@ exports.editFormularioSave = async (req,res) => {
                 })
                 .table("jcv_notifications")
                 .then( data => {
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> editado com sucesso!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> editado com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${titleForm}</b> editado com sucesso!","timeMsg": 3000}`);
                     res.redirect("/painel/formularios/main");
                 })
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar o <b>"+titleForm+"</b>");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao editar o <b>"+titleForm+"</b>");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao editar o <b>${titleForm}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/formularios/edit/"+idForm);
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Dados necessários para a criação inexistentes");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Dados necessários para a criação inexistentes");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Dados necessários para a criação inexistentes","timeMsg": 3000}`);
         res.redirect("/painel/formularios/edit/"+idForm);
     }
 }
@@ -250,7 +256,8 @@ exports.responseFormulario = async (req,res) => {
                     getInfo: getInfo
                 })
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Formulário não encontrado","timeMsg": 3000}`);
                 res.redirect("/painel");
             }
         }else{
@@ -263,12 +270,14 @@ exports.responseFormulario = async (req,res) => {
                     getInfo: getInfo
                 })
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário já respondido");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Formulário já respondido","timeMsg": 3000}`);
                 res.redirect("/painel");
             }
         }
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Formulário não encotrado");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Formulário não encontrado","timeMsg": 3000}`);
         res.redirect("/painel");
     }    
 }
@@ -284,7 +293,8 @@ exports.sendResponse = async (req,res) => {
     const titleForm = req.body['view-form-response-response-title']
 
     if(responseForm != ''){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira alguma resposta!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira alguma resposta!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Insira alguma resposta!","timeMsg": 3000}`);
         res.redirect("/painel/formularios/reponse/"+idForm);
     }else{
         await database
@@ -327,13 +337,15 @@ exports.sendResponse = async (req,res) => {
                     .where({jcv_formularios_registers_id: idForm})
                     .table("jcv_formularios_registers")
                     .then( data => {
-                        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> respondido com sucesso!");
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+titleForm+"</b> respondido com sucesso!");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${titleForm}</b> respondido com sucesso!","timeMsg": 3000}`);
                         res.redirect("/painel");
                     })
                 })
 
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao responder o formulário <b>"+titleForm+"</b>");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao responder o formulário <b>"+titleForm+"</b>");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao responder o formulário <b>${titleForm}</b>","timeMsg": 3000}`);
                 res.redirect("/painel/formularios/main");
             }
         })
@@ -362,10 +374,12 @@ exports.removeResponses = async (req,res) => {
     .then( data => {
         //console.log(data)
         if(data > 1){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram excluídas <b>"+data.length+"</b> destes formulário");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Foram excluídas <b>"+data.length+"</b> destes formulário");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Foram excluídas <b>${data.length}</b> destes formulário","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao excluir as respostas");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao excluir as respostas");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Foram excluídas <b>${data.length}</b> destes formulário","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }
     })
@@ -389,10 +403,12 @@ exports.deleteFormulario = async (req,res) => {
     .table("jcv_formularios_registers")
     .then( data => {
         if(data != 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário foi excluido com sucesso");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário foi excluido com sucesso");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulário foi excluido com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao excluir o formulário");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao excluir o formulário");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao excluir o formulário","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }
     })
@@ -540,7 +556,8 @@ exports.exportResponses = async (req,res) => {
 
         wb.write(nameData+'.xlsx', res);//o res faz o download
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhuma resposta encontrada");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhuma resposta encontrada");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhuma resposta encontrada","timeMsg": 3000}`);
         res.redirect("/painel/formularios/main");
     }    
 }
@@ -556,10 +573,12 @@ exports.disabledForm = async (req,res) => {
     .table("jcv_formularios_registers")
     .then( data => {
         if(data != 0){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário desabilitado com sucesso");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Formulário desabilitado com sucesso");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Formulário desabilitado com sucesso","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao desabilitar o formulário");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao desabilitar o formulário");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao desabilitar o formulário","timeMsg": 3000}`);
             res.redirect("/painel/formularios/main");
         }
     })

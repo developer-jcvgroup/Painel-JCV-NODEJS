@@ -99,7 +99,6 @@
 
     function copyToClipboard(element) {
 
-        alert('Link copiado para clipboard com sucesso!')
         var $temp = $("<input>");
         $("body").append($temp);
 
@@ -107,6 +106,15 @@
 
         document.execCommand("copy");
         $temp.remove();
+
+        //Exibindo a msg
+        $.notification(
+            ['Link copiado para clipboard com sucesso!'],
+            {
+                messageType: 'success',
+                timeView: 3000,
+            }
+        )
     }
 
 </script>

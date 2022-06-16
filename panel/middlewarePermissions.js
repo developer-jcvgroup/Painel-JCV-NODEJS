@@ -1,4 +1,3 @@
-const { raw } = require("express");
 const database = require("./database/database");
 
 async function getUpdates(idUser, moduleOp){
@@ -42,7 +41,8 @@ async function getPermissions (req, res, next) {
 
     global.PROFILE_FINALYT = false;
     if(getDataUser[0].jcv_userEmailCorporate == null || getDataUser[0].jcv_userEmailCorporate == ''){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| <b>Antes de utilizar os apps. Você precisa cadastrar um email!</b>");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| <b>Antes de utilizar os apps. Você precisa cadastrar um email!</b>");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"<b>Antes de utilizar os apps. Você precisa cadastrar um email!</b>","timeMsg": 4000}`);
         PROFILE_FINALYT = true;//O usuario precisa terminar seu cadastro
     }
 
@@ -84,7 +84,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -126,7 +127,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -151,7 +153,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
 
@@ -171,7 +174,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -202,7 +206,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -227,7 +232,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -258,7 +264,8 @@ async function getPermissions (req, res, next) {
         
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -285,7 +292,8 @@ async function getPermissions (req, res, next) {
 
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }
@@ -321,7 +329,8 @@ async function getPermissions (req, res, next) {
         
         //Não foi encontrado
         if(pageError){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
             res.redirect("/painel");
         }
     }

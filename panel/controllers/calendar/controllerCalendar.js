@@ -212,7 +212,8 @@ exports.saveNewEvent = async (req,res) => {
     })
 
     if(moment(eventDateDefault).isBefore(moment().format("YYYY-MM-DD"))){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Data inferiror a data atual.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Data inferiror a data atual.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Data inferiror a data atual.","timeMsg": 3000}`);
         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
     }else{
 
@@ -230,7 +231,8 @@ exports.saveNewEvent = async (req,res) => {
         })
 
         if(validadeRooms != true){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento em salas diferentes!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento em salas diferentes!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você não pode cadastrar um evento em salas diferentes.","timeMsg": 3000}`);
             res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }else{
 
@@ -305,10 +307,12 @@ exports.saveNewEvent = async (req,res) => {
             if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' || eventRoom == ''){
 
                 if(validationResult == false){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode registrar um evento neste horario.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você não pode registrar um evento neste horario.","timeMsg": 3000}`);
                     res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Falta dados cruciais para a criação do envento! Tente novamente.","timeMsg": 3000}`);
                     res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                 }
             }else{
@@ -385,7 +389,8 @@ exports.saveNewEvent = async (req,res) => {
                         })
                         .table("jcv_notifications")
                         .then( data => {
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> registrado com sucesso!");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> registrado com sucesso!");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Evento <b>${eventName}</b> registrado com sucesso!","timeMsg": 3000}`);
                             res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                         })
                     }
@@ -445,7 +450,8 @@ exports.deleteEvent = async(req,res) => {
     .table("jcv_calendar_registers")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${infoEvent[0].sys_calendar_eventName}</b> deletado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/calendario/main/"+infoEvent[0].sys_calendar_eventMonth);
         }
     })
@@ -604,7 +610,8 @@ exports.editSaveNewEvent = async (req,res) => {
 
     //console.log(eventDay)
     if(moment(eventDaySet).isBefore(moment().format("YYYY-MM-DD"))){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a data do evento! Data inferiror ao dia atual.");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a data do evento! Data inferiror ao dia atual.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você não pode modificar a data do evento! Data inferiror ao dia atual","timeMsg": 3000}`);
         res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
     }else{
 
@@ -622,7 +629,8 @@ exports.editSaveNewEvent = async (req,res) => {
         })
 
         if(validadeRooms != true){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento em salas diferentes!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode cadastrar um evento em salas diferentes!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você não pode cadastrar um evento em salas diferentes!","timeMsg": 3000}`);
             res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
         }else{
 
@@ -688,10 +696,12 @@ exports.editSaveNewEvent = async (req,res) => {
             //Validando os inputs
             if(validationResult == false || eventName == '' || eventDay == '' || eventLocation == '' || eventHourInitial == '' || eventHourFinal == '' ||eventRoom == ''){
                 if(validationResult == false){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a hora do evento! Horários incompatíveis.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Você não pode modificar a hora do evento! Horários incompatíveis.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você não pode modificar a hora do evento! Horários incompatíveis","timeMsg": 3000}`);
                     res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Falta dados cruciais para a criação do envento! Tente novamente.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Falta dados cruciais para a criação do envento! Tente novamente","timeMsg": 3000}`);
                     res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                 }
             }else{
@@ -770,7 +780,8 @@ exports.editSaveNewEvent = async (req,res) => {
                         })
                         .table("jcv_notifications")
                         .then( data => {
-                            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> editado com sucesso!");
+                            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Evento <b>"+eventName+"</b> editado com sucesso!");
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Evento <b>${eventName}</b> editado com sucesso!","timeMsg": 3000}`);
                             res.redirect("/painel/calendario/main/"+monthCalendarRedirect);
                         })
                     }
@@ -828,7 +839,8 @@ exports.registerNewRoom = async (req,res) => {
     .table("jcv_calendar_rooms")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sala <b>"+roomName+"</b> editado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sala <b>"+roomName+"</b> editado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sala <b>${roomName}</b> registrada com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/calendario/room/RoomSettings");
         }
     })
@@ -854,7 +866,8 @@ exports.editNewRoom = async (req,res) => {
     .table("jcv_calendar_rooms")
     .then( data => {
         if(data != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sala <b>"+roomName+"</b> editado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sala <b>"+roomName+"</b> editado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sala <b>${roomName}</b> editado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/calendario/room/RoomSettings");
         }
     })
@@ -925,7 +938,8 @@ exports.viewRoom = async (req,res) => {
                 monthRoom: monthRoom
             })
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Sala não encontrada");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Sala não encontrada");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Sala não encontrada","timeMsg": 3000}`);
             res.redirect("/painel/calendario/main")
         }
     }
@@ -945,7 +959,8 @@ exports.viewEventDay = async (req,res) => {
 
         //Caso o mes e ano não esteja definido ele pega o mes atual
         if(dayEvent.split('-').length > 3){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Dia não definido");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03|Dia não definido");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Dia não definido","timeMsg": 3000}`);
             res.redirect("/painel/calendario")
         }else{
 
@@ -981,7 +996,8 @@ exports.viewEventDay = async (req,res) => {
                     dayComp: dayComp
                 })
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhum evento encontrado neste dia");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Nenhum evento encontrado neste dia");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum evento encontrado neste dia","timeMsg": 3000}`);
                 res.redirect("/painel/calendario/main")
             }
         }

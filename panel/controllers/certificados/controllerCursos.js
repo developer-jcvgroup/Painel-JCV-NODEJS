@@ -114,13 +114,15 @@ exports.saveNewCourse = async (req,res) => {
         .table("jcv_course")
         .then( data => {
             if(data != ''){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> criado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> criado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso <b>${courseName}</b> criado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/cursos/main");
             }
         })
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Existem valores a ser preenchido!","timeMsg": 3000}`);
         res.redirect("/painel/cursos/new");
     }
 }
@@ -169,7 +171,8 @@ exports.cursosEdit = async (req,res) => {
         res.render("panel/index", {page: page, allInfo: validadeDitGet, getAllUsers: getAllUsers, getAllUsersObj: getAllUsersObj})
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum curso encontrado!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum curso encontrado!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum curso encontrado!","timeMsg": 3000}`);
         res.redirect("/painel/cursos/main");
     }
 
@@ -218,13 +221,15 @@ exports.saveEditCourse = async (req,res) => {
             .table("jcv_course")
             .then( data => {
                 if(data == 1){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> editado com sucesso!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> editado com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso <b>${courseName}</b> editado com sucesso!","timeMsg": 3000}`);
                     res.redirect("/painel/cursos/main");
                 }
             })
     
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Existem valores a ser preenchido!","timeMsg": 3000}`);
             res.redirect("/painel/cursos/new");
         }
     }
@@ -247,15 +252,18 @@ exports.courseDelete = async (req,res) => {
         .table("jcv_course")
         .then( data => {
             if(data == 1){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso deletado com sucesso!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso deletado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso deletado com sucesso!","timeMsg": 3000}`);
                 res.redirect("/painel/cursos/main");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao deleta o curso");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao deleta o curso");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro ao deleta o curso","timeMsg": 3000}`);
                 res.redirect("/painel/cursos/edit/"+couserId);
             }
         })
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao deleta o curso*");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro ao deleta o curso*");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro ao deleta o curso*","timeMsg": 3000}`);
         res.redirect("/painel/cursos/edit/"+couserId);
     }
 
@@ -271,60 +279,66 @@ exports.cursosStartup = async (req,res) => {
     .table("jcv_course")
     .then (data => {return data})
 
-    //Validando se o cusrso esta finalazado
-    if(validationCourse[0].jcv_course_status == 4){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Curso já finalizado");
+    //Validando se o cusrso esta finalizado
+    if(validationCourse == ''){
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Curso inexistente","timeMsg": 3000}`);
         res.redirect("/painel/cursos/main");
     }else{
-        //Lista de usuarios deste curso
-        let getUsersCourse;
-        if(validationCourse[0].jcv_course_array_users != null){
-            getUsersCourse = await databaseCertificates
-            .select()
-            .whereIn('jcv_user_id', JSON.parse(validationCourse[0].jcv_course_array_users))
+        if(validationCourse[0].jcv_course_status == 4){
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Curso já finalizado");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Curso já finalizado","timeMsg": 3000}`);
+            res.redirect("/painel/cursos/main");
+        }else{
+            //Lista de usuarios deste curso
+            let getUsersCourse;
+            if(validationCourse[0].jcv_course_array_users != null){
+                getUsersCourse = await databaseCertificates
+                .select()
+                .whereIn('jcv_user_id', JSON.parse(validationCourse[0].jcv_course_array_users))
+                .table("jcv_users")
+                .then( data => {return data})
+            }else{
+                getUsersCourse = [];
+            }
+    
+            //Pegando o usuario que vai ministrar o curso
+            const getInfoIntructor = await database
+            .select("jcv_userNamePrimary")
+            .where({jcv_id: validationCourse[0].jcv_course_manager_course})
             .table("jcv_users")
             .then( data => {return data})
-        }else{
-            getUsersCourse = [];
+    
+            //Pegando o usuario que criou o curso
+            const getInfoCreater = await database
+            .select("jcv_userNamePrimary")
+            .where({jcv_id: validationCourse[0].jcv_course_created})
+            .table("jcv_users")
+            .then( data => {return data})
+    
+            //Pegandos as pessoas CADASTRADAS NO PORTAL DO CERTIFICADO
+            const getAllInfoUsers = await databaseCertificates
+            .select()
+            .where({jcv_users_enabled: 1})
+            .table("jcv_users")
+            .then( data => {
+                let newArrgen = [];
+                data.forEach(element => {
+                    newArrgen.push(element.jcv_users_name, element.jcv_users_cpf)
+                });
+                return newArrgen
+            })
+    
+            var page = "cursos/cursosStart";
+            res.render("panel/index", {
+                page: page, 
+                getAllInfoUsers: getAllInfoUsers, 
+                validationCourse: JSON.stringify(validationCourse), 
+                getUsersCourse: JSON.stringify(getUsersCourse), 
+                courseId: courseId,
+                getInfoIntructor: getInfoIntructor,
+                getInfoCreater: getInfoCreater
+            })
         }
-
-        //Pegando o usuario que vai ministrar o curso
-        const getInfoIntructor = await database
-        .select("jcv_userNamePrimary")
-        .where({jcv_id: validationCourse[0].jcv_course_manager_course})
-        .table("jcv_users")
-        .then( data => {return data})
-
-        //Pegando o usuario que criou o curso
-        const getInfoCreater = await database
-        .select("jcv_userNamePrimary")
-        .where({jcv_id: validationCourse[0].jcv_course_created})
-        .table("jcv_users")
-        .then( data => {return data})
-
-        //Pegandos as pessoas CADASTRADAS NO PORTAL DO CERTIFICADO
-        const getAllInfoUsers = await databaseCertificates
-        .select()
-        .where({jcv_users_enabled: 1})
-        .table("jcv_users")
-        .then( data => {
-            let newArrgen = [];
-            data.forEach(element => {
-                newArrgen.push(element.jcv_users_name, element.jcv_users_cpf)
-            });
-            return newArrgen
-        })
-
-        var page = "cursos/cursosStart";
-        res.render("panel/index", {
-            page: page, 
-            getAllInfoUsers: getAllInfoUsers, 
-            validationCourse: JSON.stringify(validationCourse), 
-            getUsersCourse: JSON.stringify(getUsersCourse), 
-            courseId: courseId,
-            getInfoIntructor: getInfoIntructor,
-            getInfoCreater: getInfoCreater
-        })
     }
 
 
@@ -337,7 +351,8 @@ exports.startCourse = async (req,res) => {
     //console.log(dataObjUsers)
 
     if(dataObjUsers == false){
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Dados essenciais estão faltando!","timeMsg": 3000}`);
         res.redirect("/painel/cursos/main");
     }else{
         let returnDataGetBase = await databaseCertificates
@@ -352,10 +367,12 @@ exports.startCourse = async (req,res) => {
         .then( data => { return data})
 
         if(returnDataGetBase != ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso iniciado com sucesso!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso iniciado com sucesso!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso iniciado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/cursos/start/"+dataObjUsers.courseID);
         }else{
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao iniciar o curso");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao iniciar o curso");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao iniciar o curso","timeMsg": 3000}`);
             res.redirect("/painel/cursos/start/"+dataObjUsers.courseID);
         }
     }
@@ -371,7 +388,8 @@ exports.finalityCourse = async (req,res) => {
     if(dataObjUsers != false && saveAssinaturaBlob != ''){
 
         if(dataObjUsers.listUsers == ''){
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Dados essenciais estão faltando!","timeMsg": 3000}`);
             res.redirect("/painel/cursos/main");
         }else{
             databaseCertificates
@@ -386,17 +404,20 @@ exports.finalityCourse = async (req,res) => {
             .table("jcv_course")
             .then( data => {
                 if(data != ''){
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso finalizado com sucesso!");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso finalizado com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso finalizado com sucesso!","timeMsg": 3000}`);
                     res.redirect("/painel/cursos/main");
                 }else{
-                    res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao finalizar o curso");
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao finalizar o curso");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao finalizar o curso","timeMsg": 3000}`);
                     res.redirect("/painel/cursos/main");
                 }
             })
         }
 
     }else{
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Dados essenciais estão faltando!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Dados essenciais estão faltando!","timeMsg": 3000}`);
         res.redirect("/painel/cursos/start/"+dataObjUsers.courseID);
     }
 
@@ -427,7 +448,8 @@ exports.moduleActionSync = async (req,res) => {
 
     if(verifyAccount != ''){
         //Possui já conta!
-        res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sincronismo já relizado! Acesse o portal utilizando o link próximo ao seu avatar!");
+        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sincronismo já relizado! Acesse o portal utilizando o link próximo ao seu avatar!");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sincronismo já relizado! Acesse o portal utilizando o link próximo ao seu avatar!","timeMsg": 3000}`);
         res.redirect("/painel");
     }else{
         //Não possui, vamos sincronizar!!
@@ -443,10 +465,12 @@ exports.moduleActionSync = async (req,res) => {
         .then( data => {
             //console.log(data)
             if(data != 0){
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sincronizado com sucesso! Acesse o portal utilizando o link próximo ao seu avatar!");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Sincronizado com sucesso! Acesse o portal utilizando o link próximo ao seu avatar!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sincronizado com sucesso! Acesse o portal utilizando o link próximo ao seu avatar!","timeMsg": 3000}`);
                 res.redirect("/painel");
             }else{
-                res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao sincronizar");
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro interno ao sincronizar");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao sincronizar","timeMsg": 3000}`);
                 res.redirect("/painel");
             }
         })

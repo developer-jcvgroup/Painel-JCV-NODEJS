@@ -65,10 +65,15 @@ Setor
 # Sistema de PopUP
 - É executado por uma função que recebe o codigo do popup e o texto
 
-Nome de cookies que ele aceita:
-- SYS-NOTIFICATION-EXE1
-- SYS-NOTIFICATION-EXE2
-- SYS-NOTIFICATION-EXE3
+Nome de cookies que ele aceita (atualizado 14/06/2022):
+- SYS-NOTIFICATION-EXE1 *ANTIGO*
+- SYS-NOTIFICATION-EXE2 *ANTIGO*
+- SYS-NOTIFICATION-EXE3 *ANTIGO*
+
+- SYSTEM-NOTIFICATIONS-MODULE {este é o nome do cookie gerado para exibir as menssagens}
+
+- Exemplo de gerar cookie nodejs
+res.cookie('SYSTEM-NOTIFICATIONS-MODULE', "{typeMsg: 'success',message:'XXXXXXXX',timeMsg: 2000}");
 
 Ele aceita até tres popups por operação vinda do backend
 
