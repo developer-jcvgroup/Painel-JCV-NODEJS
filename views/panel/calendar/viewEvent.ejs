@@ -330,12 +330,24 @@
         let validateUser = arrayDataOne.indexOf($("#insert-person").val())
 
         if(valIdUser == '' || valPerson == '' || validateUser == -1){
-            $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+            //$.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+            $.notification(
+                [`Insira um usuário válido`],
+                { 
+                    messageType: 'warning'
+                }
+            )
             $("#insert-person").val('')
         }else{
 
             if(idArray.indexOf(parseInt(valIdUser)) != -1){
-                $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                //$.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                $.notification(
+                    [`Usuário já adicionado`],
+                    { 
+                        messageType: 'warning'
+                    }
+                )
             }else{
                 idArray.push(parseInt(valIdUser))
                 $(".event-edit-event-persons-list")

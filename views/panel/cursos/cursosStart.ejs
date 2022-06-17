@@ -211,7 +211,13 @@
                 $("#cursos-stratup-table").append(stringHTML)
             }else{
                 //Usuario já adicionado
-                $.fn.sys_popupSystem("SYS02", "Pessoa já adicionada!")
+                //$.fn.sys_popupSystem("SYS02", "Pessoa já adicionada!");
+                $.notification(
+                    [`Pessoa já adicionada`],
+                    { 
+                        messageType: 'warning'
+                    }
+                )
 
                 $(`#tr-id-${data[0].jcv_user_id}`).addClass('animation-select-user')
 
@@ -276,11 +282,23 @@
     //
     document.getElementById('save-ass-action').addEventListener('click', function () {
         if (signaturePad.isEmpty()) {
-            $.fn.sys_popupSystem("SYS02", "Insira uma assinatura!")
+            //$.fn.sys_popupSystem("SYS02", "Insira uma assinatura!")
+            $.notification(
+                [`Insira uma assinatura válida`],
+                { 
+                    messageType: 'warning'
+                }
+            )
         }else{
             var data = signaturePad.toDataURL('image/png');
             $("#save-ass").val(data);
-            $.fn.sys_popupSystem("SYS01", "Assinatura salva temporaiamente. Agora finalize!")
+            //$.fn.sys_popupSystem("SYS01", "Assinatura salva temporaiamente. Agora finalize!")
+            $.notification(
+                [`Assinatura reconhecida, agora finalize!`],
+                { 
+                    messageType: 'warning'
+                }
+            )
         }
 
         //window.open(data);

@@ -217,7 +217,7 @@ $(function(){
     $("#menu-action").click(function(){
         var classeSetada = $("#menu-action").attr('class');
 
-        var classeSetarClose = "ri-close-fill";
+        var classeSetarClose = "ri-arrow-left-s-line";
         var classeSetarMenu = "ri-menu-line";
 
         if(classeSetada == classeSetarMenu){
@@ -374,7 +374,13 @@ $(function(){
                 //quantidade inválida
                 //$("#"+itemName+"").val('');//Limpando o input name
                 $("#"+itemAmount+"").val('');//Limpando o input amount
-                $.fn.sys_popupSystem("SYS02", "Insira uma quantidade válida")
+                //$.fn.sys_popupSystem("SYS02", "Insira uma quantidade válida")
+                $.notification(
+                    [`Insira uma quantidade válida`],
+                    { 
+                        messageType: 'warning'
+                    }
+                )
             }else{
                 //Verificando se o item é repetido
                 
@@ -383,7 +389,13 @@ $(function(){
                     //item repetido
                     $("#"+itemName+"").val('');//Limpando o input name
                     $("#"+itemAmount+"").val('');//Limpando o input amount
-                    $.fn.sys_popupSystem("SYS02", "O item já foi inserido")
+                    //$.fn.sys_popupSystem("SYS02", "O item já foi inserido")
+                    $.notification(
+                        [`O item já foi inserido`],
+                        { 
+                            messageType: 'warning'
+                        }
+                    )
                 }else{
 
                     //Mostrando a tabela
@@ -415,7 +427,13 @@ $(function(){
             //item não encontrado
             $("#"+itemName+"").val('');//Limpando o input name
             $("#"+itemAmount+"").val('');//Limpando o input amount
-            $.fn.sys_popupSystem("SYS02", "O item não foi encontrado")
+            //$.fn.sys_popupSystem("SYS02", "O item não foi encontrado")
+            $.notification(
+                [`O item não foi encontrado`],
+                { 
+                    messageType: 'warning'
+                }
+            )
         }
     };
 
@@ -634,7 +652,13 @@ $(function(){
                 if(key == ''){
                     return false;
                 }else{
-                    $.fn.sys_popupSystem("SYS02","<b>Digite apenas caracteres MINÚSCULOS e NÃO ESPECIAIS</b>")
+                    //$.fn.sys_popupSystem("SYS02","<b>Digite apenas caracteres MINÚSCULOS e NÃO ESPECIAIS</b>")
+                    $.notification(
+                        [`<b>Digite apenas caracteres MINÚSCULOS e NÃO ESPECIAIS</b>`],
+                        { 
+                            messageType: 'warning'
+                        }
+                    )
                 }
             }
 

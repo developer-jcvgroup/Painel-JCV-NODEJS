@@ -88,12 +88,24 @@
             const valPerson = $("#insert-person").val().split(' - ')[1];
 
             if(valIdUser == '' || valPerson == ''){
-                $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+                //$.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+                $.notification(
+                    [`Insira um usuario válido`],
+                    { 
+                        messageType: 'warning'
+                    }
+                )
             }else{
 
                 if(idArray.indexOf(parseInt(valIdUser)) != -1){
                     $("#insert-person").val('')
-                    $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                    //$.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                    $.notification(
+                        [`Usuário já adicionado`],
+                        { 
+                            messageType: 'warning'
+                        }
+                    )
                 }else{
                     idArray.push(parseInt(valIdUser))
                     $(".shop-config-container-box-users")
@@ -119,12 +131,24 @@
                 const valPerson = $("#insert-person").val().split(' - ')[1];
 
                 if(valIdUser == '' || valPerson == ''){
-                    $.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+                    //$.fn.sys_popupSystem("SYS03","Insira um usuario válido")
+                    $.notification(
+                        [`Insira um usuario válido`],
+                        { 
+                            messageType: 'warning'
+                        }
+                    )
                 }else{
 
                     if(idArray.indexOf(parseInt(valIdUser)) != -1){
                         $("#insert-person").val('')
-                        $.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                        //$.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
+                        $.notification(
+                            [`Usuário já adicionado`],
+                            { 
+                                messageType: 'warning'
+                            }
+                        )
                     }else{
                         idArray.push(parseInt(valIdUser))
                         $(".shop-config-container-box-users")

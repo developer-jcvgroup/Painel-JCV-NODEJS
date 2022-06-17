@@ -2,7 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!Notification) {
         //alert('Desktop notifications not available in your browser. Try Chromium.');
         $(function(){
-            $.fn.sys_popupSystem('SYS02','Este navegador não possui suporte para as notificações..')
+            //$.fn.sys_popupSystem('SYS02','Este navegador não possui suporte para as notificações..')
+            $.notification(
+                [`<b>Este navegador não possui suporte para as notificações. Acesse com outro`],
+                { 
+                    messageType: 'error'
+                }
+            )
         })
     return;
     }

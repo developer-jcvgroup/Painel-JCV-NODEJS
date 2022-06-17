@@ -63,7 +63,7 @@ body, html{
     max-height: 1000px;
     display: none;
     overflow-y: auto;
-    background: linear-gradient(188deg, rgba(34,34,36,1) 0%, rgba(44,47,51,1) 88%, rgba(52,58,64,1) 100%);
+    background: linear-gradient(188deg, rgba(34,34,36,1) 0%, rgba(44,47,51,1) 88%, rgba(52,58,64,1) 100%);    
     box-shadow: 0 0 4px 0 var(--color-one);
     z-index: 10;
 }
@@ -221,6 +221,12 @@ header{
     display: flex;
     align-items: center;
 }
+
+/*  */
+#menu-index-links{
+    display: none;
+}
+/*  */
 
 .header-links-nav{
     height: 100%;
@@ -1031,5 +1037,15 @@ input:checked + .system-mode-department-button-slider:before {
     .sys-form-notification-box{
         width: 100%;
         max-width: 100%;
+    }
+
+    .header-links-nav{
+        display: none;
+    }
+    .index-header-logo{
+        width: 80px;
+    }
+    #menu-index-links{
+        display: block;
     }
 }

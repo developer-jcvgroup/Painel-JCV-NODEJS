@@ -251,7 +251,13 @@
                 
 
                 if($("#input-search-table").val() == ''){
-                    $.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                    //$.fn.sys_popupSystem("SYS02", "Faça uma busca válida")
+                    $.notification(
+                        [`Faça uma busca válida`],
+                        { 
+                            messageType: 'warning'
+                        }
+                    )
                 }else{
                     $.fn.loadSpin(1);
                     

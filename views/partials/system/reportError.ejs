@@ -16,7 +16,8 @@
 </section>
 
 <script>
-    $("#sys-report-open-screen").click(function(){
+    $(".sys-report-open-screen").click(function(){
+        $("#li-info-user-drop").fadeOut()
         $("#sys-partial-report-main").fadeIn().css({'display':'flex'})
     })
     $("#sys-partial-report-close").click(function(){
