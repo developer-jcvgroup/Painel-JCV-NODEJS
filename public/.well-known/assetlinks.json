@@ -1,6 +1,6 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target" : { "namespace": "android_app", "package_name": "br.net.jcv.twa",
-               "sha256_cert_fingerprints": ["BD:C9:8D:F8:2B:27:EC:BB:D8:13:84:D7:B1:77:D2:16:2F:56:F5:E1:3D:8A:2E:8A:24:26:D9:11:BA:87:FA:C9"] }
+               "sha256_cert_fingerprints": ["A4:AF:15:6A:CA:7C:7D:71:7A:1B:2F:55:BF:12:C6:58:8E:DD:9D:E0:0B:AA:C4:8E:F6:50:45:D8:09:33:19:6D"] }
 }
 ]
