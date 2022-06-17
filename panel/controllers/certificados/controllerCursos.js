@@ -95,7 +95,7 @@ exports.saveNewCourse = async (req,res) => {
     })
 
 
-    if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus,courseDescription != ''){
+    if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus != ''){
         
         //Podemos cadastrar o curso
 
@@ -202,7 +202,7 @@ exports.saveEditCourse = async (req,res) => {
     })
 
     if(courseManager != ''){
-        if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus,courseDescription != ''){
+        if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus != ''){
         
             //Podemos cadastrar o curso
     
