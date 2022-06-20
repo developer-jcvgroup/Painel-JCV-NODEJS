@@ -41,6 +41,7 @@
                         <thead>
                             <tr>
                                 <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th></th>
                                 <th>SKU</th>
                                 <th>Marca</th>
                                 <th>Produto</th>
@@ -53,6 +54,7 @@
                         <tbody>
 
                             <tr>
+                                <td>    </td>
                                 <td>    </td>
                                 <td><input type="text" name="productSKU" placeholder="Insira o SKU.."></td>
                                 <td>
@@ -102,6 +104,7 @@
                             <% productsData.forEach(element => { %>
                             <tr class="request-row-check-mark">
                                 <td><input class="checkbox-select-single" type="checkbox" value="<%= element['sys_blz_product_id'] %>" name="productsIds"></td>
+                                <td><img style="width: 80px; height: 80px;" src="<%= element['sys_blz_productImage'] %>" alt=""></td>
                                 <td><input type="text" value="<%= element['sys_blz_productSKU'] %>" name="editProduct_sku<%= element['sys_blz_product_id'] %>"></td>
                                 <td>
                                     <select name="editProductBrand<%= element['sys_blz_product_id'] %>" id="">

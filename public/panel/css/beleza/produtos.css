@@ -207,9 +207,11 @@
 }
 .produtos-list-table tr th:nth-child(4){
     text-align: left;
+    width: 9%;
 }
 .produtos-list-table tr th:nth-child(5){
     text-align: left;
+    
 }
 .produtos-list-table tr th:nth-child(6){
     text-align: center;
@@ -220,6 +222,10 @@
     width: 5%;
 }
 .produtos-list-table tr th:nth-child(8){
+    text-align: center;
+    width: 5%;
+}
+.produtos-list-table tr th:nth-child(9){
     text-align: center;
     width: 5%;
 }
