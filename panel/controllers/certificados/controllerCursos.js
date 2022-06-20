@@ -83,48 +83,59 @@ exports.saveNewCourse = async (req,res) => {
     const courseStatus = req.body['course-status']
     const courseDescription = req.body['course-description']
     const courseTextCertificate = req.body['course-text-certificate']
+    const courseType = req.body['course-type']
 
     //Validando o instrutor
     await database
     .select("")
-    .whereRaw(`jcv_userNamePrimary = '${req.body['course-manager']}' AND sys_courses_perm_manager = 1 OR sys_courses_perm_admin = 1`)
+    .whereRaw(`jcv_userNamePrimary = '${req.body['course-manager']}'`)
     .table("jcv_users")
     .join("jcv_users_permissions","jcv_users_permissions.sys_perm_idUser","jcv_users.jcv_id")
     .then( data => {
-        courseManager = data[0].jcv_id != '' ? data[0].jcv_id : '';
+        if(data != ''){
+            if(data[0].sys_courses_perm_manager == 1 || data[0].sys_courses_perm_admin == 1){
+                courseManager = data[0].jcv_id;
+            }
+        }
     })
 
-
-    if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus != ''){
+    if(courseManager != undefined){
+        if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseType,courseStatus != ''){
         
-        //Podemos cadastrar o curso
-
-        await databaseCertificates.insert({
-            jcv_course_name: courseName,
-            jcv_course_total_hours: courseTotalHours,
-            jcv_course_manager_course: courseManager,
-            jcv_course_created: GLOBAL_DASH[0],
-            jcv_course_brand: courseBrand,
-            jcv_course_initial_date: courseInitial,
-            jcv_course_description: courseDescription,
-            jcv_course_status: parseInt(courseStatus),
-            jcv_course_uuid: uuid.v1(),
-            jcv_course_text: courseTextCertificate
-        })
-        .table("jcv_course")
-        .then( data => {
-            if(data != ''){
-                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> criado com sucesso!");
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso <b>${courseName}</b> criado com sucesso!","timeMsg": 3000}`);
-                res.redirect("/painel/cursos/main");
-            }
-        })
-
+            //Podemos cadastrar o curso
+    
+            await databaseCertificates.insert({
+                jcv_course_name: courseName,
+                jcv_course_total_hours: courseTotalHours,
+                jcv_course_manager_course: courseManager,
+                jcv_course_created: GLOBAL_DASH[0],
+                jcv_course_brand: courseBrand,
+                jcv_course_initial_date: courseInitial,
+                jcv_course_type: courseType,
+                jcv_course_description: courseDescription,
+                jcv_course_status: parseInt(courseStatus),
+                jcv_course_uuid: uuid.v1(),
+                jcv_course_text: courseTextCertificate
+            })
+            .table("jcv_course")
+            .then( data => {
+                if(data != ''){
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> criado com sucesso!");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso <b>${courseName}</b> criado com sucesso!","timeMsg": 3000}`);
+                    res.redirect("/painel/cursos/edit/"+data[0]);
+                }
+            })
+    
+        }else{
+            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Existem valores a ser preenchido!","timeMsg": 3000}`);
+            res.redirect("/painel/cursos/new");
+        }
     }else{
-        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Existem valores a ser preenchido!","timeMsg": 3000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado","timeMsg": 3000}`);
         res.redirect("/painel/cursos/new");
     }
+    
 }
 
 exports.cursosEdit = async (req,res) => {
@@ -190,6 +201,7 @@ exports.saveEditCourse = async (req,res) => {
     const courseStatus = req.body['course-status']
     const courseDescription = req.body['course-description']
     const courseTextCertificate = req.body['course-text-certificate']
+    const courseType = req.body['course-type']
 
     //Validando o instrutor
     await database
@@ -198,10 +210,15 @@ exports.saveEditCourse = async (req,res) => {
     .table("jcv_users")
     .join("jcv_users_permissions","jcv_users_permissions.sys_perm_idUser","jcv_users.jcv_id")
     .then( data => {
-        courseManager = data != '' ? data[0].jcv_id : '';
+        if(data != ''){
+            if(data[0].sys_courses_perm_manager == 1 || data[0].sys_courses_perm_admin == 1){
+                courseManager = data[0].jcv_id;
+            }
+        }
     })
 
-    if(courseManager != ''){
+
+    if(courseManager != undefined){
         if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus != ''){
         
             //Podemos cadastrar o curso
@@ -212,6 +229,7 @@ exports.saveEditCourse = async (req,res) => {
                 jcv_course_manager_course: courseManager,
                 jcv_course_created: GLOBAL_DASH[0],
                 jcv_course_brand: courseBrand,
+                jcv_course_type: courseType,
                 jcv_course_initial_date: courseInitial,
                 jcv_course_description: courseDescription,
                 jcv_course_status: courseStatus,
@@ -223,15 +241,18 @@ exports.saveEditCourse = async (req,res) => {
                 if(data == 1){
                     //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Curso <b>"+courseName+"</b> editado com sucesso!");
                     res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Curso <b>${courseName}</b> editado com sucesso!","timeMsg": 3000}`);
-                    res.redirect("/painel/cursos/main");
+                    res.redirect("/painel/cursos/edit/"+courseId);
                 }
             })
     
         }else{
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Existem valores a ser preenchido!");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Existem valores a ser preenchido!","timeMsg": 3000}`);
-            res.redirect("/painel/cursos/new");
+            res.redirect("/painel/cursos/edit/"+courseId);
         }
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado","timeMsg": 3000}`);
+        res.redirect("/painel/cursos/edit/"+courseId);
     }
 }
 
@@ -459,7 +480,8 @@ exports.moduleActionSync = async (req,res) => {
             jcv_users_cpf: getCPF[0].jcv_userCpf,
             jcv_users_email_primary: getCPF[0].jcv_userEmailCorporate,
             jcv_users_email_secundary: getCPF[0].jcv_userEmailFolks,
-            jcv_users_enabled: 1
+            jcv_users_enabled: 1,
+            jcv_users_created: generateDate()
         })
         .table("jcv_users")
         .then( data => {

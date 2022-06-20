@@ -19,6 +19,17 @@
             </div>
             <!--  -->
             <div class="cursos-edit-box">
+                <label for="">Tipo</label>
+                <select required name="course-type">
+                    <option value="<%= allInfo[0].jcv_course_type %>"><%= allInfo[0].jcv_course_type %></option>
+                    <option disabled></option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Curso">Curso</option>
+                    <option value="Treinamento">Treinamento</option>
+                </select>
+            </div>
+            <!--  -->
+            <div class="cursos-edit-box">
                 <label for="">Carga Horária</label>
                 <input required type="number" name="course-total-hours" value="<%= allInfo[0].jcv_course_total_hours %>" placeholder="Insira a carga horária total">
             </div>

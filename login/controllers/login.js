@@ -7,27 +7,61 @@ const emailSystemExe = require('../../panel/controllers/system/emailSystem');
 exports.commandLogar = async (req, res) =>{
 
     const linkspecial = req.body['input-link-special']
-    
-    req.session.cookieLogin = undefined;
 
-    const dataOne = req.body.cpfUser.split('.').join("").split('-').join("");
-    const dataTwo = req.body.cpfPassword != undefined ? req.body.cpfPassword : dataOne;
+    try {
+        
+        /* throw {
+            pageRedirect: '/login',
+            messageError: 'Olar tudo bem???',
+            typeError: 'success'
+        } */
 
+        const dataOne = req.body.cpfUser.split('.').join("").split('-').join("");
+        const dataTwo = req.body.cpfPassword != undefined ? req.body.cpfPassword : dataOne;
 
-    //Validando o CPF
-    database.select().where({jcv_userCpf: dataOne, jcv_userEnabled: 1}).limit(1).table("jcv_users").then( data => {
-        //CPF encontrado
-        if(data != ''){
-            //Conta encontrada
+        if(req.session.cookieLogin == undefined){
+            //Cookie de sessão não criado
 
-            //Validando se é uma conta sem senha
-            if(data[0].jcv_userPassword != null){
-                //Conta com senha
+            //Validando o CPF
+            database.select().where({jcv_userCpf: dataOne, jcv_userEnabled: 1}).limit(1).table("jcv_users").then( data => {
+                //Validando se o CPF foi encontrado
+                if(data == ''){
+                    throw {pageRedirect: '/login',messageError: 'Nenhum usuario encontrado..',typeError: 'error'}
+                } 
 
-                //Validando a senha
-                var passCorrect = bcripty.compareSync(dataTwo, data[0].jcv_userPassword);
-                if(passCorrect){
-                    //Senha correta
+                //Validando se é uma conta sem senha
+                if(data[0].jcv_userPassword != null){
+                    //Conta com senha
+
+                    //Validando a senha
+                    var passCorrect = bcripty.compareSync(dataTwo, data[0].jcv_userPassword);
+                    if(passCorrect){
+                        //Senha correta
+                        req.session.cookieLogin = [
+                            data[0]["jcv_id"],
+                            data[0]["jcv_userNamePrimary"],
+                            data[0]["jcv_userUnity"],
+                            data[0]["jcv_userSector"],
+                            data[0]["jcv_userManager"],
+                            data[0]["jcv_userEmailCorporate"],
+                            data[0]["jcv_userExtension"],
+                            data[0]["jcv_userImageIcon"]
+                        ];
+
+                        //Sistema de links
+                        if(linkspecial > ''){
+                            res.redirect(linkspecial)
+                        }else{
+                            res.redirect("/painel");
+                        }
+                    }else{
+                        //Senha incorreta
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"Senha Incorreta!","timeMsg": 3000}');
+                        res.redirect("/login");
+                    }
+                }else if(data[0].cv_userPassword == null){
+                    //Conta sem senha
+
                     req.session.cookieLogin = [
                         data[0]["jcv_id"],
                         data[0]["jcv_userNamePrimary"],
@@ -39,42 +73,19 @@ exports.commandLogar = async (req, res) =>{
                         data[0]["jcv_userImageIcon"]
                     ];
 
-                    //Sistema de links
-                    if(linkspecial > ''){
-                        res.redirect(linkspecial)
-                    }else{
-                        res.redirect("/painel");
-                    }
+                    res.redirect("/painel");
                 }else{
-                    //Senha incorreta
-                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "warning","message":"Senha Incorreta!","timeMsg": 3000}');
                     res.redirect("/login");
                 }
-            }else if(data[0].cv_userPassword == null){
-                //Conta sem senha
-
-                req.session.cookieLogin = [
-                    data[0]["jcv_id"],
-                    data[0]["jcv_userNamePrimary"],
-                    data[0]["jcv_userUnity"],
-                    data[0]["jcv_userSector"],
-                    data[0]["jcv_userManager"],
-                    data[0]["jcv_userEmailCorporate"],
-                    data[0]["jcv_userExtension"],
-                    data[0]["jcv_userImageIcon"]
-                ];
-
-                res.redirect("/painel");
-            }else{
-                res.redirect("/login");
-            }
-
+            })
         }else{
-            //Erro conta não econtrada
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', '{"typeMsg": "error","message":"Nenhum usuário encontrado!","timeMsg": 3000}');
-            res.redirect("/login");
+            res.redirect('/painel')
         }
-    })
+
+    } catch (error) {
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "${error.typeError}","message":"${error.messageError}","timeMsg": 3000}`);
+        res.redirect(error.pageRedirect);
+    }
 
 }
 
