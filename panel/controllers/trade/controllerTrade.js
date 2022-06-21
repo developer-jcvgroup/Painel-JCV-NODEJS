@@ -1891,7 +1891,6 @@ exports.mapViewShops = async (req,res) => {
     .select()
     .whereRaw("jcv_trade_shops_enabled = 1 AND jcv_trade_shops_latLong IS NOT NULL")
     .table("jcv_trade_shops")
-    .limit(5)
     .then( data => {return data})
 
     //Convertendo no array de lojas
