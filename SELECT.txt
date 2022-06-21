@@ -1,3 +1,0 @@
-Select para validar se o usuario esta na reunião ou nao
-
-SELECT * FROM jcv_jcvpanel.jcv_calendar_registers WHERE sys_calendar_eventPersons LIKE '%2,%' OR sys_calendar_eventPersons LIKE '%,2%';
