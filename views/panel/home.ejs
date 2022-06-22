@@ -43,7 +43,25 @@
         <section class="section-box-suspended">
             <div class="suspended-title">
                 <div class="title-page-info">
-                    <span>Olá, <%= GLOBAL_DASH[8] %> 👋</span>
+                    <span>Olá, <%= GLOBAL_DASH[8] %><div id="index-animation-emoji">👋</div></span>
+                    <style>
+                        #index-animation-emoji{
+                           width: fit-content;
+                            animation: animationEmoji 1.5s infinite;
+                            margin-left: 10px;
+                        }
+                        @keyframes animationEmoji {
+                        0%{
+                            transform:rotate(-10deg); 
+                        }
+                        50%{
+                            transform:rotate(-2deg); 
+                        }
+                        100%{
+                            transform:rotate(-10deg); 
+                        }
+                        }
+                    </style>
                     <a class="class-loader" href="/painel/notifications" id="title-box-notf">Você possui <label id="count-notify">0</label> notificação(ões)</a>
                 </div>
             </div>

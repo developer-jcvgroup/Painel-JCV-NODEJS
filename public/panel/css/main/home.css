@@ -132,6 +132,8 @@
     font-size: 1.6rem;
     color: var(--color-one);
     font-weight: normal;
+    display: flex;
+    align-items: center;
 }
 .title-page-info a{
     text-decoration: none;
