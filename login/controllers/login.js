@@ -17,13 +17,13 @@ exports.commandLogar = async (req, res) =>{
         } */
 
         const dataOne = req.body.cpfUser.split('.').join("").split('-').join("");
-        const dataTwo = req.body.cpfPassword != undefined ? req.body.cpfPassword : dataOne;
+        const dataTwo = req.body.cpfPassword;
 
         if(req.session.cookieLogin == undefined){
             //Cookie de sessão não criado
 
             //Validando o CPF
-            database.select().where({jcv_userCpf: dataOne, jcv_userEnabled: 1}).limit(1).table("jcv_users").then( data => {
+            await database.select().where({jcv_userCpf: dataOne, jcv_userEnabled: 1}).limit(1).table("jcv_users").then( data => {
                 //Validando se o CPF foi encontrado
                 if(data == ''){
                     throw {pageRedirect: '/login',messageError: 'Nenhum usuario encontrado..',typeError: 'error'}
