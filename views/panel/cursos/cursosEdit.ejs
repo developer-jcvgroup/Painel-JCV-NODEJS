@@ -34,10 +34,18 @@
                 <input required type="number" name="course-total-hours" value="<%= allInfo[0].jcv_course_total_hours %>" placeholder="Insira a carga horária total">
             </div>
             <!--  -->
-            <div class="cursos-edit-box">
-                <label for="">Ministrado por:</label>
-                <input required type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
-            </div>
+            <% if(allInfo[0].jcv_course_status == 4 ){ %>
+                <div class="cursos-edit-box">
+                    <label for="">Ministrado por:</label>
+                    <input style="background: var(--color-three);" required disabled type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
+                </div>
+            <% }else{ %>
+                <div class="cursos-edit-box">
+                    <label for="">Ministrado por:</label>
+                    <input required type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
+                </div>
+            <% } %>
+            
             <!--  -->
             <div class="cursos-edit-box">
                 <label for="">Marca</label>

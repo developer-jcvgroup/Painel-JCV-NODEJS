@@ -62,7 +62,7 @@ exports.updateDataUser = async (req,res) =>{
   await database.update({jcv_userNamePrimary: userName, jcv_userNameSecundary: userName, jcv_userEmailCorporate: userEmailCorp, jcv_userEmailFolks: userEmailPer, jcv_userExtension: userRamal, jcv_sysEmail: userApps, jcv_userCpf: userCpf}).where({jcv_id: GLOBAL_DASH[0]}).table("jcv_users").then(data =>{
     if(data){
       //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Seus dados foram atualizados com sucesso!");
-      res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Seus dados foram atualizados com sucesso!","timeMsg": 3000}`);
+      res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Seus dados foram atualizados com sucesso! <b>Logue novamente para seus dados ficarem visíveis</b>","timeMsg": 3000}`);
       res.redirect("/painel");
     }
   }).catch(err => {

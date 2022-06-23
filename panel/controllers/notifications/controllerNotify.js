@@ -76,7 +76,7 @@ exports.saveNotifications = async (req,res) => {
     const notificationsEnabled = req.body['newNotify-enabled']
 
     const usersNotifications = typeof(req.body['array-users-list'].split(',')) == 'object' ? req.body['array-users-list'].split(',').map(convertValues) : [req.body['array-users-list']].map(convertValues)
-    
+
     function convertValues(value){
         return parseInt(value)
     }
@@ -170,7 +170,7 @@ exports.deleteNotifications = async (req,res) => {
     .then( data => {
         if(data != ''){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Notificação deletada com sucesso!");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Notificação deletada com sucesso!","timeMsg": 3000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Notificação deletada com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/notifications/main");
         }else{
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro interno ao excluir");

@@ -244,6 +244,25 @@ header{
     display: flex;
     color: var(--color-two);
 }
+
+/* Animação para o icone de notificação */
+.notification-animation{
+    animation: animationNotification 2s infinite;
+    transform: rotate(0deg);
+}
+@keyframes animationNotification{
+    
+    33%{
+        transform: rotate(20deg);
+    }
+    66%{
+        transform: rotate(-20deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}
+
 .header-links-nav-btn{
     text-decoration: none;
     font-size: 1.2rem;
@@ -425,7 +444,7 @@ header{
 
  /* li */
 .navbar-info-user-drop li{
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--color-two);
     padding: 15px 0;
     display: flex;
@@ -437,10 +456,11 @@ header{
 }
 .navbar-info-user-drop li a{
     text-decoration: none;
-    color:  var(--color-two);
+    color: var(--color-two);
     cursor: pointer;
     display: flex;
     align-items: center;
+    font-size: 0.9rem;
 }
 .navbar-info-user-drop li span{
     text-decoration: none;

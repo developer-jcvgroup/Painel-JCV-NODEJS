@@ -212,6 +212,12 @@ $(function(){
         if($("#notification-container-box").is(':visible')){
             $("#notification-container-box").fadeOut()
         }
+
+        //Config do perfil
+        if($("#li-info-user-drop").is(':visible')){
+            $("#li-info-user-drop").fadeOut()
+            $("#toggle-user").toggleClass('rotate-90')
+        }
     })
     //Menu
     $("#menu-action").click(function(){

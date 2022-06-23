@@ -72,6 +72,7 @@ const controllerExternalLogin = require("./controllers/system/controllerExternal
 //Logout
 router.get("/logout", (req,res)=> {
     req.session.cookieLogin = undefined;
+    GLOBAL_DASH = undefined;
     res.redirect("/");
 })
 

@@ -45,7 +45,6 @@ io.on('connection', (socket) => {
         //.where({jcv_notifications_usersId: data, jcv_notifications_users_view: null})
         //.table("jcv_notifications")
         .then( dataAll => {
-
             //console.log(dataAll[0])
 
             //console.log(dataAll)
@@ -63,7 +62,7 @@ io.on('connection', (socket) => {
         //.where({jcv_notifications_usersId: data, jcv_notifications_users_view: null})
         //.table("jcv_notifications")
         .then( dataAll => {
-
+            //console.log(dataAll.data)
             socket.emit("reponseNotificationsAllCount", dataAll[0])
         
         })
@@ -358,7 +357,6 @@ app.get('/style/teste', (req,res) => {
 
 //Require do painel
 const jcvPanel = require("./panel/app");
-const { Socket } = require("socket.io");
 app.use("/painel", jcvPanel);
 
 http.listen(8080, () =>{

@@ -23,8 +23,6 @@
     <meta name="msapplication-starturl" content="./index.js">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -470,7 +468,6 @@
     //window.notificationApi = 0;
     socket.on("reponseNotificationsAllCount", (dataAll) => {
         //console.log(dataAll)
-        //console.log(dataAll.length)
 
         let idUserGet = parseInt('<%- GLOBAL_DASH[0] %>');
 
@@ -479,7 +476,7 @@
             $("#count-notify").text(dataAll.length).css({'font-weight': 'bold'})
             $("#title-box-notf").css({'background':'var(--color-red)'})
             $("#count-notifications").text(dataAll.length)
-            $("#icon-color-notify").css({'color': 'var(--color-red)'})
+            $("#icon-color-notify").css({'color': 'var(--color-red)'}).addClass('notification-animation')
             
             //Validando se esta notificação é valida
             let getValues = Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet) != undefined ? JSON.parse(Cookies.get("VIEW-NOTIFI-POPUP-"+idUserGet)) : [];//Validando se este cookie existe
@@ -537,7 +534,7 @@
         $("#display-not-notification").css('display','flex')
         $("#notification-container-box").toggle()
 
-        $("#icon-color-notify").css({'color': 'var(--color-one)'})
+        $("#icon-color-notify").css({'color': 'var(--color-one)'}).removeClass('notification-animation')
 
         $("#notification-ul-list").empty()
         socket.emit("getNotificationsAll","<%= GLOBAL_DASH[0] %>")
