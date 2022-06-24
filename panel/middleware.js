@@ -121,8 +121,19 @@ authenticate = async (req, res, next) => {
                 res.redirect("/login");
             }
         }else{
+
+            //Validando se o login é do mesmo id da sessão
+            if(GLOBAL_DASH[0] === req.session.cookieLogin[0]){
+                //Mesmo usuario
+                next();
+            }else{
+                //mudou
+                GLOBAL_DASH = undefined;
+                res.redirect("/login");
+            }
+
             //Variável já definida, não precisa renovar os dados dela
-            next();
+            //next();
         }
 
     }else{

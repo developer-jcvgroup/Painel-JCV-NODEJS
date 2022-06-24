@@ -9,7 +9,26 @@
             <div class="beleza-view-container-box">
                 <div class="beleza-view-title-box"><span>Programa da Beleza</span></div>
                 <div class="beleza-view-info">
-                    <% if(requestUser[0].sys_blz_requestStatus == 2){ %>
+
+                    <%
+                    
+                    let newObjStatus = {
+                        0: 'Pendente',
+                        1: '<span style="color: #10772a;">Solicitação concluída <i class="ri-check-double-line"></i></span><span><b>'+GLOBAL_DASH[9]+'</b>, veja abaixo os produtos do seu benefício referente ao mês <b>('+mesReferencia+')</b></span>',
+                        2: 'Cancelado',
+                        3: 'Em separação',
+                        4: 'Separado',
+                        5: 'Despachado',
+                        6: 'Recebido pelo gestor',
+                        7: 'Finalizado'
+                    }
+                    
+                    
+                    %>
+
+                    <%- newObjStatus[requestUser[0].sys_blz_requestStatus] %>
+
+                    <!-- <% if(requestUser[0].sys_blz_requestStatus == 2){ %>
                         <span style="color: #10772a;">Solicitação concluída <i class="ri-check-double-line"></i></span>
                         <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
                     <% }else if(requestUser[0].sys_blz_requestStatus == 4){ %>
@@ -20,9 +39,7 @@
                         <span><b><%= GLOBAL_DASH[9] %></b>, veja abaixo os produtos do seu benefício referente ao mês <b>(<%= mesReferencia %>)</b></span>
                     <% } %>
 
-                    <% if(statusCancel) { %>
-                        <span>Pedido de cancelamento em análise! Aguarde..</span>
-                    <% } %>
+                    -->
                 </div>
                 <div class="beleza-view-container-body">
                     <form class="beleza-view-form" action="">
@@ -39,7 +56,7 @@
                             </div>
                             <span><%= verifyProd[1].sys_blz_productName %></span>
                         </div>
-                        <% if(requestUser[0].sys_blz_requestStatus == 2 ){ %>
+                        <% if(requestUser[0].sys_blz_requestStatus == 1){ %>
                         <div class="beleza-view-form-row-action">
                             <span id="click-open-cancel" class="beleza-view-link-normal">Refazer Solicitação</span>
                         </div>

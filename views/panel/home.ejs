@@ -130,7 +130,7 @@
                         <div class="suspended-title-boxs">
                             <span>Programa da Beleza</span>
                         </div>
-                        <% if(system_blz_status == 2){ %>
+                        <% if(system_blz_status == 1){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
                                     <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
@@ -142,7 +142,7 @@
                                     </a>
                                 </div>
                             </div>
-                        <% }else if(system_blz_status == 1){ %>
+                        <% }else if(system_blz_status == 0){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
                                     <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
@@ -154,7 +154,7 @@
                                     </a>
                                 </div>
                             </div>
-                        <% }else if(system_blz_status == 3){ %>
+                        <% }else if(system_blz_status == 2){ %>
                             <div class="home-main-suspended-box">
                                 <div class="main-suspended-info">
                                     <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
@@ -166,43 +166,8 @@
                                     </a>
                                 </div>
                             </div>
-                        <% }else if(system_blz_status == 4){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Solicitação separada <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% }else if(system_blz_status == 5){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Pedido de cancelamento <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% }else if(system_blz_status == false){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Solicitação Pendente <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
                         <% } %>
+                        
                     </div>
                 </div>
                 <% } %>

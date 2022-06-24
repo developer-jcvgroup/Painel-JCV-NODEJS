@@ -32,7 +32,10 @@ Setor
     * SYS-03: Error;
 
 # Solictações {Programa da beleza}
-- status: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{EM separção}, 5{pedido de cancelamento}, 6{Pedido separador pela expedição}, 7{Pedido recebido pelo gestor};
+- status: 
+STATUS ANTIGO: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{Em separação}, 5{pedido de cancelamento};
+STATUS NOVOS: 0{Pendente}, 1{Solicitado}, 2{Cancelado}, 3{Em Separação}, 4{Separado}, 5{Despachado}, 6{Recebido pelo Gestor}, 7{Finalizado}
+
 # Commandos para o PROGRAMA DA BELEZA
 - CMD01{Setar como pedido pendente}
 - CMD02{Setar como pedido separado}

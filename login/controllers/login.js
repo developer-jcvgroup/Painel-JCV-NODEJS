@@ -19,7 +19,10 @@ exports.commandLogar = async (req, res) =>{
         const dataOne = req.body.cpfUser.split('.').join("").split('-').join("");
         const dataTwo = req.body.cpfPassword;
 
-        if(req.session.cookieLogin == undefined){
+        //Validando se a sessão está definida
+        let validationGlobalDash = typeof(GLOBAL_DASH) == 'undefined' ? true : false;
+
+        if(req.session.cookieLogin == undefined || validationGlobalDash == false){
             //Cookie de sessão não criado
 
             //Validando o CPF

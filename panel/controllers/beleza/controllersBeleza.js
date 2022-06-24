@@ -27,8 +27,8 @@ exports.sysBLZrequest = async (req, res) =>{
         
         //Valida o status
         if(data != ""){
-            //Caso o pedido esteja cancelado ou separado ele vai para a pagina de solicitação
-            if(data[0].sys_blz_requestStatus == 3){
+            //Caso o pedido esteja cancelado
+            if(data[0].sys_blz_requestStatus == 2){
                 listProducts();
             }else{
                 res.redirect("/painel/beleza/status");
@@ -79,7 +79,7 @@ exports.finalizarSolicitacao = async (req,res) => {
             //Validando se já existe pedido feito
             database
             .select("sys_blz_id")
-            .whereRaw(`sys_blz_userId = ${GLOBAL_DASH[0]} AND sys_blz_requestReference = ${getMonthReferece()} AND NOT sys_blz_requestStatus = 2`)
+            .whereRaw(`sys_blz_userId = ${GLOBAL_DASH[0]} AND sys_blz_requestReference = ${getMonthReferece()} AND NOT sys_blz_requestStatus = 1`)
             .table("jcv_blz_orders")
             .then( dataValid => {
 
@@ -97,7 +97,7 @@ exports.finalizarSolicitacao = async (req,res) => {
                         sys_blz_tratmentTwo: insertProductTwo,
                         sys_blz_requestReference: getMonthReferece(),//Mes atual
                         sys_blz_requestCreate: generateDate(),//Data Atual
-                        sys_blz_requestStatus: 2,
+                        sys_blz_requestStatus: 1,
                         sys_blz_requestCode: codeRequest
                     }).table("jcv_blz_orders").then(data => {
 
@@ -167,16 +167,16 @@ exports.finalizarSolicitacao = async (req,res) => {
 
 exports.listOrder = async (req,res,next) => {
 
-    //Pegando as informações da solcitação, so pede ser exibido pedidos do status 2,4,5
+    //Pegando as informações da solcitação, so pode ser exibido pedidos do status antigo: {2,4,5}, novo: {1,2,3}
     const requestUser = await database
     .select("sys_blz_id","sys_blz_tratmentOne","sys_blz_tratmentTwo","sys_blz_requestStatus")
     .where({sys_blz_requestReference: getMonthReferece(), sys_blz_userId: GLOBAL_DASH[0]})
-    .whereIn('sys_blz_requestStatus', [2,4,5])
+    .whereIn('sys_blz_requestStatus', [1])
     .table("jcv_blz_orders").then(data => {
         return data;
     })
-
-    if(requestUser != "" ){
+    if(requestUser.length == 1){
+        //Solicitação já realizada
 
         //Pegando dados dos produtos
         const verifyProd = await database
@@ -187,14 +187,14 @@ exports.listOrder = async (req,res,next) => {
             return data
         }) 
 
-        //Verificando se o pedido esta com a solicitação de cancelamento e se é deste mes
-        if(requestUser[0]["sys_blz_requestStatus"] == 5){
+        /* //Verificando se o pedido esta com a solicitação de cancelamento e se é deste mes
+        if(requestUser[0]["sys_blz_requestStatus"] == 2){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Seu pedido foi recebido pelo administrador. Aguarde até que sua solicitação seja cancelada.","timeMsg": 3000}`);
             var statusCancel = true;
         }else{
             var statusCancel = false;
-        }
+        } */
 
         var page = "beleza/status";
         res.render("panel/index", {
@@ -204,7 +204,6 @@ exports.listOrder = async (req,res,next) => {
             productTwo: requestUser[0]["sys_blz_tratmentTwo"].split('-')[1], 
             idRequest: requestUser[0]["sys_blz_id"], 
             mesReferencia: getMonthReferece(), 
-            statusCancel: statusCancel,
             verifyProd:verifyProd
         })
     }else{
@@ -220,7 +219,7 @@ exports.cancelOrder = async (req,res) => {
     //Validando se o usuario atingiu a cota de pedidos cancelador que é 2 vezes
     const validateCancel = await database
     .select()
-    .where({sys_blz_userId: GLOBAL_DASH[0], sys_blz_requestStatus: 3, sys_blz_requestReference: getMonthReferece()})
+    .where({sys_blz_userId: GLOBAL_DASH[0], sys_blz_requestStatus: 2, sys_blz_requestReference: getMonthReferece()})
     .table("jcv_blz_orders")
     .then( data => {
         if(data != ''){
@@ -230,6 +229,9 @@ exports.cancelOrder = async (req,res) => {
         }
     })
 
+    console.log(validateCancel)
+
+    //Verifica se atingiu a cota
     if(validateCancel >= 2){
         //Já atingiu a cota
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02|Você não pode mais cancelar sua solicitação sua cota foi excedida.");
@@ -237,7 +239,7 @@ exports.cancelOrder = async (req,res) => {
         res.redirect("/painel/beleza/status");
     }else{
         //Cancelando o pedido
-        database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: idOrder}).table("jcv_blz_orders").then(data => {
+        database.update({sys_blz_requestStatus: 2}).where({sys_blz_id: idOrder}).table("jcv_blz_orders").then(data => {
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01|Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Sua solicitação foi cancelada com sucesso! Não estrapole sua cota!.","timeMsg": 3000}`);
             res.redirect("/painel/beleza/status");
@@ -257,12 +259,12 @@ exports.listRequests = async (req,res) => {
 
     //Listando os admins so programa da beleza
     const blzGestor = await database
-        .select('jcv_users.jcv_id','jcv_users.jcv_userNamePrimary')
-        .table("jcv_users")
-        .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_perm_idUser')
-        .where({jcv_userEnabled: 1, sys_blz_perm_manager: 1})
-        .then(data => {
-            return data;
+    .select('jcv_users.jcv_id','jcv_users.jcv_userNamePrimary')
+    .table("jcv_users")
+    .join('jcv_users_permissions', 'jcv_users.jcv_id', '=', 'jcv_users_permissions.sys_perm_idUser')
+    .where({jcv_userEnabled: 1, sys_blz_perm_manager: 1})
+    .then(data => {
+        return data;
     })
 
     //Renderizando tudo
@@ -283,7 +285,7 @@ exports.searchRequests = async (req,res) => {
 
     let referenceDate = typeof(req.body['sys-filter-name-date']) == 'object' ? 'in ('+convertStringNow()+')' : req.body['sys-filter-name-date'] == undefined ? '= "'+getMonthReferece()+'"' : `= "${req.body['sys-filter-name-date']}"`;
 
-    let blzStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 1 ?  1 : 'in ('+req.body['sys-filter-name-status']+')' : "= 2";
+    let blzStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 0 ?  0 : 'in ('+req.body['sys-filter-name-status']+')' : "= 1";
 
     let listUnitys = req.body['sys-filter-name-unidade'] != undefined ? 'in ('+req.body['sys-filter-name-unidade']+')' : "LIKE '%%'";
     let listGestores = req.body['sys-filter-name-gestor'] != undefined ? 'in ('+req.body['sys-filter-name-gestor']+')' : "LIKE '%%'";
@@ -441,6 +443,7 @@ exports.statusProducts = async (req,res) => {
     const action = req.body.actionProducts;
 
     if(action == "CMD01"){
+        //?Ativo
 
         let updateSucess = 0;
         let updateError = 0;
@@ -462,28 +465,28 @@ exports.statusProducts = async (req,res) => {
         res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${updateSucess} foram alterados. Total de: ${updateError} não teve o status alterado.","timeMsg": 5000}`);
         res.redirect("/painel/beleza/produtos");
     }else if(action == "CMD02"){
-        {
+        //Inativo
 
-            let updateSucess = 0;
-            let updateError = 0;
-    
-            for (let i = 0; i < ids.length; i++) {
-                let result = await database.update({sys_blz_productEnabled: 2}).where({sys_blz_product_id: ids[i]}).table("jcv_blz_products").then(data => {
-                    return data;
-                })
-    
-                if(result == 1){
-                    updateSucess++;
-                }else{
-                    updateError++;
-                }
-                
+        let updateSucess = 0;
+        let updateError = 0;
+
+        for (let i = 0; i < ids.length; i++) {
+            let result = await database.update({sys_blz_productEnabled: 1}).where({sys_blz_product_id: ids[i]}).table("jcv_blz_products").then(data => {
+                return data;
+            })
+
+            if(result == 1){
+                updateSucess++;
+            }else{
+                updateError++;
             }
-    
-            res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+updateSucess+" foram alterados. Total de: "+updateError+" não teve o status alterado.");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${updateSucess} foram alterados. Total de: ${updateError} não teve o status alterado.","timeMsg": 5000}`);
-            res.redirect("/painel/beleza/produtos");
+            
         }
+
+        res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+updateSucess+" foram alterados. Total de: "+updateError+" não teve o status alterado.");
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${updateSucess} foram alterados. Total de: ${updateError} não teve o status alterado.","timeMsg": 5000}`);
+        res.redirect("/painel/beleza/produtos");
+
     }else if(action == "CMD03"){
 
         const xl = require('excel4node');
@@ -621,9 +624,24 @@ exports.actionsCommandsUnityDownload = async (req,res) => {
                     if(typeof(record[columnName]) === 'number'){
 
                         //Convertendo o id do pedido para string
-                        record.blz_id = "#"+record.blz_id;
+                        record.sys_blz_id = "#"+record.sys_blz_id;
                         //Classificando o status do pedido
-                        if(record.blz_orderStatus == 1){
+
+                        let newObjStatus = {
+                            0: 'Pendente',
+                            1: 'Solicitado',
+                            2: 'Cancelado',
+                            3: 'Em separação',
+                            4: 'Separado',
+                            5: 'Despachado',
+                            6: 'Recebido pelo gestor',
+                            7: 'Finalizado'
+                        }
+
+                        //record.blz_orderStatus = newObjStatus[record.blz_orderStatus]
+                        record.sys_blz_requestStatus = newObjStatus[record.sys_blz_requestStatus]
+
+                        /* if(record.blz_orderStatus == 1){
                             record.blz_orderStatus = "Pendente"
                         }else if(record.blz_orderStatus == 2){
                             record.blz_orderStatus = "Solicitado"
@@ -633,7 +651,7 @@ exports.actionsCommandsUnityDownload = async (req,res) => {
                             record.blz_orderStatus = "Separado"
                         }else if(record.blz_orderStatus == 5){
                             record.blz_orderStatus = "Pedido de Cancelamento"
-                        }
+                        } */
 
                         ws.cell(rowIndex,columnIndex++)
                         .string(record [columnName])
@@ -655,7 +673,7 @@ exports.actionsCommandsUnityCancel = async (req,res) => {
     
     const id = req.body.btnDeleteOrder;
 
-    database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: id, sys_blz_requestStatus: 2}).table("jcv_blz_orders").then(data => {
+    database.update({sys_blz_requestStatus: 2}).where({sys_blz_id: id, sys_blz_requestStatus: 1}).table("jcv_blz_orders").then(data => {
 
         if(data != ""){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Pedido #"+id+" cancelado com sucesso!");
@@ -716,7 +734,21 @@ function exportOrders(ids,req,res){
                         //Convertendo o id do pedido para string
                         record.sys_blz_id = "#"+record.sys_blz_id;
                         //Classificando o status do pedido
-                        if(record.sys_blz_requestStatus == 1){
+
+                        let newObjStatus = {
+                            0: 'Pendente',
+                            1: 'Solicitado',
+                            2: 'Cancelado',
+                            3: 'Em separação',
+                            4: 'Separado',
+                            5: 'Despachado',
+                            6: 'Recebido pelo gestor',
+                            7: 'Finalizado'
+                        }
+
+                        record.sys_blz_requestStatus = newObjStatus[record.sys_blz_requestStatus]
+
+                        /* if(record.sys_blz_requestStatus == 1){
                             record.sys_blz_requestStatus = "Pendente"
                         }else if(record.sys_blz_requestStatus == 2){
                             record.sys_blz_requestStatus = "Solicitado"
@@ -726,7 +758,7 @@ function exportOrders(ids,req,res){
                             record.sys_blz_requestStatus = "Separado"
                         }else if(record.sys_blz_requestStatus == 5){
                             record.sys_blz_requestStatus = "Pedido de Cancelamento"
-                        }
+                        } */
 
                         ws.cell(rowIndex,columnIndex++)
                         .string(record [columnName])
@@ -1011,10 +1043,10 @@ async function alterarStatus(ids, status,req,res) {
         let ordersUpdated = 0;
         let ordersNoUpdated = 0;
         resultSearch.forEach(element => {
-            //So altere o status caso o status do pedido seja 2
-            if(element['sys_blz_requestStatus'] == 2){
+            //So altere o status caso o status do pedido seja 1
+            if(element['sys_blz_requestStatus'] == 1){
                 //console.log("posso alterar")
-                database.update({sys_blz_requestStatus: 4}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
+                database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
                     //update ok
                 })
                 //adicionando pedidos que podem ser alterados
@@ -1042,13 +1074,14 @@ async function alterarStatus(ids, status,req,res) {
             res.redirect("/painel/beleza/solicitacoes");
         }
     }else if (status == "CMD03"){
+
         let ordersUpdated = 0;
         let ordersNoUpdated = 0;
         resultSearch.forEach(element => {
-            //So altere o status caso o status do pedido seja 2 e 5
-            if(element['sys_blz_requestStatus'] == 2 || element['sys_blz_requestStatus'] == 5){
+            //So altere o status caso o status do pedido seja 1
+            if(element['sys_blz_requestStatus'] == 1){
                 //console.log("posso alterar")
-                database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
+                database.update({sys_blz_requestStatus: 2}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
                     //update ok
                 })
                 //adicionando pedidos que podem ser alterados
