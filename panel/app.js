@@ -179,6 +179,15 @@ router.post("/beleza/actions/orders/commands", authenticate, programaBeleza.acti
 router.post("/beleza/actions/order/download", authenticate, programaBeleza.actionsCommandsUnityDownload)
 router.post("/beleza/actions/order/delete", authenticate, programaBeleza.actionsCommandsUnityCancel)
 
+//Programa da beleza: Compilação
+router.get('/beleza/compilate/:uuid?', middlewareURL, authenticate, programaBeleza.compilateView)
+router.post('/beleza/compilate/action/expedicao', programaBeleza.compilateActionExpedicao)
+router.post('/beleza/compilate/action/despacho', programaBeleza.compilateActionExpedicaoDespacho)
+router.post('/beleza/compilate/action/coletar', programaBeleza.compilateActionExpedicaoColeta)
+
+router.get('/beleza/compilate/generate/:uuid?', programaBeleza.compilateGeneratePDF)
+router.get('/beleza/view/status/:uuid?', programaBeleza.viewStatus)
+
 /***********************************/
 /***********************************/
 //Sistema: Usuarios, permissoes, departamentos, unidades

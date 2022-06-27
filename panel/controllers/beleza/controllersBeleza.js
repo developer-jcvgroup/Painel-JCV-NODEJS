@@ -167,14 +167,17 @@ exports.finalizarSolicitacao = async (req,res) => {
 
 exports.listOrder = async (req,res,next) => {
 
-    //Pegando as informações da solcitação, so pode ser exibido pedidos do status antigo: {2,4,5}, novo: {1,2,3}
+    //Validando se existe pedidos para este usuario
+    //Exeto os cancelados {2}
     const requestUser = await database
     .select("sys_blz_id","sys_blz_tratmentOne","sys_blz_tratmentTwo","sys_blz_requestStatus")
     .where({sys_blz_requestReference: getMonthReferece(), sys_blz_userId: GLOBAL_DASH[0]})
-    .whereIn('sys_blz_requestStatus', [1])
+    .whereNot('sys_blz_requestStatus', [2])
     .table("jcv_blz_orders").then(data => {
         return data;
     })
+
+
     if(requestUser.length == 1){
         //Solicitação já realizada
 
@@ -314,7 +317,7 @@ exports.searchRequests = async (req,res) => {
         database
         .select('jcv_blz_orders.sys_blz_id','jcv_blz_orders.sys_blz_userName','jcv_unitys.sys_unity_name',
         'jcv_users.jcv_userNameSecundary', 'jcv_blz_orders.sys_blz_tratmentOne','jcv_blz_orders.sys_blz_tratmentTwo',
-        'jcv_blz_orders.sys_blz_requestStatus','jcv_blz_orders.sys_blz_requestReference','jcv_blz_orders.sys_blz_requestCreate')
+        'jcv_blz_orders.sys_blz_requestStatus','jcv_blz_orders.sys_blz_requestReference','jcv_blz_orders.sys_blz_requestCreate','jcv_blz_orders.sys_blz_requestCode')
         .table("jcv_blz_orders")
         .join('jcv_unitys', 'jcv_blz_orders.sys_blz_userUnity', '=', 'jcv_unitys.sys_unity_id')
         .join('jcv_users', 'jcv_blz_orders.sys_blz_userManager', '=', 'jcv_users.jcv_id')
@@ -548,7 +551,7 @@ exports.statusProducts = async (req,res) => {
 
 exports.actionsCommandsOrder = async (req,res) => {
     const commandSet = req.body.requestOrderCommands;
-    const arrayPedidos = req.body.requestOrderId;
+    const arrayPedidos = typeof(req.body.requestOrderId) == 'string' ? [req.body.requestOrderId] : req.body.requestOrderId;
 
     if(arrayPedidos == undefined){
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Selecione algum pedido!");
@@ -575,6 +578,8 @@ exports.actionsCommandsOrder = async (req,res) => {
         exportsUnitysExcel(arrayPedidos,req,res)
     }else if(commandSet == "CMD08"){
         exportProductsUnity(arrayPedidos,req,res)
+    }else if(commandSet == "CMD09"){
+        exportsEtiquetasQR(arrayPedidos,req,res)
     }else{
         //Opção não encontrado
     }
@@ -1038,41 +1043,82 @@ async function alterarStatus(ids, status,req,res) {
         return data;
     })
 
-    if(status == "CMD02"){   
+    if(status == "CMD02"){  
         
-        let ordersUpdated = 0;
-        let ordersNoUpdated = 0;
-        resultSearch.forEach(element => {
-            //So altere o status caso o status do pedido seja 1
-            if(element['sys_blz_requestStatus'] == 1){
-                //console.log("posso alterar")
-                database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
-                    //update ok
-                })
-                //adicionando pedidos que podem ser alterados
-                ordersUpdated++;
-            }else{
-                //adicionando pedidos que não podem ser alterados
-                ordersNoUpdated++;
-            }
-        })
-    
-        if(ordersNoUpdated != ""){
-            if(ordersUpdated != ""){
-                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${ordersNoUpdated} não podem ser alterados. ${ordersUpdated} teve o status alterado com sucesso!","timeMsg": 3000}`);
-                res.redirect("/painel/beleza/solicitacoes");
-            }else{
-                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos: não podem ser alterados");
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos não podem ser alterados","timeMsg": 3000}`);
-                res.redirect("/painel/beleza/solicitacoes");
-            }
-        }else{
-            //console.log("Não tem pedidos")
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado(s) com sucesso!","timeMsg": 3000}`);
+        //Em separação
+        //Pegando quais solicitações pode ou não pode ser adicionadas
+        const getDataRequestsValidation = await database
+        .select()
+        .whereRaw(`sys_blz_id IN (${ids}) AND sys_blz_requestStatus = 1`)
+        .table('jcv_blz_orders')
+        .then( data => { return data })
+
+        if(getDataRequestsValidation == ''){
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Este pedido não pode alterar seu status","timeMsg": 3000}`);
             res.redirect("/painel/beleza/solicitacoes");
+        }else{
+
+            //console.log(getDataRequestsValidation+' '+ids)
+            let validaeMonth = getDataRequestsValidation[0].sys_blz_requestReference;
+            let validaeMonthCode = true;
+            getDataRequestsValidation.forEach(element => {
+                if(element.sys_blz_requestReference != validaeMonth){
+                    validaeMonthCode = false
+                }
+            });
+
+
+            if(getDataRequestsValidation.length == ids.length && validaeMonthCode == true && validationStatus == true){
+
+                //Podemos continuar as operações
+                ////////////////////////////////////////////////
+                //Modulo para criar o compilado de dar sequencia ao processo, neste caso é o 3 (em separação)
+                compilateOrders(ids, 3)
+                ////////////////////////////////////////////////
+                
+                let ordersUpdated = 0;
+                let ordersNoUpdated = 0;
+                resultSearch.forEach(element => {
+                    //So altere o status caso o status do pedido seja 1
+                    if(element['sys_blz_requestStatus'] == 1){
+                        //console.log("posso alterar")
+                        
+                        database.update({sys_blz_requestStatus: 3}).where({sys_blz_id: element['sys_blz_id']}).table("jcv_blz_orders").then(data => {
+                            //update ok
+                        })
+
+                        //adicionando pedidos que podem ser alterados
+                        ordersUpdated++;
+                    }else{
+                        //adicionando pedidos que não podem ser alterados
+                        ordersNoUpdated++;
+                    }
+                })
+            
+                if(ordersNoUpdated != ""){
+                    if(ordersUpdated != ""){
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Total de: "+ordersNoUpdated+" não podem ser alterados. "+ordersUpdated+" teve o status alterado com sucesso.");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Total de: ${ordersNoUpdated} não podem ser alterados. ${ordersUpdated} teve o status alterado com sucesso!","timeMsg": 3000}`);
+                        res.redirect("/painel/beleza/solicitacoes");
+                    }else{
+                        //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Os pedidos: não podem ser alterados");
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos não podem ser alterados","timeMsg": 3000}`);
+                        res.redirect("/painel/beleza/solicitacoes");
+                    }
+                }else{
+                    //console.log("Não tem pedidos")
+                    //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Status alterados com sucesso.");
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado(s) com sucesso!","timeMsg": 3000}`);
+                    res.redirect("/painel/beleza/solicitacoes");
+                }
+            }else{
+                //Erro ao processar
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Os pedidos não podem ser alterados! <b>Todos</b> precisam estar com status <b>SOLICITADOS</b> e serem <b>TODOS</b> de um único <b>Mês</b>","timeMsg": 6000}`);
+                res.redirect("/painel/beleza/solicitacoes");
+            }
+
         }
+        
     }else if (status == "CMD03"){
 
         let ordersUpdated = 0;
@@ -1157,6 +1203,8 @@ async function exportProductsUnity (ids,req,res){
             .raw("SELECT sys_blz_tratmentOne,sys_unity_name, COUNT(sys_blz_tratmentOne) AS Qtd FROM jcv_jcvpanel.jcv_blz_orders JOIN jcv_unitys ON jcv_blz_orders.sys_blz_userUnity = jcv_unitys.sys_unity_id WHERE sys_blz_userUnity = "+element+" AND sys_blz_userUnity in ("+ids+") GROUP BY sys_blz_tratmentOne HAVING COUNT(sys_blz_tratmentOne) > 0 ORDER BY sys_blz_userUnity, COUNT(sys_blz_tratmentOne) DESC")
             .then( data => {
                 //console.table(data[0])
+
+                //console.log(data[0])
 
                 data[0].forEach( record => {
                     let columnIndex = 1;
@@ -1332,4 +1380,511 @@ async function exportProductsUnity (ids,req,res){
 
         
     }
+}
+compilateOrders = async (idsOrder, statusOrder) => {
+
+    //Pegando os ids
+    const getOrdersSelect = await database
+    .select()
+    .whereIn('sys_blz_id', idsOrder)
+    .table("jcv_blz_orders")
+    .orderBy('sys_blz_userManager','DESC')
+    .then( data => {return data})
+
+    //Pegando o array e convertendo os dados
+    let indexManager = getOrdersSelect[0].sys_blz_userManager; // Pegando o primeiro index como usuario manager
+    let objData = [];//Obj que vai armazenar os dados referente a cada gestor
+    let arrayIdsRequests = [];//Listar os ids das solicitações
+
+    for(let i = 0; i < getOrdersSelect.length; i++){
+        
+        //console.log(i)
+        //Verificado se o index setado antes do forEach é o mesmo que o index atual
+        if(indexManager == getOrdersSelect[i].sys_blz_userManager){
+            //console.log('mesmo gestor')
+            //Mesmo gestor
+
+            
+            
+            //Puxando os dados para este novo objeto
+            objData.push({
+                blzIdRequest: getOrdersSelect[i].sys_blz_id,
+                blzUserName: getOrdersSelect[i].sys_blz_userName,
+                blzShampoo: getOrdersSelect[i].sys_blz_tratmentOne,
+                blzTreatment: getOrdersSelect[i].sys_blz_tratmentTwo,
+                blzRequestDate: getOrdersSelect[i].sys_blz_requestCreate
+            })
+
+            arrayIdsRequests.push(getOrdersSelect[i].sys_blz_id)
+
+            //Validando se é o ultimo item do array
+            if((i) +1 == getOrdersSelect.length){
+                //console.log('ultimo item do array')
+                //Neste caso por ser o ultimo item vamos salvar ele no banco de dados igual a
+                //condição do else mais abaixo
+                //console.log('Object data do gestor anterior: '+objData)
+                //Salvando no banco de dados
+                database
+                .insert({
+                    jcv_blz_compilate_id_manager: indexManager,
+                    jcv_blz_compilate_array_data: JSON.stringify(objData),
+                    jcv_blz_compilate_month_reference: getOrdersSelect[i].sys_blz_requestReference,
+                    jcv_blz_compilate_generate_date: generateDate(),
+                    jcv_blz_compilate_status: statusOrder,
+                    jcv_blz_compilate_ids: JSON.stringify(arrayIdsRequests),
+                    jcv_blz_compilate_active: 1,
+                    jcv_blz_compilate_uuid: uuid.v1(),
+                    jcv_blz_compilate_QR_manager: uuid.v1(),
+                    jcv_blz_compilate_QR_expedicao: uuid.v1()
+                })
+                .table("jcv_blz_compilate")
+                .then( data => {
+                    //Okay
+                    //console.log('inserido:'+data)
+                })
+
+                //indexManager[getOrdersSelect[getOrdersSelect.length].sys_blz_userManager]
+            }
+            
+        }else{
+            //Mudou de gestor
+
+            //Neste ação vamos salvar este objeto no banco antes dele ser apagado
+            //console.log('Object data do gestor anterior: '+objData)
+            //Salvando no banco de dados
+            database
+            .insert({
+                jcv_blz_compilate_id_manager: indexManager,
+                jcv_blz_compilate_array_data: JSON.stringify(objData),
+                jcv_blz_compilate_month_reference: getOrdersSelect[i].sys_blz_requestReference,
+                jcv_blz_compilate_generate_date: generateDate(),
+                jcv_blz_compilate_status: statusOrder,
+                jcv_blz_compilate_active: 1,
+                jcv_blz_compilate_ids: JSON.stringify(arrayIdsRequests),
+                jcv_blz_compilate_uuid: uuid.v1(),
+                jcv_blz_compilate_QR_manager: uuid.v1(),
+                jcv_blz_compilate_QR_expedicao: uuid.v1()
+            })
+            .table("jcv_blz_compilate")
+            .then( data => {
+                //Okay
+                //console.log('inserido:'+data)
+            })
+            
+            //Limapando o objeto para uma novo inserção de dados
+            objData = []
+            arrayIdsRequests = []
+
+            indexManager = getOrdersSelect[i].sys_blz_userManager
+            i--
+            //console.log('mudou de gestor (voltando uma casa)')
+        }
+    
+    }
+
+    //Registrar log das solicitações
+    getOrdersSelect.forEach(element => {
+
+        //Registrando os compilados
+        registerLogCompilate(element.sys_blz_requestCode, statusOrder)
+
+
+    });
+
+    
+
+}
+
+exports.compilateView = async (req,res) => {
+
+    const uuidGet = req.params.uuid;
+
+    const getUUIDcompilates = await database
+    .select("jcv_blz_compilate.*","jcv_users.jcv_userNamePrimary")
+    .where({jcv_blz_compilate_uuid: uuidGet})
+    .table("jcv_blz_compilate")
+    .join("jcv_users","jcv_users.jcv_id", "jcv_blz_compilate.jcv_blz_compilate_id_manager")
+    .then( data => { return data })
+
+    //Pegando quem separou
+    var userSeparador = '';
+
+    //console.log(getUUIDcompilates)
+    if(getUUIDcompilates != ''){
+        if(getUUIDcompilates[0].jcv_blz_compilate_separte_user != null){
+            userSeparador = await database
+            .select("jcv_users.jcv_userNamePrimary")
+            .where({jcv_id: getUUIDcompilates[0].jcv_blz_compilate_separte_user})
+            .table("jcv_users")
+            .then( data => {
+                //console.log(data)
+                return data[0].jcv_userNamePrimary
+            })
+        }
+    
+        //console.log(uuidGet)
+    
+        if(getUUIDcompilates != ''){
+            var page = "beleza/compilateInfo";
+            res.render("panel/index", {page: page, getUUIDcompilates: getUUIDcompilates, userSeparador: userSeparador, PAINEL_URL: PAINEL_URL})
+        }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhuma informação encontrada","timeMsg": 3000}`);
+            res.redirect("/painel/beleza/solicitacoes");
+        }
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhuma informação encontrada","timeMsg": 3000}`);
+        res.redirect("/painel/beleza/solicitacoes");
+    }
+
+    
+
+}
+
+exports.compilateActionExpedicao = async (req,res) => {
+    const uuidCompilate = req.body['button-action-expedicao-separacao'];
+
+    const getStatus = await database
+    .select()
+    .where({jcv_blz_compilate_uuid: uuidCompilate})
+    .table("jcv_blz_compilate")
+    .then( data => {return data})
+
+    if(getStatus != '' && getStatus[0].jcv_blz_compilate_status == 3){
+        //UUid existente e o compilador esta com status 3{em separação}
+
+        database
+        .update({
+            jcv_blz_compilate_status: 4,
+            jcv_blz_compilate_separte_user: GLOBAL_DASH[0]
+        })
+        .where({jcv_blz_compilate_uuid: uuidCompilate})
+        .table("jcv_blz_compilate")
+        .then( dataResult => {
+            if(dataResult == 1){
+                //Registrando os compilados
+                //Pegando os UUID dos pedidos
+
+
+
+                let arrayConvert
+                database
+                .select('sys_blz_requestCode')
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( dataGetUUID => {
+                    dataGetUUID.forEach(element => {
+                        registerLogCompilate(element.sys_blz_requestCode, 4)
+                    });
+                })
+
+                //Atualizando o status do pedido
+                database
+                .update({
+                    sys_blz_requestStatus: 4
+                })
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( data => {
+                    //Okay
+                })
+
+
+
+
+
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado com sucesso para <b>SEPARADO</b>","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }else{
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao processar este compilado","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }
+        })
+
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Dados inexistentes","timeMsg": 3000}`);
+        res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+    }
+
+}
+
+exports.compilateActionExpedicaoDespacho = async (req,res) => {
+    const uuidCompilate = req.body['button-action-expedicao-despacho'];
+    const observations = req.body['button-action-expedicao-obs'];
+
+    const getStatus = await database
+    .select()
+    .where({jcv_blz_compilate_uuid: uuidCompilate})
+    .table("jcv_blz_compilate")
+    .then( data => {return data})
+
+    if(getStatus != '' && getStatus[0].jcv_blz_compilate_status == 4){
+        //UUid existente e o compilador esta com status 4{Separado}
+
+        database
+        .update({
+            jcv_blz_compilate_status: 5,
+            jcv_blz_compilate_obs: observations
+        })
+        .where({jcv_blz_compilate_uuid: uuidCompilate})
+        .table("jcv_blz_compilate")
+        .then( dataResult => {
+            if(dataResult == 1){
+
+                //Registrando os compilados
+                //Registrando os compilados
+                //Pegando os UUID dos pedidos
+
+
+
+
+
+                database
+                .select('sys_blz_requestCode')
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( dataGetUUID => {
+                    dataGetUUID.forEach(element => {
+                        registerLogCompilate(element.sys_blz_requestCode, 5) 
+                    });
+                })
+
+                //Atualizando o status do pedido
+                database
+                .update({
+                    sys_blz_requestStatus: 5
+                })
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( data => {
+                    //Okay
+                })
+
+
+
+
+
+
+
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado com sucesso para <b>DESPACHADO</b>","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }else{
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao processar este compilado","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }
+        })
+
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Dados inexistentes","timeMsg": 3000}`);
+        res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+    }
+
+}
+
+exports.compilateActionExpedicaoColeta = async (req,res) =>{
+
+    const uuidCompilate = req.body['button-action-expedicao-coletar'];
+
+    const getStatus = await database
+    .select()
+    .where({jcv_blz_compilate_uuid: uuidCompilate})
+    .table("jcv_blz_compilate")
+    .then( data => {return data})
+
+    if(getStatus != '' && getStatus[0].jcv_blz_compilate_status == 5 && getStatus[0].jcv_blz_compilate_id_manager == GLOBAL_DASH[0]){
+        //UUid existente e o compilador esta com status 4{Separado}
+
+        database
+        .update({
+            jcv_blz_compilate_status: 6,
+        })
+        .where({jcv_blz_compilate_uuid: uuidCompilate})
+        .table("jcv_blz_compilate")
+        .then( dataResult => {
+            if(dataResult == 1){
+                //Registrando os compilados
+                //Pegando os UUID dos pedidos
+
+
+
+
+
+                database
+                .select('sys_blz_requestCode')
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( dataGetUUID => {
+                    dataGetUUID.forEach(element => {
+                        registerLogCompilate(element.sys_blz_requestCode, 6) 
+                    });
+                })
+
+                //Atualizando o status do pedido
+                database
+                .update({
+                    sys_blz_requestStatus: 6
+                })
+                .whereRaw(`sys_blz_id in (${JSON.parse(getStatus[0].jcv_blz_compilate_ids)})`)
+                .table("jcv_blz_orders")
+                .then( data => {
+                    //Okay
+                })
+
+
+
+
+
+
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Status alterado com sucesso para <b>RECEBIDO PELO GESTOR</b>","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }else{
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao processar este compilado","timeMsg": 3000}`);
+                res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+            }
+        })
+
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Somente o gestor pode coletar estas solicitações","timeMsg": 3000}`);
+        res.redirect("/painel/beleza/compilate/"+uuidCompilate);
+    }
+
+}
+
+function registerLogCompilate(uuidRequest, statusCode){
+    database
+    .insert({
+        jcv_blz_status_uuid_request: uuidRequest,
+        jcv_blz_status_type: statusCode,
+        jcv_blz_status_date: generateDate()
+    })
+    .table("jcv_blz_status_log")
+    .then( data => {
+        //Okay
+    })
+}
+
+exports.compilateGeneratePDF = async (req,res) => {
+    const uuidGet = req.params.uuid
+
+    //Pegando dados deste compilado
+    const getStatus = await database
+    .select("jcv_blz_compilate.*","jcv_users.jcv_userNamePrimary")
+    .where({jcv_blz_compilate_uuid: uuidGet})
+    .table("jcv_blz_compilate")
+    .join("jcv_users","jcv_users.jcv_id", "jcv_blz_compilate.jcv_blz_compilate_id_manager")
+    .then( data => {return data})
+
+    if(getStatus != ''){
+
+        res.render('panel/beleza/modelGenerateEtiqueta', {getStatus: getStatus})
+
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nada encontrado","timeMsg": 3000}`);
+        res.redirect("/painel/beleza/solicitacoes");
+    }
+}
+
+async function exportsEtiquetasQR (idsRequests,req ,res){
+
+    //Pegando somente os gestores das solitações e mes
+    const getManager = await database
+    .select('sys_blz_userManager','sys_blz_requestReference')
+    .distinct('sys_blz_userManager')
+    .whereIn('sys_blz_id', idsRequests)
+    .table("jcv_blz_orders")
+    .then( data => {
+
+        //Verificando se todos eles são do mesmo mes, caso não seja um erro será exibido
+        let error = false;
+        let monthFirst = data[0].sys_blz_requestReference;
+        for (let i = 0; i < data.length; i++) {
+            if(data[i].sys_blz_requestReference != monthFirst){
+                error = true;
+                i = data.length
+            }
+
+        }
+
+        //console.log(error)
+
+        if(error == false){
+            let result = data.map(functionConv);
+            function functionConv(value){
+                return value.sys_blz_userManager
+            }
+    
+            return result 
+        }else{
+            return error;
+        }
+    })
+
+    //console.log(getManager)
+
+    //console.log(getManager)
+
+    //Verificando se estes pedidos possuem o compilado
+
+    //Verificando se deu erro nos pedidos
+    if(typeof(getManager) != 'object'){
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Para consultar e gerar os QR CODES é necessário as solicitações serem do mesmo mes","timeMsg": 6000}`);
+        res.redirect("/painel/beleza/solicitacoes");
+    }else{
+        const getCompilado = await database
+        .select('jcv_users.jcv_userNamePrimary','jcv_blz_compilate.*')
+        .whereIn('jcv_blz_compilate_id_manager', getManager)
+        .table("jcv_blz_compilate")
+        .join("jcv_users","jcv_blz_compilate.jcv_blz_compilate_id_manager", "jcv_users.jcv_id")
+        .then( data => {return data})
+    
+        if(getCompilado != ''){
+
+            //Pegando data da geração
+            const dateGenerate = generateDate()
+
+            //Dados achados
+            res.render("panel/beleza/modelGenerateEtiqueta", {getCompilado: getCompilado, dateGenerate: dateGenerate})
+            //console.log()
+        }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum dado foi encotrado. Certifique-se que as solicitações passou pelo status <b>EM SEPARAÇÃO</b>","timeMsg": 6000}`);
+            res.redirect("/painel/beleza/solicitacoes");
+        }
+
+    }
+
+}
+
+exports.viewStatus = async (req,res) => {
+    const uuidGet = req.params.uuid;
+
+    //Pegando as informações
+    const getData = await database
+    .select('jcv_blz_orders.*','jcv_users.jcv_userNamePrimary')
+    .where({sys_blz_requestCode: uuidGet})
+    .table("jcv_blz_orders")
+    .join("jcv_users","jcv_users.jcv_id","jcv_blz_orders.sys_blz_userManager")
+    .then( data => {return data})
+
+    //Pegando quem criou
+    let getPerson = '';
+    if(typeof(getData) != 'undefined'){
+        getPerson = await database
+        .select('jcv_userNamePrimary')
+        .where({jcv_id: getData[0].sys_blz_userId})
+        .table("jcv_users")
+        .then( data => {return data})
+    }
+    
+
+
+    //Pegando os logs
+    const getLog = await database
+    .select()
+    .where({jcv_blz_status_uuid_request: uuidGet})
+    .table("jcv_blz_status_log")
+    .orderBy("jcv_blz_status_id","DESC")
+    .then( data => {return data})
+
+    var page = "beleza/viewStatus";
+    res.render("panel/index", {page: page, getLog: getLog, getData: getData, getPerson:getPerson})
+
 }

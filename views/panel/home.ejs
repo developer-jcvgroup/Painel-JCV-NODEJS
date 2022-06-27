@@ -130,43 +130,33 @@
                         <div class="suspended-title-boxs">
                             <span>Programa da Beleza</span>
                         </div>
-                        <% if(system_blz_status == 1){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/status">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Solicitação concluída <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
+
+                        <% 
+                                        
+                        let newObjStatus = {
+                            0: 'Solicitação Pendente',
+                            1: 'Solicitado',
+                            2: 'Cancelado',
+                            3: 'Em separação',
+                            4: 'Separado',
+                            5: 'Despachado',
+                            6: 'Recebido pelo gestor',
+                            7: 'Finalizado'
+                        }
+
+                        %>
+
+                        <div class="home-main-suspended-box">
+                            <div class="main-suspended-info">
+                                <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
+                                    <div class="sys-icon-def">
+                                        <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
+                                    </div>
+                                    <span>⠀</span>
+                                    <span><%= newObjStatus[system_blz_status] %> <i class="ri-external-link-line"></i></span>
+                                </a>
                             </div>
-                        <% }else if(system_blz_status == 0){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Solicitação pendente <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% }else if(system_blz_status == 2){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Solicitação cancelada <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% } %>
+                        </div>
                         
                     </div>
                 </div>

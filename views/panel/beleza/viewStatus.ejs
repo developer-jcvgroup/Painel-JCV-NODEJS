@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="/panel/css/beleza/viewStatus.css">
+
+<script src="/js/jquery-paginate.js"></script>
+
+<section class="view-status-container-main">
+    <section class="view-status-container-page">
+        <div class="view-status-container-identify-page">
+            <span>Status da solicitação</span>
+            <span>/ Programa da Beleza</span>
+        </div>        
+        <form class="view-status-container-list-all" method="post">
+            <div class="view-status-container-info-comp">
+                <span>Gestor <b><%= getData[0].jcv_userNamePrimary %></b></span>
+                <span>Criado por: <b><%= getPerson[0].jcv_userNamePrimary %></b> - <b>Requisição #<%= getData[0].sys_blz_id %></b></span>
+                <span>Criado ás: <b><%= getData[0].sys_blz_requestCreate %></b></span>
+
+                <% 
+                                        
+                let newObjStatus = {
+                    0: '<b>Pendente</b>',
+                    1: '<b>Solicitado</b>',
+                    2: '<b style="color: red;">Cancelado</b>',
+                    3: '<b>Em separação</b>',
+                    4: '<b>Separado</b>',
+                    5: '<b>Despachado</b>',
+                    6: '<b>Recebido pelo gestor</b>',
+                    7: '<b>Finalizado</b>'
+                }
+
+                %>
+
+                <span>Status atual: <b><%- newObjStatus[getLog[0].jcv_blz_status_type] %></b></span>
+                <span>Mês de referencia: <b>(<%= getData[0].sys_blz_requestReference %>)</b></span>
+            </div>
+
+            <div class="view-status-container-info-txt">
+                <span>Status</span>
+            </div>
+
+            <div class="view-status-container-info-list">
+                <div class="view-status-container-info-ul-main">
+
+
+                    <% getLog.forEach(element => { %>
+                    <div class="view-status-box-info-list">
+                        <div class="view-status-box-info-list-border">
+                            <div class="view-status-box-info-list-border-circle"></div><!-- circle -->
+                        </div><!-- Borda -->
+                        <div class="view-status-box-info-list-info">
+                            <span>Status alterado para: <b><%- newObjStatus[element.jcv_blz_status_type] %></b> | <%= element.jcv_blz_status_date %> </span>
+                        </div>
+                    </div>
+                    <% }) %>
+                    
+                </div>
+            </div>
+
+        </form>
+    </section>
+</section>

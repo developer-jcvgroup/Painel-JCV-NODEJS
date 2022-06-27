@@ -1,0 +1,128 @@
+.view-status-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-status-container-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.view-status-container-page{
+    width: 90%;
+}
+
+/* IDENTIFICAÇÃO DA PAGINA */
+.view-status-container-identify-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.view-status-container-identify-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.view-status-container-identify-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/***************************/
+/* PAGINA */
+.view-status-title-box{
+    width: 100%;
+    display: flex;
+}
+.view-status-title-box span{
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/* MAIN */
+.view-status-container-list-all{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+
+/*  */
+.view-status-container-info-comp{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.view-status-container-info-comp span:nth-child(1){
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: var(--color-one);
+}
+.view-status-container-info-comp span{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    line-height: 1.6;
+}
+
+/*  */
+.view-status-container-info-txt{
+    margin: 14px 0;
+    font-size: 0.8rem;
+    color: var(--color-one);
+}
+
+/*  */
+.view-status-container-info-ul-main{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+.view-status-container-info-box{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: 14px;
+    padding: 18px;
+    border-radius: 5px;
+    border: 1px solid var(--color-three);
+    font-size: 0.8rem;
+    line-height: 2;
+}
+
+.view-status-container-info-actions{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+/*  */
+.view-status-box-info-list{
+    width: fit-content;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+.view-status-box-info-list-border{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+}
+.view-status-box-info-list-border-circle{
+    width: 15px;
+    height: 15px;
+    background: var(--color-three);
+    border-radius: 50%;
+}
+.view-status-box-info-list-info{
+    display: flex;
+    align-items: center;
+}
+.view-status-box-info-list-info span{
+    font-size: 1rem;
+}

@@ -181,7 +181,7 @@
 <body>
     <section class="model-main-center">
         <div class="model-title">
-            <span>Lista de etiquetas - Programa da Beleza | Gerado ás: <b>09/03/2022 - 18:00</b></span>
+            <span>Lista de etiquetas - Programa da Beleza | Gerado ás: <b><%= dateGenerate %></b></span>
         </div>
 
         <!--  -->
@@ -190,105 +190,84 @@
 
         <section class="model-sectiom-main">
 
+            <% getCompilado.forEach(element => { %>
 
-            <div class="model-box-style">
-                <div class="model-box-header">
-                    <div class="model-box-main">
-                        <span>Vitor Henrique Alves de Macena</span>
-                        <span><b>10 solicitações</b> (03/2022) </span>
-                    </div>
-                    <!--  -->
-                    <div class="model-box-main-qrs">
-                        <div class="model-box-main-qrs-scann">
-                            <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br">
-                            <span><b>Gestor Escaneie</b></span>
+                <% let dataConvert = JSON.parse(element.jcv_blz_compilate_array_data) %>
+
+                <div class="model-box-style">
+                    <div class="model-box-header">
+                        <div class="model-box-main">
+                            <span><%= element.jcv_userNamePrimary %></span>
+                            <span><b><%= dataConvert.length %> solcitiação(ões)</b> (<%= element.jcv_blz_compilate_month_reference %>) </span>
                         </div>
-                        <div class="model-box-main-qrs-scann">
-                            <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br">
-                            <span><b>Expedição Escaneie</b></span>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="model-box-table-main">
-                    <table class="model-box-table">
-                        <thead>
-                            <tr>
-                                <th>Solicitante</th>
-                                <th>Shampoo</th>
-                                <th>Tratamento</th>
-                                <th>Gestor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Vitor Henrique</td>
-                                <td>FELPS XFORCE SHAMPOO 250ML</td>
-                                <td>FELPS XFORCE CONDICIONADOR 250ML</td>
-                                <td>Cesar Piria</td>
-                            </tr>
-                            <tr>
-                                <td>Vitor Henrique</td>
-                                <td>FELPS XFORCE SHAMPOO 250ML</td>
-                                <td>FELPS FELPS SOS RECONSTRUCAO CONDICIONADOR 250ML</td>
-                                <td>Cesar Piria</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!--  -->
-                <hr style="margin: 14px 0;border: 0;">
-                <!--  -->
-                <div class="model-box-etiquetas">
-                    <div class="model-etiqueta-box">
-                        <div class="model-etiqueta-info">
-                            <span>Solicitante: <b>Vitor Henrique</b></span>
-                            <span>Gestor: <b>Cesar Piria</b></span>
-                            <br>
-                            <span><b>Felps Xforce Shampoo 250mL</b></span>
-                            <span><b>Felps Xforce Mascara 250gr</b></span>
-                            <span style="padding-top: 7px;">REF: 03/2022</span>
-                        </div>
-                        <div class="model-etiqueta-box-qr">
-                            <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br"> -->
+                        <!--  -->
+                        <div class="model-box-main-qrs">
+                            <div class="model-box-main-qrs-scann">
+                                <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= PAINEL_URL+'/painel/beleza/compilate/'+element.jcv_blz_compilate_uuid %>">
+                                <span><b>Gestor Escaneie</b></span>
+                            </div>
+                            <div class="model-box-main-qrs-scann">
+                                <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=<%= PAINEL_URL+'/painel/beleza/compilate/'+element.jcv_blz_compilate_uuid %>">
+                                <span><b>Expedição Escaneie</b></span>
+                            </div>
                         </div>
                     </div>
                     <!--  -->
-                    <div class="model-etiqueta-box">
-                        <div class="model-etiqueta-info">
-                            <span>Solicitante: <b>Vitor Henrique</b></span>
-                            <span>Gestor: <b>Cesar Piria</b></span>
-                            <br>
-                            <span><b>Felps Xforce Shampoo 250mL</b></span>
-                            <span><b>Felps Xforce Mascara 250gr</b></span>
-                            <span style="padding-top: 7px;">REF: 03/2022</span>
-                        </div>
-                        <div class="model-etiqueta-box-qr">
-                            <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br"> -->
-                        </div>
+                    <div class="model-box-table-main">
+                        <table class="model-box-table">
+                            <thead>
+                                <tr>
+                                    <th>Solicitante</th>
+                                    <th>Shampoo</th>
+                                    <th>Tratamento</th>
+                                    <th>Gestor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <% dataConvert.forEach(elementTwo => { %>
+                                    <tr>
+                                        <td><%= elementTwo.blzUserName %></td>
+                                        <td><%= elementTwo.blzShampoo %></td>
+                                        <td><%= elementTwo.blzTreatment %></td>
+                                        <td><%= element.jcv_userNamePrimary %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
                     </div>
                     <!--  -->
-                    <div class="model-etiqueta-box">
-                        <div class="model-etiqueta-info">
-                            <span>Solicitante: <b>Vitor Henrique</b></span>
-                            <span>Gestor: <b>Cesar Piria</b></span>
-                            <br>
-                            <span><b>Felps Xforce Shampoo 250mL</b></span>
-                            <span><b>FELPS SOS RECONSTRUCAO CONDICIONADOR 250ML</b></span>
-                            <span style="padding-top: 7px;">REF: 03/2022</span>
-                        </div>
-                        <div class="model-etiqueta-box-qr">
-                            <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br"> -->
-                        </div>
+                    <hr style="margin: 14px 0;border: 0;">
+                    <!--  -->
+                    <div class="model-box-etiquetas">
+
+                        <% dataConvert.forEach(elementTwo => { %>
+                            <div class="model-etiqueta-box">
+                                <div class="model-etiqueta-info">
+                                    <span>Solicitante: <b><%= elementTwo.blzUserName %></b></span>
+                                    <span>Gestor: <b><%= element.jcv_userNamePrimary %></b></span>
+                                    <br>
+                                    <span><b><%= elementTwo.blzShampoo %></b></span>
+                                    <span><b><%= elementTwo.blzTreatment %></b></span>
+                                    <span style="padding-top: 7px;">REF: (<%= element.jcv_blz_compilate_month_reference %>)</span>
+                                </div>
+                                <div class="model-etiqueta-box-qr">
+                                    <!-- <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=https://www.codigofonte.com.br"> -->
+                                </div>
+                            </div>
+                        <% }) %>
+
                     </div>
+                    <!--  -->
+                    <hr style="margin: 14px 0;border: 0; border-bottom: 2px dashed var(--color-two); background: transparent;">
+                    <!--  -->
+    
+    
+    
                 </div>
-                <!--  -->
-                <hr style="margin: 14px 0;border: 0; border-bottom: 2px dashed var(--color-two); background: transparent;">
-                <!--  -->
 
-
-
-            </div>
+            <% }) %>
+            
 
 
         </section>

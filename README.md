@@ -36,6 +36,16 @@ Setor
 STATUS ANTIGO: 1{pendente, exclusivo para consultas}, 2{solicitado}, 3{cancelado}, 4{Em separação}, 5{pedido de cancelamento};
 STATUS NOVOS: 0{Pendente}, 1{Solicitado}, 2{Cancelado}, 3{Em Separação}, 4{Separado}, 5{Despachado}, 6{Recebido pelo Gestor}, 7{Finalizado}
 
+Processo:
+Usuario solicita seu beneficio
+Admin imprime e coloca o status EM SEPARAÇÃO
+
+Expedição separa e em seguida escaneia o QR CODE do papel e confirma o status SEPARADO 
+Expedição escaneia o mesmo qr code e atualiza para o status DESPACHADO (com um campo de observação: select método de despacho {trasportadora, correios, retirada e outros})
+Gestor escaneia o qr code destinado a ele e confirma o recebimento das solicitações
+
+Ao entregar a solicitação o GESTOR deve escanear um QR code e o status fica FINALIZADO
+
 # Commandos para o PROGRAMA DA BELEZA
 - CMD01{Setar como pedido pendente}
 - CMD02{Setar como pedido separado}

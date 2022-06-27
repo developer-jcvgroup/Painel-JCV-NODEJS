@@ -9,9 +9,9 @@ exports.alterDataUsers = (req, res, idUser, userName, userAtivo) => {
     //Excluindo todos as solicitações com estatus SOLICITADO no programa da beleza
     database
     .update({
-        sys_blz_requestStatus: 3
+        sys_blz_requestStatus: 2
     })
-    .where({sys_blz_userId: idUser, sys_blz_requestStatus: 2})
+    .where({sys_blz_userId: idUser, sys_blz_requestStatus: 1})
     .table("jcv_blz_orders")
     .then( data => {
         //console.log('ok: '+data)
