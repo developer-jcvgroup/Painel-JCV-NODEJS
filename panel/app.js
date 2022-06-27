@@ -181,12 +181,12 @@ router.post("/beleza/actions/order/delete", authenticate, programaBeleza.actions
 
 //Programa da beleza: Compilação
 router.get('/beleza/compilate/:uuid?', middlewareURL, authenticate, programaBeleza.compilateView)
-router.post('/beleza/compilate/action/expedicao', programaBeleza.compilateActionExpedicao)
-router.post('/beleza/compilate/action/despacho', programaBeleza.compilateActionExpedicaoDespacho)
-router.post('/beleza/compilate/action/coletar', programaBeleza.compilateActionExpedicaoColeta)
+router.post('/beleza/compilate/action/expedicao', authenticate, programaBeleza.compilateActionExpedicao)
+router.post('/beleza/compilate/action/despacho', authenticate, programaBeleza.compilateActionExpedicaoDespacho)
+router.post('/beleza/compilate/action/coletar', authenticate, programaBeleza.compilateActionExpedicaoColeta)
 
-router.get('/beleza/compilate/generate/:uuid?', programaBeleza.compilateGeneratePDF)
-router.get('/beleza/view/status/:uuid?', programaBeleza.viewStatus)
+router.get('/beleza/compilate/generate/:uuid?', middlewareURL, authenticate, programaBeleza.compilateGeneratePDF)
+router.get('/beleza/view/status/:uuid?', middlewareURL, authenticate, programaBeleza.viewStatus)
 
 /***********************************/
 /***********************************/

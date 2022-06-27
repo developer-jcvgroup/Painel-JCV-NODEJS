@@ -31,6 +31,10 @@
 
                 <span>Status atual: <b><%- newObjStatus[getLog[0].jcv_blz_status_type] %></b></span>
                 <span>Mês de referencia: <b>(<%= getData[0].sys_blz_requestReference %>)</b></span>
+                <br>
+                <span>SHAMPOO: <b><%= getData[0].sys_blz_tratmentOne %></b></span>
+                <span>TRATAMENTO: <b><%= getData[0].sys_blz_tratmentTwo %></b></span>
+                <br>
             </div>
 
             <div class="view-status-container-info-txt">
@@ -47,7 +51,13 @@
                             <div class="view-status-box-info-list-border-circle"></div><!-- circle -->
                         </div><!-- Borda -->
                         <div class="view-status-box-info-list-info">
-                            <span>Status alterado para: <b><%- newObjStatus[element.jcv_blz_status_type] %></b> | <%= element.jcv_blz_status_date %> </span>
+                            <span>Status alterado para: <b><%- newObjStatus[element.jcv_blz_status_type] %></b> | <%= element.jcv_blz_status_date %> </span>.
+
+
+                            <% if(element.jcv_blz_status_type == 5){ %>
+                                <br><span><b>OBS: </b><%= getComp[0].jcv_blz_compilate_obs %></span>
+                            <% } %>
+
                         </div>
                     </div>
                     <% }) %>

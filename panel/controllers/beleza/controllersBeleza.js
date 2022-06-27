@@ -8,6 +8,7 @@ moment.tz.setDefault('America/Sao_Paulo');
 
 //Sistema de emails
 const emailSystemExe = require('../system/emailSystem');
+const { get } = require("https");
 
 //Mes de referencia
 function getMonthReferece(){
@@ -1873,8 +1874,6 @@ exports.viewStatus = async (req,res) => {
         .table("jcv_users")
         .then( data => {return data})
     }
-    
-
 
     //Pegando os logs
     const getLog = await database
@@ -1884,7 +1883,13 @@ exports.viewStatus = async (req,res) => {
     .orderBy("jcv_blz_status_id","DESC")
     .then( data => {return data})
 
+    //Pegando os dados do compilador
+    const getComp = await database
+    .raw("SELECT * from jcv_blz_compilate WHERE JSON_CONTAINS(jcv_blz_compilate_ids, '"+getData[0].sys_blz_id+"', '$') AND jcv_blz_compilate_month_reference = '"+getData[0].sys_blz_requestReference+"' ")
+    .then( data => {return data[0]})
+
+
     var page = "beleza/viewStatus";
-    res.render("panel/index", {page: page, getLog: getLog, getData: getData, getPerson:getPerson})
+    res.render("panel/index", {page: page, getLog: getLog, getData: getData, getPerson:getPerson, getComp: getComp})
 
 }
