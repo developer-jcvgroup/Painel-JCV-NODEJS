@@ -1068,7 +1068,7 @@ async function alterarStatus(ids, status,req,res) {
             });
 
 
-            if(getDataRequestsValidation.length == ids.length && validaeMonthCode == true && validationStatus == true){
+            if(getDataRequestsValidation.length == ids.length && validaeMonthCode == true){
 
                 //Podemos continuar as operações
                 ////////////////////////////////////////////////
