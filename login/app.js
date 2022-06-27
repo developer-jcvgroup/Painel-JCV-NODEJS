@@ -4,12 +4,15 @@ const loginFunctions = require("./controllers/login");//Funções do login
 
 const database = require("./database/database");
 
+const os = require('os');//Pegando o nome do computador ou celular etc
+
 //Pagina inicial
 router.get("/", async (req,res)=>{
 
     try {
         if(req.session.cookieLogin == undefined){
             //Cookie inexistente
+            const computerName = os.hostname()
 
             if(enabledPanel == 1){
                 res.redirect('/maintenance')
@@ -61,7 +64,8 @@ router.get("/", async (req,res)=>{
                     authorIndex: allAuthor[1], 
                     linkspecial: linkspecial,
                     allAccountPass: allAccountPass,
-                    PAINEL_URL_LOGIN: PAINEL_URL_LOGIN
+                    PAINEL_URL_LOGIN: PAINEL_URL_LOGIN,
+                    computerName: computerName
                 })
             }
         }else{
