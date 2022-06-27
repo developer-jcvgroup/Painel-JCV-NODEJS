@@ -157,11 +157,6 @@
     <!--  -->
     <!--  -->
 </section>
-
-<section class="sys-banner-login-pwa" id="sys-banner-login-pwa">
-    <img src="/login/img/bg-app.png" alt="">
-    <button type="button" id="setup_button_two" onclick="installApp()">Instalar App</button>
-</section>
 <!-- <section class="system-section-notification" id="system-section-notification">
     <div class="sys-notifi-container-main" id="sys-notifi-container-main">
 
@@ -185,7 +180,6 @@
     //PWA
     let deferredPrompt; // Allows to show the install prompt
     let setupButton;
-    let setupButtonTwo;
 
     window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -197,38 +191,9 @@
             setupButton = document.getElementById("setup_button");
         }
 
-        if (setupButtonTwo == undefined) {
-            setupButtonTwo = document.getElementById("setup_button_two");
-        }
-
         // Show the setup button
         setupButton.style.display = "inline";
-        setupButtonTwo.style.display = "inline";
-
-
-        //Validando se o dispositivo que esta acessando é um pc interno da empresa
-        let dispoName = '<%= computerName %>';
-        let arrayNames = [
-            'PC_JCV',
-            'PC-JCV',
-            'NT_JCV',
-            'NT-JCV',
-        ]
-
-        let error = false;
-        arrayNames.forEach(element => {
-            if(dispoName.indexOf(element) > -1){
-            error = true
-        }
-        })
-
-        if(error == true){
-            document.getElementById('sys-banner-login-pwa').style.display = 'flex'
-            setupButtonTwo.disabled = false;
-        }
-
         setupButton.disabled = false;
-        
     });
 
 
@@ -237,7 +202,6 @@
         // Show the prompt
         deferredPrompt.prompt();
         setupButton.disabled = true;
-        setupButtonTwo.disabled = true;
         // Wait for the user to respond to the prompt
         deferredPrompt.userChoice
             .then((choiceResult) => {
@@ -245,7 +209,6 @@
                     console.log('PWA setup accepted');
                     // hide our user interface that shows our A2HS button
                     setupButton.style.display = 'none';
-                    setupButtonTwo.style.display = 'none';
 
                     alert('Seu aplicativo foi instalado! Procure por "JCV" em sua lista de apps')
                 } else {
