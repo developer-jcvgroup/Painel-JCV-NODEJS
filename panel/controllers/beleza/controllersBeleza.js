@@ -294,11 +294,11 @@ exports.searchRequests = async (req,res) => {
     let listUnitys = req.body['sys-filter-name-unidade'] != undefined ? 'in ('+req.body['sys-filter-name-unidade']+')' : "LIKE '%%'";
     let listGestores = req.body['sys-filter-name-gestor'] != undefined ? 'in ('+req.body['sys-filter-name-gestor']+')' : "LIKE '%%'";
 
-    if(blzStatus == 1){        
+    if(blzStatus == 0){        
         database
         .raw(`
             SELECT * FROM jcv_users e JOIN jcv_users_permissions ON jcv_id = sys_perm_idUser JOIN jcv_unitys ON e.jcv_userUnity = sys_unity_id  
-            WHERE e.jcv_userUnity ${listUnitys} AND e.jcv_userManager ${listGestores} AND NOT EXISTS 
+            WHERE e.jcv_userUnity ${listUnitys} AND e.jcv_userEnabled = 1 AND e.jcv_userManager ${listGestores} AND NOT EXISTS 
             (SELECT * FROM jcv_jcvpanel.jcv_blz_orders r WHERE e.jcv_id = r.sys_blz_userId AND r.sys_blz_requestReference ${referenceDate})
         `)
         //.join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
