@@ -56,7 +56,6 @@
 .help-main-box-list-category{
     width: 70%;
     max-height: 400px;
-    overflow: auto;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
