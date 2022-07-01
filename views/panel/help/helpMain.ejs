@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="/panel/css/help/mainHelp.css">
+
+<section class="help-main-section">
+    
+
+    <section class="help-main-box-header">
+        <div class="help-main-header-info">
+            <label for="">Central de Ajuda</label>
+            <input type="text" placeholder="Digite o que procura.." id="input-search">
+
+            <div class="help-main-header-list" id="help-main-header-list">
+                <ul id="help-main-header-list-ul">
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="help-main-box-categories">
+        <hr id="help-separator" style="width: 40%; margin: 18px 0">
+        <div class="help-main-box-title-box-category">
+            <span>Categorias</span>
+        </div>
+        <div class="help-main-box-list-category">
+
+            <% getCategories.forEach(element => { %>
+                <div class="help-main-box-category">
+                    <a class="class-loader" href="/painel/help/category/<%= element.jcv_articles_category_link %>"><%= element.jcv_articles_category_name %></a>
+                </div>
+            <% }) %>
+
+        </div>
+    </section>
+
+</section>
+
+<script>
+    var typingTimer; //timer identifier
+    var doneTypingInterval = 800; //time in ms, 1 second for example
+
+    //on keyup, start the countdown
+    $('#input-search').keyup(function() {
+        clearTimeout(typingTimer);
+        if ($('#input-search').val) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+
+    //user is "finished typing," do something
+    function doneTyping() {
+        console.log('parei de digitar');
+
+        $.fn.loadSpin(1)
+
+        let val = $("#input-search").val();
+
+        socket.emit('searchArticles', val) 
+        socket.on('searchArticlesSend', (dataTwo) => {
+            $("#help-main-header-list-ul").empty()
+
+            $.fn.loadSpin(0)
+            if(dataTwo != ''){
+
+                $("#help-main-header-list").fadeIn().css({'display':'flex'})
+                
+                dataTwo.forEach(element => {
+                    $("#help-main-header-list-ul").append(`
+                        <li>
+                            <a href="/painel/help/article/${element.jcv_article_link}">
+                                <span>${element.jcv_articles_title}</span>
+                                <span>Última alteração: <b>${element.jcv_articles_create_date}</b></span>
+                            </a>
+                        </li>
+                        <li><hr></li>
+                    `)
+                });
+
+                
+            }else{
+                $("#help-main-header-list").fadeOut()
+
+                $.notification(
+                    ["Nenhum artigo encontrado"],
+                    {
+                        //position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 3000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+            }
+
+            socket.removeListener('searchArticlesSend')
+        })
+
+        socket.removeListener('searchArticles')
+    }
+
+</script>

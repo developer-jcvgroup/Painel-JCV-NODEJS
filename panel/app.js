@@ -62,6 +62,8 @@ const controllerEncurtador = require("./controllers/encurtador/controllerEncurta
 const controllerCursos = require("./controllers/certificados/controllerCursos")
 //Controller External Login
 const controllerExternalLogin = require("./controllers/system/controllerExternalLogin")
+//Controller Help
+const controllerHelp = require("./controllers/help/controllerHelp")
 
 /*===================================*/
 
@@ -264,6 +266,21 @@ router.get('/trademkt/products', middlewareURL, authenticate, controllerTrade.tr
 router.post('/trademkt/products/save/new', authenticate, controllerTrade.saveNewProduct)
 router.post('/trademkt/products/save/edit', authenticate, controllerTrade.editNewProduct)
 router.post('/trademkt/products/action/execute', authenticate, controllerTrade.actionProductsTrade)
+
+/***********************************/
+/***********************************/
+//Central de ajuda
+router.get('/help',middlewareURL, authenticate, controllerHelp.helpMain)
+router.get('/help/category/:id?', middlewareURL,authenticate, controllerHelp.helpCategory)
+router.get('/help/article/:url?', middlewareURL,authenticate, controllerHelp.helpArticle)
+
+router.get('/help/admin/main', middlewareURL,authenticate, controllerHelp.helpMainAdmin)
+router.get('/help/admin/new', middlewareURL,authenticate, controllerHelp.helpNewAdmin)
+router.get('/help/admin/edit/:id?', middlewareURL,authenticate, controllerHelp.helpEditAdmin)
+
+router.post('/help/admin/new/save', authenticate, controllerHelp.helpNewSave)
+router.post('/help/admin/edit', authenticate, controllerHelp.helpEditSave)
+router.post('/help/admin/delete/article', authenticate, controllerHelp.helpdeleteArticle)
 
 /***********************************/
 /***********************************/

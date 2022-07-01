@@ -1,0 +1,234 @@
+.help-admin-new-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.help-admin-new-main-section-page{
+    width: 90%;
+}
+
+/* ************************************** */
+/* TITLE PAGE */
+.help-admin-new-main-title-page{
+    width: 100%;
+    margin: 2% 0;
+}
+.help-admin-new-main-title-page span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.help-admin-new-main-title-page span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/* ************************************** */
+/* TRADE MKT BODY PAGE */
+.help-admin-new-main-container-body{
+    width: 100%;
+    height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ************************************** */
+/* LISTA DE FORMULARIOS */
+.help-admin-new-main-section-list-forms{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+.help-admin-new-main-forms{
+    /* padding: 24px; */
+    display: flex;
+    width: 100%;
+    /* height: 100%; */
+    
+    flex-wrap: wrap;
+}
+
+.help-admin-new-main-forms-title{
+    margin: 8px 0;
+    display: flex;
+}
+.help-admin-new-main-forms-title span{
+    font-size: 0.9rem;
+    color: var(--color-two);
+}
+
+#form-list-fished{
+    display: none;
+}
+.help-admin-new-main-forms-link{
+    text-decoration: none;
+    width: 280px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    padding: 8px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+    margin: 24px;
+}
+.help-admin-new-main-forms-link-info{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+    text-decoration: none;
+}
+.help-admin-new-main-forms-link-info span:nth-child(1){
+    font-size: 1.2rem;
+    margin: 9px 0;
+    color: var(--color-two);
+    text-align: center;
+}
+.help-admin-new-main-forms-link-info span:nth-child(2){ 
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.help-admin-new-main-forms-link-info span:nth-child(3){ 
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.help-admin-new-main-forms-link-info span:nth-child(4){
+    font-size: 0.8rem;
+    margin: 5px 0;
+    color: var(--color-two);
+}
+.help-admin-new-main-forms-link-info span:nth-child(4) b{
+    display: flex;
+    align-items: center;
+}
+
+.help-admin-new-main-forms-link-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 10px;
+}
+.help-admin-new-main-forms-link-button button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*  */
+.help-admin-new-main-forms-not-found{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.help-admin-new-main-forms-not-found img{
+    width: 400px;
+    object-fit: contain;
+}
+.help-admin-new-main-forms-not-found span{
+    font-size: 1rem;
+    color: var(--color-two);
+    margin-top: 24px;
+}
+.help-admin-new-main-forms-not-found a{
+    font-size: 1rem;
+    color: var(--color-two);
+    margin-top: 24px;
+}
+
+/* ******************************** */
+/* ******************************** */
+/* ******************************** */
+.help-admin-new-main-actions{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: auto;
+}
+.help-admin-new-display-center{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.help-admin-new-actions-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.help-admin-new-actions-button a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.help-admin-new-actions-button button{
+    outline: 0;
+    border: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 900px) {
+    .help-admin-new-main-container-body{
+        flex-direction: column;
+    }
+    .help-admin-new-main-section-list-forms{
+        min-width: 100%;
+    }
+    .help-admin-new-main-section-menu{
+        margin-top: 24px;
+        width: 100%;
+    }
+    .help-admin-new-main-list-links-main{
+        height: 100%;
+    }
+    .help-admin-new-main-list-link-simbol{
+        min-width: 20%;
+        padding: 32px 10px;
+    }
+    .help-admin-new-main-list-links-main li{
+        min-width: 100%;
+    }
+    .help-admin-new-main-list-link-text span{
+        font-size: 1.3rem;
+    }
+}

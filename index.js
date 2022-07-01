@@ -262,6 +262,16 @@ io.on('connection', (socket) => {
 
 
     })
+
+    socket.on('searchArticles', (data) => {
+
+        database
+        .raw("SELECT * from jcv_articles WHERE jcv_articles_content like '%"+data+"%' AND jcv_articles_enabled = 1 ")
+        .then( data => {
+            socket.emit('searchArticlesSend', (data[0])) 
+        })
+
+    })
 })
 
 

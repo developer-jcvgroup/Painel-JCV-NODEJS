@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/panel/css/help/helpCategory.css">
+
+<section class="help-category-main">
+
+    <div class="help-category-title">
+        <span>Mostrando <b><%= getArticles.length %></b> de <%= getCategories[0].jcv_articles_category_name %></span>
+    </div>
+
+    <div class="help-category-list">
+        <ul class="help-category-ul">
+
+
+            <% getArticles.forEach(element => { %>
+            <li>
+                <a href="/painel/help/article/<%= element.jcv_article_link %>">
+                    <span><%= element.jcv_articles_title %></span>
+                    <span>Atualizado ás: <b><%= element.jcv_articles_create_date %></b></span>
+                </a>
+            </li>
+            <% }) %>
+
+
+        </ul>
+    </div>
+
+</section>

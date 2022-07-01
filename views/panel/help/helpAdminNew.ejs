@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="/panel/css/help/newHelpAdmin.css">
+
+<section class="help-admin-new-center">
+    <div class="link-container-back">
+        <a href="/painel/help/admin/main"><i class="ri-arrow-left-line"></i></a>
+    </div>
+    <!--  -->
+    <section class="help-admin-new-title">
+        <span>Novo Artigo</span>
+        <span>/ Central de Ajuda</span>
+    </section>
+    <!--  -->
+    <section class="help-admin-new-body">
+        <form method="post" class="help-admin-new-body-form">
+            <div class="help-admin-new-title">
+                <input type="text" name="help-main-title" placeholder="Titulo do artigo">
+            </div>
+            <!--  -->
+            <div class="help-admin-new-box">
+                <label for="">Categoria</label>
+                <select name="help-main-category">
+                    <% getCategory.forEach(element => { %>
+                        <option value="<%= element.jcv_articles_category_id %>"><%= element.jcv_articles_category_name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <!--  -->
+            <div class="help-admin-new-box">
+                <label for="">Ativo?</label>
+                <select name="help-main-enabled">
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <!--  -->
+            <section class="help-admin-new-actions">
+                <button formaction="/painel/help/admin/new/save" type="submit" id="button-save">Salvar</button>
+            </section>
+            <!--  -->
+            <section>
+                <textarea name="help-main-content" id="" cols="30" rows="30"></textarea>
+            </section>
+        </form>
+    </section>
+</section>
+<script src="https://cdn.tiny.cloud/1/kbtfse4d099mia6suz4m60564omf15433cwb4nzddf81s2cm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak spellchecker',
+        toolbar: 'link image a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+        toolbar_mode: 'floating',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        language: 'pt_BR',
+        // enable title field in the Image dialog
+        image_title: true, 
+        // enable automatic uploads of images represented by blob or data URIs
+        automatic_uploads: true,
+        // add custom filepicker only to Image dialog
+        file_picker_types: 'image',
+        file_picker_callback: function(cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+            
+            reader.onload = function () {
+                var id = 'blobid' + (new Date()).getTime();
+                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(',')[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+
+                // call the callback and populate the Title field with the file name
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+            };
+            
+            input.click();
+        }
+    });
+
+    /* $("#button-save").click(function(){
+        $("#button-save-text-area").text(''+tinymce.activeEditor.getContent())
+    }) */
+
+</script>

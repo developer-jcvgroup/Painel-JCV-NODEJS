@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="/panel/css/help/mainHelpAdmin.css">
+
+<section class="help-admin-new-main-section">
+    <section class="help-admin-new-main-section-page">
+        <div class="help-admin-new-main-title-page">
+            <span>Lista de Artigos</span>
+            <span>/ Home</span>
+        </div>
+
+        <section class="help-admin-new-main-actions">
+            <div class="help-admin-new-display-center">
+                <div class="help-admin-new-actions-button">
+                    <button type="button" id="button-open-list-forms-finished"><i class="ri-menu-5-line"></i></button>
+                    <a class="class-loader" href="/painel/help/admin/new"><i class="ri-add-line"></i></a>
+                </div>
+            </div>
+        </section>
+    
+        <!--  -->
+
+        <section class="help-admin-new-main-container-body">
+            <section class="help-admin-new-main-section-list-forms" id="forms-list-display">
+                <div class="help-admin-new-main-forms">
+
+                    <% if (getAllArticles != '') { %>
+
+                        <% getAllArticles.forEach(element => { %>
+                        <div class="help-admin-new-main-forms-link">
+                            <a class="help-admin-new-main-forms-link-info" href="/painel/help/admin/edit/<%= element.jcv_articles_id %>">
+                                <span><%= element.jcv_articles_title %></span>
+                                <span>Categoria <b><%= element.jcv_articles_category_name %></b></span>
+                                <span>Criado por: <b><%= element.jcv_userNamePrimary %></b></span>
+                                <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_articles_create_date %></b></span>
+                            </a>
+                            <hr style="width: 100%; margin: 7px 0;">
+                            <form method="post" class="help-admin-new-main-forms-link-button">
+                                <button class="class-loader" formaction="/painel/help/admin/delete/article" type="submit" value="<%= element.jcv_articles_id %>" name="button-delete-article" title="Excluir Artigo"><i class="ri-delete-bin-line"></i></button>
+                            </form>
+                        </div>
+                        <% }) %>
+
+                    <% }else{ %>
+                        <div class="help-admin-new-main-forms-not-found">
+                            <img class="help-admin-new-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Nenhum artigo <b>ativo</b> encontrado.. <b><a href="/painel/help/admin/new">Novo Artigo</a></b></span>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="help-admin-new-main-section-list-forms" id="form-list-fished">
+                <div class="help-admin-new-main-forms-title">
+                    <span>Listando artigos desabilitados</span>
+                </div>
+                <div class="help-admin-new-main-forms"> 
+
+                    <% if(getAllArticlesDisabled != ''){ %>
+                        <% getAllArticlesDisabled.forEach(element => { %>
+                            <a class="help-admin-new-main-forms-link"href="/painel/help/admin/edit/<%= element.jcv_articles_id %>">
+                                <div class="help-admin-new-main-forms-link-info">
+                                    <span><%= element.jcv_articles_title %></span>
+                                    <span>Categoria <b><%= element.jcv_articles_category_name %></b></span>
+                                    <span>Criado por: <b><%= element.jcv_userNamePrimary %></b></span>
+                                    <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.jcv_articles_create_date %></b></span>
+                                    <span style="color: red;">DESABILITADO</span>
+                                </div>
+                            </a>
+                        <% }) %>
+                    <% }else{ %>
+                        <div class="help-admin-new-main-forms-not-found">
+                            <img class="help-admin-new-main-forms-error" src="/panel/trade/error.svg" alt="">
+                            <span>Sem encurtadores..</span>
+                        </div>
+                    <% } %>
+
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<script>
+
+    let index = 0;
+    $("#button-open-list-forms-finished").click(function(){
+        if(index == 0){
+            $("#forms-list-display").css({'display':'none'})
+            $("#form-list-fished").fadeIn().css({'display':'flex'})
+            index = 1;
+        }else{
+            $("#form-list-fished").css({'display':'none'})
+            $("#forms-list-display").fadeIn().css({'display':'flex'})
+            index = 0;
+        }
+    })
+
+</script>

@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/panel/css/help/helpArticle.css">
+
+<section class="help-article-view-section">
+    <div class="help-article-view-box">
+
+        <div class="link-container-back">
+            <a href="/painel/help"><i class="ri-arrow-left-line"></i></a>
+        </div>
+
+        <div class="help-article-view-box-title">
+            <span><%= getArticles[0].jcv_articles_title %></span>
+            <span>Atualizado ás: <%= getArticles[0].jcv_articles_create_date %></span>
+        </div>
+
+        <div class="help-article-view-box-content">
+            <!--  -->
+            <!--  -->
+            <%- getArticles[0].jcv_articles_content %>
+            <!--  -->
+            <!--  -->
+        </div>
+    </div>
+</section>
