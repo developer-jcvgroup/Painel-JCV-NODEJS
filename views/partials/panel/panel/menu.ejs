@@ -104,7 +104,7 @@
             </ul>
             <% } %>
 
-
+            <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
             <ul class="menu-ul-list-set-one">
                 <li id="menu-08"><span>Central de Ajuda</span><i class="ri-arrow-down-s-line"></i></li>
                 <ul id="sub-08" class="menu-list-set-two">
@@ -112,7 +112,7 @@
                     <li><a class="class-loader" href="/painel/help/admin/new"><i class="ri-add-line"></i><span>Novo Artigo</span></a></li>
                 </ul>
             </ul>
-
+            <% } %>
 
             <% if(GLOBAL_PERM[0].jcv_userCassification == 1){ %>
             <ul class="menu-ul-list-set-one">
