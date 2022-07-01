@@ -1068,4 +1068,8 @@ input:checked + .system-mode-department-button-slider:before {
     #menu-index-links{
         display: block;
     }
+
+    .sys-update-msg-box img{
+        width: 100%;
+    }
 }
