@@ -111,6 +111,18 @@
     cursor: pointer;
     transition: 0.5s;
 }
+.sys-box-buttons a{
+    text-decoration: none;
+    outline: 0;
+    padding: 3px 8px;
+    margin: 0 7px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
 
 /******************************************/
 /******************************************/

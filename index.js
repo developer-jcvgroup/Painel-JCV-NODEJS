@@ -272,6 +272,53 @@ io.on('connection', (socket) => {
         })
 
     })
+
+    socket.on('usersTransfersGet', (data) => {
+
+        //Pegando o id do gestor
+        database
+        .select('jcv_id')
+        .whereRaw('jcv_userNamePrimary like "%'+data+'%" ')
+        .table("jcv_users")
+        .then( data => {
+            
+            if(data != ''){
+
+                database
+                .select()
+                .where({jcv_userManager: data[0].jcv_id, jcv_userEnabled: 1})
+                .table("jcv_users")
+                .join('jcv_unitys','jcv_unitys.sys_unity_id','jcv_users.jcv_userUnity')
+                .join('jcv_departments','jcv_departments.sys_department_id','jcv_users.jcv_userSector')
+                .then( dataGet => {
+                    socket.emit('usersTransfersSend', (dataGet))
+                })
+
+            }else{
+                socket.emit('usersTransfersSend', (''))
+            }
+
+        })
+        
+        /* database.raw(`
+
+            SELECT c1.*, c2.jcv_userNameSecundary, j1.*, j2.*, j3.*
+            FROM (jcv_users c1, jcv_users c2)
+
+            JOIN jcv_unitys j1 ON c1.jcv_userUnity = j1.sys_unity_id
+            JOIN jcv_users_permissions j2 ON c1.jcv_id = j2.sys_perm_idUser
+            JOIN jcv_departments j3 ON c1.jcv_userSector = j3.sys_department_id
+
+            WHERE c1.jcv_userManager = c2.jcv_id AND c1.jcv_userEnabled = 1 AND c1.jcv_userNamePrimary like '%${data}%' ORDER BY c1.jcv_id ASC
+        
+        `)
+        .then( dataRes => {
+            
+            socket.emit('usersTransfersSend', (dataRes[0]))
+
+        }) */
+    
+    })
 })
 
 

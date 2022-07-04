@@ -1,0 +1,141 @@
+.user-transfer-section-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-transfer-section-page{
+    width: 90%;
+}
+
+/* ************************************** */
+/* TITLE PAGE */
+.user-transfer-section-page-title{
+    width: 100%;
+    margin: 2% 0;
+}
+.user-transfer-section-page-title span:nth-child(1){
+    font-size: 1.2rem;
+    color: var(--color-one);
+}
+.user-transfer-section-page-title span:nth-child(2){
+    margin-left: 4px;
+    font-size: 0.7rem;
+    color: var(--color-one);
+}
+
+/*  */
+.user-transfer-section-page-main{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-transfer-section-page-main{
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 4px;
+    padding: 28px;
+}
+
+/*  */
+/*  */
+/*  */
+.user-transfer-select-user-initial{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 23px;
+}
+.user-transfer-select-user-initial label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+    margin-bottom: 4px;
+}
+.user-transfer-select-user-initial input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+
+/*  */
+.user-transfer-select-user-initial-list{
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+}
+.user-transfer-select-user-initial-list ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-one);
+}
+.user-transfer-select-user-initial-list ul li{
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+.user-transfer-select-user-initial-list ul li label{
+    font-size: 1rem;
+    margin-left: 9px;
+    cursor: pointer;
+    display: flex;
+}
+.user-transfer-select-user-initial-list ul li input{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+/*  */
+.user-transfer-select-user-final{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+.user-transfer-select-user-final label{
+    font-size: 0.7rem;
+    color: var(--color-one);
+    margin-bottom: 4px;
+}
+.user-transfer-select-user-final input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+
+/*  */
+.user-transfer-box-actions{
+    width: fit-content;
+    display: flex;
+    margin: 25px 0;
+}
+.user-transfer-box-actions button{
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one-btn);
+    cursor: pointer;
+}
+
+/*  */
+.link-container-back{
+    display: flex;
+    align-items: center;
+    margin: 13px 0;
+}
+.link-container-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+}
+/*  */

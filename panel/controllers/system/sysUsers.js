@@ -486,3 +486,108 @@ exports.downloadDataUsers = async (req,res) => {
         res.redirect("/painel/system/users");
     }
 }
+
+exports.moduleTransferMain = async (req,res) => {
+
+    //Pegando todos os gestores ativos
+    const getAllManager = await database
+    .select()
+    .whereRaw(`jcv_userCassification in (1,2,4) AND jcv_userEnabled = 1`)
+    .table("jcv_users")
+    .then( data => {
+        let arrayGet = [];
+        data.forEach(element => {
+            arrayGet.push(element.jcv_userNamePrimary)
+        });
+        return arrayGet
+    })
+
+    var page = "system/usersTransfer";
+    res.render("panel/index", {page: page, getAllManager: getAllManager})
+}
+
+exports.moduleTransfer = async (req,res) => {
+    const listUsers = typeof(req.body['input-list-users']) != 'object' ? [parseInt(req.body['input-list-users'])] : req.body['input-list-users'].map(function(value){
+        return parseInt(value)
+    })
+
+    //const managerOld = req.body['input-old-manager']
+    const managerNew = req.body['input-new-manager']
+    //console.log(managerNew)
+
+    if(managerNew != ''){
+        const getManagerNew = await database
+        .select('jcv_id')
+        .where({jcv_userNamePrimary: managerNew})
+        .table("jcv_users")
+        .then( data => {return data})
+    
+        if(getManagerNew != ''){
+    
+            database
+            .update({
+                jcv_userManager: getManagerNew[0].jcv_id
+            })
+            .whereIn('jcv_id', listUsers)
+            .table("jcv_users")
+            .then( data => {
+                if(data >= 1){
+
+                    //Função que atualiza o gestor do usuario na tabela do programa da beleza
+                    alterInformationsBeleza(listUsers, getManagerNew[0].jcv_id)
+
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Total de <b>${listUsers.length}</b> foram tranferidos para o novo gestor.","timeMsg": 3000}`);
+                    res.redirect("/painel/system/users/transfer");
+                }else{
+                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro interno ao fazer a tranferência.","timeMsg": 3000}`);
+                    res.redirect("/painel/system/users/transfer");
+                }
+            })
+    
+        }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Gestor não encontrado","timeMsg": 3000}`);
+            res.redirect("/painel/system/users/transfer");
+        }
+    }else{
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Insira o gestor que vai receber a transferência!","timeMsg": 3000}`);
+        res.redirect("/painel/system/users/transfer");
+    }   
+}
+
+async function alterInformationsBeleza(listUsers, managerId){
+
+    //Verificando se existe SOLICITAÇÕES em aberto
+    const resultSearch = await database
+    .select()
+    .whereRaw(`sys_blz_userId in (${listUsers}) AND sys_blz_requestStatus = 1`)
+    .table("jcv_blz_orders")
+    .then( data => {
+        if(data != ''){
+            let dataArray = []
+            data.forEach(element => {
+                dataArray.push(element.sys_blz_id)
+            });
+            return dataArray
+        }else{
+            return ''
+        }
+    })
+
+    if(resultSearch != ''){
+        //Tem solicitações
+        
+        database
+        .update({
+            sys_blz_userManager: managerId
+        })
+        .whereIn('sys_blz_id', resultSearch)
+        .table("jcv_blz_orders")
+        .then( data => {
+            //console.log('')
+        })
+
+    }else{
+        //Sem solicitações
+    }
+
+}

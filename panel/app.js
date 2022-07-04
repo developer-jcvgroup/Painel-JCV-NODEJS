@@ -194,6 +194,8 @@ router.get('/beleza/view/status/:uuid?', middlewareURL, authenticate, programaBe
 /***********************************/
 //Sistema: Usuarios, permissoes, departamentos, unidades
 router.get("/system/users", middlewareURL, authenticate, getPermissions, controllerUsers.listAllinformations)
+router.get("/system/users/transfer", middlewareURL, authenticate, getPermissions, controllerUsers.moduleTransferMain)
+router.post("/system/users/transfer", authenticate, controllerUsers.moduleTransfer)
 
 //Salvar novo usuario
 router.post("/system/action/sys/user/save", authenticate, controllerUsers.saveNewUser)

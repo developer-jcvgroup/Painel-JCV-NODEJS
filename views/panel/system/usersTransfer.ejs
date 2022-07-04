@@ -1,0 +1,139 @@
+<link rel="stylesheet" href="/panel/css/system/usersTransfer.css">
+
+<section class="user-transfer-section-main">
+    <section class="user-transfer-section-page">
+        <div class="link-container-back">
+            <a class="class-loader" href="/painel/system/users"><i class="ri-arrow-left-line"></i></a>
+        </div>
+        
+        <div class="user-transfer-section-page-title">
+            <span>Transferência de Colaboradores</span>
+            <span>/ Sistema</span>
+        </div>
+
+        <!--  -->
+
+        <form onSubmit="if(!confirm('Deseja realmente fazer a transferência?')){return false;}" method="post" class="user-transfer-section-page-main">
+
+            <div class="user-transfer-select-user-initial" id="user-transfer-select-user-initial">
+                <label for="">Selecione o gestor/representante</label>
+                <input required type="text" name="input-old-manager" id="input-search-manager-one" placeholder="Busque e selecione o gestor">
+            </div>
+
+            <div class="user-transfer-select-user-final" id="user-transfer-select-user-final">
+                <label for="">Selecione o que gestor/representante que <b>será</b> o novo gestor</label>
+                <input required type="text" name="input-new-manager" id="input-search-manager-two" placeholder="Busque e selecione o gestor">
+            </div>
+
+            <div class="user-transfer-box-actions">
+                <button id="user-transfer-button" name="user-transfer-button" formaction="/painel/system/users/transfer">Transferir</button>
+            </div>
+
+            <div class="user-transfer-select-user-initial-list" id="user-transfer-list-users">
+                <ul id="user-transfer-list-ipts">
+
+                    <li><input checked type="checkbox" id="input-mark-all"></li>
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </ul>
+            </div>
+
+        </form>
+    </section>
+</section>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    let arrayDataOne = '<%= getAllManager %>'.split(',')
+
+    //Primeiro campo
+    $("#input-search-manager-one").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+            //console.log(results.slice(0, 5))
+            //console.log(response)
+            //console.log($(".ui-menu-item-wrapper").text())
+        },
+        select: function (e, i) {
+            //console.log(i.item.value)
+
+            doneTyping(i.item.value)
+           /*  setTimeout(() => {
+                $("#button-add-person").trigger('click')
+            }, 100); */
+        }
+    });
+
+    //Segundo nome
+    $("#input-search-manager-two").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
+            response(results.slice(0, 5));
+            //console.log(results.slice(0, 5))
+            //console.log(response)
+            //console.log($(".ui-menu-item-wrapper").text())
+        }
+    });
+
+    /* var typingTimer; //timer identifier
+    var doneTypingInterval = 800; //time in ms, 1 second for example
+    //on keyup, start the countdown
+    $('#input-search-manager-one').keyup(function() {
+        clearTimeout(typingTimer);
+        if ($('#input-search-manager-one').val) {
+            typingTimer = setTimeout(doneTyping($('#input-search-manager-one').val()), doneTypingInterval);
+        }
+    }); */
+
+    function doneTyping(valor){
+        //alert('olar')
+
+        $.fn.loadSpin(1)
+
+        socket.emit('usersTransfersGet', (valor))
+        socket.on('usersTransfersSend', (data) => {
+
+            $(".inputs-list-li").remove()
+            if(data == ''){
+                $.fn.loadSpin(0)
+                $.notification(
+                    ["Nenhum colaborador vinculado a este gestor"],
+                    {
+                        //position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 3000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+            }else{
+
+                $("#user-transfer-button").val(data[0].jcv_userManager)
+                $("#input-mark-all").prop('checked',true)
+
+                data.forEach(element => {
+                    $("#user-transfer-list-ipts").append(`
+                        <li class="inputs-list-li"><input class="inputs-list-checks" type="checkbox" checked name="input-list-users" value="${element.jcv_id}" id="list-users-${element.jcv_id}"> <label for="list-users-${element.jcv_id}"><span style='width: 300px'>${element.jcv_userNamePrimary}</span>⠀ / ⠀<b>${element.sys_unity_name}</b>⠀ / ⠀<b>${element.jcv_userCpf}</b>⠀ / ⠀${element.sys_department_name}</label></li>
+                    `)
+                });
+                $.fn.loadSpin(0)
+            }
+
+            socket.removeListener('usersTransfersSend')
+        })
+
+        socket.removeListener('usersTransfersGet')
+    }
+
+    $("#input-mark-all").click(function(){
+        if($(this).prop('checked')){
+            $(".inputs-list-checks").prop('checked', true)
+        }else{
+            $(".inputs-list-checks").prop('checked', false)
+        }
+    })
+
+</script>
