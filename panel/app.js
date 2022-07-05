@@ -64,6 +64,8 @@ const controllerCursos = require("./controllers/certificados/controllerCursos")
 const controllerExternalLogin = require("./controllers/system/controllerExternalLogin")
 //Controller Help
 const controllerHelp = require("./controllers/help/controllerHelp")
+//Controller Produtos
+const controllerProdutcs = require("./controllers/system/controllerProducts")
 
 /*===================================*/
 
@@ -219,6 +221,12 @@ router.post("/system/unidades/action/save/edit", authenticate, controllerDepartm
 
 //Sistema: Reports
 router.post("/system/report/action", authenticate, controllerReport.saveNewReport)
+
+//Sistema: Produtos
+router.get('/system/products', middlewareURL, authenticate, getPermissions, controllerProdutcs.viewProducts)
+
+router.post("/system/save/product", authenticate, controllerProdutcs.moduleSaveProduct)
+router.post("/system/save/edit/product", authenticate, controllerProdutcs.moduleEditSaveProduct)
 
 /***********************************/
 /***********************************/

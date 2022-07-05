@@ -45,16 +45,16 @@
                     <form class="beleza-view-form" action="">
                         <div class="beleza-view-form-row-large">
                             <div style="max-width: 120px; max-height: 120px; display: flex; justify-content: center;">
-                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[0].sys_blz_productImage %>" alt="">
+                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[0].jcv_sys_products_img %>" alt="">
                             </div>
-                            <span><%= verifyProd[0].sys_blz_productName %></span>
+                            <span><%= verifyProd[0].jcv_sys_products_name %></span>
                         </div>
 
                         <div class="beleza-view-form-row-large">
                             <div style="max-width: 120px; max-height: 120px; display: flex; justify-content: center;">
-                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[1].sys_blz_productImage %>" alt="">
+                                <img style="width: 100%; object-fit: contain;" src="<%= verifyProd[1].jcv_sys_products_img %>" alt="">
                             </div>
-                            <span><%= verifyProd[1].sys_blz_productName %></span>
+                            <span><%= verifyProd[1].jcv_sys_products_name %></span>
                         </div>
                         <% if(requestUser[0].sys_blz_requestStatus == 1){ %>
                         <div class="beleza-view-form-row-action">

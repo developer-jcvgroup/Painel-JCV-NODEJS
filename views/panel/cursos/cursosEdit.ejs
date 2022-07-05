@@ -37,7 +37,7 @@
             <% if(allInfo[0].jcv_course_status == 4 ){ %>
                 <div class="cursos-edit-box">
                     <label for="">Ministrado por:</label>
-                    <input style="background: var(--color-three);" required disabled type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
+                    <input style="background: var(--color-three);" required readonly type="text" name="course-manager" id="instrutor-manager" value="<%= getAllUsersObj[allInfo[0].jcv_course_manager_course] %>" placeholder="Busque pelos instrutores aqui">
                 </div>
             <% }else{ %>
                 <div class="cursos-edit-box">

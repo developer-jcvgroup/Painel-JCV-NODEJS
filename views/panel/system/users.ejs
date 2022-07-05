@@ -462,7 +462,7 @@
                     </div>
                     <div class="sys-save-user-box-save-row-permissions-cont">
                         <label for="">Admin</label>
-                        <input type="checkbox" id="sys-new-user-calendar-admin">
+                        <input type="checkbox" id="sys-new-user-requisitor-admin">
                     </div>
                 </div>
                 <!--  -->
@@ -507,7 +507,7 @@
                     </div>
                     <div class="sys-save-user-box-save-row-permissions-cont">
                         <label for="">Utilizar</label>
-                        <input type="checkbox" name="save-new-sys-enc-use" id="sys-new-user-beleza-use">
+                        <input type="checkbox" name="save-new-sys-enc-use" id="sys-new-user-enc-use">
                     </div>
                 </div>
                 <!--  -->
@@ -573,11 +573,14 @@
             </div>
         </form>
     </div>
+
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+
 <script>
+
     $(window).on("load", function (e) {
         $(function(){
             $.fn.loadSpin(0)

@@ -206,7 +206,7 @@ exports.saveEditCourse = async (req,res) => {
     //Validando o instrutor
     await database
     .select("")
-    .whereRaw(`jcv_userNamePrimary = '${req.body['course-manager']}'`)
+    .whereRaw(`jcv_userNamePrimary like '%${req.body['course-manager']}%'`)
     .table("jcv_users")
     .join("jcv_users_permissions","jcv_users_permissions.sys_perm_idUser","jcv_users.jcv_id")
     .then( data => {

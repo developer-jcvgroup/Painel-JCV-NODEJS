@@ -319,6 +319,16 @@ io.on('connection', (socket) => {
         }) */
     
     })
+
+    socket.on('productGetInfo', (data) => {
+        database
+        .select()
+        .where({jcv_sys_products_id: data})
+        .table("jcv_sys_products")
+        .then( data => {
+            socket.emit('productGetInfoGet', (data))
+        })
+    })
 })
 
 

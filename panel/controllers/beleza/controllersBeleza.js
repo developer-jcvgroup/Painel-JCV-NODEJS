@@ -46,12 +46,12 @@ exports.sysBLZrequest = async (req, res) =>{
         let arrayProductTwo = [];
 
         //Pegando os produtos
-        database.select().where({sys_blz_productEnabled: 1}).table("jcv_blz_products").then(result => {
+        database.select().where({jcv_sys_products_enabled: 1, jcv_sys_products_prog_beleza: 1}).table("jcv_sys_products").then(result => {
             result.forEach(element => {
-                if(element["sys_blz_productType"] === 1){
-                    arrayProductOne.push([element["sys_blz_productName"], element["sys_blz_productImage"], element["sys_blz_productBrand"]]);
+                if(element["jcv_sys_products_type"] === 1){
+                    arrayProductOne.push([element["jcv_sys_products_name"], element["jcv_sys_products_img"], element["jcv_sys_products_brand"]]);
                 }else{
-                    arrayProductTwo.push([element["sys_blz_productName"], element["sys_blz_productImage"], element["sys_blz_productBrand"]]);
+                    arrayProductTwo.push([element["jcv_sys_products_name"], element["jcv_sys_products_img"], element["jcv_sys_products_brand"]]);
                 }
             });
 
@@ -69,13 +69,13 @@ exports.finalizarSolicitacao = async (req,res) => {
     const confirmSend = req.body['input-send-confirm'] == 'on' ? 1 : 0
 
     //Validando os produtos
-    await database.select().where({sys_blz_productEnabled: 1}).whereIn('sys_blz_productName', [productOne,productTwo]).table("jcv_blz_products").orderBy("sys_blz_productType").then(data => {
+    await database.select().where({jcv_sys_products_enabled: 1, jcv_sys_products_prog_beleza: 1}).whereIn('jcv_sys_products_name', [productOne,productTwo]).table("jcv_sys_products").orderBy("jcv_sys_products_type").then(data => {
         //Com o orderBy ele lista primeiro o shampoo depois o tratamento
 
         //Verificando se existe algo e se o retorno da consulta foi exatamente 2 produtos
         if(data != "" && Object.keys(data).length === 2){
-            const insertProductOne = data[0]["sys_blz_productSKU"]+" - "+data[0]["sys_blz_productName"];
-            const insertProductTwo = data[1]["sys_blz_productSKU"]+" - "+data[1]["sys_blz_productName"];
+            const insertProductOne = data[0]["jcv_sys_products_sku"]+" - "+data[0]["jcv_sys_products_name"];
+            const insertProductTwo = data[1]["jcv_sys_products_sku"]+" - "+data[1]["jcv_sys_products_name"];
 
             //Validando se já existe pedido feito
             database
@@ -185,8 +185,8 @@ exports.listOrder = async (req,res,next) => {
         //Pegando dados dos produtos
         const verifyProd = await database
         .select()
-        .whereIn("sys_blz_productName ", [requestUser[0].sys_blz_tratmentOne.split(' - ')[1], requestUser[0].sys_blz_tratmentTwo.split(' - ')[1]])
-        .table("jcv_blz_products")
+        .whereIn("jcv_sys_products_name ", [requestUser[0].sys_blz_tratmentOne.split(' - ')[1], requestUser[0].sys_blz_tratmentTwo.split(' - ')[1]])
+        .table("jcv_sys_products")
         .then( data => {
             return data
         }) 
@@ -338,7 +338,7 @@ exports.searchRequests = async (req,res) => {
 }
 
 exports.listProducts = async (req,res) => {
-    database.select().table("jcv_blz_products").orderBy("sys_blz_productName").then(data => {
+    database.select().table("jcv_sys_products").orderBy("jcv_sys_products_name").then(data => {
         var page = "beleza/produtos";
         res.render("panel/index", {page: page, productsData: data})
     })
@@ -361,13 +361,13 @@ exports.registerProduct = async (req,res) => {
         }
         
         database.insert({
-            sys_blz_productSKU: productSKU,
-            sys_blz_productName: productName,
-            sys_blz_productEnabled: productEnabled,
-            sys_blz_productType: productType,
-            sys_blz_productBrand: productBrand,
-            sys_blz_productImage: productLinkImg
-        }).table("jcv_blz_products").then(data => {
+            jcv_sys_products_sku: productSKU,
+            jcv_sys_products_name: productName,
+            jcv_sys_products_enabled: productEnabled,
+            jcv_sys_products_type: productType,
+            jcv_sys_products_brand: productBrand,
+            jcv_sys_products_img: productLinkImg
+        }).table("jcv_sys_products").then(data => {
             if(data != ""){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+productName+"' foi cadastrado com sucesso!");
                 res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O produto <b>${productName}</b> foi cadastrado com sucesso!.","timeMsg": 3000}`);
@@ -404,16 +404,16 @@ exports.actionProductSave = async (req,res) => {
     }
 
     database.update({
-        sys_blz_productSKU: editproductSKU,
-        sys_blz_productName: editproductName,
-        sys_blz_productEnabled: editproductEnabled,
-        sys_blz_productType: editproductType,
-        sys_blz_productBrand: editproductBrand,
-        sys_blz_productUpdate: generateDate(),
-        sys_blz_productImage: productLinkImg
+        jcv_sys_products_sku: editproductSKU,
+        jcv_sys_products_name: editproductName,
+        jcv_sys_products_enabled: editproductEnabled,
+        jcv_sys_products_type: editproductType,
+        jcv_sys_products_brand: editproductBrand,
+        jcv_sys_products_last_update: generateDate(),
+        jcv_sys_products_img: productLinkImg
     })
-    .where({sys_blz_product_id: idProd})
-    .table("jcv_blz_products").then(data => {
+    .where({jcv_sys_products_id: idProd})
+    .table("jcv_sys_products").then(data => {
         if(data != ""){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O produto '"+editproductName+"' foi salvo com sucesso!");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O produto <b>${editproductName}</b> foi salvo com sucesso!","timeMsg": 3000}`);
@@ -429,7 +429,7 @@ exports.actionProductSave = async (req,res) => {
 exports.actionProductDelete = async (req,res) => {
     const id = req.body.btnDeleteProduct;
 
-    database.where({sys_blz_product_id: id}).delete().table("jcv_blz_products").then( data => {
+    database.where({jcv_sys_products_id: id}).delete().table("jcv_sys_products").then( data => {
         if(data = 1){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto deletado com sucesso!");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Produto deletado com sucesso!","timeMsg": 3000}`);
@@ -453,7 +453,7 @@ exports.statusProducts = async (req,res) => {
         let updateError = 0;
 
         for (let i = 0; i < ids.length; i++) {
-            let result = await database.update({sys_blz_productEnabled: 1}).where({sys_blz_product_id: ids[i]}).table("jcv_blz_products").then(data => {
+            let result = await database.update({jcv_sys_products_enabled: 1}).where({jcv_sys_products_id: ids[i]}).table("jcv_sys_products").then(data => {
                 return data;
             })
 
@@ -475,7 +475,7 @@ exports.statusProducts = async (req,res) => {
         let updateError = 0;
 
         for (let i = 0; i < ids.length; i++) {
-            let result = await database.update({sys_blz_productEnabled: 1}).where({sys_blz_product_id: ids[i]}).table("jcv_blz_products").then(data => {
+            let result = await database.update({jcv_sys_products_enabled: 1}).where({jcv_sys_products_id: ids[i]}).table("jcv_sys_products").then(data => {
                 return data;
             })
 
@@ -498,9 +498,9 @@ exports.statusProducts = async (req,res) => {
         const ws = wb.addWorksheet('Worksheet Name');
 
         database
-        .select("sys_blz_productSKU","sys_blz_productName", "sys_blz_productEnabled", "sys_blz_productBrand")
-        .table("jcv_blz_products")
-        .whereRaw("jcv_blz_products.sys_blz_product_id IN ("+ids+")")
+        .select("jcv_sys_products_sku","jcv_sys_products_name", "jcv_sys_products_enabled", "jcv_sys_products_brand")
+        .table("jcv_sys_products")
+        .whereRaw("jcv_sys_products.jcv_sys_products_id IN ("+ids+")")
         .then(data => {
                 
             const headingColumnNames = [
@@ -526,10 +526,10 @@ exports.statusProducts = async (req,res) => {
 
                         
                         //Classificando o status do pedido
-                        if(record.sys_blz_productEnabled == 1){
-                            record.sys_blz_productEnabled = "Ativo"
-                        }else if(record.sys_blz_productEnabled == 0){
-                            record.sys_blz_productEnabled = "Desativado"
+                        if(record.jcv_sys_products_enabled == 1){
+                            record.jcv_sys_products_enabled = "Ativo"
+                        }else if(record.jcv_sys_products_enabled == 0){
+                            record.jcv_sys_products_enabled = "Desativado"
                         }
 
                         ws.cell(rowIndex,columnIndex++)

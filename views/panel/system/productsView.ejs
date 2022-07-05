@@ -1,0 +1,430 @@
+<link rel="stylesheet" href="/panel/css/system/productsView.css">
+
+<script src="/js/jquery-paginate.js"></script>
+<script>
+    let divLoader = document.getElementById('sys-section-loader')
+    
+    divLoader.style.display = 'flex';
+</script>
+
+<section class="products-container-main">
+    <section class="products-container-page">
+        <div class="products-container-identify-page">
+            <span>Produtos</span>
+            <span>/ Sistema</span>
+        </div>        
+        <form class="products-container-list-all" method="post">
+            <section class="section-products-list-center">
+                <div class="products-title-box"><span>Lista de produtos</span></div>
+
+                <div class="products-order-srs-search">
+                    <div class="products-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nome do item.." id="input-search-table">
+                        <i id="open-new-product" class="ri-add-line"></i>
+                    </div>
+                    <div class="container-actions-checks-products">
+                        <div class="products-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="action-products-select">
+                                <option value="">-- Selecione --</option>
+                                <option value="" disabled></option>
+                                <option value="CMD01">Habilitar</option>
+                                <option value="CMD02">Desabilitar</option>
+                            </select>
+                        </div>
+                        <div class="products-box-actions-checks-button">
+                            <button class="class-loader" formaction="">Executar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+
+        <div class="products-box-list-box">
+
+
+            <% getAllProdutcs.forEach(element => { %>
+            <div class="products-box-single">
+                <div class="products-box-single-header">
+                    <input type="checkbox" value="<%= element.jcv_sys_products_name %>">
+                </div>
+                <!--  -->
+                <div class="products-box-single-info">
+                    <div class="products-box-single-info-img">
+                        <%if (element.jcv_sys_products_img != null){ %>
+                            <img src="<%= element.jcv_sys_products_img %>" alt="">
+                        <% } %>
+                    </div>
+                    <!--  -->
+                    <div class="products-box-single-info-list">
+                        <% if(element.jcv_sys_products_enabled == 0){ %>
+                            <span style="color: var(--color-red)"><b><%= element.jcv_sys_products_name %></b></span>
+                            <span style="color: var(--color-red)">Desabilitado</b></span>
+                        <% }else{ %>
+                            <span><b><%= element.jcv_sys_products_name %></b></span>
+                        <% } %>
+                        <span style="display: none;"><%= element.jcv_sys_products_name.toLowerCase() %></span>
+                        <span><%= element.jcv_sys_products_line %></span>
+                        <span><%= element.jcv_sys_products_sku %></span>
+
+                        <% if(element.jcv_sys_products_prog_beleza == 1){ %>
+                            <span><i class="ri-check-double-line"></i>⠀Programa da Beleza</span>
+                            <span style="display: none;">programa da beleza</span>
+                        <% } %>
+
+                        <% if(element.jcv_sys_products_trade_mkt == 1){ %>
+                            <span><i class="ri-check-double-line"></i>⠀Trade Marketing</span>
+                            <span style="display: none;">trade marketing</span>
+                        <% } %>
+
+                    </div>
+                    <!--  -->
+                    <div class="products-box-single-info-action">
+                        <div class="products-box-single-info-action-box">
+                            <button type="button" class="products-box-single-edit" value="<%= element.jcv_sys_products_id %>" formaction="/portal/system/save/edit/product">Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+
+
+        </div>
+    </section>
+</section>
+<!--  -->
+<section class="products-new-section" id="products-new-section">
+    <div class="products-new-section-box">
+        
+        <div class="products-new-section-title">
+            <span>Cadastrar novo produto</span>
+            <i id="close-new-product" class="ri-close-line"></i>
+        </div>
+
+        <form method="post" class="products-new-section-options">
+            <div class="products-new-section-box-inputs">
+                <label for="">SKU</label>
+                <input required type="text" name="save-new-sku">
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Nome do produto</label>
+                <input required type="text" name="save-new-name">
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Tipo</label>
+                <select required name="save-new-type">
+                    <option value="1">Shampoo</option>
+                    <option value="2">Condicionador</option>
+                    <option value="3">Máscaras, pomadas, etc.</option>
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Marca</label>
+                <select required name="save-new-brand">
+                    <option value="Felps Professional">Felps Professional</option>
+                    <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                    <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Linha</label>
+                <select required name="save-new-line">
+                    <option value="QUIABO XBTX">QUIABO XBTX</option>
+                    <option value="ANTIRRESIDUO">ANTIRRESIDUO</option>
+                    <option value="OMEGA ZERO">OMEGA ZERO</option>
+                    <option value="MACADAMIA">MACADAMIA</option>
+                    <option value="X REPAIR">X REPAIR</option>
+                    <option value="X FORCE">X FORCE</option>
+                    <option value="X COLOR">X COLOR</option>
+                    <option value="X NUTRITIVE">X NUTRITIVE</option>
+                    <option value="BANHO DE VERNIZ">BANHO DE VERNIZ</option>
+                    <option value="MARULA">MARULA</option>
+                    <option value="SOS">SOS</option>
+                    <option value="EXTRATO DE BAMBOO">EXTRATO DE BAMBOO</option>
+                    <option value="CACHOS">CACHOS</option>
+                    <option value="SOU LOIRA">SOU LOIRA</option>
+                    <option value="RP PREMIUM">RP PREMIUM</option>
+                    <option value="MATIZADORES">MATIZADORES</option>
+                    <option value="PO DESCOLORANTE">PO DESCOLORANTE</option>
+                    <option value="UNIQ CREAM">UNIQ CREAM</option>
+                    <option value="OLEO DE ARGAN">OLEO DE ARGAN</option>
+                    <option value="VEGAN OIL KALAHARI">VEGAN OIL KALAHARI</option>
+                    <option value="EQUILIBRIO">EQUILIBRIO</option>
+                    <option value="QUIABO XBTX PROGRESSIVA">QUIABO XBTX PROGRESSIVA</option>
+                    <option value="POKER">POKER</option>
+                    <option value="BLACK JACK">BLACK JACK</option>
+                    <option value="CRAPS">CRAPS</option>
+                    <option value="COLOR">COLOR</option>
+                    <option value="UNIQ CREAM">UNIQ CREAM</option>
+                    <option disabled></option>
+                    <option value="MONA & LISA">MONA & LISA</option>
+                    <option value="LISO MAGIA">LISO MAGIA</option>
+                    <option value="SOUL COCO">SOUL COCO</option>
+                    <option value="SUPER TONICO">SUPER TONICO</option>
+                    <option value="ALO, E VERA">ALO, E VERA</option>
+                    <option value="MANDIOCA">MANDIOCA</option>
+                    <option value="BLOND ANGEL">BLOND ANGEL</option>
+                    <option value="ELIZABETH">ELIZABETH</option>
+                    <option value="PODER DOS CACHOS">PODER DOS CACHOS</option>
+                    <option disabled></option>
+                    <option value="MASCARA PRETA">MASCARA PRETA</option>
+                    <option value="GOLDEN">GOLDEN</option>
+                    <option value="VITAMINA C">VITAMINA C</option>
+                    <option value="PORCELANA">PORCELANA</option>
+                    <option value="DETOX PE">DETOX PE</option>
+                    <option value="IDEALY">IDEALY</option>
+                    <option value="ACNEED">ACNEED</option>
+                    <option value="AGUA MICELAR">AGUA MICELAR</option>
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Imagem</label>
+                <input required type="text" name="save-new-image">
+            </div>
+
+            <div class="products-new-section-box-actions">
+                <input type="checkbox" id="prog-blz" name="save-new-op-prog-blz">
+                <label for="prog-blz">Programa da Beleza</label>
+            </div>
+            <div class="products-new-section-box-actions">
+                <input type="checkbox" id="trade-mkt" name="save-new-op-trade-mkt">
+                <label for="trade-mkt">Trade Mkt</label>
+            </div>
+
+            <div class="products-new-section-box-actions">
+                <button type="submit" formaction="/painel/system/save/product" >Salvar</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+
+
+<section class="products-new-section" id="products-save-edit-section">
+    <div class="products-new-section-box">
+        
+        <div class="products-new-section-title">
+            <span><b id="product-name" style="white-space: normal;"></b></span>
+            <i id="close-edit-product" class="ri-close-line"></i>
+        </div>
+
+        <form method="post" class="products-new-section-options">
+            <div class="products-new-section-box-inputs">
+                <label for="">SKU</label>
+                <input required type="text" name="save-new-sku-edit" id="product-sku">
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Nome do produto</label>
+                <input required type="text" name="save-new-name-edit" id="product-name-get">
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Ativo?</label>
+                <select required name="save-new-enabled-edit" id="product-enabled">
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Tipo</label>
+                <select required name="save-new-type-edit" id="product-type">
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Marca</label>
+                <select required name="save-new-brand-edit" id="product-brand">
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Linha</label>
+                <select required name="save-new-line-edit" id="product-line">
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                </select>
+            </div>
+            <div class="products-new-section-box-inputs">
+                <label for="">Imagem</label>
+                <input required type="text" name="save-new-image-edit" id="product-image">
+            </div>
+
+            <div class="products-new-section-box-actions">
+                <input type="checkbox" name="save-new-op-prog-blz-edit" id="product-prop-blz">
+                <label for="product-prop-blz">Programa da Beleza</label>
+            </div>
+            <div class="products-new-section-box-actions">
+                <input type="checkbox" name="save-new-op-trade-mkt-edit" id="product-prop-trade">
+                <label for="product-prop-trade">Trade Mkt</label>
+            </div>
+
+            <div class="products-new-section-box-actions">
+                <button type="submit" name="button-save-edit" id="button-save-edit" value="" formaction="/painel/system/save/edit/product" >Salvar Edição</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<script>
+    $(window).on("load", function (e) {
+
+
+        $(function(){
+
+            //Abrir cadastro de produtos
+            $("#close-new-product").click(function(){
+                $("#products-new-section").fadeOut()
+            })
+            $("#open-new-product").click(function(){
+                $("#products-new-section").fadeIn().css({'display':'flex'})
+            })
+
+            //Pegando informações do produto e abrindo tela
+            $(".products-box-single-edit").click(function(){
+                let thisVal = $(this).val()
+                //alert(thisVal)
+                $("#products-save-edit-section").fadeIn().css({'display':'flex'})
+                
+                socket.emit('productGetInfo', (thisVal))
+                socket.on('productGetInfoGet', (data) => {
+
+                    if(data != ''){
+                        //Tem dados
+
+                        let dataTypes = {
+                            1: 'Shampoo',
+                            2: 'Condicionadores',
+                            3: 'Máscaras, pomadas, etc'
+                        }
+                        
+                        $("#product-sku").val(data[0].jcv_sys_products_sku)
+                        $("#product-name-get").val(data[0].jcv_sys_products_name)
+                        $("#product-name").text(data[0].jcv_sys_products_name)
+                        $("#product-type").empty().append(`
+                            <option selected value="${data[0].jcv_sys_products_type}" >${ dataTypes[data[0].jcv_sys_products_type] }</option>
+                            <option disabled></option>
+                            <option value="1">Shampoo</option>
+                            <option value="2">Condicionador</option>
+                            <option value="3">Máscaras, pomadas, etc.</option>
+                        `)
+                        $("#product-brand").empty().append(`
+                            <option selected value="${data[0].jcv_sys_products_brand}">${data[0].jcv_sys_products_brand}</option>
+                            <option disabled></option>
+                            <option value="Felps Professional">Felps Professional</option>
+                            <option value="Retro Cosmeticos">Retro Cosmeticos</option>
+                            <option value="Avenca Cosmeticos">Avenca Cosmeticos</option>
+                        `)
+                        $("#product-enabled").empty().append(`
+                            <option selected value="${data[0].jcv_sys_products_enabled}">${data[0].jcv_sys_products_enabled == 1 ? 'Sim':'Não'}</option>
+                            <option disabled></option>
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        `)
+                        $("#product-line").empty().append(`
+                            <option selected value="${data[0].jcv_sys_products_line}">${data[0].jcv_sys_products_line}</option>
+                            <option disabled></option>
+                            <option value="QUIABO XBTX">QUIABO XBTX</option>
+                            <option value="ANTIRRESIDUO">ANTIRRESIDUO</option>
+                            <option value="OMEGA ZERO">OMEGA ZERO</option>
+                            <option value="MACADAMIA">MACADAMIA</option>
+                            <option value="X REPAIR">X REPAIR</option>
+                            <option value="X FORCE">X FORCE</option>
+                            <option value="X COLOR">X COLOR</option>
+                            <option value="X NUTRITIVE">X NUTRITIVE</option>
+                            <option value="BANHO DE VERNIZ">BANHO DE VERNIZ</option>
+                            <option value="MARULA">MARULA</option>
+                            <option value="SOS">SOS</option>
+                            <option value="EXTRATO DE BAMBOO">EXTRATO DE BAMBOO</option>
+                            <option value="CACHOS">CACHOS</option>
+                            <option value="SOU LOIRA">SOU LOIRA</option>
+                            <option value="RP PREMIUM">RP PREMIUM</option>
+                            <option value="MATIZADORES">MATIZADORES</option>
+                            <option value="PO DESCOLORANTE">PO DESCOLORANTE</option>
+                            <option value="UNIQ CREAM">UNIQ CREAM</option>
+                            <option value="OLEO DE ARGAN">OLEO DE ARGAN</option>
+                            <option value="VEGAN OIL KALAHARI">VEGAN OIL KALAHARI</option>
+                            <option value="EQUILIBRIO">EQUILIBRIO</option>
+                            <option value="QUIABO XBTX PROGRESSIVA">QUIABO XBTX PROGRESSIVA</option>
+                            <option value="POKER">POKER</option>
+                            <option value="BLACK JACK">BLACK JACK</option>
+                            <option value="CRAPS">CRAPS</option>
+                            <option value="COLOR">COLOR</option>
+                            <option value="UNIQ CREAM">UNIQ CREAM</option>
+                            <option disabled></option>
+                            <option value="MONA & LISA">MONA & LISA</option>
+                            <option value="LISO MAGIA">LISO MAGIA</option>
+                            <option value="SOUL COCO">SOUL COCO</option>
+                            <option value="SUPER TONICO">SUPER TONICO</option>
+                            <option value="ALO, E VERA">ALO, E VERA</option>
+                            <option value="MANDIOCA">MANDIOCA</option>
+                            <option value="BLOND ANGEL">BLOND ANGEL</option>
+                            <option value="ELIZABETH">ELIZABETH</option>
+                            <option value="PODER DOS CACHOS">PODER DOS CACHOS</option>
+                            <option disabled></option>
+                            <option value="MASCARA PRETA">MASCARA PRETA</option>
+                            <option value="GOLDEN">GOLDEN</option>
+                            <option value="VITAMINA C">VITAMINA C</option>
+                            <option value="PORCELANA">PORCELANA</option>
+                            <option value="DETOX PE">DETOX PE</option>
+                            <option value="IDEALY">IDEALY</option>
+                            <option value="ACNEED">ACNEED</option>
+                            <option value="AGUA MICELAR">AGUA MICELAR</option>
+                        `)
+                        
+                        $("#product-image").val(data[0].jcv_sys_products_img)
+                        data[0].jcv_sys_products_prog_beleza == 1 ? $("#product-prop-blz").prop('checked', true) : $("#product-prop-blz").prop('checked', false)
+                        //$("#product-prop-blz").val(data[0].jcv_sys_products_prog_beleza)
+                        data[0].jcv_sys_products_trade_mkt == 1 ? $("#product-prop-trade").prop('checked', true) : $("#product-prop-trade").prop('checked', false)
+
+                        $("#button-save-edit").val(data[0].jcv_sys_products_id)
+
+                    }else{
+                        //Não tem
+                        $.notification(
+                            ["Nenhum produto encontrado"],
+                            {
+                                //position: ['top', 'right'], 
+                                messageType: 'warning',
+                                timeView: 3000,
+                                //redirectAction: 'https://google.com' ou null
+                            }
+                        )
+                    }
+
+
+                    socket.removeListener('productGetInfoGet')
+                })
+
+                socket.removeListener('productGetInfo')
+            
+            })
+            $("#close-edit-product").click(function(){
+                $("#products-save-edit-section").fadeOut()
+            })
+
+            //Filtro de busca
+            $('#input-search-table').keyup(function(){
+ 
+                // Search text
+                var text = $(this).val();
+
+                // Hide all content class element
+                $('.products-box-single').hide();
+
+                // Search and show
+                $('.products-box-single:contains("'+text+'")').show();
+
+            });
+
+        })
+
+
+    })
+</script>

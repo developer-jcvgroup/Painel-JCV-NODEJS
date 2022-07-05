@@ -605,7 +605,6 @@
     color: var(--color-three);
 }
 
-
 @media only screen and (max-width: 650px){
     .sys-users-container-identify-page{
         margin: 26px 0;

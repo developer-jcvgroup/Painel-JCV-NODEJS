@@ -220,45 +220,45 @@ exports.salesDay = async (req,res) => {
 
     const allLines = await database
     .select()
-    .distinct("jcv_trade_products_line")
-    .where({jcv_trade_products_enable: 1})
-    .table("jcv_trade_products")
+    .distinct("jcv_sys_products_line")
+    .where({jcv_sys_products_enabled: 1})
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     const allProductsFelps = await database
     .select()
-    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Felps Professional'")
-    .table("jcv_trade_products")
+    .whereRaw("jcv_sys_products_enabled = 1 AND jcv_sys_products_trade_mkt = 1 AND jcv_sys_products_brand = 'Felps Professional'")
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     const allProductsRetro = await database
     .select()
-    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Retro Cosmeticos'")
-    .table("jcv_trade_products")
+    .whereRaw("jcv_sys_products_enabled = 1 AND jcv_sys_products_trade_mkt = 1 AND jcv_sys_products_brand = 'Retro Cosmeticos'")
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     const allProductsAvenca = await database
     .select()
-    .whereRaw("jcv_trade_products_enable = 1 AND jcv_trade_products_brand = 'Avenca Cosmeticos'")
-    .table("jcv_trade_products")
+    .whereRaw("jcv_sys_products_enabled = 1 AND jcv_sys_products_trade_mkt = 1 AND jcv_sys_products_brand = 'Avenca Cosmeticos'")
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     //Array produtos FELPS
     let arrayProdFelps = []
     allProductsFelps.forEach(element => {
-        arrayProdFelps.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+        arrayProdFelps.push(element.jcv_sys_products_sku+' - '+element.jcv_sys_products_name+',')
     });
 
     //Array produtos RETRO
     let arrayProdRetro = []
     allProductsRetro.forEach(element => {
-        arrayProdRetro.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+        arrayProdRetro.push(element.jcv_sys_products_sku+' - '+element.jcv_sys_products_name+',')
     });
 
     //Array produtos FELPS
     let arrayProdAvenca = []
     allProductsAvenca.forEach(element => {
-        arrayProdAvenca.push(element.jcv_trade_products_sku+' - '+element.jcv_trade_products_product+',')
+        arrayProdAvenca.push(element.jcv_sys_products_sku+' - '+element.jcv_sys_products_name+',')
     });
 
 
@@ -457,8 +457,8 @@ exports.salesDayRegister = async (req,res) => {
     //Validando o produto
     const verifyProd = await database
     .select()
-    .whereRaw(`jcv_trade_products_sku = '${popularFelps.split(" - ")[0]}' OR jcv_trade_products_sku = '${popularRetro.split(" - ")[0]}' OR jcv_trade_products_sku = '${popularAvenca.split(" - ")[0]}'`)
-    .table("jcv_trade_products")
+    .whereRaw(`jcv_sys_products_sku = '${popularFelps.split(" - ")[0]}' OR jcv_sys_products_sku = '${popularRetro.split(" - ")[0]}' OR jcv_sys_products_sku = '${popularAvenca.split(" - ")[0]}'`)
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     //Object Felps
@@ -1665,7 +1665,7 @@ exports.tradeProducts = async (req,res) => {
     //Todos os produtos
     const allProducts = await database
     .select()
-    .table("jcv_trade_products")
+    .table("jcv_sys_products")
     .then( data => {return data})
 
     var page = "trade/products";
@@ -1687,13 +1687,13 @@ exports.saveNewProduct = async (req,res) => {
     if(productSku != '' || productBrand != '' || productLine != '' || productName != ''){
         database
         .insert({
-            jcv_trade_products_sku: productSku,
-            jcv_trade_products_brand: productBrand,
-            jcv_trade_products_line: productLine,
-            jcv_trade_products_product: productName,
-            jcv_trade_products_enable: productEnabled
+            jcv_sys_products_sku: productSku,
+            jcv_sys_products_brand: productBrand,
+            jcv_sys_products_line: productLine,
+            jcv_sys_products_name: productName,
+            jcv_sys_products_enabled: productEnabled
         })
-        .table("jcv_trade_products")
+        .table("jcv_sys_products")
         .then( data => {
             if(data[0] != ''){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> registrado com sucesso!.");
@@ -1721,14 +1721,14 @@ exports.editNewProduct = async (req,res) => {
     if(productSku != '' || productBrand != '' || productLine != '' || productName != ''){
         database
         .update({
-            jcv_trade_products_sku: productSku,
-            jcv_trade_products_brand: productBrand,
-            jcv_trade_products_line: productLine,
-            jcv_trade_products_product: productName,
-            jcv_trade_products_enable: productEnabled
+            jcv_sys_products_sku: productSku,
+            jcv_sys_products_brand: productBrand,
+            jcv_sys_products_line: productLine,
+            jcv_sys_products_name: productName,
+            jcv_sys_products_enabled: productEnabled
         })
-        .where({jcv_trade_products_id: idProd})
-        .table("jcv_trade_products")
+        .where({jcv_sys_products_id: idProd})
+        .table("jcv_sys_products")
         .then( data => {
             if(data[0] != ''){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produto <b>"+productName+"</b> editado com sucesso!.");
@@ -1751,10 +1751,10 @@ exports.actionProductsTrade = async (req,res) => {
     if(typeOp == 'CMD01'){
         database
         .update({
-            jcv_trade_products_enable: 1
+            jcv_sys_products_enabled: 1
         })
-        .whereIn("jcv_trade_products_id", idsOp)
-        .table("jcv_trade_products")
+        .whereIn("jcv_sys_products_id", idsOp)
+        .table("jcv_sys_products")
         .then( data => {
             if(data[0] != ''){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>HABILITADOS</b> com sucesso!.");
@@ -1769,10 +1769,10 @@ exports.actionProductsTrade = async (req,res) => {
     }else if(typeOp == 'CMD02'){
         database
         .update({
-            jcv_trade_products_enable: 0
+            jcv_sys_products_enabled: 0
         })
-        .whereIn("jcv_trade_products_id", idsOp)
-        .table("jcv_trade_products")
+        .whereIn("jcv_sys_products_id", idsOp)
+        .table("jcv_sys_products")
         .then( data => {
             if(data[0] != ''){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Produtos <b>DESABILITADOS</b> com sucesso!.");

@@ -151,6 +151,11 @@ async function getPermissions (req, res, next) {
             return next();
         }
 
+        let validationGet = resultPermissions[0].sys_tra_perm_admin == 1 ? 1 : resultPermissions[0].sys_blz_perm_manager == 1 ? 1 : 0
+        if(urlPage[1] == "products" && validationGet == 1){
+            return next();
+        }
+
         //Não foi encontrado
         if(pageError){
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");

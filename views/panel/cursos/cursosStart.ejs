@@ -67,6 +67,10 @@
                         <button type="button" id="clear-ass">Limpar</button>
                     </div>
                 </div>
+
+                <div>
+                    <input id="input-file" type="file" />
+                </div>
             <% } %>
             
             <!--  -->
@@ -307,5 +311,32 @@
     document.getElementById('clear-ass').addEventListener('click', function () {
         $("#save-ass").val('');
         signaturePad.clear();
+    });
+</script>
+<script>
+    // Get a reference to the file input
+    const fileInput = document.getElementById('input-file');
+
+    // Listen for the change event so we can capture the file
+    fileInput.addEventListener('change', (e) => {
+        // Get a reference to the file
+        const file = e.target.files[0];
+
+        // Encode the file using the FileReader API
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            console.log(reader.result);
+
+            $("#save-ass").val(reader.result);
+            //$.fn.sys_popupSystem("SYS01", "Assinatura salva temporaiamente. Agora finalize!")
+            $.notification(
+                [`Assinatura reconhecida, agora finalize!`],
+                { 
+                    messageType: 'warning'
+                }
+            )
+            // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+        };
+        reader.readAsDataURL(file);
     });
 </script>
