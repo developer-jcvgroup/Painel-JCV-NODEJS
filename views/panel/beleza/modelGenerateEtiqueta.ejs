@@ -5,23 +5,10 @@
     *{
         margin: 0;
         padding: 0;
+        line-height: 1.4em;
         box-sizing: border-box;
         font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
         color: #4B4B4D;
-    }
-    body{
-        width: 100%;    
-    }
-
-    @page {
-        margin: 10px !important;
-    }
-
-    @media print {
-        body {
-            zoom: 90%;
-        }
-        
     }
 
     /*  */
@@ -44,9 +31,7 @@
     /* Model Box */
     .model-sectiom-main{
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: block;
     }
 
 
@@ -147,7 +132,7 @@
         justify-content: end;
         border-radius: 2px;
         border: 2px solid var(--color-two);
-        margin: 2px;
+        margin: 24px;
     }
     .model-box-etiquetas{
         width: 100%;
@@ -176,6 +161,17 @@
         object-fit: contain;
     }
 
+    @page {
+        margin: 20px;
+    }
+    
+    @media print{
+        /* use your css selector */    
+        div{ 
+            page-break-inside: avoid;
+        }
+    } 
+
 </style>
 <!--  -->
 <body>
@@ -194,7 +190,7 @@
 
                 <% let dataConvert = JSON.parse(element.jcv_blz_compilate_array_data) %>
 
-                <div tyle="page-break-before: always; page-break-after: always;" class="model-box-style">
+                <div class="model-box-style">
                     <div class="model-box-header">
                         <div class="model-box-main">
                             <span><%= element.jcv_userNamePrimary %></span>
@@ -213,36 +209,14 @@
                         </div>
                     </div>
                     <!--  -->
-                    <div class="model-box-table-main">
-                        <table class="model-box-table">
-                            <thead>
-                                <tr>
-                                    <th>Solicitante</th>
-                                    <th>Shampoo</th>
-                                    <th>Tratamento</th>
-                                    <th>Gestor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <% dataConvert.forEach(elementTwo => { %>
-                                    <tr>
-                                        <td><%= elementTwo.blzUserName %></td>
-                                        <td><%= elementTwo.blzShampoo %></td>
-                                        <td><%= elementTwo.blzTreatment %></td>
-                                        <td><%= element.jcv_userNamePrimary %></td>
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
+                    
                     <!--  -->
-                    <hr style="margin: 14px 0;border: 0;">
+                    <hr style="border: 0;">
                     <!--  -->
                     <div class="model-box-etiquetas">
 
                         <% dataConvert.forEach(elementTwo => { %>
-                            <div class="model-etiqueta-box">
+                            <div class="model-etiqueta-box pagebreak">
                                 <div class="model-etiqueta-info">
                                     <span>Solicitante: <b><%= elementTwo.blzUserName %></b></span>
                                     <span>Gestor: <b><%= element.jcv_userNamePrimary %></b></span>
@@ -259,7 +233,7 @@
 
                     </div>
                     <!--  -->
-                    <hr style="margin: 14px 0;border: 0; border-bottom: 2px dashed var(--color-two); background: transparent;">
+                    <hr style="border: 0; border-bottom: 2px dashed var(--color-two); background: transparent;">
                     <!--  -->
     
     
