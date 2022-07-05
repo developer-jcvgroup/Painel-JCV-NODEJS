@@ -66,10 +66,6 @@
 
                 <% if(getUUIDcompilates[0].jcv_blz_compilate_status == 3){ %>
                     <div class="compilate-container-info-actions-cont">
-                        <button class="class-loader" type="submit" value="<%= getUUIDcompilates[0].jcv_blz_compilate_uuid %>" name="button-action-expedicao-separacao" formaction="/painel/beleza/compilate/action/expedicao">Separação Realizada</button>
-                    </div>
-                <% }else if(getUUIDcompilates[0].jcv_blz_compilate_status == 4){ %>
-                    <div class="compilate-container-info-actions-cont">
                         <input type="text" required name="button-action-expedicao-obs" placeholder="Descreva como foi feito o despache..: CORREIOS, TRANSPORTADORA NOTA 123456">
                         <button type="submit" value="<%= getUUIDcompilates[0].jcv_blz_compilate_uuid %>" name="button-action-expedicao-despacho" formaction="/painel/beleza/compilate/action/despacho">Despacho Realizado</button>
                     </div>
@@ -78,7 +74,6 @@
                         <button class="class-loader" type="submit" value="<%= getUUIDcompilates[0].jcv_blz_compilate_uuid %>" name="button-action-expedicao-coletar" formaction="/painel/beleza/compilate/action/coletar">Coletar Pedidos</button>
                     </div>
                 <% } %>
-                
             </div>
         </form>
     </section>

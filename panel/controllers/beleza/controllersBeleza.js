@@ -1618,8 +1618,8 @@ exports.compilateActionExpedicaoDespacho = async (req,res) => {
     .table("jcv_blz_compilate")
     .then( data => {return data})
 
-    if(getStatus != '' && getStatus[0].jcv_blz_compilate_status == 4){
-        //UUid existente e o compilador esta com status 4{Separado}
+    if(getStatus != '' && getStatus[0].jcv_blz_compilate_status == 3){
+        //UUid existente e o compilador esta com status 3{Em separação}
 
         database
         .update({

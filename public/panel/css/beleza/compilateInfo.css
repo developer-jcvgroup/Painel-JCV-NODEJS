@@ -138,4 +138,10 @@
         width: 100%;
         white-space: normal;
     }
+    .compilate-container-info-actions{
+        width: 100%;
+    }
+    .compilate-container-info-actions-cont input{
+        padding: 15px;
+    }
 }
