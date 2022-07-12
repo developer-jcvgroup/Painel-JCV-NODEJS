@@ -22,7 +22,8 @@ async function getUpdates(idUser, moduleOp){
     return allUpdate;
 }
 
-async function getPermissions (req, res, next) {
+//async getPermissions = (urlArray) => (req, res, next) => 
+const getPermissions = (urlArray) => async(req, res, next) => {
 
     const resultPermissions = await database
     .select("jcv_users.jcv_userCassification","jcv_users_permissions.*")
@@ -47,7 +48,7 @@ async function getPermissions (req, res, next) {
     }
 
     //Pegando e tranformando em array a URL
-    const urlPage = req.path.split('/');urlPage.shift();
+    const urlPage = urlArray;
 
     //PÁGINA INCIAL
     if(urlPage[0] == ''){
@@ -56,291 +57,122 @@ async function getPermissions (req, res, next) {
         return next();
     }
 
-    //PROGRAMA DA BELEZA
-    if(urlPage[0] == "beleza"){
+    let objectPermissions = {
+        "/": 1,
+        "beleza/solicitar": resultPermissions[0].sys_blz_perm_use,
+        "beleza/status": resultPermissions[0].sys_blz_perm_use,
+        "beleza/solicitacoes": resultPermissions[0].sys_blz_perm_admin,
+        "beleza/produtos": [resultPermissions[0].sys_blz_perm_manager, resultPermissions[0].sys_blz_perm_admin],
 
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
+        "requisitor/novo": resultPermissions[0].sys_req_perm_use,
+        "requisitor/EeditarRequisicao": resultPermissions[0].sys_req_perm_use,
+        "requisitor/visualizarRequisicao": resultPermissions[0].sys_req_perm_use,
+        "requisitor/minhasRequisicoes": resultPermissions[0].sys_req_perm_use,
+        "requisitor/listaRequisicoes": resultPermissions[0].sys_req_perm_admin,
+        "requisitor/items": resultPermissions[0].sys_req_perm_use,
 
-        let pageError = true;
-        //USER:
-        if(urlPage[1] == "solicitar" && resultPermissions[0].sys_blz_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "status" && resultPermissions[0].sys_blz_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "listaItens" && resultPermissions[0].sys_blz_perm_use == 1){
-            return next();
-        }
+        "system/users": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        "system/unidades": resultPermissions[0].jcv_userCassification,
+        "system/departamentos": resultPermissions[0].jcv_userCassification,
+        "system/products": [resultPermissions[0].sys_tra_perm_admin, resultPermissions[0].sys_blz_perm_manager],
+        "system/users": resultPermissions[0].jcv_userCassification,
+        "system/users/transfer": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+
+        "formularios": resultPermissions[0].sys_forms_perm_admin,
+
+        "calendario/main": resultPermissions[0].sys_cal_perm_use,
+        "calendario/event": resultPermissions[0].sys_cal_perm_use,
+        "calendario/room": resultPermissions[0].sys_cal_perm_admin,
+        "calendario/viewRoom": resultPermissions[0].sys_cal_perm_use,
+        "calendario/viewEvent": resultPermissions[0].sys_cal_perm_use,
+
+        "notifications/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        "notifications/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        "notifications/edit": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+
+        "cursos/main": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
+        "cursos/start": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
+        "cursos/new": resultPermissions[0].sys_courses_perm_admin,
+        "cursos/edit": resultPermissions[0].sys_courses_perm_admin,
+
+        "encurtador/main": resultPermissions[0].sys_enc_perm_use,
+        "encurtador/new": resultPermissions[0].sys_enc_perm_use,
+        "encurtador/edit": resultPermissions[0].sys_enc_perm_use,
+        
+        "trademkt/award/new": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+        "trademkt/award/edit": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+        "trademkt/award/list": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+
+        "trademkt/main": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+        "trademkt/formSearch": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/visit": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/listTrade": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/edit": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/form": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+        "trademkt/salesDay": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+        "trademkt/form/response": resultPermissions[0].sys_tra_perm_use,
+        "trademkt/shops": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/shops/config": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/shops/maps": resultPermissions[0].sys_tra_perm_admin,
+
+        "updates/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        "updates/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        "updates/edit": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+
+        "notifications/main": resultPermissions[0].sys_notify_perm_admin,
+        "notifications/new": resultPermissions[0].sys_notify_perm_admin,
+        "notifications/edit": resultPermissions[0].sys_notify_perm_admin,
+
+        "formularios/main": resultPermissions[0].sys_forms_perm_admin,
+        "formularios/novo": resultPermissions[0].sys_forms_perm_admin,
+        "formularios/edit": resultPermissions[0].sys_forms_perm_admin,
+
+        "encurtador/main": resultPermissions[0].sys_enc_perm_use,
+        "encurtador/novo": resultPermissions[0].sys_enc_perm_use,
+        "encurtador/edit": resultPermissions[0].sys_enc_perm_use,
+
+        "cursos/main": resultPermissions[0].sys_courses_perm_admin,
+        "cursos/new": resultPermissions[0].sys_courses_perm_admin,
+        "cursos/edit": resultPermissions[0].sys_courses_perm_admin,
+        "cursos/delete": resultPermissions[0].sys_courses_perm_admin,//Post
+        "cursos/start": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
+    }
+
+    async function validateParams (arrayGet, searchGet){
+        let convertNewArr = []
+        searchGet.forEach(element => {
+
+            //Verificando se o parametro é referente a alguma edição, caso seja ele ira ignorar o parametro. ex: id, uuid da url
+            if(element != '...'){convertNewArr.push(element)}
+        })
       
-        //ADMIN:
-        if(urlPage[1] == "solicitacoes" && resultPermissions[0].sys_blz_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "produtos" && resultPermissions[0].sys_blz_perm_manager == 1 || resultPermissions[0].sys_blz_perm_admin == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
+        let convertAgain = convertNewArr.join('/')
+    
+        try{
+          return typeof(arrayGet[convertAgain]) == 'object' ? arrayGet[convertAgain].indexOf(1) > -1 ? true : false : arrayGet[convertAgain] == 1 ? true : arrayGet[convertAgain] == 0 ? false : null
+      }catch(err){
+          alert('error')
+      }
+      
     }
 
-    //REQUISITOR DE MATERIAIS
-    if(urlPage[0] == "requisitor"){
+    let validationGet = await validateParams(objectPermissions, urlPage)
+    validationGet == true ? functionNetPage() : validationGet == null ? functionPageNull() : functionNotPermission()
 
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD03')
-
-        let pageError = true;
-        //USER
-        if(urlPage[1] == "Novo" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "EditarRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "VisualizarRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "ReceberRequisicao" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "MinhasRequisicoes" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "itemsAll" && resultPermissions[0].sys_req_perm_use == 1){
-            return next();
-        }
-
-        //ADMIN
-        if(urlPage[1] == "ListaRequisicoes" && resultPermissions[0].sys_req_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "items" && resultPermissions[0].sys_req_perm_admin == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
+    function functionNetPage(){
+        //console.log('aaaaaaa')
+        //GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
+        next();
+    }
+    function functionPageNull(){
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Página não encontrada","timeMsg": 4000}`);
+        res.redirect("/painel");
+    }
+    function functionNotPermission(){
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui acesso a esta página","timeMsg": 4000}`);
+        res.redirect("/painel");
     }
 
-    //CONFIGURAÇÃO DO SISTEMA
-    if(urlPage[0] == "system"){
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD06')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(urlPage[1] == "users" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-        if(urlPage[1] == "unidades" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-        if(urlPage[1] == "departamentos" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-
-        let validationGet = resultPermissions[0].sys_tra_perm_admin == 1 ? 1 : resultPermissions[0].sys_blz_perm_manager == 1 ? 1 : 0
-        if(urlPage[1] == "products" && validationGet == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-
-    }
-
-    //FORMULARIOS DE PESQUISA
-    if(urlPage[0] == "formularios"){
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD01')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(resultPermissions[0].sys_forms_perm_admin == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    //CONFIGURAÇÃO DO CALENDARIO
-    if(urlPage[0] == "calendario"){
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD04')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(urlPage[1] == "main" && resultPermissions[0].sys_cal_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "event" && resultPermissions[0].sys_cal_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "room" && resultPermissions[0].sys_cal_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "viewRoom" && resultPermissions[0].sys_cal_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "viewEvent" && resultPermissions[0].sys_cal_perm_use == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    //NOTIFICAÇÕES
-    if(urlPage[0] == "notifications"){
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD06')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(urlPage[1] == "main" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-        if(urlPage[1] == "new" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-        if(urlPage[1] == "edit" && resultPermissions[0].jcv_userCassification == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    //Cursos & Treinamentos
-    if(urlPage[0] == "cursos"){        
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD09')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(urlPage[1] == "main"){
-            if(resultPermissions[0].sys_courses_perm_admin == 1 || resultPermissions[0].sys_courses_perm_manager == 1){
-                return next();
-            }
-        }
-        if(urlPage[1] == "start"){
-            if(resultPermissions[0].sys_courses_perm_admin == 1 || resultPermissions[0].sys_courses_perm_manager == 1){
-                return next();
-            }
-        }
-        if(urlPage[1] == "new" && resultPermissions[0].sys_courses_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "edit" && resultPermissions[0].sys_courses_perm_admin == 1){
-            return next();
-        }
-        
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    //Encurtador
-    if(urlPage[0] == "encurtador"){
-        
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD08')
-
-        let pageError = true;
-        //ADMIN GERAL
-        if(urlPage[1] == "main" && resultPermissions[0].sys_enc_perm_use == 1){
-
-            return next();
-        }
-        if(urlPage[1] == "new" && resultPermissions[0].sys_enc_perm_use == 1){
-            return next();
-        }
-        if(urlPage[1] == "edit" && resultPermissions[0].sys_enc_perm_use == 1){
-            return next();
-        }
-
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    //TRADE MKT
-    if(urlPage[0] == "trademkt"){
-
-        //Pegando os updates
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD05')
-
-        let pageError = true;
-        if(urlPage[1] == "main" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "formSearch" && resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "visit" && resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "listTrade" && resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "edit" && resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "form" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        if(urlPage[1] == "salesDay" && resultPermissions[0].sys_tra_perm_use == 1 || resultPermissions[0].sys_tra_perm_admin == 1){
-            return next();
-        }
-        
-        //Não foi encontrado
-        if(pageError){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Você não possui permissão");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Você não possui permissão para acessar","timeMsg": 4000}`);
-            res.redirect("/painel");
-        }
-    }
-
-    next();
 
 }
 

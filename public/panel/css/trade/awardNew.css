@@ -1,0 +1,195 @@
+.award-new-section{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+.award-new-div-main{
+    width: 100%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    padding: 15px;
+}
+
+/*  */
+.award-new-title-box{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin-top: 2%;
+}
+.award-new-title-box span:nth-child(2){
+    font-size: 1.3rem;
+    color: var(--color-one);
+}
+.award-new-title-box span:nth-child(3){
+    font-size: 0.9rem;
+    margin-left: 9px;
+    color: var(--color-two);
+}
+.award-new-title-box a{
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--color-one);
+    margin-right: 8px;
+}
+
+.award-new-div-brand{
+    width: 100%;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+}
+.award-new-div-brand-row{
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    margin: 24px;
+}
+.award-new-div-brand-title{
+    width: 100%;
+    padding: 18px;
+    border-radius: 4px;
+}
+.award-new-div-brand-title{
+    font-size: 1rem;
+}
+
+/*  */
+.award-new-div-inputs-box{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+}
+.award-new-div-inputs-box input:nth-child(1){
+    font-size: 0.9rem;
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: var(--color-two);
+}
+.award-new-div-inputs-box input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    border-radius: 3px;
+}
+.award-new-actions{
+    display: flex;
+}
+.award-new-actions button{
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    margin: 24px 0;
+}
+
+/*  */
+/*  */
+/* CONTAINER SUSPENSO */
+.award-new-suspend-section{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.award-new-suspend-box-main{
+    width: 600px;
+    max-height: 80%;
+    padding: 32px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+    margin-top: -10%;
+}
+.award-new-suspend-title{
+    width: 100%;
+    display: flex;
+    margin-bottom: 29px;
+}
+.award-new-suspend-title span{
+    font-size: 1.3rem;
+    color: var(--color-two);
+}
+.award-new-suspend-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*  */
+.award-new-suspend-box{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 27px 0;
+}
+.award-new-suspend-box label{
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: var(--color-two);
+}
+.award-new-suspend-box input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    border-radius: 3px;
+}
+
+.award-new-alert{
+    width: 100%;
+    display: none;
+    white-space: normal;
+    line-height: 2;
+    text-align: center;
+}
+.award-new-alert a{
+    font-weight: bold;
+    color: var(--color-red);
+}
+.award-new-alert span{
+    font-size: 0.9rem;
+    color: var(--color-red);
+}
+
+/*  */
+.list-config-search-link-back{display: flex; align-items: center; margin-top: 20px;}
+.list-config-search-link-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    margin-right: 25px;
+}
+
+/************************/
+/************************/
+/* RESPONSIVE */
+@media only screen and (max-width: 800px){
+    .award-new-suspend-box-main{
+        width: 95%;
+        flex-wrap: wrap;
+        white-space: normal;
+    }
+    .award-new-title-box{
+        flex-direction: column;
+    }
+    .award-new-title-box > span{
+        margin-left: 0 !important;
+        margin-bottom: 12px;
+    }
+}

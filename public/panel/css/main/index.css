@@ -432,6 +432,8 @@ header{
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     z-index: 10;
+    max-height: 450px;
+    overflow: auto;
 }
 .navbar-info-user-drop{
     margin: 20px 25px;

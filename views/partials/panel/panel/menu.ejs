@@ -58,16 +58,28 @@
                         <li><a class="class-loader" href="/painel/trademkt/salesDay"><i class="ri-add-line"></i></i><span>Vendas Diárias</span></a></li>
                     <% } %>
 
-                    <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
-                        <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
+                    <% if(GLOBAL_PERM[0].sys_tra_premiation_use == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/award/new"><i class="ri-award-line"></i><span>Novo informe de premiação</span></a></li>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].sys_tra_premiation_admin == 0){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/award/list"><i class="ri-medal-line"></i><span>Meus informe de premiação</span></a></li>
+                    <% } %>
+
+                    <% if(GLOBAL_PERM[0].sys_tra_premiation_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/award/list"><i class="ri-medal-line"></i><span>Informes de premiações</span></a></li>
                     <% } %>
                     
                     <% if(GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
+                        <li><a class="class-loader" href="/painel/trademkt/visit"><i class="ri-add-line"></i><span>Formulario de Visita</span></a></li>
                         <li><a class="class-loader" href="/painel/trademkt/formSearch/new"><i class="ri-add-line"></i></i><span>Formulario de Pesquisa</span></a></li>
                         <li><a class="class-loader" href="/painel/trademkt/listTrade"><i class="ri-file-list-3-line"></i><span>Lista Formulário de Pesquisa</span></a></li>
                         <li><a class="class-loader" href="/painel/trademkt/shops"><i class="ri-store-2-line"></i><span>Lojas</span></a></li>
                         <li><a class="class-loader" href="/painel/system/products"><i class="ri-ink-bottle-line"></i><span>Produtos</span></a></li>
                     <% } %>
+
+                    
+
                 </ul>
             </ul>
             <% } %>

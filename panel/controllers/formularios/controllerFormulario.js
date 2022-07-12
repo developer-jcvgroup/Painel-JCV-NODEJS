@@ -292,7 +292,7 @@ exports.sendResponse = async (req,res) => {
     const responseForm = req.body['view-form-response-response-text']
     const titleForm = req.body['view-form-response-response-title']
 
-    if(responseForm != ''){
+    if(responseForm == ''){
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Insira alguma resposta!");
         res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Insira alguma resposta!","timeMsg": 3000}`);
         res.redirect("/painel/formularios/reponse/"+idForm);

@@ -12,6 +12,7 @@ Compilado de apps do jcv group
 - JCVMOD07 = Perfil Usuario
 - JCVMOD08 = Sistema de encurtador de links
 - JCVMOD09 = Sistema de cursos e treinamentos
+- JCVMOD10 = TRADE MKT (INFORME DE PREMIAÇÃO)
 
 # Banco do usuarios
 CPF

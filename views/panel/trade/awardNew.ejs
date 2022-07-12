@@ -1,0 +1,215 @@
+<link rel="stylesheet" href="/panel/css/trade/awardNew.css">
+<script src="/js/global/jquery.mask.min.js"></script>
+<script src="/js/global/moment.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="award-new-section">
+
+    <div class="award-new-title-box" id="award-new-title-box">
+        <a class="class-loader" href="/painel/trademkt/award/new"><i class="ri-refresh-line"></i></a>
+        <span id="award-new-one"></span>
+        <span id="award-new-two"></span>
+    </div>
+
+    <form method="post" class="award-new-div-main">
+
+        <div class="award-new-div-brand">
+            <div style="background: black;" class="award-new-div-brand-title">
+                <span style="color: var(--color-four);">Felps Professional</span>
+            </div>
+
+            <div class="award-new-div-brand-row">
+                <!--  -->
+                <div class="award-new-div-inputs-box">
+                    <input readonly type="text" name="input-values-felps" value="Felps Vendido">
+                    <input type="text" name="input-values-felps" >
+                </div>
+                <div class="award-new-div-inputs-box">
+                    <input readonly type="text" name="input-values-felps" value="Coloração Vendida">
+                    <input type="text" name="input-values-felps">
+                </div>
+                <!--  -->
+            </div>
+        </div>
+
+        <div class="award-new-div-brand">
+            <div style="background: #43BAC8;" class="award-new-div-brand-title">
+                <span style="color: var(--color-four);">Retrô Cosméticos</span>
+            </div>
+            <div class="award-new-div-brand-row">
+                <!--  -->
+                <div class="award-new-div-inputs-box">
+                    <input readonly type="text" name="input-values-retro" value="Retro Vendido">
+                    <input type="text" name="input-values-retro" >
+                </div>
+                <!--  -->
+            </div>
+        </div>
+
+        <div class="award-new-div-brand">
+            <div style="background: #468431;" class="award-new-div-brand-title">
+                <span style="color: var(--color-four);">Avenca Cosméticos</span>
+            </div>
+            <div class="award-new-div-brand-row">
+                <!--  -->
+                <div class="award-new-div-inputs-box">
+                    <input readonly type="text" name="input-values-avenca" value="Avenca Vendido">
+                    <input type="text" name="input-values-avenca" >
+                </div>
+                <!--  -->
+            </div>
+        </div>
+
+        <div class="award-new-actions">
+            <input hidden id="input-get-values" name="award-new-report-values" type="text">
+            <input hidden type="text" name="monthReference" id="reference-month">
+            <input hidden type="text" name="getShopPromot" id="id-shop-promot">
+            <button type="submit" id="button-send-form" formaction="/painel/trademkt/award/new">Registrar Relátorio</button>
+        </div>
+
+    </form>
+
+</section>
+<section class="award-new-suspend-section" id="award-new-suspend-section">
+    <div class="award-new-suspend-box-main">
+        <div class="award-new-suspend-title">
+            <span>Antes de começar a preencher nos informe:</span>
+        </div>
+        <!--  -->
+        <div class="award-new-suspend-content">
+            <div class="award-new-suspend-box">
+                <label for="">Mês de referência</label>
+                <input type="text" id="mask-month" placeholder="Ex: 06/2022">
+            </div>
+            <div class="award-new-suspend-box">
+                <label for="">Selecione a <b>promotora/loja</b></label>
+                <input type="text" id="input-person-shop" placeholder="Busque e selecione a promotora/loja ">
+            </div>
+            <div class="award-new-alert" id="award-new-alert-link-box">
+                <span>Você possui um relátorio vinculado a esta loja/promotora no mes selecionado! <a class="class-loader" id="award-new-alert-link">Edite clicando aqui</a></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--  -->
+<!--  -->
+
+<script>
+
+    //Configurando o input do mes
+    var options =  {
+        onComplete: function(value) {
+            //Chamando função
+            validadeBoxs(value, $("#input-person-shop").val())
+        },
+        onKeyPress: function(value, event, currentField, options){
+            if(value.length < 7){
+                displayStats('', "#mask-month")
+            }
+        },
+    };
+    $("#mask-month").mask('00-0000', options)
+
+    //LISTANDO AS INFORMAÇÕES DE LOJAS/PROMOTORAS
+    let dataOne = '<%= letNewArrayData %>';
+    let arrayDataOne = dataOne.split(',');
+    //Primeiro campo
+    $("#input-person-shop").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);
+            response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            
+            //console.log(i.item.value)
+            //processCloseBox(i.item.value)
+            validadeBoxs($("#mask-month").val(), i.item.value)
+
+            /* setTimeout(() => {
+                $("#input-item-amount").select()
+            }, 100); */
+        }
+    });
+
+
+    //Função para validar os dois campos
+    function validadeBoxs(valueMonth, valuePersonShop){
+
+        $.fn.loadSpin(1)
+        //Validando a data
+        if(valueMonth.length === 7){
+            //Validando o valor da data
+            moment(`${valueMonth.split('-')[1]}-${valueMonth.split('-')[0]}`).isBefore(moment().format('YYYY-MM')) == true ? displayStats('success',"#mask-month") : displayStats('error',"#mask-month")
+        }
+
+        if(valueMonth,valuePersonShop == ''){
+            $.fn.loadSpin(0)
+            $.notification(
+                ["Os dois parametros são obrigatórios, preencha-os"],
+                {
+                    position: ['top', 'right'], 
+                    messageType: 'warning',
+                    timeView: 5000,
+                    //redirectAction: 'https://google.com' ou null
+                }
+            )
+        }else{
+            //Validando o campo de loja/prpomotora inseridos
+            socket.emit('getRegistersPremiation', ([valueMonth, valuePersonShop]))
+            //Resultado da validação
+            socket.on('getRegistersPremiationSend', (data) => {
+
+                    if( data.length == 0){
+                        //Não tem dados, podemos registrar
+                        $("#id-shop-promot").val(valuePersonShop)
+                        $("#reference-month").val(valueMonth)
+                        $("#award-new-suspend-section").fadeOut()
+
+                        //$("#felps-award").text(valueMonth +' / '+valuePersonShop.split(' | ')[1])
+                        $(".award-new-div-brand-title").css({'display':'flex','justify-content': 'space-between'})
+
+                        $("#award-new-title-box").fadeIn().css({'display':'flex'})
+                        $("#award-new-one").text(valuePersonShop)
+                        $("#award-new-two").text(valueMonth)
+
+                        $.fn.loadSpin(0)
+                    }else{
+                        //Tem dados
+                        
+                        $("#award-new-alert-link-box").fadeIn().css({'display':'flex'})
+                        $("#award-new-alert-link").attr('href','/painel/trademkt/award/edit/'+data[0].jcv_award_registers_uuid)
+                        //alert('Você tem um regsitro neste nome')
+                        $.fn.loadSpin(0)
+                    }
+                    socket.removeListener('getRegistersPremiationSend')
+            })
+        }
+
+        
+
+    }
+
+    $("#input-person-shop").keyup(function(){
+        $("#award-new-alert-link-box").fadeOut()
+    })
+
+    function displayStats(type, monthElement){
+        if(type == 'success'){
+            //Style sucess
+            $(`${monthElement}`).css({'border':'1px solid var(--color-green)','outline':0})
+        }else if(type == 'error'){
+            //Style error
+            $(`${monthElement}`).css({'border':'1px solid var(--color-red)','outline':0})
+        }else{
+            //Remove display
+            $(`${monthElement}`).css({'border':'1px solid var(--color-three)','outline':0})
+        }
+    }
+    
+</script>
+<script>
+    //Scripts 
+</script>

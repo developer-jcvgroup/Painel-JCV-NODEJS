@@ -1,0 +1,189 @@
+<link rel="stylesheet" href="/panel/css/trade/awardParams.css">
+
+<section class="award-params-section">
+    <form method="post" class="award-params-div">
+
+        <div class="award-params-title-page">
+            <span>Editar parâmetros <b><%= getBrand[0].jcv_award_params_brand_name %></b></span>
+        </div> 
+
+        <!--  -->
+        <div class="award-params-content">
+
+            <div class="award-params-row-comp">
+                <div class="award-params-row-comp-title">
+                    <span>Parametro 1</span>
+                </div>
+                <div class="award-params-row-comp-content">
+                    <div class="award-params-row">
+                        <div class="award-params-boxs">
+                            <label for="">Action</label>
+                            <select name="" id="action-change-param-1">
+                                <option value="SE">SE</option>
+                            </select>
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Quantidade</label>
+                            <input type="text" id="action-input-param-1" placeholder="Quantidade">
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Action</label>
+                            <select name="" id="action-change-param-2">
+                                <option value="FOR-MAIOR">FOR MAIOR</option>
+                                <option value="FOR-MENOR">FOR MENOR</option>
+                                <option value="FOR-IGUAL">FOR IGUAL</option>
+                                <option value="FOR-ENTRE">FOR ENTRE</option>
+                            </select>
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Valor</label>
+                            <input type="text" id="action-input-param-2" placeholder="Quantidade">
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Valor</label>
+                            <input type="text" id="action-input-param-3" placeholder="Quantidade">
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Action</label>
+                            <select name="" id="action-change-param-3">
+                                <option value="PREMIO-DE">PRÊMIO DE</option>
+                            </select>
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Valor</label>
+                            <input type="number" id="action-input-param-4" placeholder="Quantidade">
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">Action</label>
+                            <select name="" id="action-change-param-4">
+                                <option value="POR-UNIDADE-VENDIDA">POR UNIDADE VENDIDA</option>
+                                <option value="POR-MEIA-DUZIA-VENDIDA">POR MEIA DÚZIA VENDIDA</option>
+                                <option value="POR-DUZIA-VENDIDA">POR DÚZIA VENDIDA</option>
+                            </select>
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs">
+                            <label for="">OBS</label>
+                            <input type="text" id="action-input-param-5" placeholder="Observações">
+                        </div>
+                        <!--  -->
+                        <div class="award-params-boxs-action">
+                            <button type="button" class="save-params" data-params="1">Salvar Parâmetro</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="award-params-row-new">
+                <button><i class="ri-add-line"></i></button>
+            </div>
+
+        </div>
+
+        <!--  -->
+        <div class="award-params-actions">
+            <input hidden type="text" name="award-input-value-json" id="input-json-set">
+            <input hidden type="text" name="award-input-id-brand" value="<%= getBrand[0].jcv_award_params_brand_id %>">
+            <button type="submit" id="get-data-save" formaction="/painel/trademkt/award/brand/edit">Salvar Parametros</button>
+        </div>
+
+    </form>
+</section>
+<script>
+
+    //Campos que ja começas desabilitados
+    $("#action-input-param-3").closest('div').css({'display':'none'});
+
+    //Validação dinamica dos campos
+    //Condições:
+    $("#action-change-param-2").change(function(){
+        if($(this).val() === 'FOR-ENTRE'){
+            //Esta opçaõ referece á: FOR ENTRE
+            //Habilita o campo seguinte
+            $("#action-input-param-3").closest('div').fadeIn()
+        }else{
+            //Caso seja outra opção desabilite-o
+            $("#action-input-param-3").closest('div').fadeOut()
+        }   
+    })
+
+    //Configurando e salvando os parametros
+    $(".save-params").click(function(){
+        try {
+            //$.fn.loadSpin(1);
+
+            let paramsId = parseInt($(this).attr('data-params'))
+
+            let arrayFinal = [];//Arrya Final
+
+            //Pegando os valores dos selects
+            let oneSelectVal = $("#action-change-param-1").val()
+            let twoSelectVal = $("#action-change-param-2").val()
+            let threeSelectVal = $("#action-change-param-3").val()
+            let fourSelectVal = $("#action-change-param-4").val()
+
+            //Pegando os valores dos inputs
+            let oneInputVal = $("#action-input-param-1").val()
+            let twoInputVal = $("#action-input-param-2").val()
+            let threeInputVal = $("#action-input-param-3").val()
+            let fourInputVal = $("#action-input-param-4").val()
+            let fiveInputVal = $("#action-input-param-5").val() == '' ? 'Sem observação' : $("#action-input-param-5").val()//OBS
+
+            //Verificandos os input principais
+            if(oneInputVal, twoInputVal, fourInputVal == ''){
+                throw 'Preencha todos os campos'
+            }
+
+            //Validação
+            if(oneSelectVal == 'SE'){
+                //Adicionando no array
+                arrayFinal.push('SE');
+            }
+
+            //Input 1
+            arrayFinal.push(oneInputVal)
+            //Select 2
+            if(twoSelectVal == 'FOR-ENTRE'){
+                //Adcionando
+                arrayFinal.push(twoSelectVal)
+                arrayFinal.push(twoInputVal)
+                arrayFinal.push(threeInputVal)
+            }else{
+                arrayFinal.push(twoSelectVal)
+                arrayFinal.push(twoInputVal)
+            }
+
+            //Select 3
+            arrayFinal.push(threeSelectVal)
+
+            //Input 4
+            arrayFinal.push(fourInputVal)
+
+            arrayFinal.push(fiveInputVal)
+
+            alert(arrayFinal)
+        } catch (error) {
+            alertError(error)
+        }
+    })
+
+    function alertError(msg){
+        $.notification(
+            [msg],
+            {
+                position: ['top', 'right'], 
+                messageType: 'warning',
+                timeView: 4000,
+                //redirectAction: 'https://google.com' ou null
+            }
+        )
+    }
+
+</script>

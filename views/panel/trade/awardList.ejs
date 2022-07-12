@@ -1,0 +1,315 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="/panel/css/trade/awardList.css">
+<section class="award-list-container-main">
+    <section class="award-list-container-page">
+        <div class="award-list-container-identify-page">
+            <span>Lista de Relatórios</span>
+            <span>/ Informe de premiação</span>
+        </div>
+
+        <section class="section-award-list-container-search">
+            <section class="award-list-center-body">
+                <div class="award-list-title-box"><span>Busque por realtórios</span></div>
+
+                <section class="award-list-main-page">
+                    <form class="award-list-form-search" action="/painel/trademkt/award/list/search" method="post">
+                        <div class="award-list-container-row-form">
+                            <div class="award-list-form-box">
+                                <label for="">Referência</label>
+                                <input type="text" id="reference-select-filter">
+                            </div>
+                            <div class="award-list-form-box">
+                                <label for="">Status</label>
+                                <select name="" id="status-select-filter">
+                                    <option value=""></option>
+                                    <!-- <option value="1">Pedente</option> -->
+                                    <option value="0">Não Preenchido</option>
+                                    <option value="1">Preenchido</option>
+                                    <option value="2">Fechados</option>
+                                </select>
+                            </div>
+
+                            <% if(convertRepre != undefined){ %>
+                                <div class="award-list-form-box">
+                                    <label for="">Representante</label>
+                                    <input type="text" id="representante-select-filter">
+                                </div>
+                            <% }else{ %>
+                                <div class="award-list-form-box" style="display: none;">
+                                    <label for="">Representante</label>
+                                    <input type="text" id="representante-select-filter">
+                                </div>
+                            <% } %>
+
+                            <div class="award-list-form-box">
+                                <label for="">Loja</label>
+                                <input type="text" id="shop-select-filter">
+                            </div>
+
+                            <div class="award-list-form-box-actions">
+                                <button class="class-loader" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="award-list-container-row-form-filter">
+                            <div class="sys-filter-display-main" id="sys-filter-display-main">
+                                <div class="sys-filter-container-col">
+                                    <div class="sys-filter-title">
+                                        <span>Filtros</span>
+                                    </div>
+                                    <div class="sys-filter-component-boxs" id="sys-filter-component-boxs">
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </section>   
+
+        <% if(resultSearchDataPremiacao != ''){ %>
+        <form class="award-list-container-list-all" action="/painel/trademkt/award/action/commands" method="post">
+            <section class="section-award-list-list-center">
+                <div class="award-list-title-box"><span>Lista de solicitações</span></div>
+                <div class="award-list-order-srs-search">
+                    <div class="award-list-order-srs-box">
+                        <input type="text" placeholder="Busque por ID, nomde do solicitante, gestor, unidade.." id="input-search-requests">
+                    </div>
+                    <div class="container-actions-checks-requests">
+                        <div class="award-list-box-actions-checks">
+                            <label for="">Ação</label>
+                            <select name="command-actions" >
+                                <option value="">⠀⠀Selecione⠀⠀</option>
+                                    <option value="" disabled>-- Exportar</option>
+                                    <option value="CMD01">⠀⠀Exportar Dados</option>
+                                    <option value="CMD03">⠀⠀Exportar Parâmetros</option>
+                                    <option disabled></option>
+                                    <option value="" disabled>-- Status</option>
+                                    <option value="CMD02">⠀⠀Fechados</option>
+                            </select>
+                        </div>
+                        <div class="award-list-box-actions-checks-button">
+                            <button type="submit" id="reload-page">Executar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="award-list-container-table">
+                    <table class="award-list-list-table" id="award-list-list-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="" id="checkbox-select-all"></th>
+                                <th>Representante</th>
+                                <th>Promotora/Loja</th>
+                                <th>Mês</th>
+                                <th>Status</th>
+                                <th>Criado</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="award-list-list-table-tbody">
+
+                                <% resultSearchDataPremiacao[0].forEach(element => { %>
+                                <tr class="award-list-row-check-mark check-row-tr" id="<%= element.jcv_award_registers_id %>">
+
+                                
+                                    <td><input class="checkbox-select-single" type="checkbox" value="<%= element.jcv_award_registers_id %>" id="check-option-<%= element.jcv_award_registers_id %>" name="id-order-input"></td>
+                                    <td><b><%= element.jcv_userNamePrimary %></b></td>
+
+
+                                    <td>
+                                        
+                                        <% if(element.jcv_award_registers_type == 1){ %>
+                                            <b>Loja:</b> <%= resultSearchDataPremiacao[1][element.jcv_award_registers_id_registred] %>
+                                        <% }else{ %>
+                                            <b>Promotor(a):</b> <%= resultSearchDataPremiacao[2][element.jcv_award_registers_id_registred] %>
+                                        <% }%>
+                                    
+                                    </td>
+                                    <td><b><%= element.jcv_award_registers_month %></b></td>
+                                    <td>
+
+                                        <%
+
+                                        let statusGet = {
+                                            '0': 'Não Preenchido',
+                                            '1': 'Preenchido',
+                                            '2': 'Fechados'
+                                        }
+                                        
+                                        %>
+                                        
+                                        <b><%= statusGet[element.jcv_award_registers_status] %></b>
+                                    
+                                    </td>
+                                    <td><%= element.jcv_award_registers_created_date %></td>
+                                    <td>
+                                        <div class="award-list-container-actions-table">
+                                            
+                                            <form></form>
+
+                                            <form method="post">
+                                                <a href="/painel/trademkt/award/edit/<%= element.jcv_award_registers_uuid %>"><i class="ri-edit-line"></i></a>
+                                                <button formaction="/painel/trademkt/award/delete" value="<%= element.jcv_award_registers_uuid %>" name="btnDeleteOrder"><i class="ri-delete-bin-line"></i></button>
+                                            </form>
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table> 
+                </div>
+            </section>
+        </form>
+        <% } %>
+    </section>
+</section>
+
+<script src="/js/panel/script-filters.js"></script>
+<script>
+    
+let countButtonsOne = 0;
+let countButtonsTwo = 0;
+
+$(function(){
+
+    //Input Search
+    $.fn.searchInputTable('#award-list-list-table-tbody tr', '#input-search-requests')
+
+    //Paginação das tabelas
+    $.fn.paginationTableMain('#award-list-list-table',25,0);
+
+    //Adicionando um filtro: Unidades
+    /* $("select#unidade-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select (ex.: unidades,), 5° Codigo unico para este filtro
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','unidade-select-filter','Unidade');
+    })
+
+    //Adicionando um filtro: Gestor
+    $("select#gestor-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','gestor-select-filter','Gestor');
+    })
+
+    //Adicionando um filtro: Status
+    $("select#status-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° o nome do select, ex.: unidades
+        $.fn.clickADDInputDinamic('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','Status');
+    })
+
+    //Validando se existe filtro: //1° elemento pai que receber os boxs, 2° os filtros que eu vou buscar
+    $.fn.searchFiltersCookies("sys-filter-display-main","sys-filter-component-boxs", ['Unidade','Gestor','Status']) */
+    
+   
+
+    //Check select tr
+    $(".check-row-tr").click(function(){
+        let optionValue = $(this).attr('id')
+
+        if($("#check-option-"+optionValue).is(':checked') == true){
+            $("#check-option-"+optionValue).prop('checked', false)
+        }else{
+            $("#check-option-"+optionValue).prop('checked', true)
+        }
+        
+        //alert(optionValue)
+    })
+
+    //Checknox all
+    $("#checkbox-select-all").click(function(){
+        var checkSet = $(this).is(':checked');
+        var inputsCheckedmodel = $('.checkbox-select-single');
+
+        if(checkSet == true){
+            inputsCheckedmodel.prop('checked', true);
+        }else{
+            inputsCheckedmodel.prop('checked', false);
+        }
+    })
+    $(".checkbox-select-single").click(function(){
+        $("#checkbox-select-all").prop("checked", false)
+    })
+
+    let arrayDataOne = '<%= convertRepre %>'.split(',')
+    //console.log(arrayDataOne)
+    //Auto complete representante
+    $("#representante-select-filter").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);
+            response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            $.fn.loadSpin(1)
+            //console.log(i.item.value)
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            setTimeout(() => {
+                $.fn.loadSpin(0)
+                $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','representante-select-filter','sys-filter-name-representante','Representante', 'JCVMOD10');
+                $("#representante-select-filter").val('')
+            }, 100);
+        }
+    });
+
+    let validationRepre = '<%= convertRepre %>' == '' ? insertInputdinamic() : true
+
+    function insertInputdinamic(){
+        Cookies.remove('COOKIE-FILTER-MODULE-JCVMOD10')
+        $(".award-list-container-row-form-filter").fadeOut()
+        setTimeout(() => {
+            $("#representante-select-filter").val('<%= GLOBAL_DASH[1] %>')
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','representante-select-filter','sys-filter-name-representante','Representante', 'JCVMOD10');
+            $("#representante-select-filter").val('')    
+
+            
+        }, 500);
+    }
+
+    //Auto complete representante
+    let arrayDataTwo = '<%= convertShops %>'.split(',')
+    //console.log(arrayDataTwo)
+    $("#shop-select-filter").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(arrayDataTwo, request.term);
+            response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            $.fn.loadSpin(1)
+            //console.log(i.item.value)
+            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+            setTimeout(() => {
+                $.fn.loadSpin(0)
+                $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','shop-select-filter','sys-filter-name-shop','Loja', 'JCVMOD10');
+                $("#shop-select-filter").val('')
+            }, 100);
+        }
+    });
+
+    let  options = {
+        onComplete: function(cep) {
+            $.fn.loadSpin(1)
+            setTimeout(() => {
+                //Inserindo os dados
+                $.fn.loadSpin(0)
+                $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','reference-select-filter','sys-filter-name-reference','Referencia', 'JCVMOD10');
+                $("#reference-select-filter").val('')
+            }, 100);
+        }
+    }
+
+    $("#reference-select-filter").mask('00-0000', options)
+
+        
+    //Adicionando um filtro: Status
+    $("select#status-select-filter").change(function(){
+        //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+        $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','status-select-filter','sys-filter-name-status','Status', 'JCVMOD10');
+    })
+
+    $.fn.searchFiltersDinamics('JCVMOD10','sys-filter-display-main','sys-filter-component-boxs');//Buscando todos os filtros deste app {1° App, 2° Display main (1°), 2° Display content (2°)}
+    
+})
+
+</script>

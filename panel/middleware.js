@@ -5,17 +5,19 @@ authenticate = async (req, res, next) => {
     if(req.session.cookieLogin != undefined){
         //Cookie de login existente
 
+        //Buscando o usuario
+        let idUser = req.session.cookieLogin[0];
+
+        const searchUser = await database.select().where({jcv_id: idUser}).table("jcv_users").then(data => {
+            return data;
+        }).catch(err =>{
+            res.send(err);
+        })
+
         //Validando se a variavel GLOBAL_DASH já foi criada
         if(typeof(GLOBAL_DASH) == 'undefined'){
             //Primeiro login, variavel NÃO DEFINIDA
-            let idUser = req.session.cookieLogin[0];
-
-            const searchUser = await database.select().where({jcv_id: idUser}).table("jcv_users").then(data => {
-                return data;
-            }).catch(err =>{
-                res.send(err);
-            })
-
+            
             global.GLOBAL_DASH = []
             if(searchUser.length >= 1){
 
@@ -121,6 +123,8 @@ authenticate = async (req, res, next) => {
                 res.redirect("/login");
             }
         }else{
+
+            //
 
             //Validando se o login é do mesmo id da sessão
             if(GLOBAL_DASH[0] === req.session.cookieLogin[0]){

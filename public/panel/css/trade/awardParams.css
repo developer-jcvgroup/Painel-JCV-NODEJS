@@ -1,0 +1,144 @@
+.award-params-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.award-params-div{
+    width: 90%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+   
+}
+
+/*  */
+.award-params-title-page{
+    width: 100%;
+    display: flex;
+    padding: 14px;
+    background: var(--color-one);
+}
+.award-params-title-page span{
+    font-size: 1rem;
+    color: var(--color-four);
+}
+
+/*  */
+.award-params-content{
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+/*  */
+.award-params-row-comp{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 3px;
+    border: 1px solid var(--color-three);
+    flex-wrap: wrap;
+    white-space: normal;
+}
+.award-params-row-comp-title{
+    display: flex;
+}
+.award-params-row-comp-title span{
+    font-size: 0.9rem;
+    color: var(--color-one);
+    margin-bottom: 9px;
+}
+.award-params-row-comp-content{
+    width: 100%;
+    display: flex;
+}
+
+
+/*  */
+.award-params-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.award-params-boxs{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 18px;
+}
+.award-params-boxs label{
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    color: var(--color-two);
+}
+.award-params-boxs input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    border-radius: 3px;
+}
+.award-params-boxs select{
+    width: 100%;
+    margin-top: 6px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-one);
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-one);
+}
+.award-params-boxs-action{
+    width: fit-content;
+}
+.award-params-boxs-action button{
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    margin: 24px 0;
+}
+
+/*  */
+/*  */
+.award-params-row-new{
+    width: fit-content;
+    display: flex;
+}
+.award-params-row-new button{
+    background: transparent;
+    padding: 7px;
+    cursor: pointer;
+    border: none;
+    font-size: 1.3rem;
+}
+
+/*  */
+.award-params-actions{
+    display: flex;
+    margin: 19px;
+}
+.award-params-actions button{
+    outline: 0;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-four);
+    background: var(--color-one);
+    cursor: pointer;
+    margin: 24px 0;
+}
+

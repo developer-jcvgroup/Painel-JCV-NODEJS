@@ -114,6 +114,8 @@ exports.saveNewUser = async (req,res) => {
 
             const userSYStradeUse = req.body['save-new-sys-trade-use'] == 'on' ? 1 : 0;
             const userSYStradeAdmin = req.body['save-new-sys-trade-admin'] == 'on' ? 1 : 0;
+            const userSYStradeawarduse = req.body['save-edit-sys-trade-award-use'] == 'on' ? 1 : 0;
+            const userSYStradeawardadmin = req.body['save-edit-sys-trade-award-admin'] == 'on' ? 1 : 0;
     
             const userType = parseInt(req.body['save-new-sys-type-user']);
             const userSYSemail = 1;
@@ -167,7 +169,10 @@ exports.saveNewUser = async (req,res) => {
                     sys_enc_perm_use: useEncurtador,
 
                     sys_courses_perm_admin: adminCourses,
-                    sys_courses_perm_manager: managerCourses
+                    sys_courses_perm_manager: managerCourses,
+
+                    sys_tra_premiation_use: userSYStradeawarduse,
+                    sys_tra_premiation_admin: userSYStradeawardadmin
     
                 }).table("jcv_users_permissions").then(data => {
                     if(data != ''){
@@ -235,6 +240,8 @@ exports.editSaveUser = async (req,res) => {
 
         const userSYStradeUse = req.body['save-edit-sys-trade-use-'+idUser] == 'on' ? 1 : 0;
         const userSYStradeAdmin = req.body['save-edit-sys-trade-admin-'+idUser] == 'on' ? 1 : 0;
+        const userSYStradeawarduse = req.body['save-edit-sys-trade-award-use-'+idUser] == 'on' ? 1 : 0;
+        const userSYStradeawardadmin = req.body['save-edit-sys-trade-award-admin-'+idUser] == 'on' ? 1 : 0;
 
         const userFormsAdmin = req.body['save-edit-sys-forms-use-'+idUser] == 'on' ? 1 : 0;
         const userNotifyAdmin = req.body['save-edit-sys-notify-use-'+idUser] == 'on' ? 1 : 0;
@@ -299,12 +306,16 @@ exports.editSaveUser = async (req,res) => {
                         sys_enc_perm_use: useEncurtador,
 
                         sys_courses_perm_admin: adminCourses,
-                        sys_courses_perm_manager: managerCourses
+                        sys_courses_perm_manager: managerCourses,
+
+                        sys_tra_premiation_use: userSYStradeawarduse,
+                        sys_tra_premiation_admin: userSYStradeawardadmin
             
                     }).table("jcv_users_permissions").where({sys_perm_idUser: idUser}).then(data => {
                         if(data != ''){
                             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O usuario <b>"+userName+"</b> foi alterado com sucesso");
-                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi alterado com sucesso","timeMsg": 3000}`);
+                            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O usuario <b>${userName}</b> foi alterado com sucesso! Talves seja necessário relogar no sistema","timeMsg": 5000}`);
+                            //res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Talves seja necessário o <b>${userName}</b> relogar no sistema","timeMsg":5000}`);
                             res.redirect("/painel/system/users");
                         }
                     })

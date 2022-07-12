@@ -329,6 +329,68 @@ io.on('connection', (socket) => {
             socket.emit('productGetInfoGet', (data))
         })
     })
+
+    socket.on('getRegistersPremiation', (data) => {
+
+        //Validando as informaçõe recebidas
+        let monthValidadtion = data[0]
+
+        let subValidadtion = data[1].split(' | ')
+        let typeSerchValidation = subValidadtion[0] == 'LOJA' ? [1,subValidadtion[1]] : [2,subValidadtion[1]] 
+        
+        if(typeSerchValidation[0] == 1){
+            //Buscar loja
+
+            //Pegando o id da loja
+            database
+            .select('jcv_trade_shops_id')
+            .where({jcv_trade_shops_name_fantasy: typeSerchValidation[1]})
+            .table("jcv_trade_shops")
+            .then( data => {
+
+                //PEgando o registro de relatorio
+                database
+                .select('jcv_award_registers_uuid')
+                .where({jcv_award_registers_id_registred: data[0].jcv_trade_shops_id, jcv_award_registers_type: typeSerchValidation[0], jcv_award_registers_month: monthValidadtion})
+                .table("jcv_award_registers")
+                .then( dataTwo => {
+                    socket.emit('getRegistersPremiationSend', (dataTwo))
+                })
+
+            })
+
+            
+        }else{
+            //Buscar Promotora
+
+            //Pegando o id da promotora e validando
+            database
+            .select('jcv_id')
+            .where({jcv_userNamePrimary: typeSerchValidation[1]})
+            .table("jcv_users")
+            .then( data => {
+
+                //PEgando o registro de relatorio
+                database
+                .select()
+                .where({jcv_award_registers_id_registred: data[0].jcv_id, jcv_award_registers_type: typeSerchValidation[0], jcv_award_registers_month: monthValidadtion})
+                .table("jcv_award_registers")
+                .then( dataTwo => {
+                    socket.emit('getRegistersPremiationSend', (dataTwo))
+                })
+
+            })
+
+            
+        }
+        /* database
+        .select()
+        .where({jcv_sys_products_id: data})
+        .table("jcv_sys_products")
+        .then( data => {
+            socket.emit('productGetInfoGet', (data))
+        }) */
+    })
 })
 
 

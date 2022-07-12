@@ -28,7 +28,9 @@ $.fn.systemAddFiltersDinamics = function (boxMainFilter, contentBoxFilters, sele
 
     //Pegando o VALUE e TEXT do select
     let getSelectValue = sysSelectFilter.val()
-    let getSelectText = sysSelectFilter.children("option:selected").text();
+    let getSelectText = sysSelectFilter.children("option:selected").text() != '' ? sysSelectFilter.children("option:selected").text() : sysSelectFilter.val();
+
+    //console.log(getSelectValue)
 
     try {
         
@@ -38,7 +40,8 @@ $.fn.systemAddFiltersDinamics = function (boxMainFilter, contentBoxFilters, sele
         }
 
         //Codigo unico do filtro
-        let codeFilterSet = 'filter-'+sysNameIdentify+'-'+getSelectValue;
+        let codeFilterSet = 'filter-'+sysNameIdentify+'-'+getSelectValue.replace(/\s/g, '-');
+        //console.log(codeFilterSet)
 
         //Validando se este select já foi adicionado
         if(valideDataFilterArray(codeFilterSet) == null){

@@ -303,6 +303,14 @@
                         <label for="">Admin</label>
                         <input type="checkbox" id="sys-edit-user-trademkt-admin">
                     </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Premiação *utilizar*</label>
+                        <input type="checkbox" id="sys-edit-user-trademkt-award-use">
+                    </div>
+                    <div class="sys-edit-user-box-edit-row-permissions-cont">
+                        <label for="">Premiação *admin*</label>
+                        <input type="checkbox" id="sys-edit-user-trademkt-award-admin">
+                    </div>
                 </div>
                 <!--  -->
                 <div class="sys-edit-user-box-edit-row-permissions-box">
@@ -498,6 +506,14 @@
                         <label for="">Admin</label>
                         <input type="checkbox" name="save-new-sys-trade-admin" id="sys-new-user-trade-admin">
                     </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Premiação *utilizar*</label>
+                        <input type="checkbox" name="save-edit-sys-trade-award-use" id="sys-new-user-trade-admin-award-use">
+                    </div>
+                    <div class="sys-save-user-box-save-row-permissions-cont">
+                        <label for="">Premiação *admin*</label>
+                        <input type="checkbox" name="save-edit-sys-trade-award-admin" id="sys-new-user-trade-admin-award-admin">
+                    </div>
                 </div>
                 <!--  -->
                 <div class="sys-save-user-box-save-row-permissions-box">
@@ -569,7 +585,7 @@
             </div>
             <!--  -->
             <div class="sys-save-user-box-save-row-actions">
-                <button formaction="/painel//action/sys/user/save" class="class-loader" type="submit" title="Salvar Usuario"><i class="ri-save-3-line"></i></button>
+                <button formaction="/painel/system/action/sys/user/save" class="class-loader" type="submit" title="Salvar Usuario"><i class="ri-save-3-line"></i></button>
             </div>
         </form>
     </div>
@@ -689,8 +705,15 @@
                     //Permissions: Trade MKT
                     $("#sys-edit-user-trademkt-use").attr('name','save-edit-sys-trade-use-'+idSet)
                     $("#sys-edit-user-trademkt-admin").attr('name','save-edit-sys-trade-admin-'+idSet)
+                    
+                    $("#sys-edit-user-trademkt-award-use").attr('name','save-edit-sys-trade-award-use-'+idSet)
+                    $("#sys-edit-user-trademkt-award-admin").attr('name','save-edit-sys-trade-award-admin-'+idSet)
+
                     infoUserData.sys_tra_perm_use == 1 ? $("#sys-edit-user-trademkt-use").prop("checked", true) : $("#sys-edit-user-trademkt-use").prop("checked", false)
                     infoUserData.sys_tra_perm_admin == 1 ? $("#sys-edit-user-trademkt-admin").prop("checked", true) : $("#sys-edit-user-trademkt-admin").prop("checked", false)
+                    
+                    infoUserData.sys_tra_premiation_use == 1 ? $("#sys-edit-user-trademkt-award-use").prop("checked", true) : $("#sys-edit-user-trademkt-award-use").prop("checked", false)
+                    infoUserData.sys_tra_premiation_admin == 1 ? $("#sys-edit-user-trademkt-award-admin").prop("checked", true) : $("#sys-edit-user-trademkt-award-admin").prop("checked", false)
                 
                     //Permissions: Encurtador
                     $("#sys-edit-user-enc-use").attr('name','save-edit-sys-enc-use-'+idSet)
