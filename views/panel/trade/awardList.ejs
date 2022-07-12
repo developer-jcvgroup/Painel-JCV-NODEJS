@@ -78,6 +78,8 @@
                     <div class="award-list-order-srs-box">
                         <input type="text" placeholder="Busque por ID, nomde do solicitante, gestor, unidade.." id="input-search-requests">
                     </div>
+
+                    <% if(convertRepre != undefined){ %>
                     <div class="container-actions-checks-requests">
                         <div class="award-list-box-actions-checks">
                             <label for="">Ação</label>
@@ -95,6 +97,7 @@
                             <button type="submit" id="reload-page">Executar</button>
                         </div>
                     </div>
+                    <% } %>
                 </div>
                 <div class="award-list-container-table">
                     <table class="award-list-list-table" id="award-list-list-table">
@@ -136,12 +139,12 @@
                                         let statusGet = {
                                             '0': 'Não Preenchido',
                                             '1': 'Preenchido',
-                                            '2': 'Fechados'
+                                            '2': '<b style="color: var(--color-red)">Fechados</b>'
                                         }
                                         
                                         %>
                                         
-                                        <b><%= statusGet[element.jcv_award_registers_status] %></b>
+                                        <b><%- statusGet[element.jcv_award_registers_status] %></b>
                                     
                                     </td>
                                     <td><%= element.jcv_award_registers_created_date %></td>
@@ -152,7 +155,9 @@
 
                                             <form method="post">
                                                 <a href="/painel/trademkt/award/edit/<%= element.jcv_award_registers_uuid %>"><i class="ri-edit-line"></i></a>
-                                                <button formaction="/painel/trademkt/award/delete" value="<%= element.jcv_award_registers_uuid %>" name="btnDeleteOrder"><i class="ri-delete-bin-line"></i></button>
+                                                <% if(convertRepre != undefined){ %>
+                                                    <button formaction="/painel/trademkt/award/delete" value="<%= element.jcv_award_registers_uuid %>" name="btnDeleteOrder"><i class="ri-delete-bin-line"></i></button>
+                                                <% } %>
                                             </form>
                                             
                                         </div>
@@ -257,14 +262,15 @@ $(function(){
 
     function insertInputdinamic(){
         Cookies.remove('COOKIE-FILTER-MODULE-JCVMOD10')
-        $(".award-list-container-row-form-filter").fadeOut()
+        //$(".award-list-container-row-form-filter").fadeOut()
         setTimeout(() => {
             $("#representante-select-filter").val('<%= GLOBAL_DASH[1] %>')
             $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','representante-select-filter','sys-filter-name-representante','Representante', 'JCVMOD10');
-            $("#representante-select-filter").val('')    
-
+            $("#representante-select-filter").val('')   
             
+            $("#filter-Representante-<%= GLOBAL_DASH[1].split(' ').join('-') %>").children('button').css({'display':'none'})
         }, 500);
+        
     }
 
     //Auto complete representante

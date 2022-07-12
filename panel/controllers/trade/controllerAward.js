@@ -2,7 +2,8 @@ const database = require("../../database/database");
 const moment = require("moment");
 moment.tz.setDefault('America/Sao_Paulo');
 
-const uuid = require('uuid')
+const uuid = require('uuid');
+const { assign } = require("nodemailer/lib/shared");
 
 //Data atual
 function generateDate(){
@@ -683,8 +684,29 @@ exports.moduleActions = async (req,res) => {
         exportsParams(req,res,listIds)
     }else if(typeAction == 'CMD02'){
         //Status FECHADO
-
+        alterStatusClosed(req,res,listIds)
     }
+}
+
+async function alterStatusClosed(req,res,listIds){
+
+    let listIdsNew = typeof(listIds) == 'object' ? listIds : [listIds] 
+    //console.log(listIdsNew)
+    database
+    .update({
+        jcv_award_registers_status: 2
+    })
+    .whereRaw(`jcv_award_registers_id in (${listIdsNew}) AND jcv_award_registers_status = 1`)
+    .table("jcv_award_registers")
+    .then( data => {
+        if(data > 0){
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Solicitações com o status <b>PREENCHIDOS</b> foram alterado com sucesso para <b>FECHADOS</b>","timeMsg": 5000}`);
+            res.redirect("/painel/trademkt/award/list");
+        }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao alterar os registros, status incompatível","timeMsg": 5000}`);
+            res.redirect("/painel/trademkt/award/list");
+        }
+    })
 }
 
 async function exportsData(req,res,listIds){
