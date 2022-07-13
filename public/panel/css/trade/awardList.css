@@ -150,6 +150,21 @@
     background: var(--color-one-btn);
     cursor: pointer;
 }
+.award-list-form-box-actions a{
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-one);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    border: 1px solid var(--color-one);
+}
 
 /* container list */
 .award-list-container-list-all{
@@ -242,9 +257,13 @@
     text-align: left;
     padding: 18px 6px;
     color: var(--color-one);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: 0.5s;
+}
+.award-list-list-table tr td input{
+    width: 15px;
+    height: 15px;
 }
 .award-list-list-table tr:hover{
     transition: 0.5s;

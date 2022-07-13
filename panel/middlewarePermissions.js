@@ -102,6 +102,8 @@ const getPermissions = (urlArray) => async(req, res, next) => {
         "trademkt/award/new": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
         "trademkt/award/edit": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
         "trademkt/award/list": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+        "trademkt/award/view": resultPermissions[0].sys_tra_perm_use,
+        "trademkt/award/mylist": resultPermissions[0].sys_tra_perm_use,
 
         "trademkt/main": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
         "trademkt/formSearch": resultPermissions[0].sys_tra_perm_admin,
@@ -114,6 +116,8 @@ const getPermissions = (urlArray) => async(req, res, next) => {
         "trademkt/shops": resultPermissions[0].sys_tra_perm_admin,
         "trademkt/shops/config": resultPermissions[0].sys_tra_perm_admin,
         "trademkt/shops/maps": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/formSearch/new": resultPermissions[0].sys_tra_perm_admin,
+        "trademkt/formSearch/edit": resultPermissions[0].sys_tra_perm_admin,
 
         "updates/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
         "updates/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,

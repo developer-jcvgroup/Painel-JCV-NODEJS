@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="/panel/css/trade/awardListPromot.css">
+<script src="/js/global/jquery.mask.min.js"></script>
+
+<section class="award-mylist-center-body">
+    <section class="award-mylist-main">
+
+        <div class="list-config-search-link-back">
+            <a title="Voltar a home" class="class-loader" href="/painel/trademkt/main">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+        </div>
+
+        <div class="award-mylist-title">
+            <span>Meus informes de premiação</span>
+    
+            <div class="award-mylist-title-search">
+                <div class="award-mylist-search-box-cont-row">
+                    <label for="">Mês de referência</label>
+                    <input type="text" id="mask-month" placeholder="Ex.: 06-2022">
+                    <input hidden type="text" id="id-user-input" value="<%= idUser %>">
+                </div>
+            </div>
+        </div>
+    
+        <!--  -->
+    
+        <div class="award-mylist-content" id="award-mylist-content">
+            <!--  -->
+            <!--  -->
+            <!--  -->
+
+            <!--  -->
+            <!--  -->
+            <!--  -->    
+        </div>
+    
+        <!--  -->
+        <!--  -->
+
+    
+    
+    </section>
+</section>
+<script>
+    //Configurando o input mês
+    var options =  {
+        onComplete: function(value) {
+            searchRegisters(value, $("#id-user-input").val())
+        },
+    };
+    $("#mask-month").mask('00-0000', options);
+
+    function searchRegisters(month, idUser){
+
+        idUser = parseInt(idUser)
+
+        $.fn.loadSpin(1)
+
+        socket.emit('searchRegisterPromotoras', ([month,idUser]))
+        socket.on('searchRegisterPromotorasGet', (data) => {
+            $("#award-mylist-content").empty()
+            if(data == null){
+                //alert('sem dados')
+                $.notification(
+                    ["Não foram encontrados dados para este mês"],
+                    {
+                        position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 5000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+
+                $("#award-mylist-content").append(`
+                    <div class="award-mylist-information" id="award-mylist-information">
+                        <span>
+                            <i class="ri-alert-line"></i>
+                            ⠀O informe de premiação referente ao mês <b>${month} não foi registrado</b>. <b>Caso tenha dúvidas entre em contato com seu representante</b>⠀
+                            <i class="ri-alert-line"></i>
+                        </span>
+                    </div>
+                `)
+            }else{
+                //alert('com dados')
+                $("#award-mylist-information").remove()
+                data.forEach(element => {
+                    $("#award-mylist-content").append(`
+
+                    <div class="award-mylist-box">
+                        <br>
+                        <span>Representante: <b>${element.jcv_userNamePrimary}</b></span>
+                        <span>Promotor(a): <b>${element.jcv_userNameSecundary}</b></span>
+                        <br>
+                        <span>Mês: <b>${element.jcv_award_registers_month}</b></span>
+                        <span>${element.jcv_award_registers_status}</span>
+                        <span>Registrado ás: <b>${element.jcv_award_registers_created_date}</b></span>
+                        <br>
+                        <hr style="width: 100%;">
+                        <a class="class-loader" href="/painel/trademkt/award/view/${element.jcv_award_registers_uuid}"><i class="ri-eye-line"></i></a>
+                    </div>
+                    
+                    `)
+                });
+
+                
+                
+            }
+            socket.removeListener('searchRegisterPromotorasGet')
+        })
+
+        $.fn.loadSpin(0)
+
+    }
+</script>

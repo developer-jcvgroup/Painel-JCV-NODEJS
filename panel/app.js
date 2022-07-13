@@ -240,8 +240,8 @@ router.post('/trademkt/visit/new', authenticate, controllerTrade.visitFormNew)
 router.get('/trademkt/salesDay', middlewareURL, authenticate, getPermissions(['trademkt/salesDay']), controllerTrade.salesDay)
 router.post('/trademkt/salesDay/new', authenticate, controllerTrade.salesDayRegister)
 //Trade Mtk: Formulario de pesquisa
-router.get('/trademkt/formSearch/new', middlewareURL, authenticate, getPermissions(['trademkt/forSearch']), controllerTrade.formSearch)
-router.get('/trademkt/formSearch/edit/:id?', middlewareURL, authenticate, getPermissions(['trademkt/forSearch']), controllerTrade.formSearchEdit)
+router.get('/trademkt/formSearch/new', middlewareURL, authenticate, getPermissions(['trademkt/formSearch/new']), controllerTrade.formSearch)
+router.get('/trademkt/formSearch/edit/:id?', middlewareURL, authenticate, getPermissions(['trademkt/formSearch/edit']), controllerTrade.formSearchEdit)
 router.post('/trademkt/formSearch/newForm', authenticate, controllerTrade.formSearchNew)
 router.post('/trademkt/formSearch/editForm', authenticate, controllerTrade.formSearchEditAction)
 //Trade Mtk: Lista Geral
@@ -282,7 +282,10 @@ router.post('/trademkt/products/action/execute', authenticate, controllerTrade.a
 router.get('/trademkt/award/new', authenticate, getPermissions(['trademkt/award/new']), controllerAward.moduleAwardNew)
 router.get('/trademkt/award/edit/:id?', authenticate, getPermissions(['trademkt/award/edit']), controllerAward.moduleAwardEdit)
 //router.get('/trademkt/award/brand/edit/:id', authenticate, getPermissions, controllerAward.moduleAwardEditBrand)
+router.get('/trademkt/award/view/:uuid?', authenticate, getPermissions(['trademkt/award/view']), controllerAward.moduleAwardView)
 router.get('/trademkt/award/list', authenticate, getPermissions(['trademkt/award/list']), controllerAward.awarsList)
+
+router.get('/trademkt/award/mylist', authenticate, getPermissions(['trademkt/award/mylist']), controllerAward.moduleListAwardPromot)
 
 router.post('/trademkt/award/edit', authenticate, controllerAward.moduleAwardEditSave)
 router.post('/trademkt/award/new', authenticate, controllerAward.moduleSaveAward)

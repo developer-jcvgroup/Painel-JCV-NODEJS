@@ -6,23 +6,30 @@
 <section class="award-new-section">
 
     <div class="list-config-search-link-back">
-        <a title="Voltar a home" class="class-loader" href="/painel/trademkt/award/list">
+        <a title="Voltar a lista" class="class-loader" href="/painel/trademkt/award/list">
             <i class="ri-arrow-left-line"></i>
-        </a>
-        <a title="Novo relatório" class="class-loader" href="/painel/trademkt/award/new">
-            <i class="ri-add-line"></i>
         </a>
     </div>
 
+    <%
+
+    let statusGet = {
+        '0': 'Não Preenchido',
+        '1': 'Preenchido',
+        '2': '<b style="color: var(--color-red)">Fechados</b>'
+    }
+    
+    %>
+
     <div class="award-new-title-box">
         <span style="font-size: 1.3rem;"><%= getName %></span>
-        <span style="font-size: 0.9rem; margin-left: 9px;"><%= getValidation[0].jcv_award_registers_month %></span>
+        <span style="font-size: 0.9rem; margin-left: 9px;"><%= getValidation[0].jcv_award_registers_month %> / <%= statusGet[getValidation[0].jcv_award_registers_status] %> </span>
     </div>
 
     <form method="post" class="award-new-div-main">
 
         <div class="award-new-message">
-            <span><b><i class="ri-alert-line"></i>⠀INFORME OS PRODUTOS PASSÍVEIS DE PREMIAÇÃO⠀<i class="ri-alert-line"></i></b></span>
+            <span><b><i class="ri-alert-line"></i>⠀PEÇAS INSERIDAS DE ACORDO COM OS PRODUTOS PASSÍVEIS DE PREMIAÇÃO⠀<i class="ri-alert-line"></i></b></span>
         </div>
         <% arrDataGet = JSON.parse(getValidation[0].jcv_award_registers_json) %>
 
@@ -33,7 +40,7 @@
             </div>
             <!--  -->
             <div class="award-new-div-brand-row-title">
-                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIR: OX 90ML, ÓLEO 7ML E SACHÊS!)</b></span>
+                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIDO: OX 90ML, ÓLEO 7ML E SACHÊS!)</b></span>
             </div>
             <!--  -->
             <div class="award-new-div-brand-row">
@@ -41,13 +48,13 @@
                 <% arrDataGet[0].forEach(element => { %>
                 <div class="award-new-div-inputs-box">
                     <% if(countInfo == 0){ %>
-                        <input readonly type="text" name="input-values-felps" tabIndex="-1" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-felps" value="<%= Object.keys(element) %>">
                         <% countInfo = 0 %>
                     <% }else{ %>
-                        <input readonly type="text" name="input-values-felps" tabIndex="-1" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-felps" value="<%= Object.keys(element) %>">
                     <% } %>
                     <% countInfo = 1 %>
-                    <input type="text" name="input-values-felps" value="<%= Object.values(element) %>">
+                    <input disabled type="text" name="input-values-felps" value="<%= Object.values(element) %>">
                 </div>
                 <% }) %>
                 <% countInfo = 0 %>
@@ -61,7 +68,7 @@
             </div>
             <!--  -->
             <div class="award-new-div-brand-row-title">
-                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIR: SACHÊS!)</b></span>
+                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIDO: SACHÊS!)</b></span>
             </div>
             <!--  -->
             <div class="award-new-div-brand-row">
@@ -69,13 +76,13 @@
                 <% arrDataGet[1].forEach(element => { %>
                 <div class="award-new-div-inputs-box">
                     <% if(countInfo == 0){ %>
-                        <input readonly type="text" name="input-values-retro" tabIndex="-1" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-retro" value="<%= Object.keys(element) %>">
                         <% countInfo = 0 %>
                     <% }else{ %>
-                        <input readonly type="text" name="input-values-retro" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-retro" value="<%= Object.keys(element) %>">
                     <% } %>
                     <% countInfo = 1 %>
-                    <input type="text" name="input-values-retro" value="<%= Object.values(element) %>">
+                    <input disabled type="text" name="input-values-retro" value="<%= Object.values(element) %>">
                 </div>
                 <% }) %>
                 <% countInfo = 0 %>
@@ -92,25 +99,17 @@
                 <% arrDataGet[2].forEach(element => { %>
                 <div class="award-new-div-inputs-box">
                     <% if(countInfo == 0){ %>
-                        <input readonly type="text" name="input-values-avenca" tabIndex="-1" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-avenca" value="<%= Object.keys(element) %>">
                         <% countInfo = 0 %>
                     <% }else{ %>
-                        <input readonly type="text" name="input-values-avenca" value="<%= Object.keys(element) %>">
+                        <input disabled type="text" name="input-values-avenca" value="<%= Object.keys(element) %>">
                     <% } %>
                     <% countInfo = 1 %>
-                    <input type="text" name="input-values-avenca" value="<%= Object.values(element) %>">
+                    <input disabled type="text" name="input-values-avenca" value="<%= Object.values(element) %>">
                 </div>
                 <% }) %>
                 <!--  -->
             </div>
-        </div>
-
-        <div class="award-new-actions">
-            <input hidden id="input-get-values" name="award-new-report-values" type="text">
-            <input hidden type="text" name="monthReference" id="reference-month">
-            <input hidden type="text" name="getShopPromot" id="id-shop-promot">
-            <input hidden type="text" name="nameShow" value="<%= getName %>">
-            <button type="submit" id="button-send-form" value="<%= getValidation[0].jcv_award_registers_uuid %>" name="button-save-edit-request" formaction="/painel/trademkt/award/edit">Registrar Relátorio</button>
         </div>
 
     </form>

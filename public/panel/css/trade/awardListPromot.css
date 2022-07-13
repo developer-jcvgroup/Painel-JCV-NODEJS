@@ -1,0 +1,115 @@
+.award-mylist-center-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.award-mylist-main{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*  */
+.award-mylist-title{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 23px 0;
+}
+.award-mylist-title span{
+    font-size: 1.3rem;
+    color: var(--color-one);
+}
+
+/* SEARCH */
+.award-mylist-title-search{
+    width: fit-content;
+    display: flex;
+    margin-top: 23px;
+}
+
+/*  */
+.award-mylist-content{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*  */
+.award-mylist-box{
+    width: 260px;
+    /* min-height: 500px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    background: var(--background-two);
+    padding: 14px;
+    box-shadow: 0 0 4px 0 var(--color-three);
+    margin: 0 10px;
+    margin-bottom: 25px;
+    line-height: 2;
+    white-space: normal;
+    text-align: center;
+}
+.award-mylist-box span{
+    font-size: 0.9rem;
+    color: var(--color-one);
+}
+.award-mylist-box a{
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--color-one);
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+.award-mylist-search-box-cont-row{
+    display: flex;
+    flex-direction: column;
+    padding: 13px;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+}
+.award-mylist-search-box-cont-row label{
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: var(--color-two);
+}
+.award-mylist-search-box-cont-row input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    border-radius: 3px;
+}
+
+
+.award-mylist-information{
+    display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+}
+.award-mylist-information span{
+    text-align: center;
+    font-size:1rem;
+    color: var(--color-red);
+}
+.award-mylist-information i{
+    font-size: 1.2rem;
+}
+
+/*  */
+.list-config-search-link-back{display: flex; align-items: center; margin-top: 20px;}
+.list-config-search-link-back a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--color-one);
+    margin-right: 25px;
+}

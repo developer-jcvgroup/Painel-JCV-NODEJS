@@ -87,43 +87,6 @@
                 </div>
                 <% } %>
 
-
-                <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
-                <div class="suspended-blocks-container">
-                    <div class="suspended-container-center">
-                        <div class="suspended-title-boxs">
-                            <span>Requisitor de Materiais</span>
-                        </div>
-                        <% if (REQUISITORstatus == true){ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/requisitor/MinhasRequisicoes">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Você possui requisições <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% }else{ %>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/requisitor/Novo">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Faça sua requisição <i class="ri-external-link-line"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-                <% } %>
-
-
                 <% if(GLOBAL_PERM[0].sys_blz_perm_use == 1){ %>
                 <div class="suspended-blocks-container">
                     <div class="suspended-container-center">
@@ -161,6 +124,84 @@
                     </div>
                 </div>
                 <% } %>
+
+                <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
+
+                    <% if(GLOBAL_PERM[0].sys_tra_premiation_use == 1 || GLOBAL_PERM[0].sys_tra_premiation_admin == 1){ %>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title-boxs">
+                                <span>Informe de premiação</span>
+                            </div>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/list">
+                                        <div class="sys-icon-def">
+                                            <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
+                                        </div>
+                                        <span>⠀</span>
+                                        <span>Lista de Informes<i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }else{ %>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title-boxs">
+                                <span>Informe de premiação</span>
+                            </div>
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/mylist">
+                                        <div class="sys-icon-def">
+                                            <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
+                                        </div>
+                                        <span>⠀</span>
+                                        <span>Meus Informes<i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } %>
+
+                <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title-boxs">
+                                <span>Requisitor de Materiais</span>
+                            </div>
+                            <% if (REQUISITORstatus == true){ %>
+                                <div class="home-main-suspended-box">
+                                    <div class="main-suspended-info">
+                                        <a class="main-suspended-group-info class-loader" href="/painel/requisitor/MinhasRequisicoes">
+                                            <div class="sys-icon-def">
+                                                <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
+                                            </div>
+                                            <span>⠀</span>
+                                            <span>Você possui requisições <i class="ri-external-link-line"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% }else{ %>
+                                <div class="home-main-suspended-box">
+                                    <div class="main-suspended-info">
+                                        <a class="main-suspended-group-info class-loader" href="/painel/requisitor/Novo">
+                                            <div class="sys-icon-def">
+                                                <img class="sys-icon-size" src="/icons/icon-requisitor.png" alt="">
+                                            </div>
+                                            <span>⠀</span>
+                                            <span>Faça sua requisição <i class="ri-external-link-line"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
 
                 <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1 || GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
                     <div class="suspended-blocks-container">

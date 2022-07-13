@@ -18,60 +18,145 @@ function generateMonth(){
 
 exports.moduleAwardNew = async (req,res) => {
 
-    //Pegando os parametros de preenchimento de cada marca
-    const getParams = await database
-    .select()
-    .table("jcv_award_params_brand")
-    .then( data => {return data})
+    //Validando quem esta acessando a página se é um representante ou um ADMIN
+    const getPermissions = await database
+    .select('sys_tra_premiation_use','sys_tra_premiation_admin')
+    .where({sys_perm_idUser: GLOBAL_DASH[0]})
+    .table("jcv_users_permissions")
+    .then(data => {return data[0]})
+
+    getPermissions.sys_tra_premiation_use == 1 ? getPermissions.sys_tra_premiation_admin == 1 ? permissionAdmin() : permissionRepresentante() : getPermissions.sys_tra_premiation_admin == 1 ? permissionAdmin() : permissionRepresentante()
+
+    async function permissionRepresentante(){
+        //console.log('Acessando como representante')
+        //Pegando os parametros de preenchimento de cada marca
+        const getParams = await database
+        .select()
+        .table("jcv_award_params_brand")
+        .then( data => {return data})
 
 
-    //Pegando as lojas
-    let getShop = await database
-    .select('jcv_trade_shops_name_fantasy')
-    .whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${GLOBAL_DASH[0]}', '$') AND jcv_trade_shops_enabled = 1`)
-    //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
-    .table("jcv_trade_shops")
-    .then( data => {
-        return data
-    })
+        //Pegando as lojas
+        let getShop = await database
+        .select('jcv_trade_shops_name_fantasy')
+        .whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${GLOBAL_DASH[0]}', '$') AND jcv_trade_shops_enabled = 1`)
+        //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
+        .table("jcv_trade_shops")
+        .then( data => {
+            return data
+        })
 
-    //Pegando as promotoras
-    let getPromot = await database
-    .select('jcv_userNamePrimary')
-    .where({jcv_userManager: GLOBAL_DASH[0]})
-    .table("jcv_users")
-    .then( data => {
-        //console.log(data)
-        return data
-    })
+        //Pegando as promotoras
+        let getPromot = await database
+        .select('jcv_userNamePrimary')
+        .where({jcv_userManager: GLOBAL_DASH[0]})
+        .table("jcv_users")
+        .then( data => {
+            //console.log(data)
+            return data
+        })
 
-    letNewArrayData = [];
+        letNewArrayData = [];
 
-    /*  */
-    /*  */
-    /*  */
-    if(getPromot != ''){
-        getPromot.forEach(element => {
-            letNewArrayData.push(`PROMOTORA | ${element.jcv_userNamePrimary}`)
-        });
+        /*  */
+        /*  */
+        /*  */
+        if(getPromot != ''){
+            getPromot.forEach(element => {
+                letNewArrayData.push(`PROMOTOR(A) | ${element.jcv_userNamePrimary}`)
+            });
+        }
+        if(getShop != ''){
+            getShop.forEach(element => {
+                letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
+            });
+        }
+
+        //Variavel que informa se o usuario é admin ou representante: 1[ADMIN], 2[REPRESENTANTE];
+        let setValidation = JSON.stringify([2, GLOBAL_DASH[1]])
+
+        var page = "trade/awardNew";
+        res.render("panel/index", {
+            page: page,
+            getParams: getParams,
+            letNewArrayData: JSON.stringify(letNewArrayData),
+            setValidation: setValidation
+        })
     }
-    if(getShop != ''){
-        getShop.forEach(element => {
-            letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
-        });
+
+
+    async function permissionAdmin(){
+        //console.log('Acessando como admin')
+
+        //Parametros das marcas
+        const getParams = await database
+        .select()
+        .table("jcv_award_params_brand")
+        .then( data => {return data})
+
+        //Pegando as lojas
+        let getShop = await database
+        .select('jcv_trade_shops_name_fantasy')
+        //.whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${GLOBAL_DASH[0]}', '$') AND jcv_trade_shops_enabled = 1`)
+        //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
+        .where({jcv_trade_shops_enabled: 1})
+        .table("jcv_trade_shops")
+        .then( data => {
+            return data
+        })
+
+        //Pegando todas as promotoras
+        let getPromot = await database
+        .select('jcv_userNamePrimary')
+        .where({jcv_userEnabled: 1, jcv_userCassification: 5})
+        .table("jcv_users")
+        .then( data => {
+            //console.log(data)
+            return data
+        })
+
+        //Pegando todos os representante
+        let getRepresentante = await database
+        .select('jcv_userNamePrimary')
+        .where({jcv_userEnabled: 1, jcv_userCassification: 4})
+        .table("jcv_users")
+        .then( data => {
+            //console.log(data)
+            let arr = []
+            data.forEach(element => {
+                arr.push(element.jcv_userNamePrimary)
+            })
+            return arr
+        })
+
+        letNewArrayData = [];
+
+        /*  */
+        /*  */
+        /*  */
+        if(getPromot != ''){
+            getPromot.forEach(element => {
+                letNewArrayData.push(`PROMOTOR(A) | ${element.jcv_userNamePrimary}`)
+            });
+        }
+        if(getShop != ''){
+            getShop.forEach(element => {
+                letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
+            });
+        }
+
+        //Variavel que informa se o usuario é admin ou representante: 1[ADMIN], 2[REPRESENTANTE];
+        let setValidation = JSON.stringify([1, getRepresentante])
+
+        var page = "trade/awardNew";
+        res.render("panel/index", {
+            page: page,
+            getParams: getParams,
+            letNewArrayData: JSON.stringify(letNewArrayData),
+            setValidation: setValidation
+        })
+
     }
-    
-    /*  */
-    /*  */
-    /*  */
-
-
-    var page = "trade/awardNew";
-    res.render("panel/index", {
-        page: page,
-        getParams: getParams,
-        letNewArrayData: letNewArrayData
-    })
 }
 
 exports.moduleSaveAward = async (req,res) => {
@@ -95,145 +180,101 @@ exports.moduleSaveAward = async (req,res) => {
 
     const getMonth = req.body['monthReference']
     const getSerch = req.body['getShopPromot'].split(' | ')
+    const getRepresentante = req.body['getRepresentante']
 
-    //console.log(getSerch[1])
-
-    //Validando a informação de loja/representante inserida
-    let getShop = await database
-    .select('jcv_trade_shops_id')
-    .whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
-    .table("jcv_trade_shops")
-    .then( data => {
-        return data.length != 0 ? data[0].jcv_trade_shops_id : null
-    })
-
-    let getPromot = await database
-    .select('jcv_id')
-    .whereRaw(`jcv_userNamePrimary like '%${getSerch[1]}%'`)
-    .table("jcv_users")
-    .then( data => {
-        //console.log(data)
-        return data.length != 0 ? data[0].jcv_id : null
-    })
-
-    //console.log(getShop)
-    //console.log(getPromot)
-
-    //Validano esta string para fazer validação e inserir no banco da maneira certa!
-    let validationFinal = getPromot == null ? getShop == null ? null : [1,getShop] : [2,getPromot] // [1= typo de regsitro (1{loja}/2{representante}), 2=id da loja/reprensentante]
-
-    //Validação final
-    if(validationFinal == null){
-        //Erro
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao validar loja/promotora","timeMsg": 3000}`);
+    if([getMonth, getSerch, getRepresentante].indexOf('') > -1){
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"As três informações principais estão em falta, revise-os","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/award/new");
     }else{
+        //console.log(getSerch[1])
 
-        //Validando se já possui registro desta loja/promotora
-        const getvalidation = await database
+        //Validando a informação de loja/representante inserida
+        let getShop = await database
+        .select('jcv_trade_shops_id')
+        .whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
+        .table("jcv_trade_shops")
+        .then( data => {
+            return data.length != 0 ? data[0].jcv_trade_shops_id : null
+        })
+
+        let getPromot = await database
+        .select('jcv_id')
+        .whereRaw(`jcv_userNamePrimary = '%${getSerch[1]}%'`)
+        .table("jcv_users")
+        .then( data => {
+            //console.log(data)
+            return data.length != 0 ? data[0].jcv_id : null
+        })
+
+        let getRepre = await database
         .select()
-        .where({jcv_award_registers_id_registred: validationFinal[1], jcv_award_registers_type: validationFinal[0]})
-        .table("jcv_award_registers")
-        .then( data => {return data.length === 0 ? null : 200 })
+        .where({jcv_id: getRepresentante})
+        .table("jcv_users")
+        .then( data => {
+            return data.length != 0 ? data[0].jcv_id : null
+        })
 
-        //console.log(validationFinal)
+        //console.log(getShop)
+        //console.log(getPromot)
 
-        //Validando
-        if(getvalidation != null){
-            //console.log('errado')
-            //Relatorio já relaizado
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatorio já registrado!","timeMsg": 3000}`);
+        //Validano esta string para fazer validação e inserir no banco da maneira certa!
+        let validationFinal = getPromot == null ? getShop == null ? null : [1,getShop] : [2,getPromot] // [1= typo de regsitro (1{loja}/2{representante}), 2=id da loja/reprensentante]
+        getRepre == null ? validationFinal = null : validationFinal;
+
+        //Validação final
+        if(validationFinal == null){
+            //Erro
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao validar loja/promotora","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/award/new");
         }else{
-            let arrayData = [
-                getDataFelps,
-                getDataRetro,
-                getDataAvenca
-            ]
 
-            //Relatorio ainda não relaizado
-            database
-            .insert({
-                jcv_award_registers_id_registred: validationFinal[1],
-                jcv_award_registers_type: validationFinal[0],
-                jcv_award_registers_json: JSON.stringify(arrayData),
-                jcv_award_registers_created_date: generateDate(),
-                jcv_award_registers_month: getMonth,
-                jcv_award_registers_id_manager: GLOBAL_DASH[0],
-                jcv_award_registers_status: 1,
-                jcv_award_registers_uuid: uuid.v1()
-            })
+            //Validando se já possui registro desta loja/promotora
+            const getvalidation = await database
+            .select()
+            .where({jcv_award_registers_id_registred: validationFinal[1], jcv_award_registers_type: validationFinal[0]})
             .table("jcv_award_registers")
-            .then( data => {
-                if(data >= 1){
-                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relatório realizado com sucesso","timeMsg": 4000}`);
-                    res.redirect("/painel/trademkt/award/new");
-                }else{
-                    res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Não foi possivel registrar seu relatorio","timeMsg": 4000}`);
-                    res.redirect("/painel/trademkt/award/new");
-                }
-            })
+            .then( data => {return data.length === 0 ? null : 200 })
+
+            //console.log(validationFinal)
+
+            //Validando
+            if(getvalidation != null){
+                //console.log('errado')
+                //Relatorio já relaizado
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatorio já registrado!","timeMsg": 3000}`);
+                res.redirect("/painel/trademkt/award/new");
+            }else{
+                let arrayData = [
+                    getDataFelps,
+                    getDataRetro,
+                    getDataAvenca
+                ]
+
+                //Relatorio ainda não relaizado
+                database
+                .insert({
+                    jcv_award_registers_id_registred: validationFinal[1],
+                    jcv_award_registers_type: validationFinal[0],
+                    jcv_award_registers_json: JSON.stringify(arrayData),
+                    jcv_award_registers_created_date: generateDate(),
+                    jcv_award_registers_month: getMonth,
+                    jcv_award_registers_id_manager: getRepre,
+                    jcv_award_registers_status: 1,
+                    jcv_award_registers_uuid: uuid.v1()
+                })
+                .table("jcv_award_registers")
+                .then( data => {
+                    if(data >= 1){
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relatório realizado com sucesso","timeMsg": 4000}`);
+                        res.redirect("/painel/trademkt/award/new");
+                    }else{
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Não foi possivel registrar seu relatorio","timeMsg": 4000}`);
+                        res.redirect("/painel/trademkt/award/new");
+                    }
+                })
+            }
         }
     }
-
-    
-    
-
-
-
-
-
-
-
-    //Validando se a PROMOTORA já possui um relatorio cadastrado para este mes
-    /* const getvalidationPromot = await database
-    .select()
-    .where({jcv_award_registers_promot_id: getPromot, jcv_award_registers_shop_id: getShop, jcv_award_registers_month: getMonth})
-    .table("jcv_award_registers")
-    .then( data => {return data.length === 0 ? null : 200 })
-
-    //Validando se a LOJA já possui um relatorio cadastrado para este mes
-    const getvalidationShop = await database
-    .select()
-    .where({jcv_award_registers_promot_id: null, jcv_award_registers_shop_id: getShop, jcv_award_registers_month: getMonth})
-    .table("jcv_award_registers")
-    .then( data => {return data.length === 0 ? null : 200 }) */
-
-    /* let arrayData = [
-        getDataFelps,
-        getDataRetro,
-        getDataAvenca
-    ]
-
-    //Validando a promotora e a loja
-    if(getvalidationPromot == null){
-        //Nenhum registro de promotora encontrado
-
-        //Validando a loja somente
-        if(getvalidationShop == null){
-            //Nehnum regsitro de loja..
-
-            //res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Vamos cadastrar","timeMsg": 3000}`);
-            //res.redirect("/painel/trademkt/award/new");
-            
-        }else{
-            //achamos um registro..
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Já existe um relatório para esta loja no mês <b>(${getMonth})</b>","timeMsg": 4000}`);
-            res.redirect("/painel/trademkt/award/new");
-        }
-    }else{
-        //regsitro encontrado
-
-        if(getvalidationShop != null){
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Já existe um relatório para esta loja no mês <b>(${getMonth})</b>","timeMsg": 4000}`);
-            res.redirect("/painel/trademkt/award/new");
-        }else{
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Já existe um relatório para esta promotora no mês <b>(${getMonth})</b>","timeMsg": 4000}`);
-            res.redirect("/painel/trademkt/award/new");
-        }
-        
-    } */
-
     
 }
 
@@ -328,6 +369,50 @@ exports.moduleAwardEdit = async (req,res) => {
         })
     }
 }
+exports.moduleAwardView = async (req,res) => {
+    const getUUID = req.params.uuid;
+
+    //Validando se exite
+    const getValidation = await database
+    .select()
+    .where({jcv_award_registers_uuid: getUUID})
+    .table("jcv_award_registers")
+    .then( data => {return data})
+
+    if(getValidation.length === 0){
+        //não
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatório não encontrado ou não disponível para a edição","timeMsg": 4000}`);
+        res.redirect("/painel/trademkt/main");
+    }else{
+        //tem
+
+        let getName;
+        //Pegango o nome loja/promotora
+        if(getValidation[0].jcv_award_registers_type == 1){
+            //Buscar loja
+            await database
+            .select('jcv_trade_shops_name_fantasy')
+            .where({jcv_trade_shops_id: getValidation[0].jcv_award_registers_id_registred})
+            .table("jcv_trade_shops")
+            .then( data => {getName = data[0].jcv_trade_shops_name_fantasy})
+        }else{
+            //Buscar Promotora
+            await database
+            .select('jcv_userNamePrimary')
+            .where({jcv_id: getValidation[0].jcv_award_registers_id_registred})
+            .table('jcv_users')
+            .then(data => {getName = data[0].jcv_userNamePrimary})
+        }
+
+
+        var page = "trade/awardView";
+        res.render("panel/index", {
+            page: page,
+            getValidation: getValidation,
+            getName: getName
+        })
+    }
+}
 exports.moduleAwardEditSave = async (req,res) => {
 
     const idUUID = req.body['button-save-edit-request'];
@@ -365,10 +450,10 @@ exports.moduleAwardEditSave = async (req,res) => {
     .then( data => {
         if( data == 1){
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relátorio <b>${getName}</b> atualizado com sucesso!","timeMsg": 3000}`);
-            res.redirect("/painel/trademkt/award/edit/"+idUUID);
+            res.redirect("/painel/trademkt/award/list");
         }else{
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao editar o relatorio <b>${getName}</b>","timeMsg": 5000}`);
-            res.redirect("/painel/trademkt/award/edit/"+idUUID);
+            res.redirect("/painel/trademkt/award/list");
         }
     })
 }
@@ -432,7 +517,8 @@ exports.awarsList = async (req,res) => {
         getPerm: getPerm,
         convertShops: convertShops,
         convertRepre: convertRepre,
-        resultSearchDataPremiacao: req.flash('resultSearchDataPremiacao')
+        resultSearchDataPremiacao: req.flash('resultSearchDataPremiacao'),
+        resultSearchDataPremiacaoNot: req.flash('resultSearchDataPremiacaoNot')
     })
 }
 
@@ -464,7 +550,7 @@ exports.moduleAwardSearch = async (req,res) => {
 
             let convertFilter = [];
             inputFilterConvert.forEach(element => {
-                convertFilter.push(parseInt(element.split(' - ')))
+                convertFilter.push(parseInt(element.split(' - ')[0]))
             });
 
             //console.log(inputFilterConvert)
@@ -526,8 +612,8 @@ exports.moduleAwardSearch = async (req,res) => {
         }
     } */
 
-
     let concatArray = resultRepresentante != null ? resultShop != null ? `in (${resultRepresentante.concat(resultShop)})` : `in (${resultRepresentante})` : resultShop != null ? `in (${resultShop})` : 'like "%%"'
+
     //console.log(concatArray)
 
     //Mês de referencia (data)
@@ -546,49 +632,97 @@ exports.moduleAwardSearch = async (req,res) => {
 
     const awardStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 0 ? 0 : `in (${req.body['sys-filter-name-status']})` : 'like "%%" '
 
-    //Fazendo a busca pelo regsitro
-    const getRegsiterSearch = await database
-    .select()
-    //.whereRaw(`jcv_award_registers_id_registred ${concatArray} AND jcv_award_registers_type in (1,2) AND jcv_award_registers_id_manager ${awardStatus} AND jcv_award_registers_status ${awardStatus} AND jcv_award_registers_month ${newConvertRef}`)
-    .whereRaw(`jcv_award_registers_type in (1,2) AND jcv_award_registers_id_manager ${concatArray} AND jcv_award_registers_status ${awardStatus} AND jcv_award_registers_month ${newConvertRef}`)
-    .table("jcv_award_registers")
-    .join("jcv_users","jcv_users.jcv_id","jcv_award_registers.jcv_award_registers_id_manager")
-    .then( data => {return data})
+    //Caso a parte é a busca de relatorios que não foram solicitados
+    if(awardStatus == 0){
+        //Buscar não registrados
 
-    let getUsers = {}
-    await database
-    .select('jcv_userNamePrimary','jcv_id')
-    .orderBy('jcv_id','ASC')
-    .table("jcv_users")
-    .then( data => {
-        data.forEach(element => {
-            getUsers[element.jcv_id] = element.jcv_userNamePrimary
-            //getUsers.push({[element.jcv_id]: element.jcv_userNamePrimary})
-        });
-    })
+        //Pegando os nomes dos representantes
+        const getNamesNot = await database
+        .select('jcv_id','jcv_userNamePrimary')
+        .whereRaw(`jcv_id ${concatArray}`)
+        .table("jcv_users")
+        .then( data => {return data})
 
-    let getShops = {}
-    await database
-    .select('jcv_trade_shops_id','jcv_trade_shops_name_fantasy')
-    .table("jcv_trade_shops")
-    .then( data => {
-        data.forEach(element => {
-            getShops[element.jcv_trade_shops_id] = element.jcv_trade_shops_name_fantasy
-            //getShops.push({[element.jcv_trade_shops_id]: element.jcv_trade_shops_name_fantasy})
-        });
-    })
+        //Buscando as promotoras
+        const getPromotNot = await database
+        .raw(`
 
-    //console.log(getUsers)
+            SELECT DISTINCT e.jcv_userManager,e.jcv_id,e.jcv_userNamePrimary,d.jcv_award_registers_month FROM jcv_users e, jcv_award_registers d
+            WHERE e.jcv_userManager ${concatArray} AND d.jcv_award_registers_month ${newConvertRef} AND e.jcv_id NOT IN (SELECT jcv_award_registers_id_registred FROM jcv_award_registers);
+        
+        `)
+        .then( data => {return data[0]})
 
-    //console.log(getRegsiterSearch)
-    if(getRegsiterSearch.length === 0){
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum relatorio encontrado","timeMsg": 5000}`);
-        res.redirect("/painel/trademkt/award/list");
+        //Buscando lojas
+        const getShops = await database
+        .raw(`
+        
+            SELECT DISTINCT e.jcv_trade_shops_name_fantasy,e.jcv_trade_shops_manager,e.jcv_trade_shops_id,d.jcv_award_registers_month FROM jcv_trade_shops e, jcv_award_registers d
+            WHERE e.jcv_trade_shops_manager ${concatArray} AND d.jcv_award_registers_month ${newConvertRef} AND e.jcv_trade_shops_id NOT IN (SELECT jcv_award_registers_id_registred FROM jcv_award_registers); 
+        
+        `)
+        .then( data => {return data[0]})
+
+        let newArrCompilate = [...getPromotNot, ...getShops];
+
+        if(newArrCompilate.length === 0){
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum relatorio pendente encontrado","timeMsg": 5000}`);
+            res.redirect("/painel/trademkt/award/list");
+        }else{
+            //console.log(getDataSearch)
+            //console.log(newArrCompilate)
+            req.flash('resultSearchDataPremiacaoNot', [newArrCompilate, getNamesNot])
+            res.redirect("/painel/trademkt/award/list");
+        }
+
     }else{
-        //console.log(getDataSearch)
-        req.flash('resultSearchDataPremiacao', [getRegsiterSearch, getShops, getUsers ])
-        res.redirect("/painel/trademkt/award/list");
+
+        //Fazendo a busca pelo regsitro
+        const getRegsiterSearch = await database
+        .select()
+        //.whereRaw(`jcv_award_registers_id_registred ${concatArray} AND jcv_award_registers_type in (1,2) AND jcv_award_registers_id_manager ${awardStatus} AND jcv_award_registers_status ${awardStatus} AND jcv_award_registers_month ${newConvertRef}`)
+        .whereRaw(`jcv_award_registers_type in (1,2) AND jcv_award_registers_id_manager ${concatArray} AND jcv_award_registers_status ${awardStatus} AND jcv_award_registers_month ${newConvertRef}`)
+        .table("jcv_award_registers")
+        .join("jcv_users","jcv_users.jcv_id","jcv_award_registers.jcv_award_registers_id_manager")
+        .then( data => {return data})
+
+        let getUsers = {}
+        await database
+        .select('jcv_userNamePrimary','jcv_id')
+        .orderBy('jcv_id','ASC')
+        .table("jcv_users")
+        .then( data => {
+            data.forEach(element => {
+                getUsers[element.jcv_id] = element.jcv_userNamePrimary
+                //getUsers.push({[element.jcv_id]: element.jcv_userNamePrimary})
+            });
+        })
+
+        let getShops = {}
+        await database
+        .select('jcv_trade_shops_id','jcv_trade_shops_name_fantasy')
+        .table("jcv_trade_shops")
+        .then( data => {
+            data.forEach(element => {
+                getShops[element.jcv_trade_shops_id] = element.jcv_trade_shops_name_fantasy
+                //getShops.push({[element.jcv_trade_shops_id]: element.jcv_trade_shops_name_fantasy})
+            });
+        })
+
+        //console.log(getUsers)
+
+        //console.log(getRegsiterSearch)
+        if(getRegsiterSearch.length === 0){
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum relatorio encontrado","timeMsg": 5000}`);
+            res.redirect("/painel/trademkt/award/list");
+        }else{
+            //console.log(getDataSearch)
+            req.flash('resultSearchDataPremiacao', [getRegsiterSearch, getShops, getUsers ])
+            res.redirect("/painel/trademkt/award/list");
+        }
     }
+
+    
 
 
 
@@ -929,7 +1063,7 @@ async function exportsParams(req,res,listIds){
 
 
     const headingColumnNames = [
-        "REPRESENTANTE","LOJA/PROMOTORA","MÊS REF.","DADOS"
+        "REPRESENTANTE","LOJA/PROMOTORA","MÊS REF.","CAMPOS","PEÇAS"
     ]
     
     let headingColumnIndex = 1; //diz que começará na primeira linha
@@ -1093,5 +1227,17 @@ exports.moduleDelete = async (req,res) => {
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao deletar o relatorio","timeMsg": 5000}`);
             res.redirect("/painel/trademkt/award/list");
         }
+    })
+}
+
+exports.moduleListAwardPromot = async (req,res) => {
+
+    //Pegando o id deste usuario
+    const idUser = GLOBAL_DASH[0];
+
+    var page = "trade/awardListPromot";
+    res.render("panel/index", {
+        page: page,
+        idUser: idUser
     })
 }

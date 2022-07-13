@@ -18,7 +18,7 @@
                         <div class="award-list-container-row-form">
                             <div class="award-list-form-box">
                                 <label for="">Referência</label>
-                                <input type="text" id="reference-select-filter">
+                                <input type="text" id="reference-select-filter" placeholder="Ex.: 06-2022">
                             </div>
                             <div class="award-list-form-box">
                                 <label for="">Status</label>
@@ -43,13 +43,14 @@
                                 </div>
                             <% } %>
 
-                            <div class="award-list-form-box">
+                            <!-- <div class="award-list-form-box">
                                 <label for="">Loja</label>
                                 <input type="text" id="shop-select-filter">
-                            </div>
+                            </div> -->
 
                             <div class="award-list-form-box-actions">
                                 <button class="class-loader" type="submit">Buscar</button>
+                                <a class="class-loader" href="/painel/trademkt/award/new">Criar Informe</a>
                             </div>
                         </div>
                         
@@ -70,7 +71,7 @@
             </section>
         </section>   
 
-        <% if(resultSearchDataPremiacao != ''){ %>
+        <% if(resultSearchDataPremiacao != '' || resultSearchDataPremiacaoNot != '' ){ %>
         <form class="award-list-container-list-all" action="/painel/trademkt/award/action/commands" method="post">
             <section class="section-award-list-list-center">
                 <div class="award-list-title-box"><span>Lista de solicitações</span></div>
@@ -86,8 +87,8 @@
                             <select name="command-actions" >
                                 <option value="">⠀⠀Selecione⠀⠀</option>
                                     <option value="" disabled>-- Exportar</option>
-                                    <option value="CMD01">⠀⠀Exportar Dados</option>
-                                    <option value="CMD03">⠀⠀Exportar Parâmetros</option>
+                                    <option value="CMD01">⠀⠀Exportar Dados Resumidos</option>
+                                    <option value="CMD03">⠀⠀Exportar Dados Detalhados</option>
                                     <option disabled></option>
                                     <option value="" disabled>-- Status</option>
                                     <option value="CMD02">⠀⠀Fechados</option>
@@ -114,7 +115,7 @@
                         </thead>
                         <tbody id="award-list-list-table-tbody">
 
-                                <% resultSearchDataPremiacao[0].forEach(element => { %>
+                            <% resultSearchDataPremiacao == '' ? '' : resultSearchDataPremiacao[0].forEach(element => { %>
                                 <tr class="award-list-row-check-mark check-row-tr" id="<%= element.jcv_award_registers_id %>">
 
                                 
@@ -154,6 +155,7 @@
                                             <form></form>
 
                                             <form method="post">
+                                                <a href="/painel/trademkt/award/view/<%= element.jcv_award_registers_uuid %>"><i class="ri-eye-line"></i></a>
                                                 <a href="/painel/trademkt/award/edit/<%= element.jcv_award_registers_uuid %>"><i class="ri-edit-line"></i></a>
                                                 <% if(convertRepre != undefined){ %>
                                                     <button formaction="/painel/trademkt/award/delete" value="<%= element.jcv_award_registers_uuid %>" name="btnDeleteOrder"><i class="ri-delete-bin-line"></i></button>
@@ -164,6 +166,58 @@
                                     </td>
                                 </tr>
                             <% }) %>
+
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+
+                            <% resultSearchDataPremiacaoNot == '' ? '' : resultSearchDataPremiacaoNot[0].forEach(element => { %>
+                                <tr class="award-list-row-check-mark check-row-tr" id="<%= element.jcv_award_registers_id %>">
+
+
+                                    <%
+                                
+                                    function functionSearch(value, objGet){
+		
+                                        for(let i = 0; i < objGet.length; i++){
+                                            if(Object.values(objGet[i]).indexOf(value) > -1){
+                                              return objGet[i].jcv_userNamePrimary
+                                                i = objGet.length
+                                            }
+                                        }
+                                      
+                                    }
+
+                                    let keyword = typeof(element.jcv_userManager) == 'undefined' ? element.jcv_trade_shops_manager : element.jcv_userManager;
+                                    
+                                    let results = functionSearch(parseInt(keyword), resultSearchDataPremiacaoNot[1])
+
+                                    
+                                    %>
+
+                                    <td>⠀</td>
+                                    <td><%= results %></td>
+
+                                    <td>
+                                        
+                                        <%- typeof(element.jcv_id) != 'undefined' ? '<b>PROMOTOR(A):</b> '+element.jcv_userNamePrimary : '<b>LOJA:</b> '+element.jcv_trade_shops_name_fantasy %>
+                                    
+                                    </td>
+
+                                    <td><b><%= element.jcv_award_registers_month %></b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    
+                                </tr>
+                            <% }) %>
+
+
+
                         </tbody>
                     </table> 
                 </div>
@@ -208,20 +262,6 @@ $(function(){
     //Validando se existe filtro: //1° elemento pai que receber os boxs, 2° os filtros que eu vou buscar
     $.fn.searchFiltersCookies("sys-filter-display-main","sys-filter-component-boxs", ['Unidade','Gestor','Status']) */
     
-   
-
-    //Check select tr
-    $(".check-row-tr").click(function(){
-        let optionValue = $(this).attr('id')
-
-        if($("#check-option-"+optionValue).is(':checked') == true){
-            $("#check-option-"+optionValue).prop('checked', false)
-        }else{
-            $("#check-option-"+optionValue).prop('checked', true)
-        }
-        
-        //alert(optionValue)
-    })
 
     //Checknox all
     $("#checkbox-select-all").click(function(){

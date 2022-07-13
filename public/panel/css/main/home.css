@@ -172,7 +172,7 @@
     background: var(--background-two);
     box-shadow: 0 0 4px 0 var(--color-three);
     border-radius: 3px;
-    margin: 9px;
+    margin: 18px;
 }
 .suspended-container-center{
     width: 100%;

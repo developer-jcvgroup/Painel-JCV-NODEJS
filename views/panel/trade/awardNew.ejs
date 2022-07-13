@@ -16,19 +16,30 @@
     <form method="post" class="award-new-div-main">
 
         <div class="award-new-div-brand">
+            <div class="award-new-message">
+                <span><b><i class="ri-alert-line"></i>⠀INFORME OS PRODUTOS PASSÍVEIS DE PREMIAÇÃO⠀<i class="ri-alert-line"></i></b></span>
+            </div>
             <div style="background: black;" class="award-new-div-brand-title">
                 <span style="color: var(--color-four);">Felps Professional</span>
             </div>
-
+            <!--  -->
+            <div class="award-new-div-brand-row-title">
+                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIR: OX 90ML, ÓLEO 7ML E SACHÊS!)</b></span>
+            </div>
+            <!--  -->
             <div class="award-new-div-brand-row">
                 <!--  -->
                 <div class="award-new-div-inputs-box">
-                    <input readonly type="text" name="input-values-felps" value="Felps Vendido">
-                    <input type="text" name="input-values-felps" >
+                    <input readonly type="text" name="input-values-felps" value="Felps Professional">
+                    <input type="number" name="input-values-felps" min="0" value="0">
                 </div>
                 <div class="award-new-div-inputs-box">
-                    <input readonly type="text" name="input-values-felps" value="Coloração Vendida">
-                    <input type="text" name="input-values-felps">
+                    <input readonly type="text" name="input-values-felps" tabIndex="-1" value="Felps Coloração">
+                    <input type="number" name="input-values-felps" min="0" value="0">
+                </div>
+                <div class="award-new-div-inputs-box">
+                    <input readonly type="text" name="input-values-felps" tabIndex="-1" value="Felps Men">
+                    <input type="number" name="input-values-felps" min="0" value="0">
                 </div>
                 <!--  -->
             </div>
@@ -38,11 +49,16 @@
             <div style="background: #43BAC8;" class="award-new-div-brand-title">
                 <span style="color: var(--color-four);">Retrô Cosméticos</span>
             </div>
+            <!--  -->
+            <div class="award-new-div-brand-row-title">
+                <span><b><i class="ri-alert-line"></i>⠀(NÃO INSERIR: SACHÊS!)</b></span>
+            </div>
+            <!--  -->
             <div class="award-new-div-brand-row">
                 <!--  -->
                 <div class="award-new-div-inputs-box">
-                    <input readonly type="text" name="input-values-retro" value="Retro Vendido">
-                    <input type="text" name="input-values-retro" >
+                    <input readonly type="text" name="input-values-retro" tabIndex="-1" value="Retro Cosméticos">
+                    <input type="number" name="input-values-retro" min="0" value="0">
                 </div>
                 <!--  -->
             </div>
@@ -55,8 +71,8 @@
             <div class="award-new-div-brand-row">
                 <!--  -->
                 <div class="award-new-div-inputs-box">
-                    <input readonly type="text" name="input-values-avenca" value="Avenca Vendido">
-                    <input type="text" name="input-values-avenca" >
+                    <input readonly type="text" name="input-values-avenca" tabIndex="-1" value="Avenca Cosméticos">
+                    <input type="number" name="input-values-avenca" min="0" value="0">
                 </div>
                 <!--  -->
             </div>
@@ -66,6 +82,7 @@
             <input hidden id="input-get-values" name="award-new-report-values" type="text">
             <input hidden type="text" name="monthReference" id="reference-month">
             <input hidden type="text" name="getShopPromot" id="id-shop-promot">
+            <input hidden type="text" name="getRepresentante" id="id-user-representante">
             <button type="submit" id="button-send-form" formaction="/painel/trademkt/award/new">Registrar Relátorio</button>
         </div>
 
@@ -76,6 +93,7 @@
     <div class="award-new-suspend-box-main">
         <div class="award-new-suspend-title">
             <span>Antes de começar a preencher nos informe:</span>
+            <a class="class-loader" href="/painel/trademkt/award/list"><i class="ri-close-fill"></i></a>
         </div>
         <!--  -->
         <div class="award-new-suspend-content">
@@ -83,9 +101,19 @@
                 <label for="">Mês de referência</label>
                 <input type="text" id="mask-month" placeholder="Ex: 06/2022">
             </div>
+
+            <!--  -->
             <div class="award-new-suspend-box">
+                <label for="">Representante</label>
+                <input type="text" id="input-representante-get" placeholder="Busque pelo representante">
+            </div>
+            <% if(JSON.parse(setValidation)[0] == 1){ %>
+                
+            <% } %>
+            <!--  -->
+            <div class="award-new-suspend-box" style="display: none;" id="box-show-shops-promot">
                 <label for="">Selecione a <b>promotora/loja</b></label>
-                <input type="text" id="input-person-shop" placeholder="Busque e selecione a promotora/loja ">
+                <input type="text" id="input-person-shop" placeholder="Busque e selecione a(o) loja/promotor(a) ">
             </div>
             <div class="award-new-alert" id="award-new-alert-link-box">
                 <span>Você possui um relátorio vinculado a esta loja/promotora no mes selecionado! <a class="class-loader" id="award-new-alert-link">Edite clicando aqui</a></span>
@@ -98,9 +126,270 @@
 <!--  -->
 
 <script>
+    //Configurando o input mês
+    var options =  {
+        onComplete: function(value) {
+
+            //Verificando se o a div de promotoras/loja esta visível
+            if($("#box-show-shops-promot").is(':visible') == true){
+                //Div visivel
+
+                //Chamando função
+                nextInputSearch($("#input-representante-get").val())
+
+                $.notification(
+                    ["Insira o(a) promotor(a)/loja novamente"],
+                    {
+                        position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 6000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+
+                //Destacando o input
+                $("#input-person-shop").css({'border':'1px solid var(--color-red)'})
+                setTimeout(() => {
+                    $("#input-person-shop").css({'border':'1px solid var(--color-seven)'})
+                }, 4000);
+            }
+           
+        },
+    };
+    $("#mask-month").mask('00-0000', options);
+    
+
+    '<%= JSON.parse(setValidation)[0] %>' == '2' ? blockRepresentante('<%= JSON.parse(setValidation)[1] %>') : ''
+    function blockRepresentante(nameRpresent){
+        //alert('olá representante')
+        $("#input-representante-get").val(nameRpresent).attr('readonly',true).css({'background':'var(--color-eight)','cursor':'default','outline':0})
+        nextInputSearch(nameRpresent)
+    }
+
+    //Configurando o input representante
+    let validationTypes = JSON.parse('<%- setValidation %>');
+    if(validationTypes[0] == 1){
+        //é admin gerando o relatorio
+        let arrayDataOneRep = validationTypes[1];
+        //Auto completar input representante
+        $("#input-representante-get").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayDataOneRep, request.term);
+                response(results.slice(0, 5));
+            },
+            select: function (e, i) {
+                //
+                nextInputSearch(i.item.value)
+                //validateInputs()
+            }
+        });
+
+        //Pegando a digitação em tempo real
+        $("#input-representante-get").keyup(function(){
+            let valueTyping = $(this).val();
+            validationTypes.indexOf(valueTyping) == -1 ? $("#box-show-shops-promot").fadeOut() : $("#box-show-shops-promot").fadeIn()
+        })
+    }else{
+        //representante
+
+        //Informando o input que pega o representate como null
+        $("#id-user-representante").val(null)
+    }
+
+    //$("#box-show-shops-promot").fadeOut()
+    /* ************************************* */
+    /* ************************************* */
+    /* Função para buscar lojas e promotoras */
+    function nextInputSearch(valueSearch){
+        //$.fn.loadSpin(1);
+        $("#sys-section-loader").fadeIn();//Load spin
+
+        if(valueSearch == ''){
+            //Valor vazio
+            $("#sys-section-loader").fadeOut();//Load spin
+        }else{
+            socket.emit('searchRepresentante', (valueSearch))
+        
+            //Resultado
+            socket.on('searchRepresentanteGet', (data) => {
+                if(data[0].length == 0){
+                    //Nenhum dado encontrado
+                    console.log('nenhum dado')
+                    $("#box-show-shops-promot").fadeOut()
+
+                    $.notification(
+                        ["Nenhum representante econtrado"],
+                        {
+                            position: ['top', 'right'], 
+                            messageType: 'warning',
+                            timeView: 5000,
+                            //redirectAction: 'https://google.com' ou null
+                        }
+                    )
+
+                    $("#sys-section-loader").fadeOut();//Load spin
+                }else{
+                    //Existem dados para a busca
+                    console.log('possui dados')
+
+                    $.fn.loadSpin(0)
+                    $("#box-show-shops-promot").fadeIn()
+                    $("#input-person-shop").val('')
+
+                    //Configurando o input de lojas/promotoras
+                    let dataPromotLoja = data[0];
+                    //Primeiro campo
+                    $("#input-person-shop").autocomplete({
+                        source: function(request, response) {
+                            var results = $.ui.autocomplete.filter(dataPromotLoja, request.term);
+                            response(results.slice(0, 5));
+                        },
+                        select: function (e, i) {
+                            //
+                            validateRegisters($("#mask-month").val(),i.item.value,data[1][0].jcv_id)
+                        }
+                    });
+                }
+
+                socket.removeListener('searchRepresentanteGet')
+            })
+        }
+    }
+
+    /* ********************************************* */
+    /* ********************************************* */
+    /* Função para validar a existência de registros */
+    function validateRegisters(validateMonth, validatePromotoraLoja, validateRepresentante){
+        $.fn.loadSpin(1)
+
+        if([validateMonth, validatePromotoraLoja, validateRepresentante].indexOf('') > -1){
+            //Alguns parametros sem dados
+            $.fn.loadSpin(0)
+            $.notification(
+                ["Você precisa preencher os <b>TRÊS</b> campos"],
+                {
+                    position: ['top', 'right'], 
+                    messageType: 'warning',
+                    timeView: 5000,
+                    //redirectAction: 'https://google.com' ou null
+                }
+            )
+        }else{
+            console.log([validateMonth, validatePromotoraLoja, validateRepresentante])
+            socket.emit('getRegistersPremiation', ([validateMonth, validatePromotoraLoja, validateRepresentante]))
+            //Resultado da validação
+            socket.on('getRegistersPremiationSend', (data) => {
+                console.log(data)
+                if(data == null || data.length == 0){
+                    //Nenhum registro encontrado, podemos exibir
+
+                    //Inputs
+                    $("#id-shop-promot").val(validatePromotoraLoja)
+                    $("#reference-month").val(validateMonth)
+                    $("#id-user-representante").val(validateRepresentante)
+
+                    $(".award-new-div-brand-title").css({'display':'flex','justify-content': 'space-between'})
+
+                    $("#award-new-title-box").fadeIn().css({'display':'flex'})
+                    $("#award-new-one").text(validatePromotoraLoja)
+                    $("#award-new-two").text(validateMonth)
+
+                    $("#award-new-suspend-section").fadeOut()
+
+                }else{
+                    //Registro encontrado
+                    $("#award-new-alert-link-box").fadeIn().css({'display':'flex'})
+                    $("#award-new-alert-link").attr('href','/painel/trademkt/award/edit/'+data[0].jcv_award_registers_uuid)
+                }
+                $.fn.loadSpin(0)
+                socket.removeListener('getRegistersPremiationSend')
+            })
+        }
+    }
+
+
+</script>
+<script>
+/* 
+
+    //Configurando o input mês
+    $("#mask-month").mask('00-0000')
+
+    
+
+    //Configurando o input de lojas/promotoras
+    let dataPromotLoja = JSON.parse('<%- letNewArrayData %>');
+    //Primeiro campo
+    $("#input-person-shop").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(dataPromotLoja, request.term);
+            response(results.slice(0, 5));
+        },
+        select: function (e, i) {
+            //
+            validateInputs()
+        }
+    });
+
+    function validateInputs(){
+        $.fn.loadSpin(1)
+        setTimeout(() => {
+            let validateMonth = $("#mask-month").val();
+            let validateRepresentante = $("#input-representante-get").val();
+            let validatePromotoraLoja = $("#input-person-shop").val();
+
+            let arrayCompilate = [validateMonth, validateRepresentante, validatePromotoraLoja].indexOf('') > -1 ? true : false; //true: expaço vazio, false: sem expaço vazio
+            //Validando se os campos estão vazios
+            if(arrayCompilate == true){
+                //Espaço vazio
+                $.notification(
+                    ["Os campos precisam esta preenchidos antes de continuar"],
+                    {
+                        position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 5000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+            }else{
+                //Campos preenchidos
+
+                //Validando o campo de loja/promotora inseridos
+                //console.log([validateMonth, validatePromotoraLoja, validateRepresentante])
+                socket.emit('getRegistersPremiation', ([validateMonth, validatePromotoraLoja, validateRepresentante]))
+                //Resultado da validação
+                socket.on('getRegistersPremiationSend', (data) => {
+                    console.log(data.length)
+                    if( data.length == 0){
+                        //Não tem dados, podemos registrar
+                        $("#id-shop-promot").val(validatePromotoraLoja)
+                        $("#reference-month").val(validateMonth)
+
+                        $(".award-new-div-brand-title").css({'display':'flex','justify-content': 'space-between'})
+
+                        $("#award-new-title-box").fadeIn().css({'display':'flex'})
+                        $("#award-new-one").text(validatePromotoraLoja)
+                        $("#award-new-two").text(validateMonth)
+
+                        $.fn.loadSpin(0)
+                    }else{
+                        //Tem dados
+                        
+                        $("#award-new-alert-link-box").fadeIn().css({'display':'flex'})
+                        $("#award-new-alert-link").attr('href','/painel/trademkt/award/edit/'+data[0].jcv_award_registers_uuid)
+                        $.fn.loadSpin(0)
+                    }
+                    socket.removeListener('getRegistersPremiationSend')
+                })
+
+            }
+
+            $.fn.loadSpin(0)
+        }, 100);
+    } */
 
     //Configurando o input do mes
-    var options =  {
+    /* var options =  {
         onComplete: function(value) {
             //Chamando função
             validadeBoxs(value, $("#input-person-shop").val())
@@ -127,10 +416,11 @@
             //console.log(i.item.value)
             //processCloseBox(i.item.value)
             validadeBoxs($("#mask-month").val(), i.item.value)
+            validateInputs()
 
-            /* setTimeout(() => {
+            setTimeout(() => {
                 $("#input-item-amount").select()
-            }, 100); */
+            }, 100);
         }
     });
 
@@ -145,7 +435,7 @@
             moment(`${valueMonth.split('-')[1]}-${valueMonth.split('-')[0]}`).isBefore(moment().format('YYYY-MM')) == true ? displayStats('success',"#mask-month") : displayStats('error',"#mask-month")
         }
 
-        if(valueMonth,valuePersonShop == ''){
+        if(valueMonth == ''){
             $.fn.loadSpin(0)
             $.notification(
                 ["Os dois parametros são obrigatórios, preencha-os"],
@@ -166,7 +456,7 @@
                         //Não tem dados, podemos registrar
                         $("#id-shop-promot").val(valuePersonShop)
                         $("#reference-month").val(valueMonth)
-                        $("#award-new-suspend-section").fadeOut()
+                        //$("#award-new-suspend-section").fadeOut()
 
                         //$("#felps-award").text(valueMonth +' / '+valuePersonShop.split(' | ')[1])
                         $(".award-new-div-brand-title").css({'display':'flex','justify-content': 'space-between'})
@@ -188,13 +478,32 @@
             })
         }
 
-        
-
     }
 
     $("#input-person-shop").keyup(function(){
         $("#award-new-alert-link-box").fadeOut()
     })
+
+    
+    let validationTypes = JSON.parse('<%- setValidation %>');
+    if(validationTypes[0] == 1){
+        //é admin
+        let arrayDataOneRep = validationTypes[1]
+        //Auto completar input representante
+        $("#input-representante-get").autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(arrayDataOneRep, request.term);
+                response(results.slice(0, 5));
+            },
+            select: function (e, i) {
+                validateInputs()
+            }
+        });
+    }else{
+        //representante
+        $("#id-user-representante").val(null)
+    }
+    
 
     function displayStats(type, monthElement){
         if(type == 'success'){
@@ -208,6 +517,33 @@
             $(`${monthElement}`).css({'border':'1px solid var(--color-three)','outline':0})
         }
     }
+
+
+    //Função que valida os tres campos necessário!
+    function validateInputs(){
+        $.fn.loadSpin(1)
+        setTimeout(() => {
+            let validateMonth = $("#mask-month").val();
+            let validateRepresentante = $("#input-representante-get").val();
+            let validatePromotoraLoja = $("#input-person-shop").val();
+
+            let searchValues = [validateMonth, validateRepresentante, validatePromotoraLoja].indexOf('') >-1 ? true : false; //True achado campo vazio, false não achado
+            if(searchValues == true){
+                $.notification(
+                    ["Os campos precisam esta preenchidos antes de continuar"],
+                    {
+                        position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 5000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+            }else{
+                $("#award-new-suspend-section").fadeOut()
+            }
+            $.fn.loadSpin(0)
+        }, 100);
+    } */
     
 </script>
 <script>

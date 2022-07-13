@@ -52,6 +52,39 @@ exports.listNotificationsUser = async (req,res) => {
     .raw("SELECT * from jcv_notifications WHERE JSON_CONTAINS(jcv_notifications_usersId, '"+GLOBAL_DASH[0]+"', '$') ORDER BY jcv_notifications_id DESC LIMIT 50")
     .then( data => {return data[0]})
 
+    //Ja atualizando e dizendo que o usuario já leu
+
+    allNot.forEach(element => {
+        let validando = JSON.parse(element.jcv_notifications_users_view).indexOf(GLOBAL_DASH[0]);
+        
+        //console.log(convertion)
+        if(validando == -1){
+
+            let convert = []
+            if(JSON.parse(element.jcv_notifications_users_view).length == 0){
+                convert = [GLOBAL_DASH[0]]
+            }else{
+                let arr = JSON.parse(element.jcv_notifications_users_view)
+                arr.push(GLOBAL_DASH[0])
+                convert = arr
+            }
+
+            //Atualizar
+            database
+            .update({
+                jcv_notifications_users_view: JSON.stringify(convert)
+            })
+            .where({jcv_notifications_id: element.jcv_notifications_id, jcv_notifications_enabled: 1})
+            .table("jcv_notifications")
+            .then( data => {
+                //console.log('aaaaa')
+            }) 
+        }
+
+
+
+    });
+
     var page = "system/notifications";
     res.render("panel/index", {page: page, allNot: allNot})
 }

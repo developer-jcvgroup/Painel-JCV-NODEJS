@@ -88,8 +88,8 @@
                     <span><%= element.jcv_trade_shops_region %></span>
 
                     <% if(element.jcv_trade_shops_enabled == 1){ %>
-                        <% if(element.jcv_trade_shops_users > 1){ %>
-                            <span><b><%= element.jcv_trade_shops_users.split(',').length %></b> usuarios</span>
+                        <% if(JSON.parse(element.jcv_trade_shops_users) >= 1){ %>
+                            <span><b><%= JSON.parse(element.jcv_trade_shops_users).length %></b> usuarios</span>
                         <% }else{ %>
                             <span><b>Nenhum usuario..</b></span>
                         <% } %>
@@ -141,6 +141,15 @@
                 <div class="shop-edit-box-main-options">
                     <label for="">Região</label>
                     <select id="shop-edit-region">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                    </select>
+                </div>
+                <div class="shop-edit-box-main-options">
+                    <label for="">Representante</label>
+                    <select id="shop-manager-edit">
                         <!--  -->
                         <!--  -->
                         <!--  -->
@@ -319,32 +328,44 @@
                 socket.on("getInfoShopEditResult", (dataShop) => {
 
                     //Title
-                    $("#name-shop").text(dataShop[0].jcv_trade_shops_name_social)
+                    $("#name-shop").text(dataShop[0][0].jcv_trade_shops_name_social)
 
                     //Disabled checkbox
-                    $("#"+dataShop[0].jcv_trade_shops_id).prop('checked', false)
+                    $("#"+dataShop[0][0].jcv_trade_shops_id).prop('checked', false)
 
                     //Limpando todos os campos
                 
                     //Inserindo os dados e nome dos campos
-                    $("#shop-edit-cnpj-cpf").val(dataShop[0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0].jcv_trade_shops_id)
-                    $("#shop-social-name").val(dataShop[0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0].jcv_trade_shops_id)
-                    $("#shop-fantasy-name").val(dataShop[0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0].jcv_trade_shops_id)
+                    $("#shop-edit-cnpj-cpf").val(dataShop[0][0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0][0].jcv_trade_shops_id)
+                    $("#shop-social-name").val(dataShop[0][0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0][0].jcv_trade_shops_id)
+                    $("#shop-fantasy-name").val(dataShop[0][0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0][0].jcv_trade_shops_id)
 
-                    $("#shop-cep-shop").val(dataShop[0].jcv_trade_shops_cep).attr('name','shop-cep-edit-'+dataShop[0].jcv_trade_shops_id)
-                    $("#shop-number-shop").val(dataShop[0].jcv_trade_shops_number).attr('name','shop-number-edit-'+dataShop[0].jcv_trade_shops_id)
+                    $("#shop-cep-shop").val(dataShop[0][0].jcv_trade_shops_cep).attr('name','shop-cep-edit-'+dataShop[0][0].jcv_trade_shops_id)
+                    $("#shop-number-shop").val(dataShop[0][0].jcv_trade_shops_number).attr('name','shop-number-edit-'+dataShop[0][0].jcv_trade_shops_id)
                     
                     $("#shop-edit-region").empty().append(optionsRegion)
-                    $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0].jcv_trade_shops_region}'>${dataShop[0].jcv_trade_shops_region}</option>`)
+                    $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
+
+                    console.log(dataShop[2])
+                    //Gestor da loja
+                    $("#shop-manager-edit").empty()
+                    $("#shop-manager-edit").append(`
+                        <option value="${dataShop[2]}">${dataShop[2]}</option>
+                        <option disabled></option>
+                    `)
+                    dataShop[1].forEach(element => {
+                        $("#shop-manager-edit").append(`<option value="${element.jcv_userNamePrimary}">${element.jcv_userNamePrimary}</option>`)
+                    })
+                    $("#shop-manager-edit").attr('name','shop-manager-edit-'+dataShop[0][0].jcv_trade_shops_id)//.append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
 
                     $("#shop-edit-enabled").empty().append(`<option value='1'>Sim</option><option value='0'>Não</option><option disabled></option>`)
-                    if(dataShop[0].jcv_trade_shops_enabled == 1){
-                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='1'>Sim</option>`)
+                    if(dataShop[0][0].jcv_trade_shops_enabled == 1){
+                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='1'>Sim</option>`)
                     }else{
-                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0].jcv_trade_shops_id).append(`<option selected value='0'>Não</option>`)
+                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='0'>Não</option>`)
                     }
 
-                    $("#shop-button-send-data").val(dataShop[0].jcv_trade_shops_id)
+                    $("#shop-button-send-data").val(dataShop[0][0].jcv_trade_shops_id)
 
                     $.fn.verifyCep()//Verificando cep
                 })

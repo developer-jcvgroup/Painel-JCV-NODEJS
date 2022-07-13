@@ -36,6 +36,20 @@
     margin-right: 8px;
 }
 
+/*  */
+.award-new-div-brand-row-title{
+    margin-top: 23px;
+    display: flex;
+    white-space: normal;
+    align-items: center;
+}
+.award-new-div-brand-row-title span{
+    font-size: 1rem;
+    color: var(--color-red);
+}
+
+/*  */
+
 .award-new-div-brand{
     width: 100%;
     margin-bottom: 28px;
@@ -55,6 +69,26 @@
 }
 .award-new-div-brand-title{
     font-size: 1rem;
+}
+
+/*  */
+.award-new-message{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 14px 0;
+    white-space: normal;
+    line-height: 2;
+    height: fit-content;
+    text-align: center;
+    justify-content: center;
+}
+.award-new-message span{
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    color: var(--color-red);
+    animation: msgAlert 2s infinite;
 }
 
 /*  */
@@ -118,11 +152,18 @@
 .award-new-suspend-title{
     width: 100%;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 29px;
 }
 .award-new-suspend-title span{
     font-size: 1.3rem;
     color: var(--color-two);
+}
+.award-new-suspend-title a{
+    font-size: 1.5rem;
+    color: var(--color-one);
+    text-decoration: none;
 }
 .award-new-suspend-content{
     width: 100%;

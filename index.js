@@ -228,7 +228,25 @@ io.on('connection', (socket) => {
         .select()
         .where({jcv_trade_shops_id: data})
         .table("jcv_trade_shops")
-        .then( data => { socket.emit("getInfoShopEditResult", data) })
+        .then( data => { 
+
+            //Pegando todos os representantes
+            database
+            .select('jcv_userNamePrimary','jcv_id')
+            .where({jcv_userEnabled: 1, jcv_userCassification: 4})
+            .table("jcv_users")
+            .then( dataRepre => {
+                //Pegando o representante desta loja
+
+                const searchIndex = dataRepre.findIndex((valueGet) => valueGet.jcv_id==data[0].jcv_trade_shops_manager);
+                let userManager = typeof(dataRepre[searchIndex]) == 'undefined' ? '' : dataRepre[searchIndex].jcv_userNamePrimary
+
+                //let userManager = b;//Object.keys(object).find(key => object[key] === value)
+                //Object.values(dataRepre[0]).indexOf(data[0].jcv_trade_shops_manager) == -1 ? '' : Object.values(dataRepre[0]).indexOf(data[0].jcv_trade_shops_manager)
+
+                socket.emit("getInfoShopEditResult", ([data, dataRepre, userManager]))   
+            })
+        })
     })
 
     socket.on("getInfoUserProfile", (dataGet) => {
@@ -330,66 +348,169 @@ io.on('connection', (socket) => {
         })
     })
 
-    socket.on('getRegistersPremiation', (data) => {
+    socket.on('searchRepresentante', async(data) => {
+        const getInfoUser = await database
+        .select('jcv_id')
+        .where({jcv_userNamePrimary: data})
+        .table("jcv_users")
+        .then( dataSearch =>{return dataSearch})
 
-        //Validando as informaçõe recebidas
-        let monthValidadtion = data[0]
+        if(getInfoUser.length == 0){
+            //Usuario não encontrado
+        }else{
+            //Usuario encontrado
 
-        let subValidadtion = data[1].split(' | ')
-        let typeSerchValidation = subValidadtion[0] == 'LOJA' ? [1,subValidadtion[1]] : [2,subValidadtion[1]] 
-        
-        if(typeSerchValidation[0] == 1){
-            //Buscar loja
-
-            //Pegando o id da loja
-            database
-            .select('jcv_trade_shops_id')
-            .where({jcv_trade_shops_name_fantasy: typeSerchValidation[1]})
+            //Pegando as lojas
+            let getShop = await database
+            .select('jcv_trade_shops_name_fantasy')
+            .whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${getInfoUser[0].jcv_id}', '$') AND jcv_trade_shops_enabled = 1`)
+            //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
             .table("jcv_trade_shops")
             .then( data => {
-
-                //PEgando o registro de relatorio
-                database
-                .select('jcv_award_registers_uuid')
-                .where({jcv_award_registers_id_registred: data[0].jcv_trade_shops_id, jcv_award_registers_type: typeSerchValidation[0], jcv_award_registers_month: monthValidadtion})
-                .table("jcv_award_registers")
-                .then( dataTwo => {
-                    socket.emit('getRegistersPremiationSend', (dataTwo))
-                })
-
+                return data
             })
 
-            
-        }else{
-            //Buscar Promotora
+            //console.log(getShop)
 
-            //Pegando o id da promotora e validando
-            database
-            .select('jcv_id')
-            .where({jcv_userNamePrimary: typeSerchValidation[1]})
+            //Pegando as promotoras
+            let getPromot = await database
+            .select('jcv_userNamePrimary')
+            .where({jcv_userManager: getInfoUser[0].jcv_id})
             .table("jcv_users")
             .then( data => {
-
-                //PEgando o registro de relatorio
-                database
-                .select()
-                .where({jcv_award_registers_id_registred: data[0].jcv_id, jcv_award_registers_type: typeSerchValidation[0], jcv_award_registers_month: monthValidadtion})
-                .table("jcv_award_registers")
-                .then( dataTwo => {
-                    socket.emit('getRegistersPremiationSend', (dataTwo))
-                })
-
+                //console.log(data)
+                return data
             })
+
+            /*  */
+            letNewArrayData = [];
+            if(getPromot != ''){
+                getPromot.forEach(element => {
+                    letNewArrayData.push(`PROMOTOR(A) | ${element.jcv_userNamePrimary}`)
+                });
+            }
+            if(getShop != ''){
+                getShop.forEach(element => {
+                    letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
+                });
+            }
+            /*  */
+
+            //Enviando o resultado
+            socket.emit('searchRepresentanteGet', [letNewArrayData,getInfoUser])
 
             
         }
-        /* database
-        .select()
-        .where({jcv_sys_products_id: data})
-        .table("jcv_sys_products")
-        .then( data => {
-            socket.emit('productGetInfoGet', (data))
-        }) */
+    })
+
+    socket.on('getRegistersPremiation', async (data) => {
+
+        //Validando as informaçõe recebidas
+        let monthValidadtion = data[0];
+        let lojaPromotValidation = data[1];
+        let representanteValidation = data[2];
+        //console.log([monthValidadtion, lojaPromotValidation, representanteValidation])
+
+        let subValidadtion = lojaPromotValidation.split(' | ') 
+        let typeSerchValidation = subValidadtion[0] == 'LOJA' ? [1,subValidadtion[1]] : [2,subValidadtion[1]] 
+
+        //Pegando informações do representante
+        const getRepresentante = await database
+        .select('jcv_id')
+        .where({jcv_id: representanteValidation})
+        .table("jcv_users")
+        .then( data => {return data})
+
+        if(getRepresentante.length == 0){
+            //Representante não encontrado
+            socket.emit('getRegistersPremiationSend', null)
+        }else{
+            if(typeSerchValidation[0] == 1){
+                //Buscar loja
+    
+                //Pegando o id da loja
+                database
+                .select('jcv_trade_shops_id')
+                .where({jcv_trade_shops_name_fantasy: typeSerchValidation[1]})
+                .table("jcv_trade_shops")
+                .then( data => {
+    
+                    //Pegando o registro de relatorio
+                    database
+                    .select('jcv_award_registers_uuid')
+                    .where({
+                        jcv_award_registers_id_registred: data[0].jcv_trade_shops_id, 
+                        jcv_award_registers_type: typeSerchValidation[0], 
+                        jcv_award_registers_month: monthValidadtion, 
+                        jcv_award_registers_id_manager: getRepresentante[0].jcv_id
+                    })
+                    .table("jcv_award_registers")
+                    .then( dataTwo => {
+                        socket.emit('getRegistersPremiationSend', (dataTwo))
+                    })
+    
+                })
+    
+                
+            }else{
+                //Buscar Promotora
+    
+                //console.log(typeSerchValidation[1])
+                //Pegando o id da promotora e validando
+                database
+                .select('jcv_id')
+                .where({jcv_userNamePrimary: typeSerchValidation[1]})
+                .table("jcv_users")
+                .then( data => {
+                    //console.log(typeSerchValidation)
+                    //PEgando o registro de relatorio
+                    database
+                    .select()
+                    .where({
+                        jcv_award_registers_id_registred: data[0].jcv_id, 
+                        jcv_award_registers_type: typeSerchValidation[0], 
+                        jcv_award_registers_month: monthValidadtion,
+                        jcv_award_registers_id_manager: getRepresentante[0].jcv_id
+                    })
+                    .table("jcv_award_registers")
+                    .then( dataTwo => {
+                        //console.log(dataTwo)
+                        socket.emit('getRegistersPremiationSend', (dataTwo))
+                    })
+    
+                })
+            }
+        }
+    })
+
+    socket.on('searchRegisterPromotoras', async(data) => {
+
+        let month = data[0]
+        let idUser = data[1]
+        //Buscando
+
+        //Primeiro validando se possui o registro
+        const getRegisters = await database
+        .raw(`
+
+        select a.*, e.jcv_userNamePrimary, d.jcv_userNameSecundary from jcv_award_registers a 
+        inner join jcv_users e on e.jcv_id = a.jcv_award_registers_id_manager 
+        inner join jcv_users d on d.jcv_id = a.jcv_award_registers_id_registred where a.jcv_award_registers_id_registred = ${idUser} and a.jcv_award_registers_type = 2 and 
+        a.jcv_award_registers_month = '${month}'
+
+        `)
+        .then( data => {return data[0].length == 0 ? null : data[0]})
+
+        if(getRegisters == null){
+            //Erro ao procurar
+            socket.emit('searchRegisterPromotorasGet', null)
+        }else{
+            //Encontrado
+            socket.emit('searchRegisterPromotorasGet', getRegisters)
+        }
+
+        //console.log(getRegisters)
+
     })
 })
 
@@ -486,6 +607,7 @@ app.get('/style/teste', (req,res) => {
 
 //Require do painel
 const jcvPanel = require("./panel/app");
+const { Socket } = require("dgram");
 app.use("/painel", jcvPanel);
 
 http.listen(8080, () =>{

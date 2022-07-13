@@ -20,7 +20,7 @@ exports.controllerMain = async (req,res) =>{
 
     //Pegando as permissões
     const getPerm = await database
-    .select("sys_tra_perm_use","sys_tra_perm_admin")
+    .select("sys_tra_perm_use","sys_tra_perm_admin","sys_tra_premiation_use","sys_tra_premiation_admin")
     .where({sys_perm_idUser: GLOBAL_DASH[0]})
     .table("jcv_users_permissions")
     .then(data => {
@@ -1326,6 +1326,18 @@ exports.shopsRegisterEdit = async (req,res) => {
     const cepShop = req.body['shop-cep-edit-'+id] == '' ? null : req.body['shop-cep-edit-'+id]
     const numberShop = req.body['shop-number-edit-'+id] == '' ? null :req.body['shop-number-edit-'+id]
 
+    const managerShop = req.body['shop-manager-edit-'+id] == '' ? null : req.body['shop-manager-edit-'+id]
+
+    const getInfoUser = await database
+    .select('jcv_id')
+    .where({jcv_userNamePrimary: managerShop})
+    .table("jcv_users")
+    .then( data => {
+        return data[0].jcv_id == '' ? null : data[0].jcv_id
+    })
+
+    //console.log(getInfoUser)
+
     //Pegando a lat long das lojas com base no cep
     var latLong = null;
     if(cepShop != ''){
@@ -1351,7 +1363,7 @@ exports.shopsRegisterEdit = async (req,res) => {
     }
 
 
-    if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != ''){
+    if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != '' && getInfoUser != null){
         database
         .update({
             jcv_trade_shops_cnpj: cpnjShop,
@@ -1362,7 +1374,9 @@ exports.shopsRegisterEdit = async (req,res) => {
 
             jcv_trade_shops_cep: cepShop,
             jcv_trade_shops_number: numberShop,
-            jcv_trade_shops_latLong: latLong
+            jcv_trade_shops_latLong: latLong,
+
+            jcv_trade_shops_manager: getInfoUser
         })
         .where({jcv_trade_shops_id: id})
         .table("jcv_trade_shops")
@@ -1377,7 +1391,7 @@ exports.shopsRegisterEdit = async (req,res) => {
         })
     }else{
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Você precisa colocar mais informações!","timeMsg": 3000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"<b>CNPJ</b>, <b>Nome Social</b>, <b>Nome Fantasia</b>, <b>Representante</b> estão inválidos!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/shops");
     }
 
@@ -1546,9 +1560,13 @@ exports.configShops = async (req,res) => {
 
     let newArrUsersSet = []
     if(allUsersShops[0].jcv_trade_shops_users != null || allUsersShops[0].jcv_trade_shops_users == ''){
+
+        //console.log(JSON.parse(allUsersShops[0].jcv_trade_shops_users))
+        
+        //let arrayString = (.join(','))
         const getAllUsersData = await database
         .select("jcv_id","jcv_userNamePrimary")
-        .whereRaw("jcv_id in ("+allUsersShops[0].jcv_trade_shops_users+")")
+        .whereIn("jcv_id", JSON.parse(allUsersShops[0].jcv_trade_shops_users))
         .table("jcv_users")
         //.join("jcv_users_permissions","jcv_users.jcv_id","jcv_users_permissions.sys_perm_idUser")
         .then( data => {return data})
@@ -1564,7 +1582,7 @@ exports.configShops = async (req,res) => {
 }
 
 exports.saveSetUsers = async (req,res) => {
-    const allUsers = typeof(req.body['shop-config-set-persons']) == 'object' ? req.body['shop-config-set-persons'] : [req.body['shop-config-set-persons']];
+    const allUsers = typeof(req.body['shop-config-set-persons']) == 'object' ? req.body['shop-config-set-persons'].map(function(value){return parseInt(value)}) : [parseInt(req.body['shop-config-set-persons'])];
     const idShop = req.body['shop-config-id-shop'];
 
     //Pegando o nome da loja
@@ -1576,11 +1594,13 @@ exports.saveSetUsers = async (req,res) => {
         return data;
     })
 
+    //console.log(allUsers)
+
     if(allUsers != ''){
 
         database
         .update({
-            jcv_trade_shops_users: allUsers.join()
+            jcv_trade_shops_users: JSON.stringify(allUsers)
         })
         .where({jcv_trade_shops_id: idShop})
         .table("jcv_trade_shops")
@@ -1818,7 +1838,7 @@ exports.deleteFPform = async (req,res) => {
             .where({jcv_trade_form_res_formId: idForm})
             .table("jcv_trade_form_response")
             .then( data => {
-                if(data > 0){
+                if(data == 0){
 
                     //Zerando as respostas
                     database
