@@ -16,14 +16,14 @@
     let statusGet = {
         '0': 'Não Preenchido',
         '1': 'Preenchido',
-        '2': '<b style="color: var(--color-red)">Fechados</b>'
+        '2': '<b style="color: var(--color-red)">Fechado</b>'
     }
     
     %>
 
     <div class="award-new-title-box">
         <span style="font-size: 1.3rem;"><%= getName %></span>
-        <span style="font-size: 0.9rem; margin-left: 9px;"><%= getValidation[0].jcv_award_registers_month %> / <%= statusGet[getValidation[0].jcv_award_registers_status] %> </span>
+        <span style="font-size: 0.9rem; margin-left: 9px;"><%= getValidation[0].jcv_award_registers_month %> / <%- statusGet[getValidation[0].jcv_award_registers_status] %> </span>
     </div>
 
     <form method="post" class="award-new-div-main">
