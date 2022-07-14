@@ -86,88 +86,87 @@
                     </div>
                 </div>
                 <% } %>
-
+                <!--  -->
                 <% if(GLOBAL_PERM[0].sys_blz_perm_use == 1){ %>
-                <div class="suspended-blocks-container">
-                    <div class="suspended-container-center">
-                        <div class="suspended-title-boxs">
-                            <span>Programa da Beleza</span>
-                        </div>
-
-                        <% 
-                                        
-                        let newObjStatus = {
-                            0: 'Solicitação Pendente',
-                            1: 'Solicitado',
-                            2: 'Cancelado',
-                            3: 'Em separação',
-                            4: 'Separado',
-                            5: 'Despachado',
-                            6: 'Recebido pelo gestor',
-                            7: 'Finalizado'
-                        }
-
-                        %>
-
-                        <div class="home-main-suspended-box">
-                            <div class="main-suspended-info">
-                                <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
-                                    <div class="sys-icon-def">
-                                        <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
-                                    </div>
-                                    <span>⠀</span>
-                                    <span><%= system_blz_status == '' ? 'Solicitação pendente' : newObjStatus[system_blz_status] %> <i class="ri-external-link-line"></i></span>
-                                </a>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title-boxs">
+                                <span>Programa da Beleza</span>
                             </div>
+                
+                            <% 
+                                            
+                            let newObjStatus = {
+                                0: 'Solicitação Pendente',
+                                1: 'Solicitado',
+                                2: 'Cancelado',
+                                3: 'Em separação',
+                                4: 'Separado',
+                                5: 'Despachado',
+                                6: 'Recebido pelo gestor',
+                                7: 'Finalizado'
+                            }
+                
+                            %>
+                
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/beleza/solicitar">
+                                        <div class="sys-icon-def">
+                                            <img class="sys-icon-size" src="/icons/icon-progama-da-beleza.png" alt="">
+                                        </div>
+                                        <span>⠀</span>
+                                        <span><%= system_blz_status == '' ? 'Solicitação pendente' : newObjStatus[system_blz_status] %> <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                            
                         </div>
-                        
                     </div>
-                </div>
                 <% } %>
-
+                <!--  -->
                 <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1){ %>
-
                     <% if(GLOBAL_PERM[0].sys_tra_premiation_use == 1 || GLOBAL_PERM[0].sys_tra_premiation_admin == 1){ %>
-                    <div class="suspended-blocks-container">
-                        <div class="suspended-container-center">
-                            <div class="suspended-title-boxs">
-                                <span>Informe de premiação</span>
-                            </div>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/list">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Lista de Informes<i class="ri-external-link-line"></i></span>
-                                    </a>
+                        <div class="suspended-blocks-container">
+                            <div class="suspended-container-center">
+                                <div class="suspended-title-boxs">
+                                    <span>Informe de premiação</span>
+                                </div>
+                                <div class="home-main-suspended-box">
+                                    <div class="main-suspended-info">
+                                        <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/list">
+                                            <div class="sys-icon-def">
+                                                <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
+                                            </div>
+                                            <span>⠀</span>
+                                            <span>Lista de Informes<i class="ri-external-link-line"></i></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <% }else{ %>
-                    <div class="suspended-blocks-container">
-                        <div class="suspended-container-center">
-                            <div class="suspended-title-boxs">
-                                <span>Informe de premiação</span>
-                            </div>
-                            <div class="home-main-suspended-box">
-                                <div class="main-suspended-info">
-                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/mylist">
-                                        <div class="sys-icon-def">
-                                            <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
-                                        </div>
-                                        <span>⠀</span>
-                                        <span>Meus Informes<i class="ri-external-link-line"></i></span>
-                                    </a>
+                        <div class="suspended-blocks-container">
+                            <div class="suspended-container-center">
+                                <div class="suspended-title-boxs">
+                                    <span>Informe de premiação</span>
+                                </div>
+                                <div class="home-main-suspended-box">
+                                    <div class="main-suspended-info">
+                                        <a class="main-suspended-group-info class-loader" href="/painel/trademkt/award/mylist">
+                                            <div class="sys-icon-def">
+                                                <img class="sys-icon-size" src="/icons/icon-premiation.png" alt="">
+                                            </div>
+                                            <span>⠀</span>
+                                            <span>Meus Informes<i class="ri-external-link-line"></i></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <% } %>
                 <% } %>
-
+                <!--  -->
                 <% if(GLOBAL_PERM[0].sys_req_perm_use == 1){ %>
                     <div class="suspended-blocks-container">
                         <div class="suspended-container-center">
@@ -201,8 +200,8 @@
                             <% } %>
                         </div>
                     </div>
-                    <% } %>
-
+                <% } %>
+                <!--  -->
                 <% if(GLOBAL_PERM[0].sys_tra_perm_use == 1 || GLOBAL_PERM[0].sys_tra_perm_admin == 1){ %>
                     <div class="suspended-blocks-container">
                         <div class="suspended-container-center">
@@ -224,7 +223,34 @@
                         </div>
                     </div>
                 <% } %>
+                <!--  -->
+                <% if(GLOBAL_PERM[0].sys_courses_perm_admin == 1 || GLOBAL_PERM[0].sys_courses_perm_manager == 1){ %>
+                    <div class="suspended-blocks-container">
+                        <div class="suspended-container-center">
+                            <div class="suspended-title-boxs">
+                                <span>Cursos & Treinamentos</span>
+                            </div>
+                            
+                            <div class="home-main-suspended-box">
+                                <div class="main-suspended-info">
+                                    <a class="main-suspended-group-info class-loader" href="/painel/trademkt/main">
+                                        <div class="sys-icon-def">
+                                            <img class="sys-icon-size" src="/icons/icon-courses.png" alt="">
+                                        </div>
+                                        <span>⠀</span>
+                                        <span>Acessar <i class="ri-external-link-line"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+                
             </div>
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
             <div class="home-display-grapics-main">
                 <% if(GLOBAL_PERM[0].sys_blz_perm_manager == 1 || GLOBAL_PERM[0].sys_blz_perm_admin == 1){ %>
                     <div class="home-grapics-system">
