@@ -68,9 +68,20 @@ exports.cursosNew = async (req,res) => {
             return value.jcv_userNamePrimary;
         })
     })
+
+    //Pegando os modelos de certificados
+    const getModels = await databaseCertificates
+    .select()
+    .where({jcv_models_certificates_enabled: 1})
+    .table("jcv_models_certificates")
+    .then( data => {return data})
     
     var page = "cursos/cursosNew";
-    res.render("panel/index", {page: page, getAllUsers: getAllUsers})
+    res.render("panel/index", {
+        page: page, 
+        getAllUsers: getAllUsers,
+        getModels: getModels
+    })
 }
 
 exports.saveNewCourse = async (req,res) => {
@@ -84,6 +95,7 @@ exports.saveNewCourse = async (req,res) => {
     const courseDescription = req.body['course-description']
     const courseTextCertificate = req.body['course-text-certificate']
     const courseType = req.body['course-type']
+    const courseModel = req.body['input-select-model'];
 
     //Validando o instrutor
     await database
@@ -99,7 +111,14 @@ exports.saveNewCourse = async (req,res) => {
         }
     })
 
-    if(courseManager != undefined){
+    //Validando o modelo
+    const validateModel = await databaseCertificates
+    .select()
+    .where({jcv_models_certificates_id: courseModel})
+    .table("jcv_models_certificates")
+    .then( data => {return data})
+
+    if(courseManager != undefined && validateModel != ''){
         if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseType,courseStatus != ''){
         
             //Podemos cadastrar o curso
@@ -115,7 +134,8 @@ exports.saveNewCourse = async (req,res) => {
                 jcv_course_description: courseDescription,
                 jcv_course_status: parseInt(courseStatus),
                 jcv_course_uuid: uuid.v1(),
-                jcv_course_text: courseTextCertificate
+                jcv_course_text: courseTextCertificate,
+                jcv_course_certificate_model_id: validateModel[0].jcv_models_certificates_id
             })
             .table("jcv_course")
             .then( data => {
@@ -132,7 +152,7 @@ exports.saveNewCourse = async (req,res) => {
             res.redirect("/painel/cursos/new");
         }
     }else{
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado","timeMsg": 3000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado ou modelo de certificado não encontrado","timeMsg": 6000}`);
         res.redirect("/painel/cursos/new");
     }
     
@@ -178,8 +198,21 @@ exports.cursosEdit = async (req,res) => {
             return objNew
         })
 
+        //Pegando os modelos de certificados
+        const getModels = await databaseCertificates
+        .select()
+        .where({jcv_models_certificates_enabled: 1})
+        .table("jcv_models_certificates")
+        .then( data => {return data})
+
         var page = "cursos/cursosEdit";
-        res.render("panel/index", {page: page, allInfo: validadeDitGet, getAllUsers: getAllUsers, getAllUsersObj: getAllUsersObj})
+        res.render("panel/index", {
+            page: page, 
+            allInfo: validadeDitGet, 
+            getAllUsers: getAllUsers, 
+            getAllUsersObj: getAllUsersObj,
+            getModels: getModels
+        })
 
     }else{
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Nenhum curso encontrado!");
@@ -202,6 +235,7 @@ exports.saveEditCourse = async (req,res) => {
     const courseDescription = req.body['course-description']
     const courseTextCertificate = req.body['course-text-certificate']
     const courseType = req.body['course-type']
+    const courseModel = req.body['input-select-model']
 
     //Validando o instrutor
     await database
@@ -218,7 +252,15 @@ exports.saveEditCourse = async (req,res) => {
     })
 
 
-    if(courseManager != undefined){
+    //Validando o modelo
+    const validateModel = await databaseCertificates
+    .select()
+    .where({jcv_models_certificates_id: courseModel})
+    .table("jcv_models_certificates")
+    .then( data => {return data})
+
+
+    if(courseManager != undefined && validateModel != ''){
         if(courseName,courseTotalHours,courseManager,courseBrand,courseInitial,courseStatus != ''){
         
             //Podemos cadastrar o curso
@@ -233,7 +275,8 @@ exports.saveEditCourse = async (req,res) => {
                 jcv_course_initial_date: courseInitial,
                 jcv_course_description: courseDescription,
                 jcv_course_status: courseStatus,
-                jcv_course_text: courseTextCertificate
+                jcv_course_text: courseTextCertificate,
+                jcv_course_certificate_model_id: validateModel[0].jcv_models_certificates_id
             })
             .where({jcv_course_id: courseId})
             .table("jcv_course")
@@ -251,7 +294,7 @@ exports.saveEditCourse = async (req,res) => {
             res.redirect("/painel/cursos/edit/"+courseId);
         }
     }else{
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado","timeMsg": 3000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Instrutor não encontrado ou modelo do certificado não encontrado","timeMsg": 6000}`);
         res.redirect("/painel/cursos/edit/"+courseId);
     }
 }

@@ -52,7 +52,7 @@
 .cursos-new-box{
     display: flex;
     flex-direction: column;
-    margin: 4px 0;
+    margin: 9px 0;
     white-space: normal;
 }
 .cursos-new-box label{
@@ -78,6 +78,37 @@
     cursor: pointer;
     color: var(--color-one);
     background: transparent;
+}
+
+.cursos-new-box-models-content{
+    display: flex;
+    align-items: center;
+}
+.cursos-new-box-models{
+    width: 150px;
+    padding: 19px;
+    border: 1px solid var(--color-seven);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 12px;
+}
+.cursos-new-box-models label{
+    font-size: 0.9rem;
+}
+.cursos-new-box-models img{
+    width: 100%;
+    object-fit: contain;
+    margin-left: 12px;
+}
+.cursos-new-box-models input[type=radio]{
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 5%;
+    left:5%;
+    cursor: pointer;
 }
 
 /*  */

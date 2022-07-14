@@ -62,6 +62,23 @@
                 <input required style="width: fit-content;" value="<%= allInfo[0].jcv_course_initial_date %>" type="datetime-local" name="course-initial" id="">
             </div>
             <!--  -->
+            <div class="cursos-edit-box">
+                <label for="">Modelo de certificado</label>
+                <div class="cursos-edit-box-models-content">
+                    <% getModels.forEach(element => { %>
+                        <div class="cursos-edit-box-models">
+                            <% if(allInfo[0].jcv_course_certificate_model_id == element.jcv_models_certificates_id){ %>
+                                <input checked type="radio" value="<%= element.jcv_models_certificates_id %>" name="input-select-model" id="input-check-id-<%= element.jcv_models_certificates_id %>">
+                            <% }else{ %>
+                                <input type="radio" value="<%= element.jcv_models_certificates_id %>" name="input-select-model" id="input-check-id-<%= element.jcv_models_certificates_id %>">
+                            <% } %>
+                            <label for=""><%= element.jcv_models_certificates_name %></label>
+                            <img src="https://certificados.jcv.net.br/<%= element.jcv_models_certificates_directory %>" id="model-certiificate-id-<%= element.jcv_models_certificates_id %>">
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            <!--  -->
             <% if(allInfo[0].jcv_course_status != 4 ){ %>
                 <div class="cursos-edit-box">
                     <label for="">Status</label>

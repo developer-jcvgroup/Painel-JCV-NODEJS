@@ -51,6 +51,19 @@
             </div>
             <!--  -->
             <div class="cursos-new-box">
+                <label for="">Modelo de certificado</label>
+                <div class="cursos-new-box-models-content">
+                    <% getModels.forEach(element => { %>
+                        <div class="cursos-new-box-models">
+                            <input type="radio" value="<%= element.jcv_models_certificates_id %>" name="input-select-model" id="input-check-id-<%= element.jcv_models_certificates_id %>">
+                            <label for=""><%= element.jcv_models_certificates_name %></label>
+                            <img src="https://certificados.jcv.net.br/<%= element.jcv_models_certificates_directory %>" id="model-certiificate-id-<%= element.jcv_models_certificates_id %>">
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            <!--  -->
+            <div class="cursos-new-box">
                 <label for="">Status</label>
                 <select required name="course-status">
                     <option value="1">Ativo</option>
