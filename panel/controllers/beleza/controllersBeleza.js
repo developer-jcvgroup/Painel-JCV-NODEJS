@@ -288,7 +288,7 @@ exports.searchRequests = async (req,res) => {
     
 
     let referenceDate = typeof(req.body['sys-filter-name-date']) == 'object' ? 'in ('+convertStringNow()+')' : req.body['sys-filter-name-date'] == undefined ? '= "'+getMonthReferece()+'"' : `= "${req.body['sys-filter-name-date']}"`;
-
+    
     let blzStatus = req.body['sys-filter-name-status'] != undefined ? req.body['sys-filter-name-status'] == 0 ?  0 : 'in ('+req.body['sys-filter-name-status']+')' : "= 1";
 
     let listUnitys = req.body['sys-filter-name-unidade'] != undefined ? 'in ('+req.body['sys-filter-name-unidade']+')' : "LIKE '%%'";

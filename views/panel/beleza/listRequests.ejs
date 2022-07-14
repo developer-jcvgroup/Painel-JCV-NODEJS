@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/panel/css/beleza/listRequests.css">
+<script src="/js/global/jquery.mask.min.js"></script>
+
 <section class="requests-container-main">
     <section class="requests-container-page">
         <div class="requests-container-identify-page">
@@ -16,22 +18,11 @@
                             <div class="request-form-box">
                                 <label for="">Referência</label>
                                 <select id="date-select-filter">
-                                    <option selected></option>
-                                    <option value="<%= monthReference %>">Ref. Atual (<%= monthReference %>)</option>
+                                    <option selected value="<%= monthReference %>">Ref. Atual (<%= monthReference %>)</option>
                                     <option disabled> </option>
-                                    <option value="01-<%= yearNow %>">Janeiro</option>
-                                    <option value="02-<%= yearNow %>">Fevereiro</option>
-                                    <option value="03-<%= yearNow %>">Março</option>
-                                    <option value="04-<%= yearNow %>">Abril</option>
-                                    <option value="05-<%= yearNow %>">Maio</option>
-                                    <option value="06-<%= yearNow %>">Junho</option>
-                                    <option value="07-<%= yearNow %>">Julho</option>
-                                    <option value="08-<%= yearNow %>">Agosto</option>
-                                    <option value="09-<%= yearNow %>">Setembro</option>
-                                    <option value="10-<%= yearNow %>">Outubro</option>
-                                    <option value="11-<%= yearNow %>">Novembro</option>
-                                    <option value="12-<%= yearNow %>">Dezembro</option>
+                                    <option value="other">Outro mês</option>
                                 </select>
+                                <input style="display: none;" type="text" id="date-insert-dinamic" placeholder="EX.: 06-2022">
                             </div>
                             <div class="request-form-box">
                                 <label for="">Status</label>
@@ -45,7 +36,7 @@
                                     <!-- <option value="4">Separados</option> -->
                                     <option value="5">Despachados</option>
                                     <option value="6">Recebido pelo gestor</option>
-                                    <!-- <option value="7">Finalizado</option> -->
+                                    <option value="7">Finalizado</option>
                                 </select>
                             </div>
                             <div class="request-form-box">
@@ -305,6 +296,15 @@ $(function(){
     //Validando se existe filtro: //1° elemento pai que receber os boxs, 2° os filtros que eu vou buscar
     $.fn.searchFiltersCookies("sys-filter-display-main","sys-filter-component-boxs", ['Unidade','Gestor','Status']) */
     
+    var options =  {
+        onComplete: function(value) {
+            $.fn.loadSpin(1)
+            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','date-insert-dinamic','sys-filter-name-date','Data', 'JCVMOD02');
+            $("#date-insert-dinamic").val('')
+            $.fn.loadSpin(0)
+        },
+    };
+    $("#date-insert-dinamic").mask("00-0000", options)
    
 
     //Check select tr
@@ -385,8 +385,20 @@ function buttonFilterGestor(idButton){
 
         //Adicionando um filtro: Data
         $("select#date-select-filter").change(function(){
-            //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
-            $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','date-select-filter','sys-filter-name-date','Data', 'JCVMOD02');
+
+            if($("#date-select-filter").val() == 'other'){
+                $.fn.loadSpin(1)
+                //Escolher outro mes
+                $("#date-select-filter").fadeOut()
+                setTimeout(() => {
+                    $("#date-insert-dinamic").fadeIn()
+                    $.fn.loadSpin(0)
+                }, 400);
+            }else{
+                //Mes atual
+                //1° o display principal, 2° o component box, 3° select em que deu origem a tudo, 4° a TAG NAME do select (ex: sys-select-pass), 5° Identificação (Unidade, Gestor, etc), 6° App de origem destes filtros
+                $.fn.systemAddFiltersDinamics('sys-filter-display-main','sys-filter-component-boxs','date-select-filter','sys-filter-name-date','Data', 'JCVMOD02');
+            }
         })
 
         $.fn.searchFiltersDinamics('JCVMOD02','sys-filter-display-main','sys-filter-component-boxs');//Buscando todos os filtros deste app {1° App, 2° Display main (1°), 2° Display content (2°)}
