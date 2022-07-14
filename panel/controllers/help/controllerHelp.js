@@ -220,6 +220,20 @@ exports.helpArticle = async (req,res) => {
     .then( data => {return data})
 
     if(getArticles != ''){
+
+        //Update na contagem de clicks
+        database
+        .update({
+            jcv_articles_clicks: getArticles[0].jcv_articles_clicks == '' ? 1 : getArticles[0].jcv_articles_clicks +1
+        })
+        .where({
+            jcv_articles_id: getArticles[0].jcv_articles_id
+        })
+        .table("jcv_articles")
+        .then( dataUp => {
+            //console.log(dataUp)
+        })
+
         const getCategories = await database
         .select()
         .where({jcv_articles_category_id: getArticles[0].jcv_articles_category})
