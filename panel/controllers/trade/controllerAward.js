@@ -28,60 +28,88 @@ exports.moduleAwardNew = async (req,res) => {
     getPermissions.sys_tra_premiation_use == 1 ? getPermissions.sys_tra_premiation_admin == 1 ? permissionAdmin() : permissionRepresentante() : getPermissions.sys_tra_premiation_admin == 1 ? permissionAdmin() : permissionRepresentante()
 
     async function permissionRepresentante(){
-        //console.log('Acessando como representante')
-        //Pegando os parametros de preenchimento de cada marca
-        const getParams = await database
+
+        //Validando se está no prazo
+        const getValidationPrazo = await database
         .select()
-        .table("jcv_award_params_brand")
-        .then( data => {return data})
+        .where({jcv_award_date_insert_id: 1})
+        .table("jcv_award_date_insert")
+        .then( data => {return data[0]})
 
+        let first = getValidationPrazo.jcv_award_date_insert_first;
+        let last = getValidationPrazo.jcv_award_date_insert_last;
+        let dateGet = moment().format("YYYY-MM-DD");
 
-        //Pegando as lojas
-        let getShop = await database
-        .select('jcv_trade_shops_name_fantasy')
-        .whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${GLOBAL_DASH[0]}', '$') AND jcv_trade_shops_enabled = 1`)
-        //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
-        .table("jcv_trade_shops")
-        .then( data => {
-            return data
-        })
+        let convertToDateOne = moment().format("YYYY-MM-")+(first < 10 ? '0'+first : first)
+        let convertToDateTwo = moment().format("YYYY-MM-")+(last < 10 ? '0'+last : last)
 
-        //Pegando as promotoras
-        let getPromot = await database
-        .select('jcv_userNamePrimary')
-        .where({jcv_userManager: GLOBAL_DASH[0]})
-        .table("jcv_users")
-        .then( data => {
-            //console.log(data)
-            return data
-        })
-
-        letNewArrayData = [];
-
-        /*  */
-        /*  */
-        /*  */
-        if(getPromot != ''){
-            getPromot.forEach(element => {
-                letNewArrayData.push(`PROMOTOR(A) | ${element.jcv_userNamePrimary}`)
-            });
-        }
-        if(getShop != ''){
-            getShop.forEach(element => {
-                letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
-            });
+        let conv;
+        if(convertToDateOne == dateGet || convertToDateTwo == dateGet){
+            conv = true
+        }else{
+            conv = moment(dateGet).isBetween(convertToDateOne, convertToDateTwo);
         }
 
-        //Variavel que informa se o usuario é admin ou representante: 1[ADMIN], 2[REPRESENTANTE];
-        let setValidation = JSON.stringify([2, GLOBAL_DASH[1]])
+        if(conv == true){
+            //console.log('Acessando como representante')
+            //Pegando os parametros de preenchimento de cada marca
+            const getParams = await database
+            .select()
+            .table("jcv_award_params_brand")
+            .then( data => {return data})
 
-        var page = "trade/awardNew";
-        res.render("panel/index", {
-            page: page,
-            getParams: getParams,
-            letNewArrayData: JSON.stringify(letNewArrayData),
-            setValidation: setValidation
-        })
+
+            //Pegando as lojas
+            let getShop = await database
+            .select('jcv_trade_shops_name_fantasy')
+            .whereRaw(`JSON_CONTAINS(jcv_trade_shops_manager, '${GLOBAL_DASH[0]}', '$') AND jcv_trade_shops_enabled = 1`)
+            //.whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
+            .table("jcv_trade_shops")
+            .then( data => {
+                return data
+            })
+
+            //Pegando as promotoras
+            let getPromot = await database
+            .select('jcv_userNamePrimary')
+            .where({jcv_userManager: GLOBAL_DASH[0]})
+            .table("jcv_users")
+            .then( data => {
+                //console.log(data)
+                return data
+            })
+
+            letNewArrayData = [];
+
+            /*  */
+            /*  */
+            /*  */
+            if(getPromot != ''){
+                getPromot.forEach(element => {
+                    letNewArrayData.push(`PROMOTOR(A) | ${element.jcv_userNamePrimary}`)
+                });
+            }
+            if(getShop != ''){
+                getShop.forEach(element => {
+                    letNewArrayData.push(`LOJA | ${element.jcv_trade_shops_name_fantasy}`)
+                });
+            }
+
+            //Variavel que informa se o usuario é admin ou representante: 1[ADMIN], 2[REPRESENTANTE];
+            let setValidation = JSON.stringify([2, GLOBAL_DASH[1]])
+
+            var page = "trade/awardNew";
+            res.render("panel/index", {
+                page: page,
+                getParams: getParams,
+                letNewArrayData: JSON.stringify(letNewArrayData),
+                setValidation: setValidation
+            })
+        }else{
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Prazo para o registro já passou. <b>Caso necessário entre em contato conosco</b>","timeMsg": 6000}`);
+            res.redirect("/painel/trademkt/award/list");
+        }
+        
     }
 
 
