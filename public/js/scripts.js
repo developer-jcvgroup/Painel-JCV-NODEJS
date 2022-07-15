@@ -257,7 +257,7 @@ $(function(){
 
     $.fn.searchInputTable = function(tableRows, inputSearchTable){
         
-        const rows = $(''+tableRows+'');
+        const rows = $(`${tableRows}`);
         $(inputSearchTable).keyup(function() {
             
             if($(this).val() != ''){
@@ -276,7 +276,6 @@ $(function(){
                 return !~text.indexOf(val);
             }).hide();
         });
-
         
     }
 

@@ -264,6 +264,7 @@
 .award-list-list-table tr td input{
     width: 15px;
     height: 15px;
+    cursor: pointer;
 }
 .award-list-list-table tr:hover{
     transition: 0.5s;
@@ -274,6 +275,7 @@
 .award-list-list-table tr th:nth-child(1){
     text-align: center;
     width: 1%;
+    padding: 10px 6px;
 }
 .award-list-list-table tr th:nth-child(5){
     text-align: left;

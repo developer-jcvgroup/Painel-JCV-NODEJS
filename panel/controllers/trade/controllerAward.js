@@ -219,7 +219,7 @@ exports.moduleSaveAward = async (req,res) => {
         //Validando a informação de loja/representante inserida
         let getShop = await database
         .select('jcv_trade_shops_id')
-        .whereRaw(`jcv_trade_shops_name_fantasy like '%${getSerch[1]}%'`)
+        .where({jcv_trade_shops_name_fantasy: getSerch[1]})
         .table("jcv_trade_shops")
         .then( data => {
             return data.length != 0 ? data[0].jcv_trade_shops_id : null
@@ -227,11 +227,11 @@ exports.moduleSaveAward = async (req,res) => {
 
         let getPromot = await database
         .select('jcv_id')
-        .whereRaw(`jcv_userNamePrimary = '%${getSerch[1]}%'`)
+        .where({'jcv_userNamePrimary': getSerch[1]})
         .table("jcv_users")
         .then( data => {
             //console.log(data)
-            return data.length != 0 ? data[0].jcv_id : null
+            return data.length > 0 ? data[0].jcv_id : null
         })
 
         let getRepre = await database
@@ -239,7 +239,7 @@ exports.moduleSaveAward = async (req,res) => {
         .where({jcv_id: getRepresentante})
         .table("jcv_users")
         .then( data => {
-            return data.length != 0 ? data[0].jcv_id : null
+            return data.length > 0 ? data[0].jcv_id : null
         })
 
         //console.log(getShop)
@@ -248,6 +248,9 @@ exports.moduleSaveAward = async (req,res) => {
         //Validano esta string para fazer validação e inserir no banco da maneira certa!
         let validationFinal = getPromot == null ? getShop == null ? null : [1,getShop] : [2,getPromot] // [1= typo de regsitro (1{loja}/2{representante}), 2=id da loja/reprensentante]
         getRepre == null ? validationFinal = null : validationFinal;
+        //validationFinal = validationNew;
+
+        //console.log([getRepre, validationFinal])
 
         //Validação final
         if(validationFinal == null){
@@ -366,7 +369,7 @@ exports.moduleAwardEdit = async (req,res) => {
     if(getValidation.length === 0){
         //não
         res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatório não encontrado ou não disponível para a edição","timeMsg": 4000}`);
-        res.redirect("/painel/trademkt/main");
+        res.redirect("/painel/trademkt/award/list");
     }else{
         //tem
 
@@ -1091,7 +1094,7 @@ async function exportsParams(req,res,listIds){
 
 
     const headingColumnNames = [
-        "REPRESENTANTE","LOJA/PROMOTORA","MÊS REF.","CAMPOS","PEÇAS"
+        "REPRESENTANTE","LOJA/PROMOTORA","MÊS REF.","MARCA","LINHAS","PEÇAS"
     ]
     
     let headingColumnIndex = 1; //diz que começará na primeira linha
@@ -1100,6 +1103,7 @@ async function exportsParams(req,res,listIds){
         ws.cell(1, headingColumnIndex++).string(heading);
     });
 
+    //console.log(newConversionArr)
     let newArr =[];
     let rowIndex = 2
     newConversionArr.forEach(element => {
@@ -1110,7 +1114,8 @@ async function exportsParams(req,res,listIds){
             let namePrimary = element.jcv_userNamePrimary == null ? element.jcv_trade_shops_name_fantasy : element.jcv_userNamePrimary
             let nameSecundary = element.jcv_userNameSecundary == null ? element.jcv_userNameSecundary : element.jcv_userNameSecundary
 
-            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,Object.keys(elementTwo)[0],Object.values(elementTwo)[0]])
+            let brandSet = Object.keys(elementTwo)[0].split(' ')[0] == 'Felps' ? 'Felps Professional' : ''
+            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,brandSet,Object.keys(elementTwo)[0],parseInt(Object.values(elementTwo)[0])])
 
             //console.log(Object.keys(element)[0])
             //console.log(Object.values(element)[0])
@@ -1124,7 +1129,8 @@ async function exportsParams(req,res,listIds){
             let namePrimary = element.jcv_userNamePrimary == null ? element.jcv_trade_shops_name_fantasy : element.jcv_userNamePrimary
             let nameSecundary = element.jcv_userNameSecundary == null ? element.jcv_userNameSecundary : element.jcv_userNameSecundary
 
-            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,Object.keys(elementTwo)[0],Object.values(elementTwo)[0]])
+            let brandSet = Object.keys(elementTwo)[0].split(' ')[0] == 'Retrô' ? 'Retrô Cosméticos' : ''
+            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,brandSet,Object.keys(elementTwo)[0],parseInt(Object.values(elementTwo)[0])])
 
             //console.log(Object.keys(element)[0])
             //console.log(Object.values(element)[0])
@@ -1138,21 +1144,22 @@ async function exportsParams(req,res,listIds){
             let namePrimary = element.jcv_userNamePrimary == null ? element.jcv_trade_shops_name_fantasy : element.jcv_userNamePrimary
             let nameSecundary = element.jcv_userNameSecundary == null ? element.jcv_userNameSecundary : element.jcv_userNameSecundary
 
-            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,Object.keys(elementTwo)[0],Object.values(elementTwo)[0]])
+            let brandSet = Object.keys(elementTwo)[0].split(' ')[0] == 'Avenca' ? 'Avenca Cosméticos' : ''
+            newArr.push([nameSecundary,namePrimary,element.jcv_award_registers_month,brandSet,Object.keys(elementTwo)[0],parseInt(Object.values(elementTwo)[0])])
 
             //console.log(Object.keys(element)[0])
             //console.log(Object.values(element)[0])
         });
     });
 
-
+    //console.log(newArr)
     newArr.forEach( record => {
         let columnIndex = 1;
         Object.keys(record).forEach(columnName =>{
 
 
             //Verificando se o dado é numero
-            if(typeof(record[columnName]) === 'number'){
+            if(typeof(record[columnName]) == 'number'){
                 ws.cell(rowIndex,columnIndex++)
                 .number(record [columnName])
             }else{

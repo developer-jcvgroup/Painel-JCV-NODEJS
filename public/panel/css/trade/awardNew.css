@@ -23,6 +23,7 @@
 .award-new-title-box span:nth-child(2){
     font-size: 1.3rem;
     color: var(--color-one);
+    white-space: normal;
 }
 .award-new-title-box span:nth-child(3){
     font-size: 0.9rem;
@@ -30,10 +31,10 @@
     color: var(--color-two);
 }
 .award-new-title-box a{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-decoration: none;
     color: var(--color-one);
-    margin-right: 8px;
+    margin-right: 15px;
 }
 
 /*  */
@@ -191,6 +192,14 @@
     color: var(--color-two);
     border-radius: 3px;
 }
+.award-new-suspend-box button{
+    font-size: 1.3rem;
+    color: var(--color-one);
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    background: transparent;
+}
 
 .award-new-alert{
     width: 100%;
@@ -217,6 +226,93 @@
     margin-right: 25px;
 }
 
+/*  */
+/*  */
+.award-new-box-list-itens{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 46px);
+    background: rgba(0, 0, 0, 0.158);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.award-new-box-main-itens{
+    width: 700px;
+    max-height: 80%;
+    min-height: 550px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    overflow: auto;
+}
+.award-new-box-main-itens-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.award-new-box-main-itens-title span{
+    font-size: 1rem;
+    color: var(--color-one);
+}
+.award-new-box-main-itens-title i{
+    font-size: 1.5rem;
+    color: var(--color-two);
+    cursor: pointer;
+}
+
+.award-new-box-main-itens-input{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 32px 0;
+}
+.award-new-box-main-itens-input input{
+    width: 100%;
+    margin-top: 8px;
+    outline: 0;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-one);
+}
+
+.award-new-box-main-itens-table-display{
+    display: flex;
+    overflow: auto;
+}
+.award-new-box-main-itens-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.award-new-box-main-itens-table tr td{
+    border: none;
+    border-top: 1px solid var(--color-five);
+    border-bottom: 1px solid var(--color-five);
+    text-align: left;
+    padding: 10px 6px;
+    color: var(--color-one);
+    font-size: 0.8rem;
+    transition: 0.5s;
+}
+.award-new-box-main-itens-table-button-item{
+    width: 100%;
+    background: transparent;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+}
+.award-new-box-main-itens-table-button{
+    font-size: 1.4rem;
+    background: transparent;
+    outline: 0;
+    color: var(--color-one);
+    border: none;
+    cursor: pointer;
+}
 /************************/
 /************************/
 /* RESPONSIVE */
