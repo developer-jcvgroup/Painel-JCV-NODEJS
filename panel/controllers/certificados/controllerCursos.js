@@ -542,3 +542,10 @@ exports.moduleActionSync = async (req,res) => {
         
     }
 }
+
+exports.moduleModels = async (req,res) => {
+    var page = "cursos/cursosModelos";
+    res.render("panel/index", {
+        page: page,
+    })
+}

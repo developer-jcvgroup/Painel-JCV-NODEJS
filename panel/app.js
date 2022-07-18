@@ -399,6 +399,7 @@ router.get("/cursos/new", middlewareURL, authenticate, getPermissions(['cursos/n
 router.get("/cursos/edit/:id?", middlewareURL, authenticate, getPermissions(['cursos/edit']), controllerCursos.cursosEdit)
 router.get("/cursos/start/:id?", middlewareURL, authenticate, getPermissions(['cursos/start']), controllerCursos.cursosStartup)
 router.get("/cursos/sinc/profile", middlewareURL, authenticate, controllerCursos.moduleSicProfile)
+router.get("/cursos/modelos", middlewareURL, authenticate, controllerCursos.moduleModels)
 
 router.post("/course/new", authenticate, controllerCursos.saveNewCourse)
 router.post("/course/edit", authenticate, controllerCursos.saveEditCourse)
