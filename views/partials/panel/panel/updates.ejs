@@ -1,0 +1,133 @@
+<% if(GLOBAL_DASH[11] != ''){ %>
+    <section class="sys-update-main-main">
+        <section class="sys-update-main">
+            <form method="post" class="sys-update-cont-center">
+                <% GLOBAL_DASH[11].forEach(element => { %>
+                    <div class="sys-update-box">
+                        <%- element.sys_update_textUpdate %>
+                    </div>
+
+                    <div class="sys-update-box-commands">
+                        <button type="submit" class="class-loader" value="<%= element.sys_update_idUp %>" name="update-button-okay" formaction="/painel/update/closeUp">Ótimo! Fechar</button>
+                        <input type="text" name="update-input-url-set" hidden id="input-last-url">
+                        <label for="">atualização <b><%= element.sys_update_versionUpdate %></b> por <b>JCV GROUP</b></label>
+                        <script>
+                            document.getElementById('input-last-url').value=window.location.pathname
+                        </script>
+                    </div>
+                <% }) %>
+
+                <!-- <form method="post" class="sys-update-center">
+                    <div class="sys-update-title-one">
+                        <div class="sys-update-icon">
+                            <i class="ri-code-s-slash-fill"></i>
+                            <span>Passamos por algumas atualizações aqui..</span>
+                        </div>
+                    </div>
+
+                    <% GLOBAL_DASH[11].forEach(element => { %>
+                        <hr class="sys-update-hr">
+                        <div class="sys-update-title-two">
+                            <span><%= element.sys_update_nameUpdate %> - <%= element.sys_update_versionUpdate %></span>
+                        </div>
+                        <div class="sys-update-msg-box">
+                            <div id="sys-update-text" class="sys-update-text">
+                    
+                                <%= element.sys_update_textUpdate %>
+                            
+                            </div>
+                        </div>
+                        <div class="sys-update-button">
+                            <input hidden type="text" value="<%= element.sys_update_urlRedirect %>" name="param-url-update-<%= element.sys_update_idUp %>">
+                            <button class="class-loader" type="submit" formaction="/painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
+                        </div>
+                    <% }) %>
+                    <hr class="sys-update-hr">
+                </form> -->
+            
+            
+            </form>
+        </section>
+    </section>
+    <style>
+        /******************************/
+        /******************************/
+        /* SECTION DE UPDATES DO SISTEMA */
+        .sys-update-main-main{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+        .sys-update-main{
+            width: 100%;
+            max-width: 1920px; 
+            height: 100%;
+            max-height: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(30 30 30 / 38%);
+        }
+        .sys-update-cont-center{
+            width: 750px;
+            max-width: 750px;
+            max-height: 700px;
+            margin-top: -5%;
+            display: flex;
+            flex-direction: column;
+            background: var(--background-two);
+            box-shadow: 0 0 4px 0 var(--color-three);
+            border-radius: 5px;
+            padding: 13px;
+        }
+
+        /*  */
+        /*  */
+        /*  */
+        /*  */
+        .sys-update-box{
+            width: 100%;
+            position: relative;
+            line-height: 2;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sys-update-box-commands{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 24px;
+        }
+        .sys-update-box-commands button{
+            width: fit-content;
+            padding: 8px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: var(--color-one);
+            color: var(--color-four);
+            margin: 0 19px;
+            font-size: 0.9rem;
+        }
+        .sys-update-box-commands label{
+            font-size: 0.7rem;
+            color: var(--color-one);
+            margin-top: 14px;
+        }
+
+        /* RESPONSIVE UPDATE */
+        @media only screen and (max-width: 500px){
+            .sys-update-cont-center{
+                margin-top: 5%;
+                height: 800px;
+            }
+        }
+    </style>
+<% } %>

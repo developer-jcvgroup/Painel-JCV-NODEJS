@@ -6,8 +6,10 @@ exports.systemLogs = async (req,res) => {
 }
 
 exports.closeUpdateSingle = async (req,res) => {
-    const idUpdate = parseInt(req.body['button-update-single']);
-    const moduleApp = req.body['param-url-update-'+idUpdate]
+    const idUpdate = parseInt(req.body['update-button-okay']);
+    const updateUrlRedirect = req.body['update-input-url-set'];
+
+    console.log(updateUrlRedirect)
 
     //Pegando a lista de oks deste update
     const arrayOkay = await database
@@ -19,6 +21,7 @@ exports.closeUpdateSingle = async (req,res) => {
     let arrayUserUpdate = JSON.parse(arrayOkay.sys_update_usersOkUpdate);
     arrayUserUpdate.push(GLOBAL_DASH[0])
 
+    console.log(GLOBAL_DASH)
     database
     .update({
         sys_update_usersOkUpdate: JSON.stringify(arrayUserUpdate) 
@@ -27,21 +30,14 @@ exports.closeUpdateSingle = async (req,res) => {
     .table("sys_update")
     .then( data => {
         if(data != ''){
+            GLOBAL_DASH[11] = []//Removendo o update da variavel global
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Update lido com sucesso.");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Update lido com sucesso","timeMsg": 3000}`);
-            if(moduleApp != ''){
-                res.redirect(moduleApp);
-            }else{
-                res.redirect(URL_GET_PARAMS)
-            }
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Show! Agora você pode continuar..","timeMsg": 3000}`);
+            res.redirect(updateUrlRedirect)
         }else{
             //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Erro");
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"Erro","timeMsg": 3000}`);
-            if(moduleApp != ''){
-                res.redirect(moduleApp);
-            }else{
-                res.redirect(URL_GET_PARAMS)
-            }
+            res.redirect(updateUrlRedirect)
         }
     })
 }

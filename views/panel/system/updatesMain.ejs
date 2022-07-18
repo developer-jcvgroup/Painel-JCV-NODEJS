@@ -28,7 +28,27 @@
                                 <div class="updates-main-main-forms-link-info">
                                     <span><%= element.sys_update_nameUpdate %></span>
                                     <span>Lidos: <b><%= JSON.parse(element.sys_update_usersOkUpdate).length %></b></span>
-                                    <span>App: <b><%= element.sys_update_moduleUp %></b></span>
+
+                                    <%
+                    
+                                    let apps = {
+                                        "MODULE001": "Programa da Beleza",
+                                        "MODULE002": "Requisitor de Materiais",
+                                        "MODULE003": "Calendário",
+                                        "MODULE004": "Trade Marketing",
+                                        "MODULE005": "Encurtador de Links",
+                                        "MODULE006": "Cursos & Treinamentos",
+                                        "MODULE007": "Informe de Premiação",
+                                        "MODULE008": "Notificações",
+                                        "MODULE009": "Formulários",
+
+                                        "INTERNAL001": "Todas as páginas",
+                                        "INTERNAL002": "Configurações",
+                                    }
+                                    
+                                    %>
+
+                                    <span>App: <b><%= apps[element.sys_update_moduleUp] %></b></span>
                                     <span><b><i style="margin-right: 8px;" class="ri-calendar-2-line"></i> <%= element.sys_update_date %></b></span>
                                 </div>
                                 <hr style="width: 100%; margin: 7px 0;">

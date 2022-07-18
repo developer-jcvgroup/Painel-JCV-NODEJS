@@ -233,44 +233,6 @@
     </div>
 </section>
 
-<% if(GLOBAL_DASH[11] != ''){ %>
-    <section class="sys-update-main-main">
-        <section class="sys-update-main">
-            <section class="sys-update-cont-center">
-
-                
-                <form method="post" class="sys-update-center">
-                    <div class="sys-update-title-one">
-                        <div class="sys-update-icon">
-                            <i class="ri-code-s-slash-fill"></i>
-                            <span>Atualizações</span>
-                        </div>
-                    </div>
-
-                    <% GLOBAL_DASH[11].forEach(element => { %>
-                        <hr class="sys-update-hr">
-                        <div class="sys-update-title-two">
-                            <span><%= element.sys_update_nameUpdate %> - <%= element.sys_update_versionUpdate %></span>
-                        </div>
-                        <div class="sys-update-msg-box">
-                            <div id="sys-update-text" class="sys-update-text">
-                    
-                                <%= element.sys_update_textUpdate %>
-                            
-                            </div>
-                        </div>
-                        <div class="sys-update-button">
-                            <input hidden type="text" value="<%= element.sys_update_urlRedirect %>" name="param-url-update-<%= element.sys_update_idUp %>">
-                            <button class="class-loader" type="submit" formaction="/painel/update/closeUp" name="button-update-single" value="<%= element.sys_update_idUp %>" >Fechar</button>
-                        </div>
-                    <% }) %>
-                    <hr class="sys-update-hr">
-                </form>
-            </section>
-        </section>
-    </section>
-<% } %>
-
 <!--  -->
 <% if(DEFINEpassword != null){  %>
 <section class="sys-define-pass-main" id="sys-define-pass-main">
@@ -349,6 +311,8 @@
 <%- include('../partials/system/profileUser') %>
 <!-- PARTIALS REPORT BUGS -->
 <%- include('../partials/system/reportError') %>
+<!-- PARTIALS UPDATE -->
+<%- include('../partials/panel/panel/updates') %>
 
 <script>
 

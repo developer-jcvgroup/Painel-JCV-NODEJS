@@ -4,7 +4,7 @@ async function getUpdates(idUser, moduleOp){
     //Verificando se existe menssagem de novas atualizações
 
     //Definindo que all pages
-    let moduleOpSet = moduleOp == 'JCVMOD01' ? `'${moduleOp}'` : `'${moduleOp}','JCVMOD01'`;
+    let moduleOpSet = moduleOp == 'INTERNAL001' ? `'${moduleOp}'` : `'${moduleOp}','INTERNAL001'`;
 
     const allUpdate = await database
     .raw(`
@@ -50,100 +50,142 @@ const getPermissions = (urlArray) => async(req, res, next) => {
     //Pegando e tranformando em array a URL
     const urlPage = urlArray;
 
-    //PÁGINA INCIAL
-    if(urlPage[0] == ''){
-        //Pegando os updates deste modulo
-        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD01')
-        return next();
-    }
-
     let objectPermissions = {
-        "/": 1,
-        "beleza/solicitar": resultPermissions[0].sys_blz_perm_use,
-        "beleza/status": resultPermissions[0].sys_blz_perm_use,
-        "beleza/solicitacoes": resultPermissions[0].sys_blz_perm_admin,
-        "beleza/produtos": [resultPermissions[0].sys_blz_perm_manager, resultPermissions[0].sys_blz_perm_admin],
-
-        "requisitor/novo": resultPermissions[0].sys_req_perm_use,
-        "requisitor/EeditarRequisicao": resultPermissions[0].sys_req_perm_use,
-        "requisitor/visualizarRequisicao": resultPermissions[0].sys_req_perm_use,
-        "requisitor/minhasRequisicoes": resultPermissions[0].sys_req_perm_use,
-        "requisitor/listaRequisicoes": resultPermissions[0].sys_req_perm_admin,
-        "requisitor/items": resultPermissions[0].sys_req_perm_use,
-
-        "system/users": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-        "system/unidades": resultPermissions[0].jcv_userCassification,
-        "system/departamentos": resultPermissions[0].jcv_userCassification,
-        "system/products": [resultPermissions[0].sys_tra_perm_admin, resultPermissions[0].sys_blz_perm_manager],
-        "system/users": resultPermissions[0].jcv_userCassification,
-        "system/users/transfer": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-
-        "formularios": resultPermissions[0].sys_forms_perm_admin,
-
-        "calendario/main": resultPermissions[0].sys_cal_perm_use,
-        "calendario/event": resultPermissions[0].sys_cal_perm_use,
-        "calendario/room": resultPermissions[0].sys_cal_perm_admin,
-        "calendario/viewRoom": resultPermissions[0].sys_cal_perm_use,
-        "calendario/viewEvent": resultPermissions[0].sys_cal_perm_use,
-
-        "notifications/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-        "notifications/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-        "notifications/edit": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-
-        "cursos/main": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
-        "cursos/start": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
-        "cursos/new": resultPermissions[0].sys_courses_perm_admin,
-        "cursos/edit": resultPermissions[0].sys_courses_perm_admin,
-
-        "encurtador/main": resultPermissions[0].sys_enc_perm_use,
-        "encurtador/new": resultPermissions[0].sys_enc_perm_use,
-        "encurtador/edit": resultPermissions[0].sys_enc_perm_use,
+        "INTERNAL001": {
+            "/": 1,
+        },
         
-        "trademkt/award/new": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
-        "trademkt/award/edit": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
-        "trademkt/award/list": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
-        "trademkt/award/view": resultPermissions[0].sys_tra_perm_use,
-        "trademkt/award/mylist": resultPermissions[0].sys_tra_perm_use,
+        "MODULE001":{
+            "beleza/solicitar": resultPermissions[0].sys_blz_perm_use,
+            "beleza/status": resultPermissions[0].sys_blz_perm_use,
+            "beleza/solicitacoes": resultPermissions[0].sys_blz_perm_admin,
+            "beleza/produtos": [resultPermissions[0].sys_blz_perm_manager, resultPermissions[0].sys_blz_perm_admin],
+        },
+        "MODULE002":{
+            "requisitor/novo": resultPermissions[0].sys_req_perm_use,
+            "requisitor/EeditarRequisicao": resultPermissions[0].sys_req_perm_use,
+            "requisitor/visualizarRequisicao": resultPermissions[0].sys_req_perm_use,
+            "requisitor/minhasRequisicoes": resultPermissions[0].sys_req_perm_use,
+            "requisitor/listaRequisicoes": resultPermissions[0].sys_req_perm_admin,
+            "requisitor/items": resultPermissions[0].sys_req_perm_use,
+        },
+        "MODULE003":{
+            "calendario/main": resultPermissions[0].sys_cal_perm_use,
+            "calendario/event": resultPermissions[0].sys_cal_perm_use,
+            "calendario/room": resultPermissions[0].sys_cal_perm_admin,
+            "calendario/viewRoom": resultPermissions[0].sys_cal_perm_use,
+            "calendario/viewEvent": resultPermissions[0].sys_cal_perm_use,
+        },
+        "MODULE004":{
+            "trademkt/main": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+            "trademkt/formSearch": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/visit": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/listTrade": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/edit": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/form": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+            "trademkt/salesDay": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
+            "trademkt/form/response": resultPermissions[0].sys_tra_perm_use,
+            "trademkt/shops": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/shops/config": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/shops/maps": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/formSearch/new": resultPermissions[0].sys_tra_perm_admin,
+            "trademkt/formSearch/edit": resultPermissions[0].sys_tra_perm_admin,
+        },
+        "MODULE005":{
+            "encurtador/main": resultPermissions[0].sys_enc_perm_use,
+            "encurtador/novo": resultPermissions[0].sys_enc_perm_use,
+            "encurtador/edit": resultPermissions[0].sys_enc_perm_use,
+        },
+        "MODULE006":{
+            "cursos/main": resultPermissions[0].sys_courses_perm_admin,
+            "cursos/new": resultPermissions[0].sys_courses_perm_admin,
+            "cursos/edit": resultPermissions[0].sys_courses_perm_admin,
+            "cursos/delete": resultPermissions[0].sys_courses_perm_admin,//Post
+            "cursos/start": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
+        },
+        "MODULE007":{
+            "trademkt/award/new": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+            "trademkt/award/edit": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+            "trademkt/award/list": [resultPermissions[0].sys_tra_premiation_use, resultPermissions[0].sys_tra_premiation_admin],
+            "trademkt/award/view": resultPermissions[0].sys_tra_perm_use,
+            "trademkt/award/mylist": resultPermissions[0].sys_tra_perm_use,
+        },
+        "MODULE008": {
+            "notifications/main": resultPermissions[0].sys_notify_perm_admin,
+            "notifications/new": resultPermissions[0].sys_notify_perm_admin,
+            "notifications/edit": resultPermissions[0].sys_notify_perm_admin,
+        },
+        "MODULE009": {
+            "formularios/main": resultPermissions[0].sys_forms_perm_admin,
+            "formularios/novo": resultPermissions[0].sys_forms_perm_admin,
+            "formularios/edit": resultPermissions[0].sys_forms_perm_admin,
+        },
+        "MODULE010": {},
+        "MODULE011": {},
+        "MODULE012": {},
+        "MODULE013": {},
+        "MODULE014": {},
+        "MODULE015": {},
 
-        "trademkt/main": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
-        "trademkt/formSearch": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/visit": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/listTrade": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/edit": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/form": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
-        "trademkt/salesDay": [resultPermissions[0].sys_tra_perm_use, resultPermissions[0].sys_tra_perm_admin],
-        "trademkt/form/response": resultPermissions[0].sys_tra_perm_use,
-        "trademkt/shops": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/shops/config": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/shops/maps": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/formSearch/new": resultPermissions[0].sys_tra_perm_admin,
-        "trademkt/formSearch/edit": resultPermissions[0].sys_tra_perm_admin,
-
-        "updates/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-        "updates/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-        "updates/edit": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
-
-        "notifications/main": resultPermissions[0].sys_notify_perm_admin,
-        "notifications/new": resultPermissions[0].sys_notify_perm_admin,
-        "notifications/edit": resultPermissions[0].sys_notify_perm_admin,
-
-        "formularios/main": resultPermissions[0].sys_forms_perm_admin,
-        "formularios/novo": resultPermissions[0].sys_forms_perm_admin,
-        "formularios/edit": resultPermissions[0].sys_forms_perm_admin,
-
-        "encurtador/main": resultPermissions[0].sys_enc_perm_use,
-        "encurtador/novo": resultPermissions[0].sys_enc_perm_use,
-        "encurtador/edit": resultPermissions[0].sys_enc_perm_use,
-
-        "cursos/main": resultPermissions[0].sys_courses_perm_admin,
-        "cursos/new": resultPermissions[0].sys_courses_perm_admin,
-        "cursos/edit": resultPermissions[0].sys_courses_perm_admin,
-        "cursos/delete": resultPermissions[0].sys_courses_perm_admin,//Post
-        "cursos/start": [resultPermissions[0].sys_courses_perm_admin, resultPermissions[0].sys_courses_perm_manager],
+        
+        "INTERNAL002": {
+            "system/users": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+            "system/unidades": resultPermissions[0].jcv_userCassification,
+            "system/departamentos": resultPermissions[0].jcv_userCassification,
+            "system/products": [resultPermissions[0].sys_tra_perm_admin, resultPermissions[0].sys_blz_perm_manager],
+            "system/users": resultPermissions[0].jcv_userCassification,
+            "system/users/transfer": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+    
+            "formularios": resultPermissions[0].sys_forms_perm_admin,
+    
+            "updates/main": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+            "updates/new": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+            "updates/edit": resultPermissions[0].jcv_userCassification == 1 ? 1 : 0,
+        }
+        
     }
 
     async function validateParams (arrayGet, searchGet){
-        let convertNewArr = []
+        
+        //console.log(searchGet)
+
+        let convObject = Object.values(arrayGet) 
+        let convObjectKeys = Object.keys(arrayGet)
+
+            //console.log(arr.length)
+        
+        for(let index = 0; index < convObject.length; index++){
+            let convArr = Object.keys(convObject[index]);
+            
+            //console.log(convArr.indexOf(search))
+            if(convArr.indexOf(searchGet) > -1){
+                //tem dados
+
+                let newConv = convObject[index][searchGet];
+                //Validando se é verdadeiro ou falso a permissão
+                let conv = typeof(newConv) == 'object' ? newConv.indexOf(1) > -1 ? true : false : newConv == 1 ? true : false
+                //console.log(conv)
+
+                setTimeout(() => {
+                    index = convObject.length
+                }, 50);
+                
+                return [convObjectKeys[index], conv]
+                
+            }else{
+                //Não tem nd	
+                let sub = index +1;
+                //console.log(sub)
+                if(sub == convObject.length){
+                    return [null, null]
+                }
+                //console.log([null,null])
+            }
+            
+        }
+
+
+        /* let convertNewArr = []
         searchGet.forEach(element => {
 
             //Verificando se o parametro é referente a alguma edição, caso seja ele ira ignorar o parametro. ex: id, uuid da url
@@ -153,19 +195,22 @@ const getPermissions = (urlArray) => async(req, res, next) => {
         let convertAgain = convertNewArr.join('/')
     
         try{
-          return typeof(arrayGet[convertAgain]) == 'object' ? arrayGet[convertAgain].indexOf(1) > -1 ? true : false : arrayGet[convertAgain] == 1 ? true : arrayGet[convertAgain] == 0 ? false : null
-      }catch(err){
-          alert('error')
-      }
+            return typeof(arrayGet[convertAgain]) == 'object' ? arrayGet[convertAgain].indexOf(1) > -1 ? true : false : arrayGet[convertAgain] == 1 ? true : arrayGet[convertAgain] == 0 ? false : null
+        }catch(err){
+            console.log('error')
+        } */
       
     }
 
-    let validationGet = await validateParams(objectPermissions, urlPage)
-    validationGet == true ? functionNetPage() : validationGet == null ? functionPageNull() : functionNotPermission()
+    let validationGet = await validateParams(objectPermissions, urlPage[0])
+    //console.log(validationGet)
+    validationGet[1] == true ? functionNetPage(validationGet) : validationGet[1] == null ? functionPageNull() : functionNotPermission()
 
-    function functionNetPage(){
+    async function functionNetPage(validationGet){
         //console.log('aaaaaaa')
-        //GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], 'JCVMOD02')
+
+        //Uploads
+        GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], validationGet[0])
         next();
     }
     function functionPageNull(){
