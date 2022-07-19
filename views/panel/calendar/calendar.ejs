@@ -630,8 +630,8 @@
             //$("#calendar-display-event").fadeIn();                   ANTIGO
             //$("#calendar-display-event").css('display','flex');      ANTIGO 
             
-            $("#event-view-section-main").fadeIn().css({'display':'flex'})
-            $("#event-view-display-main").animate({'margin-top': '-5%'}, "slow");
+            $("#event-new-section-main").fadeIn().css({'display':'flex'})
+            $("#event-new-display-main").animate({'margin-top': '-5%'}, "slow");
 
         })
         /* CLOSE DISPLAY EVENT DAY */
@@ -658,7 +658,7 @@
 
         let dayConfig = day.split('/')[0] < 10 ? '0'+day.split('/')[0] : day.split('/')[0];
         let valueDate = day.split('/')[2]+  '-'  +day.split('/')[1]+'-'  +  dayConfig;
-        $("#event-view-register-date").val(valueDate)
+        $("#event-new-register-date").val(valueDate)
 
         //console.log(valueDate)
         //console.log(moment().format("YYYY-MM-DD"))
@@ -668,7 +668,7 @@
         let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
         $("#calendar-day-link-module").attr('href','/painel/calendario/viewEvent/Day/'+dayLinkOpen)
 
-        $("#event-view-dinamic-date").text(getMonth)
+        $("#event-new-dinamic-date").text(getMonth)
 
         $(".calendar-display-actions").fadeIn()
         $(".calendar-display-actions").css('display','flex')

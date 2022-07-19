@@ -184,7 +184,7 @@ exports.moduleSaveNewEvent = async(req,res) => {
 
     const eventLocation = JSON.parse(req.body['event-register-location']);
     const eventRemember = req.body['event-register-remember'];//In minutes
-    const eventPersons = req.body['event-register-persons'];//Array
+    const eventPersons = req.body['event-register-persons'].indexOf('[') > -1 ? JSON.parse(req.body['event-register-persons']).map(function(value){return parseInt(value)}) : [GLOBAL_DASH[0]];//Array
 
     const eventSendEmail = req.body['event-register-send-mails']
     
@@ -276,7 +276,7 @@ exports.moduleSaveNewEvent = async(req,res) => {
             //Tudo certo!
 
             //Convertendo os array de usuarios participanentes
-            let arrayPersons = eventPersons != '' ? eventPersons.map(function(value){return parseInt(value)}) : [GLOBAL_DASH[0]]
+            let arrayPersons = eventPersons
             //ICS
             let nameArquiveCalendar = 'JCV-EVENT-'+uuid.v1()+'.ics';
 
@@ -668,7 +668,7 @@ exports.viewEvent = async (req,res) => {
     if(getEvent[0].sys_calendar_eventPersons != ''){
         getPersonsEvents = await database
         .select("jcv_userNamePrimary","jcv_id")
-        .whereIn("jcv_id", typeof(JSON.parse(getEvent[0].sys_calendar_eventPersons)) == 'object' ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
+        .whereIn("jcv_id", getEvent[0].sys_calendar_eventPersons.indexOf('[') > -1 ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
         .table("jcv_users")
         .then( data => {
             return data;
@@ -708,7 +708,7 @@ exports.viewEvent = async (req,res) => {
             //Pegando os particiapentes do evento
             personsEvent = await database
             .select("jcv_userNamePrimary","jcv_userImageIcon")
-            .whereIn("jcv_id", typeof(JSON.parse(getEvent[0].sys_calendar_eventPersons)) == 'object' ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
+            .whereIn("jcv_id", getEvent[0].sys_calendar_eventPersons.indexOf('[') > -1 ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
             .table("jcv_users")
             .then( data => {
                 return data;

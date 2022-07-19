@@ -37,7 +37,7 @@
                         <span style="width: fit-content; padding: 4px 6px; border-radius: 4px; border: 1.5px solid <%= allDataEvent[0].sys_calendar_roomColor %>;"><a class="class-loader" style="text-decoration: none; color: <%= allDataEvent[0].sys_calendar_roomColor %>" href="/painel/calendario/viewRoom/<%= allDataEvent[0].sys_calendar_roomId %>"><%= allDataEvent[0].sys_calendar_roomName %></a></span>
                     </div>
 
-                    <% let getPersonsStatus = allDataEvent[0].sys_calendar_eventPersons.split(',') %>
+                    <% let getPersonsStatus = allDataEvent[0].sys_calendar_eventPersons.indexOf('[') > -1 ? JSON.parse(allDataEvent[0].sys_calendar_eventPersons) : allDataEvent[0].sys_calendar_eventPersons.split(',') %>
 
                     <div class="event-box-main">
                         <label>Pessoas</label>
@@ -80,7 +80,7 @@
                                 <form class="event-action-command" method="post">
                                     <button class="class-loader" type="submit" value="<%= allDataEvent[0].sys_calendar_eventId %>" formaction="/painel/calendario/main/delete/event" name="delete-event"><i class="ri-delete-bin-line"></i>⠀Excluir Evento</button>
                                     <button id="view-open-edit-event-edit" type="button"><i class="ri-pencil-line"></i>⠀Editar Evento</button>
-                                    <a href="http://localhost:8080/painel/calendario/download/<%= allDataEvent[0].sys_calendar_nameIcs %>"><i class="ri-download-2-line"></i>⠀Baixar evento</a>
+                                    <a href="/painel/calendario/download/<%= allDataEvent[0].sys_calendar_nameIcs %>"><i class="ri-download-2-line"></i>⠀Baixar evento</a>
                                 </form>
 
 
