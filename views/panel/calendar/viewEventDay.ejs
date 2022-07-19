@@ -39,11 +39,11 @@
                                         <span>Somente o criador é participante</span>
                                     <% }else{ %>
 
-                                        <% let arrayUsersGet = element.sys_calendar_eventPersons.split(',') %>
+                                        <% let arrayUsersGet = element.sys_calendar_eventPersons.indexOf('[') > -1 ? JSON.parse(element.sys_calendar_eventPersons) : element.sys_calendar_eventPersons.split(',') %>
 
                                         <% userAll.forEach(elementTo => { %>
                                             
-                                            <% if(arrayUsersGet.indexOf(''+elementTo.jcv_id) > -1){ %>
+                                            <% if(arrayUsersGet.indexOf(elementTo.jcv_id) > -1){ %>
                                                 <span>
                                                     <div class="view-box-img-user">
                                                         <img src="<%= elementTo.jcv_userImageIcon %>" alt="">
