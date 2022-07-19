@@ -512,6 +512,16 @@ io.on('connection', (socket) => {
         //console.log(getRegisters)
 
     })
+
+    socket.on('eventNewValidationUser', (data) => {
+        database
+        .select("jcv_id","jcv_userNamePrimary","jcv_userImageIcon")
+        .where({jcv_userNamePrimary: data})
+        .table("jcv_users")
+        .then( dataResult => {
+            socket.emit('eventNewValidationUserSend', dataResult[0])
+        })
+    })
 })
 
 

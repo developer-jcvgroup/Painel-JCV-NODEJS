@@ -115,7 +115,7 @@ exports.viewCalendarMonth = async (req,res) => {
         //Criando um array
         let newArrUsers = []
         allUsers.forEach(element => {
-            newArrUsers.push(element.jcv_id+'-'+element.jcv_userNamePrimary);
+            newArrUsers.push(element.jcv_userNamePrimary);
         });
 
         //Listando as salas disponiveis
@@ -160,7 +160,7 @@ exports.viewCalendarMonth = async (req,res) => {
             AllDays: AllDays,
             NumberDayWeek: NumberDayWeek,
             dayNow: dayNow,
-            allUsers: newArrUsers,
+            allUsers: JSON.stringify(newArrUsers),
             allUsersSystem: arrayUserSetCal,
             allEventsMonth: allEventsMonth,
             allLocations: allLocations,
@@ -172,6 +172,169 @@ exports.viewCalendarMonth = async (req,res) => {
             arrayFeriados: arrayFeriados
         })
     }
+}
+
+exports.moduleSaveNewEvent = async(req,res) => {
+    //console.log('olar')
+    const eventName = req.body['event-register-name']
+    const eventDescription = req.body['event-register-description']
+    const eventDate = req.body['event-register-date'] == '' ? moment().format("DD/MM/YYYY") : moment(req.body['event-register-date']).format("DD/MM/YYYY")
+
+    const eventInitialEnd = [req.body['event-register-initial'], req.body['event-register-end']]
+
+    const eventLocation = JSON.parse(req.body['event-register-location']);
+    const eventRemember = req.body['event-register-remember'];//In minutes
+    const eventPersons = req.body['event-register-persons'];//Array
+
+    const eventSendEmail = req.body['event-register-send-mails']
+    
+    //console.log([eventName, eventDate, eventInitialEnd, eventLocation, eventRemember])
+    if([eventName, eventDate, eventInitialEnd, eventLocation, eventRemember].indexOf('') == -1){
+        //Tudo certo
+        //console.log(eventLocation)
+        //Pegando o nome da sala
+        const getRoomId = await database
+        .select("sys_calendar_roomId","sys_calendar_roomName")
+        .where({sys_calendar_roomId: eventLocation[0]})
+        .table("jcv_calendar_rooms")
+        .then( data => {
+            return data[0]
+        })
+
+        //Pegando o nome do local
+        const getLocateId = await database
+        .select("sys_unity_id","sys_unity_name")
+        .where({sys_unity_id: eventLocation[1]})
+        .table("jcv_unitys")
+        .then( data => {
+            return data[0]
+        })
+
+        //Pegando todos eventos desta data
+        const getAllEvent = await database
+        .select()
+        .where({sys_calendar_eventDate: eventDate, sys_calendar_eventRoom: eventLocation[1]})
+        .table("jcv_calendar_registers")
+        .then( data => {return data})
+
+        async function executeValidationHours(){
+            let validationEvent = false;
+            if(getAllEvent != ''){
+                getAllEvent.forEach(element => {
+
+                    //console.log(getAllEvent[i])
+        
+                    let insertIntervalInitial = moment(eventInitialEnd[0],'hh:mm');
+                    let insertIntervalFinal = moment(eventInitialEnd[1],'hh:mm');
+        
+                    let validateHours = element.sys_calendar_eventHours.split(' - ');
+                    let registredInitial = moment(validateHours[0],'hh:mm');
+                    let registredFinal = moment(validateHours[1],'hh:mm');
+        
+                    //Validando a hora inicial
+                    if(moment(insertIntervalInitial).isBetween(registredInitial, registredFinal) == false){
+                        //A data inicial está livre
+                        //console.log('A data inicial está livre')
+        
+                        //Validando a hora final
+                        if(moment(insertIntervalFinal).isBetween(registredInitial, registredFinal) == false){
+                            //Horario final válido
+                            //console.log('Horario final válido')
+        
+                            //Validando se os horarios do banco esta entre os horarios que o usuario inseriu
+                            if(moment(registredInitial).isBetween(insertIntervalInitial, insertIntervalFinal) == false && moment(registredFinal).isBetween(insertIntervalInitial, insertIntervalFinal) == false){
+                                //console.log('podemos registrar normalmente')
+                                validationEvent = true;
+                                //i = getAllEvent.length;
+                            }else{
+                                //console.log('as datas inseridas englobam a data do banco')
+                            }
+        
+                        }else{
+                            //Horario final já sendo usado
+                            //console.log('Horario final já sendo usado')
+                        }
+                    }else{
+                        //Data inicial já sendo usada, então vamos anular tudo! dar msg de erro
+                        //console.log('Data inicial já sendo usada, então vamos anular tudo!')
+                    }
+                })
+            }else{
+                validationEvent = true
+            }
+
+            return validationEvent
+        }
+
+        let validationEvent = await executeValidationHours();
+        //console.log(validationEvent)
+        if(validationEvent == false){
+            //Horarios inválido
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Horários inválidos","timeMsg": 3000}`);
+            res.redirect("/painel/calendario/main");
+        }else{
+            //Tudo certo!
+
+            //Convertendo os array de usuarios participanentes
+            let arrayPersons = eventPersons != '' ? eventPersons.map(function(value){return parseInt(value)}) : [GLOBAL_DASH[0]]
+            //ICS
+            let nameArquiveCalendar = 'JCV-EVENT-'+uuid.v1()+'.ics';
+
+            const insertData = await database
+            .insert({
+                sys_calendar_eventUserId: GLOBAL_DASH[0],
+                sys_calendar_eventName: eventName,
+                sys_calendar_eventDescription: eventDescription,
+                sys_calendar_eventDate: eventDate,
+                sys_calendar_eventMonth: eventDate.split('/')[1]+'/'+eventDate.split('/')[2],
+                sys_calendar_eventHours: eventInitialEnd.join(' - '),
+                sys_calendar_eventPublic: 0,
+                sys_calendar_eventLocation: getRoomId.sys_calendar_roomId,
+                sys_calendar_eventReminder: eventRemember,
+                sys_calendar_eventRoom: getLocateId.sys_unity_id,
+                sys_calendar_eventPersons: JSON.stringify(arrayPersons),
+                sys_calendar_nameIcs: nameArquiveCalendar,
+                sys_calendar_eventCreateDate: generateDate()
+            }).table("jcv_calendar_registers")
+            .then( dataInsert => {return dataInsert})
+
+            //Validando disparo de emails
+            if(eventSendEmail == 1 && insertData[0] > 0){
+                //Disparar
+                let newArrayEamils = database
+                .select("jcv_userEmailCorporate","jcv_userEmailFolks")
+                .whereRaw('jcv_id', arrayPersons)
+                .table("jcv_users")
+                .then( dato => {
+
+                    let arrayGet = []
+                    dato.forEach(element => {
+                        if(element.jcv_userEmailCorporate != '' || element.jcv_userEmailCorporate != null){
+                            arrayGet.push(element.jcv_userEmailCorporate)
+                        }else if(element.jcv_userEmailFolks != '' || element.jcv_userEmailFolks != null){
+                            arrayGet.push(element.jcv_userEmailFolks)
+                        }
+                    });
+
+                    return arrayGet;
+                    
+                })
+
+                const textOne = 'Evento criado!';
+                const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDate} | ${eventHourInitial} - ${eventInitialEnd}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomId.sys_calendar_roomName}</b>. <br> Local: <b>${getLocateId.sys_unity_name}</b>. <br><br> Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para adicionar</a> <br><br> Para maiores informações acesse o calendario jcv`;
+                emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
+            }
+
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Evento <b>${eventName}</b> foi registrado com sucesso","timeMsg": 3000}`);
+            res.redirect("/painel/calendario/main/"+eventDate.split('/')[1]+'/'+eventDate.split('/')[2]);
+
+        }
+    }else{
+        //Erro
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>Dados necessarios faltando</b>","timeMsg": 3000}`);
+        res.redirect("/painel/calendario/main");
+    }
+
 }
 
 exports.saveNewEvent = async (req,res) => {
@@ -505,7 +668,7 @@ exports.viewEvent = async (req,res) => {
     if(getEvent[0].sys_calendar_eventPersons != ''){
         getPersonsEvents = await database
         .select("jcv_userNamePrimary","jcv_id")
-        .whereRaw("jcv_id in ("+getEvent[0].sys_calendar_eventPersons+")")
+        .whereIn("jcv_id", typeof(JSON.parse(getEvent[0].sys_calendar_eventPersons)) == 'object' ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
         .table("jcv_users")
         .then( data => {
             return data;
@@ -545,7 +708,7 @@ exports.viewEvent = async (req,res) => {
             //Pegando os particiapentes do evento
             personsEvent = await database
             .select("jcv_userNamePrimary","jcv_userImageIcon")
-            .whereRaw("jcv_id in("+getEvent[0].sys_calendar_eventPersons+")")
+            .whereIn("jcv_id", typeof(JSON.parse(getEvent[0].sys_calendar_eventPersons)) == 'object' ? JSON.parse(getEvent[0].sys_calendar_eventPersons) : [getEvent[0].sys_calendar_eventPersons])
             .table("jcv_users")
             .then( data => {
                 return data;
@@ -728,7 +891,7 @@ exports.editSaveNewEvent = async (req,res) => {
                     sys_calendar_eventLocation: eventLocation,
                     sys_calendar_eventReminder: eventReminder,
                     sys_calendar_eventRoom: eventRoom,
-                    sys_calendar_eventPersons: arrNewPerson,
+                    sys_calendar_eventPersons: JSON.stringify(arrNewPerson.split(',').map(function(value){return parseInt(value)})),
                     sys_calendar_eventCreateDate: generateDate()
                 })
                 .where({sys_calendar_eventId: idEvent})

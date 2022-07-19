@@ -208,7 +208,6 @@ const getPermissions = (urlArray) => async(req, res, next) => {
 
     async function functionNetPage(validationGet){
         //console.log('aaaaaaa')
-
         //Uploads
         GLOBAL_DASH[11] = await getUpdates(GLOBAL_DASH[0], validationGet[0])
         next();

@@ -5,7 +5,6 @@ const multer  = require('multer');
 //const io = require('socket.io')(http)
 
 const getPermissions = require("./middlewarePermissions");
-const middlewareURL = require("./moduleUrl")
 
 const io = require('socket.io')
 
@@ -82,23 +81,23 @@ router.get("/logout", (req,res)=> {
 })
 
 //Pagina inicial
-router.get("/", middlewareURL, authenticate, getPermissions(['/']), homePanel.homeInfo)
+router.get("/",  authenticate, getPermissions(['/']), homePanel.homeInfo)
 router.post("/action/define/pass", homePanel.indexSetPass)
 
 
 /***********************************/
 /***********************************/
 //Requisitor: Novo Pedido
-router.get("/requisitor/Novo", middlewareURL, authenticate, getPermissions(['requisitor/novo']), requisitorMateriais.listAllinformations)
+router.get("/requisitor/Novo",  authenticate, getPermissions(['requisitor/novo']), requisitorMateriais.listAllinformations)
 router.post("/requisitor/create/order", authenticate, requisitorMateriais.createOrder);
 router.post("/requisitor/new/item/request", authenticate, itemsRequisitor.requestItemAdmin)
 
 //Requisitor: Editar Pedido
-router.get("/requisitor/EditarRequisicao/:id?", middlewareURL, authenticate, getPermissions(['requisitor/editarRequisicao']), requisitorMateriais.editRequestUser);
+router.get("/requisitor/EditarRequisicao/:id?",  authenticate, getPermissions(['requisitor/editarRequisicao']), requisitorMateriais.editRequestUser);
 router.post("/requisitor/EditarRequisicao/save/new/Request", authenticate, requisitorMateriais.editRequestUserCommand);
 
 //Requisitor: Visualizar pedido
-router.get("/requisitor/VisualizarRequisicao/:id?", middlewareURL, authenticate, getPermissions(['requisitor/visualizarRequisicao']), requisitorMateriais.viewRequest)
+router.get("/requisitor/VisualizarRequisicao/:id?",  authenticate, getPermissions(['requisitor/visualizarRequisicao']), requisitorMateriais.viewRequest)
 router.post("/requisitor/VisualizarRequisicao/view/order/download", authenticate, requisitorMateriais.viewDownloadOrder)//Botao de download pagina view
 
 //Requisitor: Receber pedido *EXCLUIR, MUDOU PARA ENVIAR REQ*
@@ -107,50 +106,51 @@ router.post("/requisitor/VisualizarRequisicao/view/order/download", authenticate
 //router.post("/requisitor/ReceberRequisicao/receber/finalizar/force", authenticate, requisitorMateriais.receberRequisicaoActionForce)
 
 //Requisitor: Enviar requisição
-router.get("/requisitor/EnviarRequisicoes/:idsOrders?", middlewareURL, authenticate, getPermissions(['requisitor/enviarRequisicoes']),requisitorMateriais.sendRequests)
+router.get("/requisitor/EnviarRequisicoes/:idsOrders?",  authenticate, getPermissions(['requisitor/enviarRequisicoes']),requisitorMateriais.sendRequests)
 
 //Requisitor: Meus pedidos
-router.get("/requisitor/MinhasRequisicoes", middlewareURL, authenticate, getPermissions(['requisitor/minhasRequisicoes']), requisitorMateriais.listMyRequests)
+router.get("/requisitor/MinhasRequisicoes",  authenticate, getPermissions(['requisitor/minhasRequisicoes']), requisitorMateriais.listMyRequests)
 router.post("/requisitor/action/search/myRequests", authenticate, requisitorMateriais.searchMyRequest)
 router.post("/requisitor/action/download/myRequest", authenticate, requisitorMateriais.myRequestDownload)
 router.post("/requisitor/action/remove/myRequest", authenticate, requisitorMateriais.myRequestRemove)
 
 //Requisitor: Lista de Pedidos {admin}
-router.get("/requisitor/ListaRequisicoes", middlewareURL, authenticate, getPermissions(['requisitor/listaRequisicoes']), requisitorMateriais.listRequsicoesAll)
+router.get("/requisitor/ListaRequisicoes",  authenticate, getPermissions(['requisitor/listaRequisicoes']), requisitorMateriais.listRequsicoesAll)
 router.post("/requisitor/action/list/requisicoes", authenticate, requisitorMateriais.actionSearchOrder)
 router.post("/requisitor/action/commands/orders", authenticate, requisitorMateriais.actionCommandsORders)
 router.post("/requisitor/admin/action/remove/myRequest", authenticate, requisitorMateriais.adminRequestRemove)
 router.post("/requisitor/admin/action/download/myRequest", authenticate, requisitorMateriais.adminRequestDownload)
 
 //Requisitor: Lista de Itens {admin}
-router.get("/requisitor/Items", middlewareURL, authenticate, getPermissions(['requisitor/items']), itemsRequisitor.adminListAllItems)
+router.get("/requisitor/Items",  authenticate, getPermissions(['requisitor/items']), itemsRequisitor.adminListAllItems)
 router.post("/requisitor/save/item/edit", authenticate, itemsRequisitor.saveEditItem);
 router.post("/requisitor/save/item/new", authenticate, itemsRequisitor.saveNewItem)
 
 /***********************************/
 /***********************************/
 //Calendario: Pagina inicial
-router.get("/calendario/main/:numberMonth?/:yearMonth?", middlewareURL, authenticate, getPermissions(['calendario/main']), controllerCalendar.viewCalendarMonth)
+router.get("/calendario/main/:numberMonth?/:yearMonth?",  authenticate, getPermissions(['calendario/main']), controllerCalendar.viewCalendarMonth)
 //Calendario: Pagina de eventos
-router.get("/calendario/event/:idEvent?/:dayEvent?/:monthEvent?/:yearEvent?", middlewareURL, authenticate, getPermissions(['calendario/event']), controllerCalendar.viewEvent)
+router.get("/calendario/event/:idEvent?/:dayEvent?/:monthEvent?/:yearEvent?",  authenticate, getPermissions(['calendario/event']), controllerCalendar.viewEvent)
 //Calendario: Pagina de salas
-router.get("/calendario/room/RoomSettings", middlewareURL, authenticate, getPermissions(['calendario/room']), controllerCalendar.roomSettings)
+router.get("/calendario/room/RoomSettings",  authenticate, getPermissions(['calendario/room']), controllerCalendar.roomSettings)
 
 
 //Calendario: Pagina ver eventos da sala
-router.get("/calendario/viewRoom/:idRoom/:monthRoom?", middlewareURL, authenticate, getPermissions(['calendario/viewRoom']), controllerCalendar.viewRoom)
+router.get("/calendario/viewRoom/:idRoom/:monthRoom?",  authenticate, getPermissions(['calendario/viewRoom']), controllerCalendar.viewRoom)
 
 //Calendario: Ver evento do dia
-router.get("/calendario/viewEvent/Day/:dayEvent?", middlewareURL, authenticate, getPermissions(['calendario/viewEvent']), controllerCalendar.viewEventDay)
+router.get("/calendario/viewEvent/Day/:dayEvent?",  authenticate, getPermissions(['calendario/viewEvent']), controllerCalendar.viewEventDay)
 
 //Calendario: Criar novo evento
-router.post("/calendario/main/register/new", authenticate, controllerCalendar.saveNewEvent)
+router.post("/calendario/main/register/new", authenticate, controllerCalendar.saveNewEvent)//Antigo
+router.post("/calendario/register/new", authenticate, controllerCalendar.moduleSaveNewEvent)//Novo
 router.post("/calendario/main/register/edit", authenticate, controllerCalendar.editSaveNewEvent)
 //Remover evento
 router.post("/calendario/main/delete/event", authenticate, controllerCalendar.deleteEvent)
 
 //Link de Download do evento:
-router.get("/calendario/download/:eventFile", middlewareURL, controllerCalendar.eventDownload)
+router.get("/calendario/download/:eventFile",  controllerCalendar.eventDownload)
 
 //Calendario: Criar nova sala
 router.post("/calendario/room/register/new", authenticate, controllerCalendar.registerNewRoom)
@@ -160,19 +160,19 @@ router.post("/calendario/room/register/createQrCode", authenticate, controllerCa
 /***********************************/
 /***********************************/
 //Programa da Beleza: Solicitar
-router.get("/beleza/solicitar", middlewareURL, authenticate, getPermissions(['beleza/solicitar']), programaBeleza.sysBLZrequest)
+router.get("/beleza/solicitar",  authenticate, getPermissions(['beleza/solicitar']), programaBeleza.sysBLZrequest)
 router.post("/beleza/action/solicitar", authenticate, programaBeleza.finalizarSolicitacao);
 
 //Programa da Beleza: Status
-router.get("/beleza/status", middlewareURL, authenticate, getPermissions(['beleza/status']), programaBeleza.listOrder)
+router.get("/beleza/status",  authenticate, getPermissions(['beleza/status']), programaBeleza.listOrder)
 router.post("/beleza/request/cancel", authenticate, programaBeleza.cancelOrder);
 
 //Programa da Beleza: Lista de solicitações
-router.get("/beleza/solicitacoes", middlewareURL, authenticate, getPermissions(['beleza/solicitacoes']), programaBeleza.listRequests);
+router.get("/beleza/solicitacoes",  authenticate, getPermissions(['beleza/solicitacoes']), programaBeleza.listRequests);
 router.post("/beleza/requests/search", authenticate, programaBeleza.searchRequests);
 
 //Programa da Beleza: Lista de produtos
-router.get("/beleza/produtos", middlewareURL, authenticate, getPermissions(['beleza/produtos']), programaBeleza.listProducts);
+router.get("/beleza/produtos",  authenticate, getPermissions(['beleza/produtos']), programaBeleza.listProducts);
 router.post("/beleza/register/product", authenticate, programaBeleza.registerProduct);
 router.post("/beleza/status/products", authenticate, programaBeleza.statusProducts);
 router.post("/beleza/actions/product/save", authenticate, programaBeleza.actionProductSave)
@@ -185,19 +185,19 @@ router.post("/beleza/actions/order/download", authenticate, programaBeleza.actio
 router.post("/beleza/actions/order/delete", authenticate, programaBeleza.actionsCommandsUnityCancel)
 
 //Programa da beleza: Compilação
-router.get('/beleza/compilate/:uuid?', middlewareURL, authenticate, programaBeleza.compilateView)
+router.get('/beleza/compilate/:uuid?',  authenticate, programaBeleza.compilateView)
 router.post('/beleza/compilate/action/expedicao', authenticate, programaBeleza.compilateActionExpedicao)
 router.post('/beleza/compilate/action/despacho', authenticate, programaBeleza.compilateActionExpedicaoDespacho)
 router.post('/beleza/compilate/action/coletar', authenticate, programaBeleza.compilateActionExpedicaoColeta)
 
-router.get('/beleza/compilate/generate/:uuid?', middlewareURL, authenticate, programaBeleza.compilateGeneratePDF)
-router.get('/beleza/view/status/:uuid?', middlewareURL, authenticate, programaBeleza.viewStatus)
+router.get('/beleza/compilate/generate/:uuid?',  authenticate, programaBeleza.compilateGeneratePDF)
+router.get('/beleza/view/status/:uuid?',  authenticate, programaBeleza.viewStatus)
 
 /***********************************/
 /***********************************/
 //Sistema: Usuarios, permissoes, departamentos, unidades
-router.get("/system/users", middlewareURL, authenticate, getPermissions(['system/users']), controllerUsers.listAllinformations)
-router.get("/system/users/transfer", middlewareURL, authenticate, getPermissions(['system/users/transfer']), controllerUsers.moduleTransferMain)
+router.get("/system/users",  authenticate, getPermissions(['system/users']), controllerUsers.listAllinformations)
+router.get("/system/users/transfer",  authenticate, getPermissions(['system/users/transfer']), controllerUsers.moduleTransferMain)
 router.post("/system/users/transfer", authenticate, controllerUsers.moduleTransfer)
 
 //Salvar novo usuario
@@ -211,12 +211,12 @@ router.post("/system/action/sys/user/resetpasssingle", authenticate, controllerU
 router.post("/system/action/sys/users/download", authenticate, controllerUsers.downloadDataUsers)
 
 //Departamentos
-router.get("/system/departamentos", middlewareURL, authenticate, getPermissions(['system/departamentos']), controllerDepartment.listDepartments)
+router.get("/system/departamentos",  authenticate, getPermissions(['system/departamentos']), controllerDepartment.listDepartments)
 router.post("/system/department/action/saveEdit", authenticate, controllerDepartment.editSaveDepartment)
 router.post("/system/department/action/save", authenticate, controllerDepartment.saveNewDepartment)
 
 //Sistema: Unidades
-router.get("/system/unidades", middlewareURL, authenticate, getPermissions(['system/unidades']), controllerDepartment.listUnitys)
+router.get("/system/unidades",  authenticate, getPermissions(['system/unidades']), controllerDepartment.listUnitys)
 router.post("/system/unidades/action/save", authenticate, controllerDepartment.saveUnity)
 router.post("/system/unidades/action/save/edit", authenticate, controllerDepartment.saveEditUnity)
 
@@ -224,7 +224,7 @@ router.post("/system/unidades/action/save/edit", authenticate, controllerDepartm
 router.post("/system/report/action", authenticate, controllerReport.saveNewReport)
 
 //Sistema: Produtos
-router.get('/system/products', middlewareURL, authenticate, getPermissions(['system/products']), controllerProdutcs.viewProducts)
+router.get('/system/products',  authenticate, getPermissions(['system/products']), controllerProdutcs.viewProducts)
 
 router.post("/system/save/product", authenticate, controllerProdutcs.moduleSaveProduct)
 router.post("/system/save/edit/product", authenticate, controllerProdutcs.moduleEditSaveProduct)
@@ -232,20 +232,20 @@ router.post("/system/save/edit/product", authenticate, controllerProdutcs.module
 /***********************************/
 /***********************************/
 //Trade Mtk: Pagina inicial
-router.get('/trademkt/main', middlewareURL, authenticate, getPermissions(['trademkt/main']), controllerTrade.controllerMain)
+router.get('/trademkt/main',  authenticate, getPermissions(['trademkt/main']), controllerTrade.controllerMain)
 //Trade Mtk: Formulario de visita
-router.get('/trademkt/visit', middlewareURL, authenticate, getPermissions(['trademkt/visit']), controllerTrade.visitForm)
+router.get('/trademkt/visit',  authenticate, getPermissions(['trademkt/visit']), controllerTrade.visitForm)
 router.post('/trademkt/visit/new', authenticate, controllerTrade.visitFormNew)
 //Trade Mtk: Vendas diarias
-router.get('/trademkt/salesDay', middlewareURL, authenticate, getPermissions(['trademkt/salesDay']), controllerTrade.salesDay)
+router.get('/trademkt/salesDay',  authenticate, getPermissions(['trademkt/salesDay']), controllerTrade.salesDay)
 router.post('/trademkt/salesDay/new', authenticate, controllerTrade.salesDayRegister)
 //Trade Mtk: Formulario de pesquisa
-router.get('/trademkt/formSearch/new', middlewareURL, authenticate, getPermissions(['trademkt/formSearch/new']), controllerTrade.formSearch)
-router.get('/trademkt/formSearch/edit/:id?', middlewareURL, authenticate, getPermissions(['trademkt/formSearch/edit']), controllerTrade.formSearchEdit)
+router.get('/trademkt/formSearch/new',  authenticate, getPermissions(['trademkt/formSearch/new']), controllerTrade.formSearch)
+router.get('/trademkt/formSearch/edit/:id?',  authenticate, getPermissions(['trademkt/formSearch/edit']), controllerTrade.formSearchEdit)
 router.post('/trademkt/formSearch/newForm', authenticate, controllerTrade.formSearchNew)
 router.post('/trademkt/formSearch/editForm', authenticate, controllerTrade.formSearchEditAction)
 //Trade Mtk: Lista Geral
-router.get('/trademkt/listTrade', middlewareURL, authenticate, getPermissions(['trademkt/listTrade']), controllerTrade.listTradePage)
+router.get('/trademkt/listTrade',  authenticate, getPermissions(['trademkt/listTrade']), controllerTrade.listTradePage)
 router.post('/trademkt/listTrade/search', authenticate, controllerTrade.listTradeSearch)
 router.post('/trademkt/action/vd/action', authenticate, controllerTrade.actionVDmodule)
 router.post('/trademkt/action/fp/action', authenticate, controllerTrade.actionFPmodule)
@@ -255,16 +255,16 @@ router.post('/trademkt/fv/export-pdf', authenticate, controllerTrade.exportFVPDF
 router.post('/trademkt/action/fp/deleteForm', authenticate, controllerTrade.deleteFPform)
 router.post('/trademkt/action/fp/removeResponses', authenticate, controllerTrade.removeFPresponses)
 //Trade Mtk: Pagina de resposta
-router.get('/trademkt/form/response/:id', middlewareURL, authenticate, getPermissions(['trademkt/form/response']), controllerTrade.formResponse)
+router.get('/trademkt/form/response/:id',  authenticate, getPermissions(['trademkt/form/response']), controllerTrade.formResponse)
 router.post('/trademkt/formSearch/responseForm', authenticate, controllerTrade.formResponseAction)
 //Trade Mkt: Lojas
-router.get('/trademkt/shops', middlewareURL, authenticate, getPermissions(['trademkt/shops']), controllerTrade.shopsPage)
+router.get('/trademkt/shops',  authenticate, getPermissions(['trademkt/shops']), controllerTrade.shopsPage)
 router.post('/trademkt/shops/register/shop/new', authenticate, controllerTrade.shopsRegisterNew)
 router.post('/trademkt/shops/register/shop/edit', authenticate, controllerTrade.shopsRegisterEdit)
 router.post('/trademkt/shops/action/execute', authenticate, controllerTrade.shopsRegisterActions)
-router.get('/trademkt/shops/config/:id?', middlewareURL, authenticate, getPermissions(['trademkt/shops/config']), controllerTrade.configShops)
+router.get('/trademkt/shops/config/:id?',  authenticate, getPermissions(['trademkt/shops/config']), controllerTrade.configShops)
 //Mapa
-router.get('/trademkt/shops/maps', middlewareURL, authenticate, getPermissions(['trademkt/shops/maps']), controllerTrade.mapViewShops)
+router.get('/trademkt/shops/maps',  authenticate, getPermissions(['trademkt/shops/maps']), controllerTrade.mapViewShops)
 //
 router.post('/trademkt/shops/set/users', authenticate, controllerTrade.saveSetUsers)
 
@@ -273,7 +273,7 @@ router.post('/trademkt/remove/fv/form', authenticate, controllerTrade.deleteFV)
 router.post('/trademkt/remove/vd/form', authenticate, controllerTrade.deleteVD)
 
 //Trade MKT: produtos
-router.get('/trademkt/products', middlewareURL, authenticate, controllerTrade.tradeProducts)
+router.get('/trademkt/products',  authenticate, controllerTrade.tradeProducts)
 router.post('/trademkt/products/save/new', authenticate, controllerTrade.saveNewProduct)
 router.post('/trademkt/products/save/edit', authenticate, controllerTrade.editNewProduct)
 router.post('/trademkt/products/action/execute', authenticate, controllerTrade.actionProductsTrade)
@@ -297,13 +297,13 @@ router.post('/trademkt/award/delete', authenticate, controllerAward.moduleDelete
 /***********************************/
 /***********************************/
 //Central de ajuda
-router.get('/help',middlewareURL, authenticate, controllerHelp.helpMain)
-router.get('/help/category/:id?', middlewareURL,authenticate, controllerHelp.helpCategory)
-router.get('/help/article/:url?', middlewareURL,authenticate, controllerHelp.helpArticle)
+router.get('/help', authenticate, controllerHelp.helpMain)
+router.get('/help/category/:id?', authenticate, controllerHelp.helpCategory)
+router.get('/help/article/:url?', authenticate, controllerHelp.helpArticle)
 
-router.get('/help/admin/main', middlewareURL,authenticate, controllerHelp.helpMainAdmin)
-router.get('/help/admin/new', middlewareURL,authenticate, controllerHelp.helpNewAdmin)
-router.get('/help/admin/edit/:id?', middlewareURL,authenticate, controllerHelp.helpEditAdmin)
+router.get('/help/admin/main', authenticate, controllerHelp.helpMainAdmin)
+router.get('/help/admin/new', authenticate, controllerHelp.helpNewAdmin)
+router.get('/help/admin/edit/:id?', authenticate, controllerHelp.helpEditAdmin)
 
 router.post('/help/admin/new/save', authenticate, controllerHelp.helpNewSave)
 router.post('/help/admin/edit', authenticate, controllerHelp.helpEditSave)
@@ -333,9 +333,9 @@ router.get("/chat", authenticate,(req,res)=>{
 /***********************************/
 /***********************************/
 //Updates: Pagina inicial
-router.get("/updates/main", middlewareURL, authenticate, getPermissions(['updates/main']),controllerUpdates.updatesMain)
-router.get("/updates/new", middlewareURL, authenticate, getPermissions(['updates/new']),controllerUpdates.updatesNew)
-router.get("/updates/edit/:id?", middlewareURL, authenticate, getPermissions(['updates/edit']),controllerUpdates.updateEdit)
+router.get("/updates/main",  authenticate, getPermissions(['updates/main']),controllerUpdates.updatesMain)
+router.get("/updates/new",  authenticate, getPermissions(['updates/new']),controllerUpdates.updatesNew)
+router.get("/updates/edit/:id?",  authenticate, getPermissions(['updates/edit']),controllerUpdates.updateEdit)
 
 router.post("/updates/new", authenticate, controllerUpdates.updatesNewSave)
 
@@ -350,12 +350,12 @@ router.post("/update/closeUp", authenticate, controllerSystemGeneral.closeUpdate
 /***********************************/
 /***********************************/
 //Notificações: Pagina inicial
-router.get("/notifications", middlewareURL, authenticate,controllerSystemGeneral.listNotificationsUser)
+router.get("/notifications",  authenticate,controllerSystemGeneral.listNotificationsUser)
 
 /* Admin */
-router.get("/notifications/main", middlewareURL, authenticate, getPermissions(['notifications/main']), controllerNotifications.mainNotifications)
-router.get("/notifications/new", middlewareURL, authenticate, getPermissions(['notifications/new']), controllerNotifications.newNotifications)
-router.get("/notifications/edit/:id?", middlewareURL, authenticate, getPermissions(['notifications/edit']), controllerNotifications.editNotifications)
+router.get("/notifications/main",  authenticate, getPermissions(['notifications/main']), controllerNotifications.mainNotifications)
+router.get("/notifications/new",  authenticate, getPermissions(['notifications/new']), controllerNotifications.newNotifications)
+router.get("/notifications/edit/:id?",  authenticate, getPermissions(['notifications/edit']), controllerNotifications.editNotifications)
 
 router.post("/notifications/new", authenticate, controllerNotifications.saveNotifications)
 router.post("/notifications/edit", authenticate, controllerNotifications.saveEditNotifications)
@@ -365,10 +365,10 @@ router.post("/notifications/reset", authenticate, controllerNotifications.resetV
 /***********************************/
 /***********************************/
 //Formulário de Pesquisa: Sistema
-router.get("/formularios/main", middlewareURL, authenticate, getPermissions(['formularios/main']), controllerFormulario.mainPage)
-router.get("/formularios/novo", middlewareURL, authenticate, getPermissions(['formularios/novo']), controllerFormulario.novoFormulario)
-router.get("/formularios/edit/:idForm?", middlewareURL, authenticate, getPermissions(['formularios/edit']), controllerFormulario.editFormulario)
-router.get("/formularios/reponse/:idForm?", middlewareURL, authenticate, controllerFormulario.responseFormulario)
+router.get("/formularios/main",  authenticate, getPermissions(['formularios/main']), controllerFormulario.mainPage)
+router.get("/formularios/novo",  authenticate, getPermissions(['formularios/novo']), controllerFormulario.novoFormulario)
+router.get("/formularios/edit/:idForm?",  authenticate, getPermissions(['formularios/edit']), controllerFormulario.editFormulario)
+router.get("/formularios/reponse/:idForm?",  authenticate, controllerFormulario.responseFormulario)
 
 router.post("/formularios/reponseButton", authenticate, getPermissions, controllerFormulario.responseFormularioButton)
 
@@ -383,9 +383,9 @@ router.post("/formularios/reponse/downlod", authenticate, controllerFormulario.e
 /***********************************/
 /***********************************/
 //Encurtador: Encurtador
-router.get("/encurtador/main", middlewareURL, authenticate, getPermissions(['encurtador/main']), controllerEncurtador.encurtadorMain)
-router.get("/encurtador/new", middlewareURL, authenticate, getPermissions(['encurtador/novo']), controllerEncurtador.encurtadorNew)
-router.get("/encurtador/edit/:id?", middlewareURL, authenticate, getPermissions(['encurtador/edit']), controllerEncurtador.encurtadorEdit)
+router.get("/encurtador/main",  authenticate, getPermissions(['encurtador/main']), controllerEncurtador.encurtadorMain)
+router.get("/encurtador/new",  authenticate, getPermissions(['encurtador/novo']), controllerEncurtador.encurtadorNew)
+router.get("/encurtador/edit/:id?",  authenticate, getPermissions(['encurtador/edit']), controllerEncurtador.encurtadorEdit)
 
 router.post("/encurtador/new", authenticate, controllerEncurtador.encurtadorNewSave)
 router.post("/encurtador/edit", authenticate, controllerEncurtador.encurtadorEditSave)
@@ -394,12 +394,12 @@ router.post("/encurtador/delete", authenticate, controllerEncurtador.encurtadorD
 /***********************************/
 /***********************************/
 //Cursos: Sistema de cursos e certificados
-router.get("/cursos/main", middlewareURL, authenticate, getPermissions(['cursos/main']),controllerCursos.cursosMain)
-router.get("/cursos/new", middlewareURL, authenticate, getPermissions(['cursos/new']), controllerCursos.cursosNew)
-router.get("/cursos/edit/:id?", middlewareURL, authenticate, getPermissions(['cursos/edit']), controllerCursos.cursosEdit)
-router.get("/cursos/start/:id?", middlewareURL, authenticate, getPermissions(['cursos/start']), controllerCursos.cursosStartup)
-router.get("/cursos/sinc/profile", middlewareURL, authenticate, controllerCursos.moduleSicProfile)
-router.get("/cursos/modelos", middlewareURL, authenticate, controllerCursos.moduleModels)
+router.get("/cursos/main",  authenticate, getPermissions(['cursos/main']),controllerCursos.cursosMain)
+router.get("/cursos/new",  authenticate, getPermissions(['cursos/new']), controllerCursos.cursosNew)
+router.get("/cursos/edit/:id?",  authenticate, getPermissions(['cursos/edit']), controllerCursos.cursosEdit)
+router.get("/cursos/start/:id?",  authenticate, getPermissions(['cursos/start']), controllerCursos.cursosStartup)
+router.get("/cursos/sinc/profile",  authenticate, controllerCursos.moduleSicProfile)
+router.get("/cursos/modelos",  authenticate, controllerCursos.moduleModels)
 
 router.post("/course/new", authenticate, controllerCursos.saveNewCourse)
 router.post("/course/edit", authenticate, controllerCursos.saveEditCourse)

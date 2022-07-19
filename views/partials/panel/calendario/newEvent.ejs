@@ -1,141 +1,351 @@
-<!-- AÇÃO AO CLICAR NO DIA (NOVO EVENTO) -->
-<section class="calendar-display-event" id="calendar-display-event">
-    <form class="calendar-event-box" method="post">
-        <div class="calendar-event-day-title">
-            <div class="calendar-event-day-title-set">
-                <span id="calendar-day-dinamic">Novo Evento</span>
-            </div>
-            <!--  -->
-            <div class="calendar-event-day-title-close">
-                <i id="event-close-display-day" class="ri-close-line"></i>
-            </div>
-        </div>
-        <!--  -->
-        <div class="calendar-event-main">
-            <div class="calendar-event-set-name">
-                <input name="calendar-register-name" type="text" placeholder="Nome do evento">
-            </div>
-        </div>
-        <!--  -->
-        <div class="calendar-event-description">
-            <label for="">Descrição</label>
-            <textarea name="calendar-register-description" rows="5"></textarea>
-        </div>
-        <!--  -->
-        <div class="calendar-event-select-day">
-            <label for="">Data</label>
-            <input required name="calendar-register-date" id="calendar-input-date" type="date">
-        </div>
-        <!--  -->
-        <div class="calendar-event-operation">
-            <div class="calendar-event-operation-initial">
-                <label for="">Das</label>
-                <input type="time" value="06:00" placeholder="06:00" name="calendar-register-hour-initial" id="">
-            </div>
-            <!--  -->
-            <div class="calendar-event-operation-final">
-                <label for="">Ás</label>
-                <input type="time" value="18:00" placeholder="18:00" name="calendar-register-hour-final">
-            </div>   
-            <!--  -->
-            <div class="calendar-event-operation-sep"></div><!-- SEPARATOR -->
-            <!--  -->
-            <div class="calendar-event-operation-day">
-                <label for="">Dia inteiro</label>
-                <input type="checkbox" name="calendar-register-all-day" id="calendar-register-all-day">
-            </div>
-            <!--  -->
-            <div class="calendar-event-operation-day">
-                <label for="">Evento Publico</label>
-                <input type="checkbox" name="calendar-register-event-public">
-            </div>  
-        </div>
-        <!--  -->
-        <div class="calendar-event-locate">
-            <div class="calendar-event-locate-cont">
-                <label for="">Local:</label>
-                <select name="calendar-register-location" id="calendar-register-location">
-                    <% allLocations.forEach(element => { %>
-                    <option value="<%= element.sys_unity_id %>"><%= element.sys_unity_name %></option>
-                    <% }) %>
-                    <!-- <option value="not">Outro local</option> -->
-                </select>
-                <!--  -->
-            </div>
-            <!--  -->
-            <% let atualIndex = allLocations[0].sys_unity_id %>
-            
-            <% for(let i = 0; i < allLocations.length; i++){ %>
-                
-                <% if(allLocations[i].sys_unity_id == atualIndex){ %>
-                    <!-- console.log("é igual: "+resultData[i].jcv_userNameSecundary) -->
-                    <!-- <span>1</span> -->
+<section class="event-new-section-main" id="event-new-section-main">
+    <form method="post" class="event-new-display-main" id="event-new-display-main">
 
-                    <div class="calendar-event-reminder-room" id="room-and-unty-<%= atualIndex %>" >
-                        <label for="">Sala</label>
-                        <select name="calendar-register-room-<%= atualIndex %>">
-                            <% getAllRooms.forEach(element => { %>
-                                    
-                                <% if(element.sys_calendar_roomUnity == atualIndex){ %>
-                                    <option value="<%= element.sys_calendar_roomId %>"><%= element.sys_calendar_roomName %></option>
-                                <% } %>
+        <div class="event-new-display-title">
+            <span id="event-new-dinamic-date">XX</span>
+            <button type="button" id="close-new-event-display"><i class="ri-close-line"></i></button>
+        </div>
 
-                            <% }) %>
-                            <!-- <option value="1">Não usarei</option> -->
-                        </select>
-                    </div>
-
-
-                <% }else{ %>
-                    
-                    <!-- console.log("Mudou para: "+resultData[i].jcv_userNameSecundary) -->
-                    <% atualIndex = allLocations[i].sys_unity_id %>
-                    <% i-- %>
-                <% } %>
-            <% } %>
-            <!--  -->
-            <div class="calendar-event-reminder">
-                <div class="calendar-event-reminder-box">
-                    <label for="">Lembre-me</label>
-                    <select  name="calendar-register-reminder">
-                        <!-- FORMATO EM MINUTOS -->
-                        <option value="60">1 Hora antes</option>
-                        <option value="30">30 minutos antes</option>
-                        <option value="15">15 minutos antes</option>
-                    </select>
+        <!--  -->
+        
+        <div class="event-new-box-center">
+            <div class="event-new-box-center-row">
+                <label for="">Nome do Evento <b>*</b></label>
+                <input type="text" required placeholder="Nome do Evento" name="event-register-name">
+            </div>
+            <div class="event-new-box-center-row">
+                <label for="">Descrição <b>(opcional)</b></label>
+                <input type="text" placeholder="Uma breve descrição do evento" name="event-register-description">
+            </div>
+            <div class="event-new-box-center-row">
+                <label for="">Data <b>*</b></label>
+                <input type="date" required placeholder="Insira uma data" id="event-new-register-date" name="event-register-date">
+            </div>
+            <div class="event-new-box-center-row">
+                <label for="">Data <b>*</b></label>
+                <div style="display: flex; align-items: center;">
+                    <input type="time" required placeholder="Hora inicial" name="event-register-initial">
+                    <label style="margin: 0 14px;">Ás</label>
+                    <input type="time" required placeholder="Hora final" name="event-register-end">
                 </div>
-                <!--  -->
-    
             </div>
-            
+            <div class="event-new-box-center-row">
+                <label for="">Local <b>*</b></label>
+                <select required placeholder="Busque uma sala" name="event-register-location">
+                    <% getAllRooms.forEach(element => { %>
+                        <option value="[<%= element.sys_unity_id %>,<%= element.sys_calendar_roomId %>]"><%= element.sys_unity_name %> | <%= element.sys_calendar_roomName %></option>  
+                    <% }) %>
+                </select>
+            </div>
+            <div class="event-new-box-center-row">
+                <label for="">Lembre-me <b>(opcional)</b></label>
+                <select name="event-register-remember">
+                    <option value="0">Não me lembre</option>
+                    <option value="5">5 Minutos antes</option>
+                    <option value="10">10 Minutos antes</option>
+                    <option value="20">20 Minutos antes</option>
+                    <option value="30">30 Minutos antes</option>
+                    <option value="60">1 Hora antes</option>
+                </select>
+            </div>
+            <div class="event-new-box-center-row">
+                <label for="">Disparar e-mail <b>*</b></label>
+                <select name="event-register-send-mails">
+                    <option value="0">NÃO</option>
+                    <option value="1">SIM</option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="event-new-box-add-users">
+            <div class="event-new-box-add-users-input">
+                <label for="">Busque e insira participantes <b>(opcional)</b></label>
+                <input type="text" placeholder="Insira aqui.." id="event-register-add-person">
+                <input type="text" hidden name="event-register-persons" id="event-register-array">
+            </div>
             <!--  -->
-            <div class="calendar-event-locate-name">
-                <input id="calendar-register-location-name" type="text" placeholder="Insira o nome do local..">
-            </div>
-        </div>
-        <!--  -->
-        <hr style="margin: 30px 0;">
-        <!--  -->
-        <div class="calendar-event-persons">
-            <div class="calendar-event-persons-filter">
-                <span>Inserir participantes: Busque pelo nome e selecione</span>
-                <input type="text" placeholder="Inserir participantes para este evento.." id="insert-person">
-                <button hidden type="button" id="button-add-person">Adicionar</button>
-            </div>
-            <!--  -->
-            <div class="calendar-event-persons-list">
+            <div class="event-new-box-add-users-box" id="event-new-box-add-users-box">
+                <!--  -->
                 <!--  -->
                 <!--  -->
                 <!--  -->
                 <!--  -->
             </div>
         </div>
-        <!--  -->
-        <hr style="margin: 30px 0;">
-        <!--  -->
-        <div class="calendar-event-actions">
-            <button class="class-loader" type="submit" formaction="../register/new">Salvar</button>
-            <button type="button" id="calendar-close-event">Cancelar</button>
+
+        <hr>
+
+        <div class="event-new-box-command">
+            <button type="submit" formaction="/painel/calendario/register/new">Salvar</button>
+            <button type="reset">Resetar</button>
         </div>
+
     </form>
 </section>
+<!--  -->
+<!--  -->
+<style>
+.event-new-section-main{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgb(30 30 30 / 15%);
+}
+.event-new-display-main{
+    width: 750px;
+    max-width: 750px;
+    max-height: 700px;
+    margin-top: -4%;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 5px;
+    padding: 18px;
+    overflow: auto;   
+}
+/*  */
+/*  */
+.event-new-display-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 27px;
+}
+.event-new-display-title span{
+    font-size: 1.6rem;
+    color: var(--color-one);
+}
+.event-new-display-title button{
+    font-size: 1.4rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+/*  */
+/*  */
+.event-new-box-center{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.event-new-box-center-row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.event-new-box-center-row label{
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--color-two);
+}
+.event-new-box-center-row input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+.event-new-box-center-row select{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    cursor: pointer;
+}
+
+/*  */
+/*  */
+/*  */
+/* ADD NEW USER */
+.event-new-box-add-users{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.event-new-box-add-users-input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+}
+.event-new-box-add-users-input label{
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--color-two);
+}
+.event-new-box-add-users-input input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+.event-new-box-add-users-box{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+/*  */
+.box-user-add{
+    width: fit-content;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-three);
+    border-radius: 15px;
+    margin: 8px;
+}
+.box-user-add img{
+    width: 30px;
+    object-fit: contain;
+}
+.box-user-add label{
+    font-size: 0.8rem;
+    margin: 0 7px;
+}
+.box-user-add button{
+    font-size: 1rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+}
+/*  */
+.event-new-box-command{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 23px 0;
+}
+.event-new-box-command button:nth-child(1){
+    width: fit-content;
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-one);
+    color: var(--color-four);
+    margin: 0 19px;
+    font-size: 0.9rem;
+}
+.event-new-box-command button:nth-child(2){
+    width: fit-content;
+    padding: 8px 15px;
+    cursor: pointer;
+    border: 1px solid var(--color-two);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-two);
+    margin: 0 19px;
+    font-size: 0.9rem;
+}
+
+ /* RESPONSIVE */
+ @media only screen and (max-width: 500px){
+    
+}
+</style>
+<script>
+$(function(){
+  
+    $("#open-new-event-display").click(function(){
+        $("#event-new-section-main").fadeIn().css({'display':'flex'})
+        $("#event-new-display-main").animate({'margin-top': '-5%'}, "slow");
+
+        $("#event-new-dinamic-date").text('Criar novo evento')
+    })
+    $("#close-new-event-display").click(function(){
+        $("#event-new-display-main").animate({'margin-top': '-4%'}, "slow");
+        $("#event-new-section-main").fadeOut()
+    })
+
+    //Autocomplete usuarios
+    let objUsers = JSON.parse('<%- allUsers %>');
+    //console.log(dataOne)
+
+    $("#event-register-add-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(objUsers, request.term);        
+            response(results.slice(0, 5));
+            //console.log(results.slice(0, 5))
+            //console.log(response)
+            //console.log($(".ui-menu-item-wrapper").text())
+        },
+        select: function (e, i) {
+            //console.log(i.item.value)
+            $.validateUser(i.item.value, 'event-new-box-add-users-box')
+        }
+    });
+
+    let arrayObj = [];
+    $.removeUser = function(idUser){
+        $.fn.loadSpin(1)
+        $(`#box-user-${idUser}`).fadeOut().remove()
+        arrayObj.splice(arrayObj.indexOf(parseInt(idUser)), 1)
+        $("#event-register-array").val(`[${arrayObj}]`)
+        $.fn.loadSpin(0)
+    }
+    $.validateUser = async (validateUser, elementDad) => {
+        $.fn.loadSpin(1);
+        if(validateUser, elementDad != ''){
+            //Validando o usuario via socket
+            socket.emit('eventNewValidationUser', validateUser);
+            socket.on('eventNewValidationUserSend', (data) => {
+                if(arrayObj.indexOf(parseInt(data.jcv_id)) == -1){
+                    //Usuario ainda não adicionado
+                    $(`#${elementDad}`).append(`
+                    <span class="box-user-add" id="box-user-${data.jcv_id}">
+                        <img src="${data.jcv_userImageIcon}" alt="">
+                        <label>${data.jcv_userNamePrimary}</label>
+                        <button type="button" onclick="$.removeUser(${data.jcv_id})"><i class="ri-close-line"></i></button>
+                    </span>
+                    `);
+                    arrayObj.push(data.jcv_id)
+                    $("#event-register-array").val(`[${arrayObj}]`)
+                    $("#event-register-add-person").val('')
+                }else{
+                    //Usuario já adicionado
+                    $.notification(
+                        ["Pessoa já adicionada neste evento"],
+                        {
+                            position: ['top', 'right'], 
+                            messageType: 'warning',
+                            timeView: 2000,
+                            //redirectAction: 'https://google.com' ou null
+                        }
+                    )
+                    $("#event-register-add-person").val('')
+                }
+                socket.removeListener('eventNewValidationUserSend')
+            })
+            
+        }else{
+            //Insira um usuario
+            $.notification(
+                ["Informe a pessoa"],
+                {
+                    position: ['top', 'right'], 
+                    messageType: 'warning',
+                    timeView: 2000,
+                    //redirectAction: 'https://google.com' ou null
+                }
+            )
+            $("#event-register-add-person").val('')
+        }
+        $.fn.loadSpin(0)
+    }
+    
+})
+</script>

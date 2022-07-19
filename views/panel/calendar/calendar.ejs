@@ -178,7 +178,7 @@
                     </div>
                     <!--  -->
                     <div class="calendar-new-event">
-                        <i id="open-new-event-display-day" class="ri-add-line"></i>
+                        <i id="open-new-event-display" class="ri-add-line"></i>
                         <% if(GLOBAL_PERM[0].sys_cal_perm_admin == 1){ %>
                             <a class="class-loader"  title="Configurações" href="../../room/RoomSettings"><i class="ri-settings-3-line"></i></a>
                         <% } %>
@@ -281,7 +281,7 @@
                                                 <% for(let jj = 0; jj < allEventsMonth.length; jj++){ %>
                                                     <% if(allEventsMonth[jj].sys_calendar_eventDate == (i < 10 ? '0'+i : i)+'/'+monthNow){ %>
                                                         
-                                                        <% let arrayPersons = allEventsMonth[jj].sys_calendar_eventPersons.split(',') %>
+                                                        <% let arrayPersons = allEventsMonth[jj].sys_calendar_eventPersons.indexOf('[') > -1 ? JSON.parse(allEventsMonth[jj].sys_calendar_eventPersons) : allEventsMonth[jj].sys_calendar_eventPersons.split(',').map(function(value){return parseInt(value)}) %>
 
                                                         <!-- Validando se é o mes atual -->
                                                         <% if(monthAgo == 1){ %>
@@ -560,10 +560,12 @@
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <!-- PARTIALS NOVO EVENTO -->
 <%- include('../../partials/panel/calendario/newEvent') %>
+<!-- PARTIALS VIEW EVENTO -->
+<%- include('../../partials/panel/calendario/viewEvent') %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     $(function(){
 
@@ -623,11 +625,14 @@
 
         /* OPEN DISPLAY EVENT DAY */
         $("#open-event-display-day").click(function(){
-
-            
             $("#calendar-display-actions").fadeOut()
-            $("#calendar-display-event").fadeIn();
-            $("#calendar-display-event").css('display','flex');
+
+            //$("#calendar-display-event").fadeIn();                   ANTIGO
+            //$("#calendar-display-event").css('display','flex');      ANTIGO 
+            
+            $("#event-view-section-main").fadeIn().css({'display':'flex'})
+            $("#event-view-display-main").animate({'margin-top': '-5%'}, "slow");
+
         })
         /* CLOSE DISPLAY EVENT DAY */
         $("#event-close-display-day").click(function(){
@@ -635,11 +640,11 @@
         })
 
         /* OPEN DISPLAY NEW EVENT DAY */
-        $("#open-new-event-display-day").click(function(){
+        /* $("#open-new-event-display-day").click(function(){
             $("#calendar-display-actions").fadeOut()
             $("#calendar-display-event").fadeIn();
             $("#calendar-display-event").css('display','flex');
-        })
+        }) */
 
         /* BUTTON CLOSE EVENT REGISTER */
         $("#calendar-close-event").click(function(){
@@ -647,109 +652,13 @@
         })
     })
 
-
-    //LISTANDO OS USUARIOS
-    let dataOne = '<%- locals.allUsers %>';
-    let arrayDataOne = dataOne.split(',');
-
-    //Primeiro campo
-    $("#insert-person").autocomplete({
-        source: function(request, response) {
-            var results = $.ui.autocomplete.filter(arrayDataOne, request.term);        
-            response(results.slice(0, 5));
-            //console.log(results.slice(0, 5))
-            //console.log(response)
-            //console.log($(".ui-menu-item-wrapper").text())
-        },
-        select: function (e, i) {
-            //console.log(i.item.value)
-            setTimeout(() => {
-                $("#button-add-person").trigger('click')
-            }, 100);
-        }
-    });
-
-    let idArray = [];
-    //ADICIONANDO PESSOAS
-    $("#button-add-person").click(function(){
-
-        //Usuario a ser adicionado
-        const valIdUser = $("#insert-person").val().split('-')[0];
-        const valPerson = $("#insert-person").val().split('-')[1];
-
-        let validateUser = arrayDataOne.indexOf($("#insert-person").val())
-
-        if(valIdUser == '' || valPerson == '' || validateUser == -1){
-            //$.fn.sys_popupSystem("SYS03","Insira um usuario válido")
-            $.notification(
-                [`Insira um usuario válido`],
-                { 
-                    messageType: 'warning'
-                }
-            )
-
-            $("#insert-person").val('')
-        }else{
-
-            //console.log(idArray.indexOf(parseInt(valIdUser)))
-
-            if(idArray.indexOf(parseInt(valIdUser)) != -1){
-                //$.fn.sys_popupSystem("SYS02", "Filtro já adicionado")
-                $.notification(
-                    [`Usuário já adicionado`],
-                    { 
-                        messageType: 'warning'
-                    }
-                )
-                $("#insert-person").val('')
-            }else{
-
-                if(isNaN(valIdUser)){
-                    //$.fn.sys_popupSystem("SYS02", "Usuario inválido")
-                    $.notification(
-                        [`Usuário inválido`],
-                        { 
-                            messageType: 'warning'
-                        }
-                    )
-                }else{
-
-                    idArray.push(parseInt(valIdUser))
-
-                    $(".calendar-event-persons-list")
-                    .append(
-                    `<div class="calendar-event-person-box" id="person-id-${valIdUser}">
-                        <input readonly type="text" value="${valPerson}">
-                        <input hidden value="${valIdUser}" name="calendar-register-persons"/>
-                        <button onclick="functionRemovePerson('${valIdUser}')" value="${valIdUser}" type="button"><i class="ri-close-circle-line"></i></button>
-                    </div>`
-                    )
-
-                    console.log(idArray)
-
-                    $("#insert-person").val('')
-                }
-            }
-        }
-    })
-    function functionRemovePerson(id){
-
-        //Revemendo o usuario no array
-        idArray.splice(idArray.indexOf(parseInt(id)), 1)
-        console.log(idArray)
-
-        //Removendo a div
-        $("#person-id-"+id).remove();
-
-    }
-
     /* OPEN MENU OPTIONS */
     function openOptionsDays(day){
         let getMonth = day.split('/')[0]+' de <%- nameMonthYear %>';
 
         let dayConfig = day.split('/')[0] < 10 ? '0'+day.split('/')[0] : day.split('/')[0];
         let valueDate = day.split('/')[2]+  '-'  +day.split('/')[1]+'-'  +  dayConfig;
-        $("#calendar-input-date").val(valueDate)
+        $("#event-view-register-date").val(valueDate)
 
         //console.log(valueDate)
         //console.log(moment().format("YYYY-MM-DD"))
@@ -759,7 +668,7 @@
         let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
         $("#calendar-day-link-module").attr('href','/painel/calendario/viewEvent/Day/'+dayLinkOpen)
 
-        $("#calendar-day-dinamic").text(getMonth)
+        $("#event-view-dinamic-date").text(getMonth)
 
         $(".calendar-display-actions").fadeIn()
         $(".calendar-display-actions").css('display','flex')
@@ -775,52 +684,15 @@
         }        
     }
 
-    /* SELECIONANDO A SALA */
-    $("select#calendar-register-location").change(function(){
-        let valueSelect = $(this).val();
-
-        /* validar */
-        /* if(valueSelect == 'not'){
-            console.log('AAAAAAAAAA')
-            $(".calendar-event-locate-name input").css('display','flex')
-            $(".calendar-event-locate-name input").attr('name','calendar-register-location')//Atribuindo o name ao input
-            $("#calendar-register-location").attr('name','xxx')
-        }else{
-            $(".calendar-event-locate-name input").css('display','none')
-            $("#calendar-register-location").attr('name','calendar-register-location')
-            $(".calendar-event-locate-name input").attr('name','xxx')
-        } */
-    })
-
     let monthNow = '<%- monthNow %>'
     if(moment().format("MM/YYYY") != monthNow){
         $("#calendar-display-month").append("  <p id='cal-sep'>|<p>  <a class='class-loader' style='font-size: 0.9rem; color: var(--color-four)' href='/painel/calendario/main/'>Mês atual <i class='ri-external-link-line'></i></a>")
     }
 
-    /* EVENTO DIA INTEIRO */
-    $("#calendar-register-all-day").click(function(){
-        //$('#calendar-register-hour-initial option[value=06:00]').attr('selected','selected');
-
-        //$("#calendar-register-hour-initial").val("06:00").change();
-        //$("#calendar-register-hour-final").val("23:30").change();
-    })
-
     //Marcação da opção
     $(".calendar-visible-bottom").click(function(){
         $('.calendar-visible-bottom hr').remove();
         $(this).append('<hr>')
-    })
-
-
-    //Sistema de salas para o calendario
-    let aptionValueSet = $("select#calendar-register-location").val()
-    $("#room-and-unty-"+aptionValueSet).fadeIn().css('display','flex')
-    $("select#calendar-register-location").change(function(){
-        let optionValue = $(this).val();
-        
-        $(".calendar-event-reminder-room").css('display','none');
-        $("#room-and-unty-"+optionValue).fadeIn().css('display','flex')
-        
     })
 
     $(".close-options-days-link").click(function(){
