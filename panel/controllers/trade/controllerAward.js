@@ -16,6 +16,10 @@ function generateMonth(){
     return moment().format('MM-YYYY')
 }
 
+function getMonthReferece(){
+    return moment().subtract(1, 'M').format('MM-YYYY')
+}
+
 exports.moduleAwardNew = async (req,res) => {
 
     //Validando quem esta acessando a página se é um representante ou um ADMIN
@@ -106,7 +110,7 @@ exports.moduleAwardNew = async (req,res) => {
                 setValidation: setValidation
             })
         }else{
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Prazo para o registro já passou. <b>Caso necessário entre em contato conosco</b>","timeMsg": 6000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Prazo para o registro referente ao mês <b>${getMonthReferece()}</b> já passou! <b>(${getValidationPrazo.jcv_award_date_insert_first < 10 ? '0'+getValidationPrazo.jcv_award_date_insert_first : getValidationPrazo.jcv_award_date_insert_first} á ${getValidationPrazo.jcv_award_date_insert_last < 10 ? '0'+getValidationPrazo.jcv_award_date_insert_last : getValidationPrazo.jcv_award_date_insert_last})</b>. <b>Caso necessário entre em contato conosco</b>","timeMsg": 15000}`);
             res.redirect("/painel/trademkt/award/list");
         }
         

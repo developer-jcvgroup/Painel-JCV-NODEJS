@@ -202,10 +202,6 @@ const getPermissions = (urlArray) => async(req, res, next) => {
       
     }
 
-    let validationGet = await validateParams(objectPermissions, urlPage[0])
-    //console.log(validationGet)
-    validationGet[1] == true ? functionNetPage(validationGet) : validationGet[1] == null ? functionPageNull() : functionNotPermission()
-
     async function functionNetPage(validationGet){
         //console.log('aaaaaaa')
         //Uploads
@@ -221,6 +217,9 @@ const getPermissions = (urlArray) => async(req, res, next) => {
         res.redirect("/painel");
     }
 
+    let validationGet = await validateParams(objectPermissions, urlPage[0])
+    
+    validationGet[1] == true ? functionNetPage(validationGet) : validationGet[1] == null ? functionPageNull() : functionNotPermission()
 
 }
 

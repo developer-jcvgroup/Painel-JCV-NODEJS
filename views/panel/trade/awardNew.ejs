@@ -210,6 +210,7 @@
     $.blockRepresentante = function(nameRpresent){
         //alert('olá representante')
         $("#input-representante-get").val(nameRpresent).attr('readonly',true).css({'background':'var(--color-eight)','cursor':'default','outline':0})
+        $("#mask-month").val(moment().subtract(1, 'M').format("MM-YYYY")).attr('readonly',true).css({'background':'var(--color-eight)','cursor':'default','outline':0})
         $.nextInputSearch(nameRpresent)
     }
     $.showAdmin = function(){
