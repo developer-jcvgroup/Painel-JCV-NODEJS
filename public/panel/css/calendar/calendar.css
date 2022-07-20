@@ -1034,7 +1034,7 @@
 
     /*  */
     .calendar-info-floating{
-        width: 100% !important;
-        left: 3.5%;
+        width: 90%;
+        left: 2.5%;
     }
 }
