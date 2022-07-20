@@ -296,11 +296,11 @@
     
                                                                 <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
                                                                     <li>
-                                                                        <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                        <div style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>">
                                                                             <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
                                                                                 ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
                                                                             </b>
-                                                                        </a>
+                                                                        </div>
                                                                         <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                             <i class="ri-checkbox-blank-circle-fill"></i>
                                                                         </p>
@@ -308,8 +308,10 @@
                                                                             <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
                                                                             <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
                                                                                 <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                                
                                                                             <% }else{ %>
                                                                                 <span>Sem descrição..</span>
+                                                                                
                                                                             <% } %>
                                                                             <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
                                                                             <div class="calendar-info-floating-users">
@@ -328,16 +330,21 @@
                                                                                     <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
                                                                                     <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                                 <% } %>
+                                                                            </div>
+                                                                            <div class="calendar-command-floating">
+                                                                                <button class="close-options-days-link" type="button" onclick="$.openEditEvent('<%= allEventsMonth[jj].sys_calendar_eventId %>')"><i class="ri-pencil-line"></i></button>
+                                                                                <a class="close-options-days-link class-loader" href="/painel/calendario/download/<%= allEventsMonth[jj].sys_calendar_nameIcs %>"><i class="ri-calendar-event-line"></i></a>
+                                                                                <a class="close-options-days-link class-loader" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
                                                                             </div>
                                                                         </div>
                                                                     </li>
                                                                 <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
                                                                     <li>
-                                                                        <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                        <div style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
                                                                             <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
                                                                                 ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
                                                                             </b>
-                                                                        </a>
+                                                                        </div>
                                                                         <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                             <i class="ri-checkbox-blank-circle-fill"></i>
                                                                         </p>
@@ -345,8 +352,10 @@
                                                                             <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
                                                                             <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
                                                                                 <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                                
                                                                             <% }else{ %>
                                                                                 <span>Sem descrição..</span>
+                                                                                
                                                                             <% } %>
                                                                             <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
                                                                             <div class="calendar-info-floating-users">
@@ -366,14 +375,17 @@
                                                                                     <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                                 <% } %>
                                                                             </div>
+                                                                            <div class="calendar-command-floating">
+                                                                               <a class="close-options-days-link class-loader" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 <% }else{ %>
                                                                     <li>
-                                                                        <a class="close-options-days-link class-loader" style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                        <div style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
                                                                             <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-line"></i>⠀
                                                                             <%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
-                                                                        </a>
+                                                                        </div>
                                                                         <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                             <i class="ri-checkbox-blank-circle-line"></i>
                                                                         </p>
@@ -381,8 +393,10 @@
                                                                             <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
                                                                             <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
                                                                                 <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                                
                                                                             <% }else{ %>
                                                                                 <span>Sem descrição..</span>
+                                                                                
                                                                             <% } %>
                                                                             <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
                                                                             <div class="calendar-info-floating-users">
@@ -401,6 +415,9 @@
                                                                                     <div class="calendar-info-floating-boxs" title="<%= allUsersSystem[arrayPersons[2]][0] %>"><img src="<%= allUsersSystem[arrayPersons[2]][1] %>" alt=""></div>
                                                                                     <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                                 <% } %>
+                                                                            </div>
+                                                                            <div class="calendar-command-floating">
+                                                                                <a class="close-options-days-link class-loader" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
                                                                             </div>
                                                                         </div>
                                                                     </li>
@@ -411,11 +428,11 @@
                                                             <!-- Não é o mes atual -->
                                                             <% if(allEventsMonth[jj].sys_calendar_eventUserId == GLOBAL_DASH[0]){ %>
                                                                 <li>
-                                                                    <a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                    <div style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
                                                                         <b style="font-weight: 700;"><i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
                                                                             ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
                                                                         </b>
-                                                                    </a>
+                                                                    </div>
                                                                     <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                         <i class="ri-checkbox-blank-circle-fill"></i>
                                                                     </p>
@@ -423,8 +440,10 @@
                                                                         <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
                                                                         <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
                                                                             <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                            
                                                                         <% }else{ %>
                                                                             <span>Sem descrição..</span>
+                                                                            
                                                                         <% } %>
                                                                         <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
                                                                         <div class="calendar-info-floating-users">
@@ -444,15 +463,20 @@
                                                                                 <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                             <% } %>
                                                                         </div>
+                                                                        <div class="calendar-command-floating">
+                                                                            <button class="close-options-days-link" type="button" onclick="$.openEditEvent('<%= allEventsMonth[jj].sys_calendar_eventId %>')"><i class="ri-pencil-line"></i></button>
+                                                                            <a class="close-options-days-link class-loader" href="/painel/calendario/download/<%= allEventsMonth[jj].sys_calendar_nameIcs %>"><i class="ri-calendar-event-line"></i></a>
+                                                                            <div href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
+                                                                        </div>
                                                                     </div>
                                                                 </li>
                                                             <% }else if(arrayPersons.indexOf(''+GLOBAL_DASH[0]) != -1){ %>
-                                                                <li><a class="close-options-days-link class-loader" style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                                <li><div style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
                                                                     <b style="font-weight: 700;">
                                                                         <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-fill"></i>
                                                                         ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
                                                                     </b>
-                                                                </a>
+                                                                </div>
                                                                 <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                     <i class="ri-checkbox-blank-circle-fill"></i>
                                                                 </p>
@@ -460,8 +484,10 @@
                                                                     <span><%= allEventsMonth[jj].sys_calendar_eventName %></span>
                                                                     <% if(allEventsMonth[jj].sys_calendar_eventDescription != ''){ %>
                                                                         <span><%= allEventsMonth[jj].sys_calendar_eventDescription %></span>
+                                                                        
                                                                     <% }else{ %>
                                                                         <span>Sem descrição..</span>
+                                                                        
                                                                     <% } %>
                                                                     <span><b><%= arrayPersons.length %> pessoa(s)</b> | <span style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>;"><%= allEventsMonth[jj].sys_calendar_roomName %></span></span>
                                                                     <div class="calendar-info-floating-users">
@@ -481,13 +507,17 @@
                                                                             <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                         <% } %>
                                                                     </div>
+                                                                    <div class="calendar-command-floating">
+                                                                        <a class="close-options-days-link class-loader" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                             <% }else{ %>
-                                                                <li><a class="close-options-days-link class-loader" style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
+                                                            <li>
+                                                                <div style="background: transparent; color: gray;" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %> ">
                                                                     <i style="color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="ri-checkbox-blank-circle-line"></i>
                                                                     ⠀<%= allEventsMonth[jj].jcv_userNamePrimary.split(' ')[0] %> | <%= allEventsMonth[jj].sys_calendar_eventHours %>
-                                                                </a>
+                                                                </div>
                                                                 <p style="font-size: 0.8rem ;color: <%= allEventsMonth[jj].sys_calendar_roomColor %>" class="calendar-cicle">
                                                                     <i class="ri-checkbox-blank-circle-line"></i>
                                                                 </p>
@@ -516,15 +546,13 @@
                                                                             <div class="calendar-info-floating-boxs">+<%= arrayPersons.length - 3 %></div>
                                                                         <% } %>
                                                                     </div>
+                                                                    <div class="calendar-command-floating">
+                                                                        <a class="close-options-days-link class-loader" href="/painel/calendario/event/<%= allEventsMonth[jj].sys_calendar_eventId %>/<%= allEventsMonth[jj].sys_calendar_eventDate %>"><i class="ri-eye-line"></i></a>
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                             <% } %>
                                                         <% } %>
-
-                                                        
-
-
-
                                                     <% } %>
                                                 <% } %>
                                             </ul>
@@ -564,7 +592,7 @@
 <!-- PARTIALS NOVO EVENTO -->
 <%- include('../../partials/panel/calendario/newEvent') %>
 <!-- PARTIALS VIEW EVENTO -->
-<%- include('../../partials/panel/calendario/viewEvent') %>
+<%- include('../../partials/panel/calendario/editEvent') %>
 
 <script>
     $(function(){
@@ -654,7 +682,9 @@
 
     /* OPEN MENU OPTIONS */
     function openOptionsDays(day){
+
         let getMonth = day.split('/')[0]+' de <%- nameMonthYear %>';
+        $("#event-new-dinamic-date").text(getMonth)
 
         let dayConfig = day.split('/')[0] < 10 ? '0'+day.split('/')[0] : day.split('/')[0];
         let valueDate = day.split('/')[2]+  '-'  +day.split('/')[1]+'-'  +  dayConfig;
@@ -667,8 +697,6 @@
         //Valor do link do dia
         let dayLinkOpen = dayConfig + '-' + day.split('/')[1]+  '-'  +day.split('/')[2];
         $("#calendar-day-link-module").attr('href','/painel/calendario/viewEvent/Day/'+dayLinkOpen)
-
-        $("#event-new-dinamic-date").text(getMonth)
 
         $(".calendar-display-actions").fadeIn()
         $(".calendar-display-actions").css('display','flex')
@@ -688,6 +716,13 @@
     if(moment().format("MM/YYYY") != monthNow){
         $("#calendar-display-month").append("  <p id='cal-sep'>|<p>  <a class='class-loader' style='font-size: 0.9rem; color: var(--color-four)' href='/painel/calendario/main/'>Mês atual <i class='ri-external-link-line'></i></a>")
     }
+
+    //Close box
+    $("#close-display-info-box").click(function(){
+        setTimeout(() => {
+            $("#calendar-display-actions").css('display','none')
+        }, 100);
+    })
 
     //Marcação da opção
     $(".calendar-visible-bottom").click(function(){

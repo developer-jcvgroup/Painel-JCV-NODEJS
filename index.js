@@ -351,7 +351,7 @@ io.on('connection', (socket) => {
     socket.on('searchRepresentante', async(data) => {
         const getInfoUser = await database
         .select('jcv_id')
-        .where({jcv_userNamePrimary: data})
+        .where({jcv_userNamePrimary: data, jcv_userEnabled: 1})
         .table("jcv_users")
         .then( dataSearch =>{return dataSearch})
 
@@ -375,7 +375,7 @@ io.on('connection', (socket) => {
             //Pegando as promotoras
             let getPromot = await database
             .select('jcv_userNamePrimary')
-            .where({jcv_userManager: getInfoUser[0].jcv_id})
+            .where({jcv_userManager: getInfoUser[0].jcv_id, jcv_userEnabled: 1})
             .table("jcv_users")
             .then( data => {
                 //console.log(data)
@@ -417,7 +417,7 @@ io.on('connection', (socket) => {
         //Pegando informações do representante
         const getRepresentante = await database
         .select('jcv_id')
-        .where({jcv_id: representanteValidation})
+        .where({jcv_id: representanteValidation, jcv_userEnabled: 1})
         .table("jcv_users")
         .then( data => {return data})
 
@@ -459,7 +459,7 @@ io.on('connection', (socket) => {
                 //Pegando o id da promotora e validando
                 database
                 .select('jcv_id')
-                .where({jcv_userNamePrimary: typeSerchValidation[1]})
+                .where({jcv_userNamePrimary: typeSerchValidation[1], jcv_userEnabled: 1})
                 .table("jcv_users")
                 .then( data => {
                     //console.log(typeSerchValidation)
@@ -520,6 +520,26 @@ io.on('connection', (socket) => {
         .table("jcv_users")
         .then( dataResult => {
             socket.emit('eventNewValidationUserSend', dataResult[0])
+        })
+    })
+
+    socket.on('eventEdit', (data) => {
+        database
+        .select("jcv_calendar_registers.*","jcv_unitys.*","jcv_calendar_rooms.*")
+        .where({sys_calendar_eventId: data})
+        .table("jcv_calendar_registers")
+        .join("jcv_unitys","jcv_unitys.sys_unity_id","jcv_calendar_registers.sys_calendar_eventLocation")
+        .join("jcv_calendar_rooms","jcv_calendar_rooms.sys_calendar_roomId","jcv_calendar_registers.sys_calendar_eventRoom")
+        .then( dataResult => {
+
+            //Pegando os usuarios deste evento
+            database
+            .select("jcv_id","jcv_userNamePrimary","jcv_userImageIcon")
+            .whereIn("jcv_id", JSON.parse(dataResult[0].sys_calendar_eventPersons))
+            .table("jcv_users")
+            .then( dataUsers => {
+                socket.emit('eventEditSend', [dataResult[0], dataUsers])
+            })
         })
     })
 })

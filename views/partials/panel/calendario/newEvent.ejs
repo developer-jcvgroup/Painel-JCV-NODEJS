@@ -22,11 +22,11 @@
                 <input type="date" required placeholder="Insira uma data" id="event-new-register-date" name="event-register-date">
             </div>
             <div class="event-new-box-center-row">
-                <label for="">Data <b>*</b></label>
+                <label for="">Horário <b>*</b></label>
                 <div style="display: flex; align-items: center;">
-                    <input type="time" required placeholder="Hora inicial" name="event-register-initial">
+                    <input type="time" required placeholder="Hora inicial" name="event-register-initial" value="08:00">
                     <label style="margin: 0 14px;">Ás</label>
-                    <input type="time" required placeholder="Hora final" name="event-register-end">
+                    <input type="time" required placeholder="Hora final" name="event-register-end" value="18:00">
                 </div>
             </div>
             <div class="event-new-box-center-row">
@@ -78,7 +78,7 @@
         <hr>
 
         <div class="event-new-box-command">
-            <button type="submit" formaction="/painel/calendario/register/new">Salvar</button>
+            <button class="class-loader" id="button-save-new-event" type="submit" formaction="/painel/calendario/register/new">Salvar</button>
             <button type="reset">Resetar</button>
         </div>
 
@@ -263,12 +263,17 @@ $(function(){
     $("#open-new-event-display").click(function(){
         $("#event-new-section-main").fadeIn().css({'display':'flex'})
         $("#event-new-display-main").animate({'margin-top': '-5%'}, "slow");
-
-        $("#event-new-dinamic-date").text('Criar novo evento')
+        
+        //Title display
+        $("#event-new-dinamic-date").text() == "XX" ? $("#event-new-dinamic-date").text('Criar novo evento') : ''
     })
     $("#close-new-event-display").click(function(){
         $("#event-new-display-main").animate({'margin-top': '-4%'}, "slow");
         $("#event-new-section-main").fadeOut()
+        $("#event-new-register-date").val('')
+        setTimeout(() => {
+            $("#event-new-dinamic-date").text('XX')
+        }, 300);
     })
 
     //Autocomplete usuarios
@@ -288,6 +293,18 @@ $(function(){
             $.validateUser(i.item.value, 'event-new-box-add-users-box')
         }
     });
+
+    $("#button-save-new-event").click(function(){
+        //Validando
+        //console.log(.validate())
+        let arrayValidation = [$("#event-register-name").val(), $("#event-register-date").val(), $("#event-register-initial").val(), $("#event-register-end").val(), $("#event-register-location").val()]
+        if(arrayValidation.indexOf('') >-1){
+            setTimeout(() => {
+                $.fn.loadSpin(0)
+                $.notification(["Preencha os campos obrigatório"],{position: ['top', 'right'],messageType: 'warning',timeView: 4000})
+            }, 100);
+        }
+    })
 
     let arrayObj = [];
     $.removeUser = function(idUser){

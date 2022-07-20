@@ -1,0 +1,455 @@
+<section class="event-edit-section-main" id="event-edit-section-main">
+    <form method="post" class="event-edit-display-main" id="event-edit-display-main">
+
+        <div class="event-edit-display-title">
+            <span id="event-edit-dinamic-date">XX</span>
+            <button type="button" id="close-edit-event-display"><i class="ri-close-line"></i></button>
+        </div>
+
+        <!--  -->
+        
+        <div class="event-edit-box-center">
+            <div class="event-edit-box-center-row">
+                <label for="">Nome do Evento <b>*</b></label>
+                <input type="text" required placeholder="Nome do Evento" name="event-register-name" id="event-register-name">
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Descrição <b>(opcional)</b></label>
+                <input type="text" placeholder="Uma breve descrição do evento" name="event-register-description" id="event-register-description">
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Data <b>*</b></label>
+                <input type="date" required placeholder="Insira uma data" id="event-edit-register-date" name="event-register-date" id="event-register-date">
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Horário <b>*</b></label>
+                <div style="display: flex; align-items: center;">
+                    <input type="time" required placeholder="Hora inicial" name="event-register-initial" id="event-register-initial">
+                    <label style="margin: 0 14px;">Ás</label>
+                    <input type="time" required placeholder="Hora final" name="event-register-end" id="event-register-end">
+                </div>
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Local <b>*</b></label>
+                <select required placeholder="Busque uma sala" name="event-register-location" id="event-register-location">
+                    <% getAllRooms.forEach(element => { %>
+                        <option value="[<%= element.sys_unity_id %>,<%= element.sys_calendar_roomId %>]"><%= element.sys_unity_name %> | <%= element.sys_calendar_roomName %></option>  
+                    <% }) %>
+                    <option disabled></option>
+                </select>
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Lembre-me <b>(opcional)</b></label>
+                <select name="event-register-remember" id="event-register-remember">
+                    <option value="0">Não me lembre</option>
+                    <option value="5">5 Minutos antes</option>
+                    <option value="10">10 Minutos antes</option>
+                    <option value="20">20 Minutos antes</option>
+                    <option value="30">30 Minutos antes</option>
+                    <option value="60">1 Hora antes</option>
+                    <option disabled></option>
+                </select>
+            </div>
+            <div class="event-edit-box-center-row">
+                <label for="">Disparar e-mail <b>*</b></label>
+                <select name="event-register-send-mails" id="event-register-send-mails-edit">
+                    <option value="0">NÃO</option>
+                    <option value="1">SIM</option>
+                    <option disabled></option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="event-edit-box-add-users">
+            <div class="event-edit-box-add-users-input">
+                <label for="">Busque e insira participantes <b>(opcional)</b></label>
+                <input type="text" placeholder="Insira aqui.." id="event-register-edit-person">
+                <input type="text" hidden name="event-register-persons" id="event-register-array-edit">
+            </div>
+            <!--  -->
+            <div class="event-edit-box-add-users-box" id="event-edit-box-add-users-box">
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <!--  -->
+                <!--  -->
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="event-edit-box-command">
+            <button class="class-loader" type="submit" formaction="/painel/calendario/register/edit" name="button-save-edit-event" id="button-save-edit-event">Salvar Edição</button>
+            <a href="#" id="button-download-event">Baixar Evento (ICS)</a>
+            <button type="reset">Resetar Edição</button>
+            <button class="class-loader" type="submit" style="background: var(--color-red);" id="button-delete-event" formaction="/painel/calendario/main/delete/event" name="delete-event">Deletar Evento</button>
+        </div>
+
+    </form>
+</section>
+<!--  -->
+<!--  -->
+<style>
+.event-edit-section-main{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgb(30 30 30 / 15%);
+}
+.event-edit-display-main{
+    width: 750px;
+    max-width: 750px;
+    max-height: 700px;
+    margin-top: -4%;
+    display: flex;
+    flex-direction: column;
+    background: var(--background-two);
+    box-shadow: 0 0 4px 0 var(--color-three);
+    border-radius: 5px;
+    padding: 18px;
+    overflow: auto;   
+}
+/*  */
+/*  */
+.event-edit-display-title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 27px;
+}
+.event-edit-display-title span{
+    font-size: 1.6rem;
+    color: var(--color-one);
+}
+.event-edit-display-title button{
+    font-size: 1.4rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+/*  */
+/*  */
+.event-edit-box-center{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.event-edit-box-center-row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.event-edit-box-center-row label{
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--color-two);
+}
+.event-edit-box-center-row input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+.event-edit-box-center-row select{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+    cursor: pointer;
+}
+
+/*  */
+/*  */
+/*  */
+/* ADD NEW USER */
+.event-edit-box-add-users{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.event-edit-box-add-users-input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+}
+.event-edit-box-add-users-input label{
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--color-two);
+}
+.event-edit-box-add-users-input input{
+    border: 1px solid var(--color-seven);
+    padding: 10px 7px;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-two);
+}
+.event-edit-box-add-users-box{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+/*  */
+.box-user-add{
+    width: fit-content;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-three);
+    border-radius: 15px;
+    margin: 8px;
+}
+.box-user-add img{
+    width: 30px;
+    object-fit: contain;
+}
+.box-user-add label{
+    font-size: 0.8rem;
+    margin: 0 7px;
+}
+.box-user-add button{
+    font-size: 1rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+}
+/*  */
+.event-edit-box-command{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 23px 0;
+    flex-wrap: wrap;
+}
+.event-edit-box-command a{
+    text-decoration: none;
+    width: fit-content;
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-one);
+    color: var(--color-four);
+    margin: 0 19px;
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+}
+.event-edit-box-command button{
+    width: fit-content;
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-one);
+    color: var(--color-four);
+    margin: 0 19px;
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+}
+.event-edit-box-command button[type=reset]{
+    width: fit-content;
+    padding: 8px 15px;
+    cursor: pointer;
+    border: 1px solid var(--color-two);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-two);
+    margin: 0 19px;
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+}
+
+ /* RESPONSIVE */
+ @media only screen and (max-width: 500px){
+    
+}
+</style>
+<script>
+$(function(){
+
+    let arrayObj = [];//Array de usuarios
+    $.openEditEvent = (idEvent) => {
+        $("#calendar-display-actions").css({'display':'none'})
+        idEvent = parseInt(idEvent);
+
+        $(".edit-data-class-remove").remove()//Clase para remover os itens inseridos em cada form
+
+        //Pegando informações do evento
+        socket.emit('eventEdit', (idEvent))
+        socket.on('eventEditSend', (data) => {
+            if(data != ''){
+                //Tem dados
+
+                //Show display
+                $("#event-edit-section-main").fadeIn().css({'display':'flex'})
+                $("#event-edit-display-main").animate({'margin-top': '-5%'}, "slow");
+
+                //console.log(data[0])
+
+                //Inserindo dados
+                let dataGet = data[0].sys_calendar_eventDate.split('/')
+                let dataMonth = {1:"Janeiro",2:"Fevereiro",3:"Março",4:"Abril",5:"Maio",6:"Junho",7:"Julho",8:"Agosto",9:"Setembro",10:"Outubro",11:"Novembro",12:"Dezembro"}
+                $("#event-edit-dinamic-date").text(`*${dataGet[0]} de ${dataMonth[parseInt(dataGet[1])]} de ${dataGet[2]}`)
+                
+                $("#event-register-name").val(data[0].sys_calendar_eventName)
+                $("#event-register-description").val(data[0].sys_calendar_eventDescription)
+                let dateSet = data[0].sys_calendar_eventDate.split('/')
+                $("#event-edit-register-date").val(dateSet[2]+'-'+dateSet[1]+'-'+dateSet[0])
+                $("#event-register-initial").val(data[0].sys_calendar_eventHours.split(' - ')[0])
+                $("#event-register-end").val(data[0].sys_calendar_eventHours.split(' - ')[1])
+                $("#event-register-location").append(`<option class="edit-data-class-remove" selected value="[${[data[0].sys_unity_id, data[0].sys_calendar_roomId]}]">${data[0].sys_unity_name} | ${data[0].sys_calendar_roomName}</option>`)
+                
+                let rememberString = data[0].sys_calendar_eventReminder == 0 ? [0,'Não me lembre'] : [data[0].sys_calendar_eventReminder, (data[0].sys_calendar_eventReminder / 60)+' Minutos antes' ]
+                $("#event-register-remember").append(`<option class="edit-data-class-remove" selected value="${rememberString[0]}">${rememberString[1]}</option>`)
+                let sendEmail = data[0].sys_calendar_email_send == null || data[0].sys_calendar_email_send == 0 ? [0,'NÃO'] : [1,'SIM']
+                $("#event-register-send-mails-edit").append(`<option class="edit-data-class-remove" selected value="${sendEmail[0]}">${sendEmail[1]}</option>`)
+                //$("#").val(data[0])
+
+                $("#event-register-array-edit").val('')
+                arrayObj = JSON.parse(data[0].sys_calendar_eventPersons)
+                $("#event-register-array-edit").val(`[${arrayObj}]`)
+
+                //Adicionando os usuarios
+                $("#event-edit-box-add-users-box").empty()
+                data[1].forEach(element => {
+                    $("#event-edit-box-add-users-box").append(`
+                        <span class="box-user-add" id="box-user-${element.jcv_id}">
+                            <img src="${element.jcv_userImageIcon}" alt="">
+                            <label>${element.jcv_userNamePrimary}</label>
+                            <button type="button" onclick="$.removeUser(${element.jcv_id})"><i class="ri-close-line"></i></button>
+                        </span>
+                    `)
+                });
+
+                //Button
+                $("#button-save-edit-event").val(data[0].sys_calendar_eventId)
+                $("#button-download-event").attr('href',`/painel/calendario/download/${data[0].sys_calendar_nameIcs}`)
+                $("#button-delete-event").val(data[0].sys_calendar_eventId)
+                
+            }else{
+                //Erro
+                $.notification(
+                    ["Evento não encontrado"],
+                    {
+                        position: ['top', 'right'], 
+                        messageType: 'warning',
+                        timeView: 2000,
+                        //redirectAction: 'https://google.com' ou null
+                    }
+                )
+            }
+            socket.removeListener('eventEditSend')
+        })
+    }
+  
+    $(".open-edit-event-display").click(function(){
+        $("#event-edit-dinamic-date").text('Criar novo evento')
+    })
+    $("#close-edit-event-display").click(function(){
+        $("#event-edit-display-main").animate({'margin-top': '-4%'}, "slow");
+        $("#event-edit-section-main").fadeOut()
+    })
+
+    $("#button-save-edit-event").click(function(){
+        //Validando
+        //console.log(.validate())
+        let arrayValidation = [$("#event-register-name").val(), $("#event-register-date").val(), $("#event-register-initial").val(), $("#event-register-end").val(), $("#event-register-location").val()]
+        if(arrayValidation.indexOf('') >-1){
+            setTimeout(() => {
+                $.fn.loadSpin(0)
+                $.notification(["Preencha os campos obrigatório"],{position: ['top', 'right'],messageType: 'warning',timeView: 2000})
+            }, 100);
+        }
+    })
+
+    //Autocomplete usuarios
+    let objUsers = JSON.parse('<%- allUsers %>');
+
+    $("#event-register-edit-person").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(objUsers, request.term);        
+            response(results.slice(0, 5));
+            //console.log(results.slice(0, 5))
+            //console.log(response)
+            //console.log($(".ui-menu-item-wrapper").text())
+        },
+        select: function (e, i) {
+            //console.log(i.item.value)
+            $.validateUser(i.item.value, 'event-edit-box-add-users-box')
+        }
+    });
+
+    
+    $.removeUser = function(idUser){
+        $.fn.loadSpin(1)
+        $(`#box-user-${idUser}`).fadeOut().remove()
+        arrayObj.splice(arrayObj.indexOf(parseInt(idUser)), 1)
+        $("#event-register-array-edit").val(`[${arrayObj}]`)
+        $.fn.loadSpin(0)
+    }
+    $.validateUser = async (validateUser, elementDad) => {
+        $.fn.loadSpin(1);
+        if(validateUser, elementDad != ''){
+            //Validando o usuario via socket
+            socket.emit('eventNewValidationUser', validateUser);
+            socket.on('eventNewValidationUserSend', (data) => {
+                if(arrayObj.indexOf(parseInt(data.jcv_id)) == -1){
+                    //Usuario ainda não adicionado
+                    $(`#${elementDad}`).append(`
+                    <span class="box-user-add" id="box-user-${data.jcv_id}">
+                        <img src="${data.jcv_userImageIcon}" alt="">
+                        <label>${data.jcv_userNamePrimary}</label>
+                        <button type="button" onclick="$.removeUser(${data.jcv_id})"><i class="ri-close-line"></i></button>
+                    </span>
+                    `);
+                    arrayObj.push(data.jcv_id)
+                    $("#event-register-array-edit").val(`[${arrayObj}]`)
+                    $("#event-register-edit-person").val('')
+                }else{
+                    //Usuario já adicionado
+                    $.notification(
+                        ["Pessoa já adicionada neste evento"],
+                        {
+                            position: ['top', 'right'], 
+                            messageType: 'warning',
+                            timeView: 2000,
+                            //redirectAction: 'https://google.com' ou null
+                        }
+                    )
+                    $("#event-register-edit-person").val('')
+                }
+                socket.removeListener('eventNewValidationUserSend')
+            })
+            
+        }else{
+            //Insira um usuario
+            $.notification(
+                ["Informe a pessoa"],
+                {
+                    position: ['top', 'right'], 
+                    messageType: 'warning',
+                    timeView: 2000,
+                    //redirectAction: 'https://google.com' ou null
+                }
+            )
+            $("#event-register-edit-person").val('')
+        }
+        $.fn.loadSpin(0)
+    }
+    
+})
+</script>

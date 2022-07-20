@@ -145,7 +145,8 @@ router.get("/calendario/viewEvent/Day/:dayEvent?",  authenticate, getPermissions
 //Calendario: Criar novo evento
 router.post("/calendario/main/register/new", authenticate, controllerCalendar.saveNewEvent)//Antigo
 router.post("/calendario/register/new", authenticate, controllerCalendar.moduleSaveNewEvent)//Novo
-router.post("/calendario/main/register/edit", authenticate, controllerCalendar.editSaveNewEvent)
+router.post("/calendario/main/register/edit", authenticate, controllerCalendar.editSaveNewEvent)//Antigo
+router.post("/calendario/register/edit", authenticate, controllerCalendar.moduleSaveEditEvent)//Novo
 //Remover evento
 router.post("/calendario/main/delete/event", authenticate, controllerCalendar.deleteEvent)
 

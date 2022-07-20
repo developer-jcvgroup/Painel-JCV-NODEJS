@@ -17,16 +17,24 @@ function generateDate(){
 
 exports.viewCalendarMonth = async (req,res) => {
 
+    //console.log('Pr: '+[req.params.numberMonth, req.params.yearMonth])
+
     //Validando se tem o numero do mes na url, caso não
-    if(req.params.numberMonth == undefined || req.params.yearMonth == undefined){
+    let getParams = [req.params.numberMonth, req.params.yearMonth];
+    //console.log(getParams)
+    if(getParams.indexOf(undefined) > -1 || getParams.indexOf('null') > -1){
         //Pegando o mes atual como referencia para passar na url
         //var monthNumber = 1 + moment().month(); //O moment js interpreta o 0 como janeiro, por isso a soma
         var monthNumber = moment().month() < 10 ? '0'+ (1 + moment().month()) : 1 + moment().month();
         var yearMonth = moment().year();
         
+        //console.log([monthNumber, yearMonth])
+
         res.redirect("/painel/calendario/main/"+monthNumber+"/"+yearMonth);
 
     }else{
+
+        //console.log('aaaaaaaaa')
 
         //Dia numero
         const dayNow = moment().format("DD-MM-YYYY")
@@ -34,6 +42,7 @@ exports.viewCalendarMonth = async (req,res) => {
         const monthIndex = req.params.numberMonth;
         //Ano (Numero)
         const yearMonth = req.params.yearMonth;
+
         //Dias totais do mes
         const AllDays = moment(yearMonth+"-"+monthIndex, "YYYY-MM").daysInMonth();
 
@@ -99,6 +108,8 @@ exports.viewCalendarMonth = async (req,res) => {
             return date;
         })
 
+        //console.log('aaaa')
+
         //Criando um array com id do Usuario, nome e icone
         let arrayUserSetCal = {}
         allUsers.forEach(element => {
@@ -139,8 +150,9 @@ exports.viewCalendarMonth = async (req,res) => {
         let nameMonthYear = first+second;
 
         //Pegando o numero do primeiro dia da semana [0,1,2,3,4,5,6]
-        const NumberDayWeek =  moment(yearMonth+'-'+monthIndex).startOf('month').format('d');
-
+        //console.log([yearMonth+'-'+monthIndex])
+        const NumberDayWeek = moment(yearMonth+'-'+monthIndex).startOf('month').format('d');
+        //console.log(`moment(${yearMonth}+'-'+${monthIndex}).startOf('month').format('d')`)
         //Validando se estamos no mes atual
         const monthAgo = moment().format("MM/YYYY") == monthIndex+'/'+yearMonth ? 1 : 0;
 
@@ -294,7 +306,8 @@ exports.moduleSaveNewEvent = async(req,res) => {
                 sys_calendar_eventRoom: getLocateId.sys_unity_id,
                 sys_calendar_eventPersons: JSON.stringify(arrayPersons),
                 sys_calendar_nameIcs: nameArquiveCalendar,
-                sys_calendar_eventCreateDate: generateDate()
+                sys_calendar_eventCreateDate: generateDate(),
+                sys_calendar_email_send: eventSendEmail
             }).table("jcv_calendar_registers")
             .then( dataInsert => {return dataInsert})
 
@@ -335,6 +348,184 @@ exports.moduleSaveNewEvent = async(req,res) => {
         res.redirect("/painel/calendario/main");
     }
 
+}
+exports.moduleSaveEditEvent = async (req,res) => {
+    
+    const idEvent = req.body['button-save-edit-event'];
+
+    const eventName = req.body['event-register-name']
+    const eventDescription = req.body['event-register-description']
+    const eventDate = req.body['event-register-date'] == '' ? moment().format("DD/MM/YYYY") : moment(req.body['event-register-date']).format("DD/MM/YYYY")
+
+    const eventInitialEnd = [req.body['event-register-initial'], req.body['event-register-end']]
+
+    const eventLocation = JSON.parse(req.body['event-register-location']);
+    const eventRemember = req.body['event-register-remember'];//In minutes
+    const eventPersons = req.body['event-register-persons'].indexOf('[') > -1 ? JSON.parse(req.body['event-register-persons']).map(function(value){return parseInt(value)}) : [GLOBAL_DASH[0]];//Array
+
+    const eventSendEmail = req.body['event-register-send-mails']
+    
+    //console.log('parte 1')
+    //console.log([eventName, eventDate, eventInitialEnd, eventLocation, eventRemember])
+    if([eventName, eventDate, eventInitialEnd, eventLocation, eventRemember].indexOf('') == -1){
+        //Tudo certo
+        //console.log(eventLocation)
+        //Pegando o nome da sala
+        const getRoomId = await database
+        .select("sys_calendar_roomId","sys_calendar_roomName")
+        .where({sys_calendar_roomId: eventLocation[0]})
+        .table("jcv_calendar_rooms")
+        .then( data => {
+            return data[0]
+        })
+
+        //Pegando o nome do local
+        const getLocateId = await database
+        .select("sys_unity_id","sys_unity_name")
+        .where({sys_unity_id: eventLocation[1]})
+        .table("jcv_unitys")
+        .then( data => {
+            return data[0]
+        })
+
+        //Pegando todos eventos desta data exeto o mesmo
+        const getAllEvent = await database
+        .select()
+        .whereRaw(`sys_calendar_eventDate = "${eventDate}" AND sys_calendar_eventRoom = "${eventLocation[1]}" AND NOT sys_calendar_eventId = ${idEvent}`)
+        .table("jcv_calendar_registers")
+        .then( data => {return data})
+
+        //console.log('parte 2')
+
+        async function executeValidationHours(){
+            let validationEvent = false;
+            if(getAllEvent != ''){
+                getAllEvent.forEach(element => {
+
+                    //console.log(getAllEvent[i])
+        
+                    let insertIntervalInitial = moment(eventInitialEnd[0],'hh:mm');
+                    let insertIntervalFinal = moment(eventInitialEnd[1],'hh:mm');
+        
+                    let validateHours = element.sys_calendar_eventHours.split(' - ');
+                    let registredInitial = moment(validateHours[0],'hh:mm');
+                    let registredFinal = moment(validateHours[1],'hh:mm');
+        
+                    //Validando a hora inicial
+                    if(moment(insertIntervalInitial).isBetween(registredInitial, registredFinal) == false){
+                        //A data inicial está livre
+                        //console.log('A data inicial está livre')
+        
+                        //Validando a hora final
+                        if(moment(insertIntervalFinal).isBetween(registredInitial, registredFinal) == false){
+                            //Horario final válido
+                            //console.log('Horario final válido')
+        
+                            //Validando se os horarios do banco esta entre os horarios que o usuario inseriu
+                            if(moment(registredInitial).isBetween(insertIntervalInitial, insertIntervalFinal) == false && moment(registredFinal).isBetween(insertIntervalInitial, insertIntervalFinal) == false){
+                                //console.log('podemos registrar normalmente')
+                                validationEvent = true;
+                                //i = getAllEvent.length;
+                            }else{
+                                //console.log('as datas inseridas englobam a data do banco')
+                            }
+        
+                        }else{
+                            //Horario final já sendo usado
+                            //console.log('Horario final já sendo usado')
+                        }
+                    }else{
+                        //Data inicial já sendo usada, então vamos anular tudo! dar msg de erro
+                        //console.log('Data inicial já sendo usada, então vamos anular tudo!')
+                    }
+                })
+            }else{
+                validationEvent = true
+            }
+
+            return validationEvent
+        }
+
+        let validationEvent = await executeValidationHours();
+        //console.log(validationEvent)
+
+        //console.log('parte 3')
+        if(validationEvent == false){
+            //Horarios inválido
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Horários inválidos","timeMsg": 3000}`);
+            res.redirect("/painel/calendario/main");
+        }else{
+            //Tudo certo!
+
+            //Convertendo os array de usuarios participanentes
+            let arrayPersons = eventPersons
+            //ICS
+            let nameArquiveCalendar = 'JCV-EVENT-'+uuid.v1()+'.ics';
+
+            const insertData = await database
+            .update({
+                sys_calendar_eventUserId: GLOBAL_DASH[0],
+                sys_calendar_eventName: eventName,
+                sys_calendar_eventDescription: eventDescription,
+                sys_calendar_eventDate: eventDate,
+                sys_calendar_eventMonth: eventDate.split('/')[1]+'/'+eventDate.split('/')[2],
+                sys_calendar_eventHours: eventInitialEnd.join(' - '),
+                sys_calendar_eventPublic: 0,
+                sys_calendar_eventLocation: getRoomId.sys_calendar_roomId,
+                sys_calendar_eventReminder: eventRemember,
+                sys_calendar_eventRoom: getLocateId.sys_unity_id,
+                sys_calendar_eventPersons: JSON.stringify(arrayPersons),
+                //sys_calendar_nameIcs: nameArquiveCalendar,
+                //sys_calendar_eventCreateDate: generateDate(),
+                sys_calendar_email_send: eventSendEmail
+            })
+            .where({sys_calendar_eventId: idEvent})
+            .table("jcv_calendar_registers")
+            .then( dataInsert => {return dataInsert})
+
+            //console.log('parte 4')
+
+            //Validando disparo de emails
+            if(eventSendEmail == 1 && insertData == 1){
+                //Disparar
+                let newArrayEamils = await database
+                .select("jcv_userEmailCorporate","jcv_userEmailFolks")
+                .whereIn('jcv_id', arrayPersons)
+                .table("jcv_users")
+                .then( dato => {
+
+                    let arrayGet = []
+                    dato.forEach(element => {
+                        if(element.jcv_userEmailCorporate != '' || element.jcv_userEmailCorporate != null){
+                            arrayGet.push(element.jcv_userEmailCorporate)
+                        }else if(element.jcv_userEmailFolks != '' || element.jcv_userEmailFolks != null){
+                            arrayGet.push(element.jcv_userEmailFolks)
+                        }
+                    });
+
+                    return arrayGet;
+                    
+                })
+
+                //console.log(newArrayEamils)
+                //console.log('aaa')
+                
+                const textOne = 'Evento criado!';
+                const textTwo = `Olá, um evento foi criado onde você é um dos participantes!.</b><br> Criado por: <b>${GLOBAL_DASH[1]}</b>. <br> Data do evento: <b>${eventDate} | ${eventInitialEnd[0]} - ${eventInitialEnd[1]}</b> <br> Nome do evento: <b>${eventName}</b>. <br> Sala: <b>${getRoomId.sys_calendar_roomName}</b>. <br> Local: <b>${getLocateId.sys_unity_name}</b>. <br><br> Link para adicionar no calendário: <a href="${PAINEL_URL+'/painel/calendario/download/'+nameArquiveCalendar}">Clique para adicionar</a> <br><br> Para maiores informações acesse o calendario jcv`;
+                emailSystemExe.sendMailExe(newArrayEamils, 'Evento Criado', 'Evento Criado', 'Calendario', '', textOne, textTwo);
+            }
+
+            //console.log('parte 5')
+
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Evento <b>${eventName}</b> foi registrado com sucesso","timeMsg": 3000}`);
+            res.redirect("/painel/calendario/main");
+
+        }
+    }else{
+        //Erro
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>Dados necessarios faltando</b>","timeMsg": 3000}`);
+        res.redirect("/painel/calendario/main");
+    }
 }
 
 exports.saveNewEvent = async (req,res) => {
@@ -582,7 +773,7 @@ exports.deleteEvent = async(req,res) => {
     .table("jcv_calendar_registers")
     .then (data => {
 
-        if(data != ''){
+        if(data[0].sys_calendar_email_send == 1){
             let newArrayUser = data[0].sys_calendar_eventPersons.split(',')
 
             let newArrayEamils = [];
