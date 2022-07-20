@@ -63,7 +63,7 @@ const getPermissions = (urlArray) => async(req, res, next) => {
         },
         "MODULE002":{
             "requisitor/novo": resultPermissions[0].sys_req_perm_use,
-            "requisitor/EeditarRequisicao": resultPermissions[0].sys_req_perm_use,
+            "requisitor/EditarRequisicao": resultPermissions[0].sys_req_perm_use,
             "requisitor/visualizarRequisicao": resultPermissions[0].sys_req_perm_use,
             "requisitor/minhasRequisicoes": resultPermissions[0].sys_req_perm_use,
             "requisitor/listaRequisicoes": resultPermissions[0].sys_req_perm_admin,

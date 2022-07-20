@@ -276,7 +276,7 @@ exports.moduleSaveAward = async (req,res) => {
             if(getvalidation != null){
                 //console.log('errado')
                 //Relatorio já relaizado
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatorio já registrado!","timeMsg": 3000}`);
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Informe já registrado!","timeMsg": 3000}`);
                 res.redirect("/painel/trademkt/award/new");
             }else{
                 let arrayData = [
@@ -300,10 +300,10 @@ exports.moduleSaveAward = async (req,res) => {
                 .table("jcv_award_registers")
                 .then( data => {
                     if(data >= 1){
-                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relatório realizado com sucesso","timeMsg": 4000}`);
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Informe realizado com sucesso","timeMsg": 4000}`);
                         res.redirect("/painel/trademkt/award/new");
                     }else{
-                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Não foi possivel registrar seu relatorio","timeMsg": 4000}`);
+                        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Não foi possivel registrar seu informe","timeMsg": 4000}`);
                         res.redirect("/painel/trademkt/award/new");
                     }
                 })
@@ -372,7 +372,7 @@ exports.moduleAwardEdit = async (req,res) => {
 
     if(getValidation.length === 0){
         //não
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatório não encontrado ou não disponível para a edição","timeMsg": 4000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Informe não encontrado ou não disponível para a edição","timeMsg": 4000}`);
         res.redirect("/painel/trademkt/award/list");
     }else{
         //tem
@@ -416,7 +416,7 @@ exports.moduleAwardView = async (req,res) => {
 
     if(getValidation.length === 0){
         //não
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Relatório não encontrado ou não disponível para a edição","timeMsg": 4000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Informe não encontrado ou não disponível para a edição","timeMsg": 4000}`);
         res.redirect("/painel/trademkt/main");
     }else{
         //tem
@@ -484,10 +484,10 @@ exports.moduleAwardEditSave = async (req,res) => {
     .table("jcv_award_registers")
     .then( data => {
         if( data == 1){
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relátorio <b>${getName}</b> atualizado com sucesso!","timeMsg": 3000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Informe <b>${getName}</b> atualizado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/award/list");
         }else{
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao editar o relatorio <b>${getName}</b>","timeMsg": 5000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao editar o informe <b>${getName}</b>","timeMsg": 5000}`);
             res.redirect("/painel/trademkt/award/list");
         }
     })
@@ -701,7 +701,7 @@ exports.moduleAwardSearch = async (req,res) => {
         let newArrCompilate = [...getPromotNot, ...getShops];
 
         if(newArrCompilate.length === 0){
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum relatorio pendente encontrado","timeMsg": 5000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum informe pendente encontrado","timeMsg": 5000}`);
             res.redirect("/painel/trademkt/award/list");
         }else{
             //console.log(getDataSearch)
@@ -748,7 +748,7 @@ exports.moduleAwardSearch = async (req,res) => {
 
         //console.log(getRegsiterSearch)
         if(getRegsiterSearch.length === 0){
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum relatorio encontrado","timeMsg": 5000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Nenhum informe encontrado","timeMsg": 5000}`);
             res.redirect("/painel/trademkt/award/list");
         }else{
             //console.log(getDataSearch)
@@ -1260,10 +1260,10 @@ exports.moduleDelete = async (req,res) => {
     .table("jcv_award_registers")
     .then( data => {
         if( data == 1){
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Relátorio deletado com sucesso!","timeMsg": 3000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Informe deletado com sucesso!","timeMsg": 3000}`);
             res.redirect("/painel/trademkt/award/list");
         }else{
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao deletar o relatorio","timeMsg": 5000}`);
+            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao deletar o informe","timeMsg": 5000}`);
             res.redirect("/painel/trademkt/award/list");
         }
     })
