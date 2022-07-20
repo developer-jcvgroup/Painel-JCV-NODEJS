@@ -367,7 +367,7 @@
     margin-bottom: 24px !important;
     overflow: hidden;
     transition: 0.5s;
-    z-index: 2;
+    z-index: 1;
 }
 /* BOXS USERS */
 .calendar-info-floating-users{

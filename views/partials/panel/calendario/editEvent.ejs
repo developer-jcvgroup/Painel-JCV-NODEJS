@@ -101,6 +101,7 @@
     justify-content: center;
     align-items: center;
     background: rgb(30 30 30 / 15%);
+    z-index: 2;
 }
 .event-edit-display-main{
     width: 750px;
@@ -283,6 +284,7 @@ $(function(){
 
     let arrayObj = [];//Array de usuarios
     $.openEditEvent = (idEvent) => {
+        //$(".calendar-info-floating").css({'display':'none'})
         $("#calendar-display-actions").css({'display':'none'})
         idEvent = parseInt(idEvent);
 
@@ -362,6 +364,7 @@ $(function(){
     $("#close-edit-event-display").click(function(){
         $("#event-edit-display-main").animate({'margin-top': '-4%'}, "slow");
         $("#event-edit-section-main").fadeOut()
+        //$(".calendar-info-floating").css({'display':'none'})
     })
 
     $("#button-save-edit-event").click(function(){
