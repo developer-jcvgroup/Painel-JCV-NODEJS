@@ -72,7 +72,18 @@ getREQUISITORstatus = async () => {
 
 getCalendarEvents = async () => {
 
-    let count = 0;
+    const allRegisters = await database
+    .raw(`
+        SELECT * from jcv_calendar_registers WHERE JSON_CONTAINS(sys_calendar_eventPersons, '${GLOBAL_DASH[0]}', '$') AND sys_calendar_eventMonth = '${moment().format("MM/YYYY")}'
+    `)
+    .then( data => {
+        return data[0].length
+    })
+
+    //console.log(allRegisters)
+    return allRegisters
+
+    /* et count = 0;
     const getFormsReponse = await database
     .raw("SELECT locate("+GLOBAL_DASH[0]+", sys_calendar_eventPersons) achado,sys_calendar_eventDate,sys_calendar_eventPersons FROM jcv_calendar_registers WHERE sys_calendar_eventMonth = '"+moment().format("MM/YYYY")+"'")
     //.select()
@@ -93,7 +104,7 @@ getCalendarEvents = async () => {
         if(element.achado > 0 && usersEvents.indexOf(GLOBAL_DASH[0]) >-1 && dateSet >= moment().format("YYYY-MM-DD")){
             count++
         }
-    });
+    }); */
 
     
     /* await database
@@ -114,7 +125,7 @@ getCalendarEvents = async () => {
         return count;
     }) */
 
-    return count;
+    /* return count; */
 }
 
 
