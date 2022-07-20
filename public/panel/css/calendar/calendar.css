@@ -367,6 +367,7 @@
     margin-bottom: 24px !important;
     overflow: hidden;
     transition: 0.5s;
+    z-index: 2;
 }
 /* BOXS USERS */
 .calendar-info-floating-users{
@@ -1004,7 +1005,7 @@
         padding: 12px 14px;
     }
 
-    .claendar-list-events li a{
+    .claendar-list-events li > div{
         display: none;
     }
     .calendar-cicle{
@@ -1033,7 +1034,7 @@
 
     /*  */
     .calendar-info-floating{
-        width: 100%;
-        left: 0;
+        width: 100% !important;
+        left: 3.5%;
     }
 }
