@@ -266,7 +266,7 @@ exports.moduleSaveAward = async (req,res) => {
             //Validando se já possui registro desta loja/promotora
             const getvalidation = await database
             .select()
-            .where({jcv_award_registers_id_registred: validationFinal[1], jcv_award_registers_type: validationFinal[0]})
+            .where({jcv_award_registers_id_registred: validationFinal[1], jcv_award_registers_type: validationFinal[0], jcv_award_registers_month: getMonth})
             .table("jcv_award_registers")
             .then( data => {return data.length === 0 ? null : 200 })
 
