@@ -1333,7 +1333,7 @@ exports.shopsRegisterEdit = async (req,res) => {
     .where({jcv_userNamePrimary: managerShop})
     .table("jcv_users")
     .then( data => {
-        return data[0].jcv_id == '' ? null : data[0].jcv_id
+        return data.length == 0 ? null : data[0].jcv_id
     })
 
     //console.log(getInfoUser)
@@ -1363,7 +1363,7 @@ exports.shopsRegisterEdit = async (req,res) => {
     }
 
 
-    if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != '' && getInfoUser != null){
+    if(cpnjShop != '' && nameShopSocial != '' && nameShopFantasy != ''){
         database
         .update({
             jcv_trade_shops_cnpj: cpnjShop,
@@ -1391,7 +1391,7 @@ exports.shopsRegisterEdit = async (req,res) => {
         })
     }else{
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS02| Você precisa colocar mais informações!");
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"<b>CNPJ</b>, <b>Nome Social</b>, <b>Nome Fantasia</b>, <b>Representante</b> estão inválidos!","timeMsg": 3000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "warning","message":"<b>CNPJ</b>, <b>Nome Social</b> ou <b>Nome Fantasia</b> estão inválidos!","timeMsg": 3000}`);
         res.redirect("/painel/trademkt/shops");
     }
 
@@ -1607,11 +1607,11 @@ exports.saveSetUsers = async (req,res) => {
         .then( data => {
             if(data != ''){
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| Os usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b> foram atualizados com sucesso!.");
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Os usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b> foram atualizados com sucesso!","timeMsg": 3000}`);
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"Os usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b> foram atualizados com sucesso!","timeMsg": 5000}`);
                 res.redirect("/painel/trademkt/shops");
             }else{
                 //res.cookie('SYS-NOTIFICATION-EXE1', "SYS03| Erro ao atualizar usuarios da loja <b>"+shopData[0].jcv_trade_shops_name_fantasy+"</b>.");
-                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b>","timeMsg": 3000}`);
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Erro ao atualizar usuarios da loja <b>${shopData[0].jcv_trade_shops_name_fantasy}</b>","timeMsg": 5000}`);
                 res.redirect("/painel/trademkt/shops");
             }
         })

@@ -76,7 +76,7 @@
                     
                     <br/>
                     <span><%= element.jcv_trade_shops_name_fantasy %></span>
-                    <span style="display: none;"><%= element.jcv_trade_shops_name_fantasy.toLowerCase() %></span>
+                    <span style="display: none;"><%= element.jcv_trade_shops_name_fantasy != null ? element.jcv_trade_shops_name_fantasy.toLowerCase() : '' %></span>
 
                     <% if(element.jcv_trade_shops_cnpj == '' || element.jcv_trade_shops_cnpj == null){ %>
                         <span><b>Sem dados..</b></span>
