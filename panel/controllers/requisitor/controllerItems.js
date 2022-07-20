@@ -26,7 +26,7 @@ exports.saveEditItem = async(req,res) => {
 
     database.update({sys_req_itemName: inputNameItem, sys_req_itemEnabled: inputEnabledItem}).where({sys_req_itemId: idItem}).table("jcv_req_items").then( data => {
         //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| O item '"+inputNameItem+"' foi editado com sucesso!");
-        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O item '"+inputNameItem+"' foi editado com sucesso!","timeMsg": 4000}`);
+        res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"O item <b>${inputNameItem}</b> foi editado com sucesso!","timeMsg": 4000}`);
         res.redirect("/painel/requisitor/items");
     })
 }
