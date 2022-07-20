@@ -767,12 +767,12 @@ exports.deleteEvent = async(req,res) => {
     })
 
     //Mandando o email referente ao evento
-    database
+    await database
     .select()
     .where({sys_calendar_eventId: idEvent})
     .table("jcv_calendar_registers")
     .then (data => {
-
+        //console.log(data[0])
         if(data[0].sys_calendar_email_send == 1){
             let newArrayUser = data[0].sys_calendar_eventPersons.split(',')
 
@@ -798,17 +798,19 @@ exports.deleteEvent = async(req,res) => {
         }
     })
 
-    database
-    .delete()
-    .where({sys_calendar_eventId: idEvent})
-    .table("jcv_calendar_registers")
-    .then( data => {
-        if(data != ''){
-            //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
-            res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${infoEvent[0].sys_calendar_eventName}</b> deletado com sucesso!","timeMsg": 3000}`);
-            res.redirect("/painel/calendario/main/"+infoEvent[0].sys_calendar_eventMonth);
-        }
-    })
+    setTimeout(() => {
+        database
+        .delete()
+        .where({sys_calendar_eventId: idEvent})
+        .table("jcv_calendar_registers")
+        .then( data => {
+            if(data != ''){
+                //res.cookie('SYS-NOTIFICATION-EXE1', "SYS01| <b>"+infoEvent[0].sys_calendar_eventName+"</b> deletado com sucesso!");
+                res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>${infoEvent[0].sys_calendar_eventName}</b> deletado com sucesso!","timeMsg": 3000}`);
+                res.redirect("/painel/calendario/main/"+infoEvent[0].sys_calendar_eventMonth);
+            }
+        })
+    }, 500);
 }
 
 exports.viewEvent = async (req,res) => {

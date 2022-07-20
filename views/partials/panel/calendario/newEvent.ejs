@@ -11,27 +11,27 @@
         <div class="event-new-box-center">
             <div class="event-new-box-center-row">
                 <label for="">Nome do Evento <b>*</b></label>
-                <input type="text" required placeholder="Nome do Evento" name="event-register-name">
+                <input type="text" required placeholder="Nome do Evento" name="event-register-name" id="event-register-name-new">
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Descrição <b>(opcional)</b></label>
-                <input type="text" placeholder="Uma breve descrição do evento" name="event-register-description">
+                <input type="text" placeholder="Uma breve descrição do evento" name="event-register-description" id="event-register-description-new">
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Data <b>*</b></label>
-                <input type="date" required placeholder="Insira uma data" id="event-new-register-date" name="event-register-date">
+                <input type="date" required placeholder="Insira uma data" id="event-new-register-date" name="event-register-date" id="event-register-date-new">
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Horário <b>*</b></label>
                 <div style="display: flex; align-items: center;">
-                    <input type="time" required placeholder="Hora inicial" name="event-register-initial" value="08:00">
+                    <input type="time" required placeholder="Hora inicial" name="event-register-initial" value="08:00" id="event-register-initial-new">
                     <label style="margin: 0 14px;">Ás</label>
-                    <input type="time" required placeholder="Hora final" name="event-register-end" value="18:00">
+                    <input type="time" required placeholder="Hora final" name="event-register-end" value="18:00" id="event-register-end-new">
                 </div>
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Local <b>*</b></label>
-                <select required placeholder="Busque uma sala" name="event-register-location">
+                <select required placeholder="Busque uma sala" name="event-register-location" id="event-register-location-new">
                     <% getAllRooms.forEach(element => { %>
                         <option value="[<%= element.sys_unity_id %>,<%= element.sys_calendar_roomId %>]"><%= element.sys_unity_name %> | <%= element.sys_calendar_roomName %></option>  
                     <% }) %>
@@ -39,7 +39,7 @@
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Lembre-me <b>(opcional)</b></label>
-                <select name="event-register-remember">
+                <select name="event-register-remember" id="event-register-remember-new">
                     <option value="0">Não me lembre</option>
                     <option value="5">5 Minutos antes</option>
                     <option value="10">10 Minutos antes</option>
@@ -50,7 +50,7 @@
             </div>
             <div class="event-new-box-center-row">
                 <label for="">Disparar e-mail <b>*</b></label>
-                <select name="event-register-send-mails">
+                <select name="event-register-send-mails" id="event-register-send-mails-new">
                     <option value="0">NÃO</option>
                     <option value="1">SIM</option>
                 </select>
@@ -297,7 +297,8 @@ $(function(){
     $("#button-save-new-event").click(function(){
         //Validando
         //console.log(.validate())
-        let arrayValidation = [$("#event-register-name").val(), $("#event-register-date").val(), $("#event-register-initial").val(), $("#event-register-end").val(), $("#event-register-location").val()]
+        let arrayValidation = [$("#event-register-name-new").val(), $("#event-register-date-new").val(), $("#event-register-initial-new").val(), $("#event-register-end-new").val(), $("#event-register-location-new").val()]
+        //alert(arrayValidation)
         if(arrayValidation.indexOf('') >-1){
             setTimeout(() => {
                 $.fn.loadSpin(0)
