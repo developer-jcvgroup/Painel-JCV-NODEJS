@@ -597,6 +597,18 @@
 <script>
     $(function(){
 
+        //Caso o flash de novo evento esja acionado
+        $.functionShowNewEvent = function(){
+            $("#event-new-section-main").fadeIn().css({'display':'flex'})
+            $("#event-new-display-main").animate({'margin-top': '-5%'}, "slow");
+
+            //Title display
+            $("#event-new-dinamic-date").text() == "XX" ? $("#event-new-dinamic-date").text('Criar novo evento') : ''
+        }
+        let newEventFlash = '<%= flashNewEvent %>';
+        newEventFlash != '' ? $.functionShowNewEvent() : '';
+        
+        //alert(newEventFlash)
         //Setando a data no calendario
         const dateNowCalendar = "<%- dayNow %>";
         console.log(dateNowCalendar)

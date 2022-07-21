@@ -36,7 +36,7 @@
                     <div class="container-actions-checks-shop">
                         <div class="shop-box-actions-checks">
                             <label for="">Ação</label>
-                            <select name="action-shops-select" id="">
+                            <select name="action-shops-select">
                                 <option value="">-- Selecione --</option>
                                 <option value="" disabled></option>
                                 <option value="CMD01">Habilitar</option>
@@ -239,7 +239,7 @@
             </div>
             <!--  -->
             <div class="shop-new-box-buttons">
-                <button class="class-loader" id="shop-button-send-data" formaction="/painel/trademkt/shops/register/shop/new" type="submit"><i class="ri-save-3-line"></i></button>
+                <button class="class-loader" formaction="/painel/trademkt/shops/register/shop/new" type="submit"><i class="ri-save-3-line"></i></button>
             </div>
         </form>
     </div>
@@ -247,213 +247,242 @@
 
 
 <script>
-    $(window).on("load", function (e) {
+$(function(){
 
-        $(function(){
-            $.fn.loadSpin(0)
-            ///Get url start Socketio
-            let urlValidate = '<%- PAINEL_URL %>';
-            const socket = io(urlValidate)
+    $.fn.loadSpin(0);
 
-            //Fechar a loja
-            $("#close-edit-shop").click(function (){
-                $("#shop-edit-main").fadeOut()
-            })
+    var typingTimer; //timer identifier
+    var doneTypingInterval = 1000; //time in ms, 1 second for example
 
-            //Fechar a loja
-            $("#close-new-shop").click(function (){
-                $("#shop-new-main").fadeOut()
-            })
+    //on keyup, start the countdown
+    var timer;
+    $('#input-search-table').keyup(function() {
+        window.clearTimeout(timer);
+        //var millisecBeforeRedirect = 10000; 
+        timer = window.setTimeout(function(){
+            $.fn.loadSpin(1);
+            var text = $("#input-search-table").val();
 
-            //Arnazendo
-            let optionsRegion = 
-            `<option value="" disabled></option>
-            <option value="Brasil - Região Centro-Oeste">Brasil - Região Centro-Oeste</option>
-            <option value="Brasil - Região Nordeste">Brasil - Região Nordeste</option>
-            <option value="Brasil - Região Norte">Brasil - Região Norte</option>
-            <option value="Brasil - Região Sudeste">Brasil - Região Sudeste</option>
-            <option value="Brasil - Região Sul">Brasil - Região Sul</option>
-            <option disabled></option>
-            <option value="São Paulo - Região Norte">São Paulo - Região Norte</option>
-            <option value="São Paulo - Região Sul">São Paulo - Região Sul</option>
-            <option value="São Paulo - Região Leste">São Paulo - Região Leste</option>
-            <option value="São Paulo - Região Oeste">São Paulo - Região Oeste</option>
-            <option value="São Paulo - Região Central">São Paulo - Região Central</option>
-            `
+            // Hide all content class element
+            $('.shop-box-single').hide();
 
-            $("#shop-cep-shop").mask('00000000');
+            // Search and show
+            $('.shop-box-single:contains("'+text+'")').show();
 
-            $.fn.verifyCep = () => {
-                if($("#shop-cep-shop").val() > ''){
-                    let cepGet = $("#shop-cep-shop").val().replace(/-/g, '');
-                    let numberGet = $("#shop-number-shop").val();
+            if(text.length <  1){
+                Cookies.remove('SEARCH-INPUT-TRADE-SHOPS')    
+            }else{
+                Cookies.set('SEARCH-INPUT-TRADE-SHOPS', text)
+            }
+            $.fn.loadSpin(0);
+        },1000); 
+    });
 
-                    if(cepGet.length >= 8){
-                        $.getJSON("https://viacep.com.br/ws/"+ cepGet +"/json/", function(dados) {
-                    
-                            if (!("erro" in dados)){
-                                //alert(cepGet)
-                                //Tem dados no CEP
-                                
+    ///Get url start Socketio
+    let urlValidate = '<%- PAINEL_URL %>';
+    const socket = io(urlValidate)
 
-                                //console.log(dados.logradouro)
-                                $("#shop-id-result-road").empty().append(`<b style='color: var(--color-one); font-size: 0.9rem'><i class="ri-road-map-line"></i> Endereço: ${dados.logradouro} - ${numberGet}</b>`)
+    //Fechar a loja
+    $("#close-edit-shop").click(function (){
+        $("#shop-edit-main").fadeOut()
+    })
 
-                                
-                            }else{
-                                $("#shop-id-result-road").empty().append(`<b style='color: red; font-size: 0.9rem'>Sem dados</b>`)
-                            }
+    //Fechar a loja
+    $("#close-new-shop").click(function (){
+        $("#shop-new-main").fadeOut()
+    })
+
+    //Arnazendo
+    let optionsRegion = 
+    `<option value="" disabled></option>
+    <option value="Brasil - Região Centro-Oeste">Brasil - Região Centro-Oeste</option>
+    <option value="Brasil - Região Nordeste">Brasil - Região Nordeste</option>
+    <option value="Brasil - Região Norte">Brasil - Região Norte</option>
+    <option value="Brasil - Região Sudeste">Brasil - Região Sudeste</option>
+    <option value="Brasil - Região Sul">Brasil - Região Sul</option>
+    <option disabled></option>
+    <option value="São Paulo - Região Norte">São Paulo - Região Norte</option>
+    <option value="São Paulo - Região Sul">São Paulo - Região Sul</option>
+    <option value="São Paulo - Região Leste">São Paulo - Região Leste</option>
+    <option value="São Paulo - Região Oeste">São Paulo - Região Oeste</option>
+    <option value="São Paulo - Região Central">São Paulo - Região Central</option>
+    `
+
+    $("#shop-cep-shop").mask('00000000');
+
+    $.fn.verifyCep = () => {
+        if($("#shop-cep-shop").val() > ''){
+            let cepGet = $("#shop-cep-shop").val().replace(/-/g, '');
+            let numberGet = $("#shop-number-shop").val();
+
+            if(cepGet.length >= 8){
+                $.getJSON("https://viacep.com.br/ws/"+ cepGet +"/json/", function(dados) {
+            
+                    if (!("erro" in dados)){
+                        //alert(cepGet)
+                        //Tem dados no CEP
                         
-                        });
+
+                        //console.log(dados.logradouro)
+                        $("#shop-id-result-road").empty().append(`<b style='color: var(--color-one); font-size: 0.9rem'><i class="ri-road-map-line"></i> Endereço: ${dados.logradouro} - ${numberGet}</b>`)
+
+                        
                     }else{
-                        $("#shop-id-result-road").empty()
+                        $("#shop-id-result-road").empty().append(`<b style='color: red; font-size: 0.9rem'>Sem dados</b>`)
                     }
-                }else{
-                    $("#shop-id-result-road").empty()
-                }
-            }
-
-            //Ação de editar a loja
-            $(".shop-open-edit-user").click(function (){
-                const idShop = parseInt($(this).val());
-
-
-                $.fn.loadSpin(0)
-
-                $("#shop-edit-main").fadeIn().css({'display':'flex'})
-
-
-                //Pegando os dados
-                socket.emit("getInfoShopEdit", idShop)
-                socket.on("getInfoShopEditResult", (dataShop) => {
-
-                    //Title
-                    $("#name-shop").text(dataShop[0][0].jcv_trade_shops_name_social)
-
-                    //Disabled checkbox
-                    $("#"+dataShop[0][0].jcv_trade_shops_id).prop('checked', false)
-
-                    //Limpando todos os campos
                 
-                    //Inserindo os dados e nome dos campos
-                    $("#shop-edit-cnpj-cpf").val(dataShop[0][0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0][0].jcv_trade_shops_id)
-                    $("#shop-social-name").val(dataShop[0][0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0][0].jcv_trade_shops_id)
-                    $("#shop-fantasy-name").val(dataShop[0][0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0][0].jcv_trade_shops_id)
+                });
+            }else{
+                $("#shop-id-result-road").empty()
+            }
+        }else{
+            $("#shop-id-result-road").empty()
+        }
+    }
 
-                    $("#shop-cep-shop").val(dataShop[0][0].jcv_trade_shops_cep).attr('name','shop-cep-edit-'+dataShop[0][0].jcv_trade_shops_id)
-                    $("#shop-number-shop").val(dataShop[0][0].jcv_trade_shops_number).attr('name','shop-number-edit-'+dataShop[0][0].jcv_trade_shops_id)
-                    
-                    $("#shop-edit-region").empty().append(optionsRegion)
-                    $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
+    //Ação de editar a loja
+    $(".shop-open-edit-user").click(function (){
+        const idShop = parseInt($(this).val());
 
-                    console.log(dataShop[2])
-                    //Gestor da loja
-                    $("#shop-manager-edit").empty()
-                    $("#shop-manager-edit").append(`
-                        <option value="${dataShop[2]}">${dataShop[2]}</option>
-                        <option disabled></option>
-                    `)
-                    dataShop[1].forEach(element => {
-                        $("#shop-manager-edit").append(`<option value="${element.jcv_userNamePrimary}">${element.jcv_userNamePrimary}</option>`)
-                    })
-                    $("#shop-manager-edit").attr('name','shop-manager-edit-'+dataShop[0][0].jcv_trade_shops_id)//.append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
 
-                    $("#shop-edit-enabled").empty().append(`<option value='1'>Sim</option><option value='0'>Não</option><option disabled></option>`)
-                    if(dataShop[0][0].jcv_trade_shops_enabled == 1){
-                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='1'>Sim</option>`)
-                    }else{
-                        $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='0'>Não</option>`)
-                    }
+        $.fn.loadSpin(0)
 
-                    $("#shop-button-send-data").val(dataShop[0][0].jcv_trade_shops_id)
+        $("#shop-edit-main").fadeIn().css({'display':'flex'})
 
-                    $.fn.verifyCep()//Verificando cep
-                })
+
+        //Pegando os dados
+        socket.emit("getInfoShopEdit", idShop)
+        socket.on("getInfoShopEditResult", (dataShop) => {
+
+            //Title
+            $("#name-shop").text(dataShop[0][0].jcv_trade_shops_name_social)
+
+            //Disabled checkbox
+            $("#"+dataShop[0][0].jcv_trade_shops_id).prop('checked', false)
+
+            //Limpando todos os campos
+        
+            //Inserindo os dados e nome dos campos
+            $("#shop-edit-cnpj-cpf").val(dataShop[0][0].jcv_trade_shops_cnpj).attr('name','shop-cnpj-edit-'+dataShop[0][0].jcv_trade_shops_id)
+            $("#shop-social-name").val(dataShop[0][0].jcv_trade_shops_name_social).attr('name','shop-name-social-edit-'+dataShop[0][0].jcv_trade_shops_id)
+            $("#shop-fantasy-name").val(dataShop[0][0].jcv_trade_shops_name_fantasy).attr('name','shop-name-fantasy-edit-'+dataShop[0][0].jcv_trade_shops_id)
+
+            $("#shop-cep-shop").val(dataShop[0][0].jcv_trade_shops_cep).attr('name','shop-cep-edit-'+dataShop[0][0].jcv_trade_shops_id)
+            $("#shop-number-shop").val(dataShop[0][0].jcv_trade_shops_number).attr('name','shop-number-edit-'+dataShop[0][0].jcv_trade_shops_id)
+            
+            $("#shop-edit-region").empty().append(optionsRegion)
+            $("#shop-edit-region").attr('name','shop-name-region-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
+
+            console.log(dataShop[2])
+            //Gestor da loja
+            $("#shop-manager-edit").empty()
+            $("#shop-manager-edit").append(`
+                <option value="${dataShop[2]}">${dataShop[2]}</option>
+                <option disabled></option>
+            `)
+            dataShop[1].forEach(element => {
+                $("#shop-manager-edit").append(`<option value="${element.jcv_userNamePrimary}">${element.jcv_userNamePrimary}</option>`)
             })
+            $("#shop-manager-edit").attr('name','shop-manager-edit-'+dataShop[0][0].jcv_trade_shops_id)//.append(`<option selected value='${dataShop[0][0].jcv_trade_shops_region}'>${dataShop[0][0].jcv_trade_shops_region}</option>`)
 
-            //Buscando o endereço dinamicamente
-            $("#shop-number-shop").keyup((e) => {
-                $.fn.verifyCep()    
-            })
-            $("#shop-cep-shop").keyup((e) => {
-                $.fn.verifyCep()    
-            })
-
-            let arrayIds = []
-            $(".shop-box-single").click(function(){
-                let idDiv = $(this).attr('value-div');
-
-                if($("#"+idDiv).is(':checked') == true){
-
-                    //Removendo
-                    let removeIndex = arrayIds.indexOf(idDiv)
-                    arrayIds.splice(removeIndex, 1)
-
-                    $("#shop-list-ids").val(JSON.stringify(arrayIds))
-
-                    $("#"+idDiv).prop('checked', false)
-                }else{
-
-                    if(arrayIds.indexOf(idDiv) == -1){
-                        arrayIds.push(idDiv)
-                    }
-
-                    $("#shop-list-ids").val(JSON.stringify(arrayIds))
-
-                    $("#"+idDiv).prop('checked', true)
-                }
-            })
-
-
-            //Filtro de busca
-            $('#input-search-table').keyup(function(){            
-                // Search text
-                var text = $(this).val();
-
-                // Hide all content class element
-                $('.shop-box-single').hide();
-
-                // Search and show
-                $('.shop-box-single:contains("'+text+'")').show();
-
-            });
-
-            //Criando um cookie para salvar sempre o que o
-            //usuario digitar
-            $("#input-search-table").keyup(function(e){
-                if($(this).val().length <  1){
-                    Cookies.remove('SEARCH-INPUT-TRADE-SHOPS')    
-                }else{
-                    Cookies.set('SEARCH-INPUT-TRADE-SHOPS', $(this).val())
-                }
-            })
-
-            function getContainerSearch (text){
-                // Search text
-                // Hide all content class element
-                $('.shop-box-single').hide();
-
-                // Search and show
-                $('.shop-box-single:contains("'+text+'")').show();
+            $("#shop-edit-enabled").empty().append(`<option value='1'>Sim</option><option value='0'>Não</option><option disabled></option>`)
+            if(dataShop[0][0].jcv_trade_shops_enabled == 1){
+                $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='1'>Sim</option>`)
+            }else{
+                $("#shop-edit-enabled").attr('name','shop-enabled-edit-'+dataShop[0][0].jcv_trade_shops_id).append(`<option selected value='0'>Não</option>`)
             }
 
-            //Cookie filter
-            if(Cookies.get('SEARCH-INPUT-TRADE-SHOPS')){
-                $("#input-search-table").val(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))   
-                $("#input-search-table").select()
-                getContainerSearch(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))
-                //$.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
-            }
+            $("#shop-button-send-data").val(dataShop[0][0].jcv_trade_shops_id)
 
-
-            /*  */
-            /*  */
-            /*  */
-            /*  */
-            $("#open-new-shop").click(function(){
-                $("#shop-new-main").fadeIn().css({'display':'flex'})
-            })
-
+            $.fn.verifyCep()//Verificando cep
         })
     })
+
+    //Buscando o endereço dinamicamente
+    $("#shop-number-shop").keyup((e) => {
+        $.fn.verifyCep()    
+    })
+    $("#shop-cep-shop").keyup((e) => {
+        $.fn.verifyCep()    
+    })
+
+    let arrayIds = []
+    $(".shop-box-single").click(function(){
+        let idDiv = $(this).attr('value-div');
+
+        if($("#"+idDiv).is(':checked') == true){
+
+            //Removendo
+            let removeIndex = arrayIds.indexOf(idDiv)
+            arrayIds.splice(removeIndex, 1)
+
+            $("#shop-list-ids").val(JSON.stringify(arrayIds))
+
+            $("#"+idDiv).prop('checked', false)
+        }else{
+
+            if(arrayIds.indexOf(idDiv) == -1){
+                arrayIds.push(idDiv)
+            }
+
+            $("#shop-list-ids").val(JSON.stringify(arrayIds))
+
+            $("#"+idDiv).prop('checked', true)
+        }
+    })
+
+    
+
+    //Filtro de busca
+    /* $('#input-search-table').keyup(function(){            
+        // Search text
+        var text = $(this).val();
+
+        // Hide all content class element
+        $('.shop-box-single').hide();
+
+        // Search and show
+        $('.shop-box-single:contains("'+text+'")').show();
+
+    }); */
+
+    //Criando um cookie para salvar sempre o que o
+    //usuario digitar
+    /* $("#input-search-table").keyup(function(e){
+        if($(this).val().length <  1){
+            Cookies.remove('SEARCH-INPUT-TRADE-SHOPS')    
+        }else{
+            Cookies.set('SEARCH-INPUT-TRADE-SHOPS', $(this).val())
+        }
+    }) */
+
+    function getContainerSearch (text){
+        // Search text
+        // Hide all content class element
+        $('.shop-box-single').hide();
+
+        // Search and show
+        $('.shop-box-single:contains("'+text+'")').show();
+    }
+
+    //Cookie filter
+    if(Cookies.get('SEARCH-INPUT-TRADE-SHOPS')){
+        $("#input-search-table").val(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))   
+        $("#input-search-table").select()
+        getContainerSearch(Cookies.get('SEARCH-INPUT-TRADE-SHOPS'))
+        //$.fn.searchInputTableInputs('#sys-users-table-list-tbody','#input-search-table',0)
+    }
+
+
+    /*  */
+    /*  */
+    /*  */
+    /*  */
+    $("#open-new-shop").click(function(){
+        $("#shop-new-main").fadeIn().css({'display':'flex'})
+    })
+
+    
+
+})
 </script>

@@ -357,6 +357,9 @@ $(function(){
             socket.removeListener('eventEditSend')
         })
     }
+
+    let validationEdit = '<%= flashEditEvent %>'
+    validationEdit != '' ? $.openEditEvent(validationEdit) : ''
   
     $(".open-edit-event-display").click(function(){
         $("#event-edit-dinamic-date").text('Criar novo evento')

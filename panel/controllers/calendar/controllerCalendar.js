@@ -181,7 +181,9 @@ exports.viewCalendarMonth = async (req,res) => {
             getAllRooms: getAllRooms,
             allEventsCount: allEventsCount,
             monthAgo: monthAgo,
-            arrayFeriados: arrayFeriados
+            arrayFeriados: arrayFeriados,
+            flashNewEvent: req.flash('flashNewEvent'),
+            flashEditEvent: req.flash('flashEditEvent')
         })
     }
 }
@@ -240,8 +242,8 @@ exports.moduleSaveNewEvent = async(req,res) => {
                     let insertIntervalFinal = moment(eventInitialEnd[1],'hh:mm');
         
                     let validateHours = element.sys_calendar_eventHours.split(' - ');
-                    let registredInitial = moment(validateHours[0],'hh:mm');
-                    let registredFinal = moment(validateHours[1],'hh:mm');
+                    let registredInitial = moment(validateHours[0],'hh:mm').subtract(1, 'minute');
+                    let registredFinal = moment(validateHours[1],'hh:mm').add(1, 'minute');
         
                     //Validando a hora inicial
                     if(moment(insertIntervalInitial).isBetween(registredInitial, registredFinal) == false){
@@ -256,6 +258,7 @@ exports.moduleSaveNewEvent = async(req,res) => {
                             //Validando se os horarios do banco esta entre os horarios que o usuario inseriu
                             if(moment(registredInitial).isBetween(insertIntervalInitial, insertIntervalFinal) == false && moment(registredFinal).isBetween(insertIntervalInitial, insertIntervalFinal) == false){
                                 //console.log('podemos registrar normalmente')
+
                                 validationEvent = true;
                                 //i = getAllEvent.length;
                             }else{
@@ -283,6 +286,7 @@ exports.moduleSaveNewEvent = async(req,res) => {
         if(validationEvent == false){
             //Horarios inválido
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Horários inválidos","timeMsg": 3000}`);
+            req.flash('flashNewEvent', (eventDate))
             res.redirect("/painel/calendario/main");
         }else{
             //Tudo certo!
@@ -408,8 +412,8 @@ exports.moduleSaveEditEvent = async (req,res) => {
                     let insertIntervalFinal = moment(eventInitialEnd[1],'hh:mm');
         
                     let validateHours = element.sys_calendar_eventHours.split(' - ');
-                    let registredInitial = moment(validateHours[0],'hh:mm');
-                    let registredFinal = moment(validateHours[1],'hh:mm');
+                    let registredInitial = moment(validateHours[0],'hh:mm').subtract(1, 'minute');
+                    let registredFinal = moment(validateHours[1],'hh:mm').add(1, 'minute');
         
                     //Validando a hora inicial
                     if(moment(insertIntervalInitial).isBetween(registredInitial, registredFinal) == false){
@@ -453,6 +457,7 @@ exports.moduleSaveEditEvent = async (req,res) => {
         if(validationEvent == false){
             //Horarios inválido
             res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "error","message":"Horários inválidos","timeMsg": 3000}`);
+            req.flash('flashEditEvent', (idEvent))
             res.redirect("/painel/calendario/main");
         }else{
             //Tudo certo!
@@ -524,6 +529,7 @@ exports.moduleSaveEditEvent = async (req,res) => {
     }else{
         //Erro
         res.cookie('SYSTEM-NOTIFICATIONS-MODULE', `{"typeMsg": "success","message":"<b>Dados necessarios faltando</b>","timeMsg": 3000}`);
+        req.flash('flashEditEvent', (idEvent))
         res.redirect("/painel/calendario/main");
     }
 }
